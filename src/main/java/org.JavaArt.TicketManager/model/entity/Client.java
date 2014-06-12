@@ -21,16 +21,9 @@ public class Client {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "PHONE")
-    private String phone;
-
     @NotEmpty
     @Column(name = "NAME", nullable = false)
     private String name;
-
-    @NotEmpty
-    @Column(name = "SURENAME", nullable = false)
-    private String sureName;
 
     @Column(name = "DESCRIPTION")
     private String description;
