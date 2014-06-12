@@ -1,4 +1,4 @@
-package hibernateTest.model.entity;
+package org.JavaArt.TicketManager.model.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -8,13 +8,12 @@ import javax.persistence.*;
 /**
  * Created with IntelliJ IDEA.
  * User: Vladislav Karpenko
- * Date: 07.06.2014
- * Time: 0:08
+ * Date: 05.06.2014
+ * Time: 16:14
  */
 @Entity
-@Table(name = "EVENTTYPES")
-public class EventType {
-
+@Table(name = "CLIENTS")
+public class Client {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -29,7 +28,7 @@ public class EventType {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    public EventType() {
+    public Client() {
     }
 
     public int getId() {
@@ -55,5 +54,4 @@ public class EventType {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

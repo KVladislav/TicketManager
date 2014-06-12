@@ -1,4 +1,4 @@
-package hibernateTest.model.entity;
+package org.JavaArt.TicketManager.model.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -26,7 +26,7 @@ public class Event {
     @ManyToOne
     @NotEmpty
     @JoinColumn(name = "EVENTTYPES_ID", nullable = false)
-    private EventType eventType;
+    private org.JavaArt.TicketManager.model.entity.EventType eventType;
 
     @NotEmpty
     @Column(name = "EventName", nullable = false)
