@@ -1,4 +1,4 @@
-package hibernateTest.model.entity;
+package org.JavaArt.TicketManager.model.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
