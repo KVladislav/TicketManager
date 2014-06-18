@@ -21,11 +21,11 @@ public class WelcomeController {
 
 
 
-    @RequestMapping("/AllEvents.html")
+    @RequestMapping("/AllEvents")
     public String allEvents(Model model) throws SQLException{
         List<Event> events = service.getAllEvents();
         model.addAttribute("events");
-        return "WEB-INF/jsp/AllEvents.jsp";
+        return "AllEvents";
     }
 
 }
