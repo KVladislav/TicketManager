@@ -1,5 +1,13 @@
 package org.JavaArt.TicketManager.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Vladislav Karpenko
