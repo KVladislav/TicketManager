@@ -25,6 +25,9 @@
         <module name="TicketManager" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TicketManager" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
