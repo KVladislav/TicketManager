@@ -15,7 +15,7 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/Booking/setSectors" method="post" >
-    <p><select multiple size="10" name="eventId">
+    <p><select size="10" name="eventId">
         <c:forEach items="${events}" var="evnt">
             <c:if test="${event.id==evnt.id}"><option value="${evnt.id}" onclick="this.form.submit()"selected>${evnt.description} ${evnt.date.day}.${evnt.date.month} ${event.date.hours}:${event.date.minutes}</option></c:if>
             <c:if test="${event.id!=evnt.id}"><option value="${evnt.id}" onclick="this.form.submit()">${evnt.description} ${evnt.date.day}.${evnt.date.month} ${evnt.date.hours}:${evnt.date.minutes}</option> </c:if>
@@ -24,7 +24,7 @@
 </form>
 
 <form action="${pageContext.request.contextPath}/Booking/setRow" method="post" >
-    <p><select multiple size="10" name="sectorId">
+    <p><select size="10" name="sectorId">
         <c:forEach items="${sectorsMap}" var="sectorEntry">
             <c:if test="${sector.id==sectorEntry.key.id}"><option value="${sectorEntry.key.id}" onclick="this.form.submit()" selected>${sectorEntry.key.name} price ${sectorEntry.key.price} free: ${sectorEntry.value}</option></c:if>
             <c:if test="${sector.id!=sectorEntry.key.id}"><option value="${sectorEntry.key.id}" onclick="this.form.submit()">${sectorEntry.key.name} price ${sectorEntry.key.price} free: ${sectorEntry.value}</option></c:if>
@@ -33,7 +33,7 @@
 </form>
 
 <form action="${pageContext.request.contextPath}/Booking/setSeat" method="post" >
-    <p><select multiple size="10" name="row">
+    <p><select size="10" name="row">
         <c:forEach items="${rowsMap}" var="rowEntry">
             <c:if test="${row==rowEntry.key}"><option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key} free: ${rowEntry.value}</option></c:if>
             <c:if test="${row!=rowEntry.key}"><option value="${rowEntry.key}" onclick="this.form.submit()">${rowEntry.key} free: ${rowEntry.value}</option></c:if>
