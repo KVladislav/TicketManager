@@ -133,7 +133,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         int counter=0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("select count (*) from Ticket where sector ="+ sector.getId() + " and row=:row");
+            Query query = session.createQuery("select count (*) from Ticket where sector ="+ sector.getId() + " and row="+row);
             counter = ((Long)query.uniqueResult()).intValue();
         }
         catch (Exception e) {
@@ -145,6 +145,25 @@ public class TicketRepositoryImpl implements TicketRepository {
             }
         }
         return sector.getMaxSeats() - counter;
+    }
 
+    @Override
+    public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException{
+        Session session = null;
+        int status=0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("select count (*) from Ticket where sector ="+ sector.getId() + " and row=" + row + " and seat=" + seat);
+            status = ((Long)query.uniqueResult()).intValue();
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        }
+        finally {
+            if (session!=null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return status == 0;
     }
 }

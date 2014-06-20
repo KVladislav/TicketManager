@@ -24,4 +24,6 @@ public interface TicketRepository {
     public void deleteTicket(Ticket ticket) throws SQLException;
     public int getFreeTicketsAmountBySector(Sector sector) throws SQLException;
     public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException;
+    public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException;
+
 }

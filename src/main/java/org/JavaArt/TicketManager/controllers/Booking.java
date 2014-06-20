@@ -2,13 +2,12 @@ package org.JavaArt.TicketManager.controllers;
 
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.service.Service;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,29 +21,48 @@ import java.util.TreeMap;
  * Time: 18:06
  */
 @Controller
-@SessionAttributes({"events", "event", "sectorsMap", "sectorId"})
+@SessionAttributes({"events", "event", "sectorsMap", "sector", "row", "rowsMap", "seatsMap"})
 
 public class Booking {
     private Service service = new Service();
 
     @RequestMapping(value = "/Booking", method = RequestMethod.GET)
-    public String BookingGet(Model model) throws SQLException {
+    public String bookingGet(Model model) throws SQLException {
         List<Event> events = service.getAllEvents();
-        model.addAttribute("event");
+        if (events != null && events.size()>0) {
+            model.addAttribute("event", events.get(0));
+
         model.addAttribute("events", events);
-        return "Booking";
+
+        List<Sector> sectors = service.getSectorsByEvent(events.get(0));
+        if (sectors!=null && sectors.size()>0) {
+            model.addAttribute("sector", sectors.get(0));
+
+        Map<Sector,Integer> sectorsMap = new TreeMap<>();
+        for (Sector sector:sectors) {
+            sectorsMap.put(sector, service.getFreeTicketsAmountBySector(sector));
+        }
+        model.addAttribute("sectorsMap", sectorsMap);
+
+        Map<Integer,Integer> rowsMap = new TreeMap<>();
+        for (int i = 0; i < sectors.get(0).getMaxRows(); i++) {
+            rowsMap.put(i,service.getFreeTicketsAmountBySectorRow(sectors.get(0), i));
+        }
+        model.addAttribute("rowsMap", rowsMap);
+
+        Map<Integer,Boolean> seatsMap = new TreeMap<>();
+        for (int i = 0; i < sectors.get(0).getMaxSeats(); i++) {
+            seatsMap.put(i,service.isPlaceFree(sectors.get(0), 1, i));
+        }
+        model.addAttribute("row", 1);
+        model.addAttribute("seatsMap", seatsMap);
+        }  }
+            return "Booking";
     }
 
-//    @RequestMapping(method = RequestMethod.POST)
-//    public String BookingPost(@ModelAttribute("eventId") String eventID) throws SQLException {
-//        System.out.println(eventID + "sdg ");
-//        return "Booking";
-//    }
-
     @RequestMapping(value = "Booking/setSectors", method = RequestMethod.POST)
-    public String BookingSetSector(@RequestParam(value = "eventId", required=true) int eventId, Model model) throws SQLException {
+    public String bookingSetSectors(@RequestParam(value = "eventId", required=true) int eventId, Model model) throws SQLException {
         Event event = service.getEventById(eventId);
-        System.out.println(eventId + " " + event);
         model.addAttribute("event", event);
         List<Sector> sectors = service.getSectorsByEvent(event);
         Map<Sector,Integer> sectorsMap = new TreeMap<>();
@@ -56,11 +74,40 @@ public class Booking {
     }
 
     @RequestMapping(value = "Booking/setRow", method = RequestMethod.POST)
-    public String BookingSetTicket(@RequestParam(value = "sector", required=true) Sector sector, Model model) throws SQLException {
-
-
+    public String bookingSetRow(@RequestParam(value = "sectorId", required=true) int sectorId, Model model) throws SQLException {
+        Sector sector = service.getSectorById(sectorId);
+        model.addAttribute("sector", sector);
+        Map<Integer,Integer> rowsMap = new TreeMap<>();
+        for (int i = 0; i < sector.getMaxRows(); i++) {
+            rowsMap.put(i,service.getFreeTicketsAmountBySectorRow(sector, i));
+        }
+        model.addAttribute("rowsMap", rowsMap);
         return "Booking";
     }
 
+    @RequestMapping(value = "Booking/setSeat", method = RequestMethod.POST)
+    public String bookingSetSeat(@RequestParam(value = "row", required=true) int row, @ModelAttribute Sector sector, Model model) throws SQLException {
+        Map<Integer,Boolean> seatsMap = new TreeMap<>();
+        for (int i = 0; i < sector.getMaxSeats(); i++) {
+            seatsMap.put(i,service.isPlaceFree(sector, row, i));
+        }
+        model.addAttribute("row", row);
+        model.addAttribute("seatsMap", seatsMap);
+        return "Booking";
+    }
 
+    @RequestMapping(value = "Booking", method = RequestMethod.POST)
+    public String bookingOrder(@ModelAttribute(value = "row") int row , @RequestParam(value = "seats", required=true) int[] seats, @ModelAttribute Sector sector,  SessionStatus status, Model model) throws SQLException {
+        for (int seat : seats) {
+            if (service.isPlaceFree(sector, row, seat)) {
+                Ticket ticket = new Ticket();
+                ticket.setSector(sector);
+                ticket.setRow(row);
+                ticket.setSeat(seat);
+                service.addTicket(ticket);
+            }
+        status.setComplete();
+        }
+        return "redirect:/Booking";
+    }
 }
