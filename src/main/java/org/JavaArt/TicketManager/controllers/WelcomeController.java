@@ -21,7 +21,7 @@ public class WelcomeController {
 
 
 
-    @RequestMapping("/AllEvents")
+    @RequestMapping("/AllEvents.do")
     public String allEvents(Model model) throws SQLException{
         List<Event> events = service.getAllEvents();
         model.addAttribute("events", events);

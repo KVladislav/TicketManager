@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="mock:///AllEvents.jsp" libraries="{html5shiv}" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/AllEvents.jsp" libraries="{jquery}" />
+  </component>
+</project>
+
