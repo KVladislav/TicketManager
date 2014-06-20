@@ -14,20 +14,39 @@
     <title>Booking</title>
 </head>
 <body>
-
 <form action="${pageContext.request.contextPath}/Booking/setSectors" method="post" >
     <p><select multiple size="10" name="eventId">
-        <c:forEach items="${events}" var="event">
-            <option value="${event.id}" onclick="this.form.submit()">${event.description} ${event.date.day}.${event.date.month} ${event.date.hours}:${event.date.minutes}</option>
+        <c:forEach items="${events}" var="evnt">
+            <c:if test="${event.id==evnt.id}"><option value="${evnt.id}" onclick="this.form.submit()"selected>${evnt.description} ${evnt.date.day}.${evnt.date.month} ${event.date.hours}:${event.date.minutes}</option></c:if>
+            <c:if test="${event.id!=evnt.id}"><option value="${evnt.id}" onclick="this.form.submit()">${evnt.description} ${evnt.date.day}.${evnt.date.month} ${evnt.date.hours}:${evnt.date.minutes}</option> </c:if>
         </c:forEach>
     </select></p>
 </form>
 
 <form action="${pageContext.request.contextPath}/Booking/setRow" method="post" >
-    <p><select multiple size="10" name="SectworId">
+    <p><select multiple size="10" name="sectorId">
         <c:forEach items="${sectorsMap}" var="sectorEntry">
-            <option value="${sectorEntry.key}" onclick="this.form.submit()">${sectorEntry.key.name} price ${sectorEntry.key.price} free: ${sectorEntry.value}</option>
+            <c:if test="${sector.id==sectorEntry.key.id}"><option value="${sectorEntry.key.id}" onclick="this.form.submit()" selected>${sectorEntry.key.name} price ${sectorEntry.key.price} free: ${sectorEntry.value}</option></c:if>
+            <c:if test="${sector.id!=sectorEntry.key.id}"><option value="${sectorEntry.key.id}" onclick="this.form.submit()">${sectorEntry.key.name} price ${sectorEntry.key.price} free: ${sectorEntry.value}</option></c:if>
         </c:forEach>
+    </select></p>
+</form>
+
+<form action="${pageContext.request.contextPath}/Booking/setSeat" method="post" >
+    <p><select multiple size="10" name="row">
+        <c:forEach items="${rowsMap}" var="rowEntry">
+            <c:if test="${row==rowEntry.key}"><option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key} free: ${rowEntry.value}</option></c:if>
+            <c:if test="${row!=rowEntry.key}"><option value="${rowEntry.key}" onclick="this.form.submit()">${rowEntry.key} free: ${rowEntry.value}</option></c:if>
+        </c:forEach>
+    </select></p>
+</form>
+
+<form action="${pageContext.request.contextPath}/Booking" method="post" >
+    <p><select multiple size="10" name="seats">
+        <c:forEach items="${seatsMap}" var="seatEntry">
+            <option value="${seatEntry.key}">${seatEntry.key} free: ${seatEntry.value}</option>
+        </c:forEach>
+        <input type="submit" name="Order">
     </select></p>
 </form>
 

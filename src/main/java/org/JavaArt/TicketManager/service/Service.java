@@ -4,6 +4,7 @@ import org.JavaArt.TicketManager.DAO.*;
 import org.JavaArt.TicketManager.DAO.impl.*;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -45,5 +46,16 @@ public class Service {
         return ticketRepository.getFreeTicketsAmountBySector(sector);
     }
 
+    public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException{
+        return ticketRepository.getFreeTicketsAmountBySectorRow(sector, row);
+    }
+
+    public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException{
+        return ticketRepository.isPlaceFree(sector, row, seat);
+    }
+
+    public void addTicket(Ticket ticket) throws SQLException{
+        ticketRepository.addTicket(ticket);
+    }
 
 }
