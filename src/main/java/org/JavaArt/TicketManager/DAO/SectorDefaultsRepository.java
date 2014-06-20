@@ -1,6 +1,7 @@
 package org.JavaArt.TicketManager.DAO;
 
 import org.JavaArt.TicketManager.entities.SectorDefaults;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.List;
  * Date: 06.06.2014
  * Time: 10:49
  */
+
+@Repository
+
 public interface SectorDefaultsRepository {
     public void addSectorDefaults(SectorDefaults sectorDefaults) throws SQLException;
     public void updateSectorDefaults(SectorDefaults sectorDefaults) throws SQLException;

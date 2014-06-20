@@ -4,6 +4,7 @@ import org.JavaArt.TicketManager.DAO.SectorDefaultsRepository;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -15,6 +16,9 @@ import java.util.List;
  * Date: 06.06.2014
  * Time: 11:01
  */
+
+@Repository
+
 public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     @Override
     public void addSectorDefaults(SectorDefaults sectorDefaults) throws SQLException {
@@ -57,7 +61,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         SectorDefaults sectorDefaults = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            sectorDefaults = (SectorDefaults) session.load(SectorDefaults.class, id);
+            sectorDefaults = (SectorDefaults) session.get(SectorDefaults.class, id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

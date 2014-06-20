@@ -4,6 +4,7 @@ import org.JavaArt.TicketManager.DAO.OperatorRepository;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -15,6 +16,9 @@ import java.util.List;
  * Date: 07.06.2014
  * Time: 22:14
  */
+
+@Repository
+
 public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
@@ -58,7 +62,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         Operator operator = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            operator = (Operator) session.load(Operator.class, id);
+            operator = (Operator) session.get(Operator.class, id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

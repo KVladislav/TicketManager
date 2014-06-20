@@ -1,9 +1,12 @@
 package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.SectorRepository;
+import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -15,6 +18,9 @@ import java.util.List;
  * Date: 06.06.2014
  * Time: 11:01
  */
+
+@Repository
+
 public class SectorRepositoryImpl implements SectorRepository {
     @Override
     public void addSector(Sector sector) throws SQLException {
@@ -61,7 +67,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         Sector sector = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            sector = (Sector) session.load(Sector.class, id);
+            sector = (Sector) session.get(Sector.class, id);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -111,5 +117,25 @@ public class SectorRepositoryImpl implements SectorRepository {
             }
         }
 
+    }
+
+    @Override
+    public List<Sector> getSectorsByEvent(Event event) {
+        Session session = null;
+        List<Sector> sectors = null;// = new ArrayList<Zone>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY id");
+            sectors = query.list();
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        }
+        finally {
+            if (session!=null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return sectors;
     }
 }

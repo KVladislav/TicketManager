@@ -5,6 +5,7 @@ import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.util.List;
  * Date: 06.06.2014
  * Time: 10:59
  */
+@Repository
 public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public void addClient(Client client) throws SQLException {
@@ -64,7 +66,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Client client = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            client = (Client) session.load(Client.class, id);
+            client = (Client) session.get(Client.class, id);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

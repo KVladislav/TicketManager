@@ -3,6 +3,7 @@ package org.JavaArt.TicketManager.service;
 import org.JavaArt.TicketManager.DAO.*;
 import org.JavaArt.TicketManager.DAO.impl.*;
 import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Sector;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,6 +24,25 @@ public class Service {
     public List<Event> getAllEvents() throws SQLException {
         List<Event> events = eventRepository.getAllEvents();
         return events;
+    }
+
+    public Event getEventById(int id) throws SQLException {
+        Event event = eventRepository.getEventById(id);
+        return event;
+    }
+
+    public List<Sector> getSectorsByEvent(Event event){
+        List<Sector> sectors = sectorRepository.getSectorsByEvent(event);
+        return sectors;
+    }
+
+    public Sector getSectorById(int id) throws SQLException {
+        Sector sector = sectorRepository.getSectorById(id);
+        return sector;
+    }
+
+    public int getFreeTicketsAmountBySector(Sector sector) throws SQLException{
+        return ticketRepository.getFreeTicketsAmountBySector(sector);
     }
 
 
