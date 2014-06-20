@@ -4,11 +4,12 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "sector")
-public class Sector {
+public class Sector implements Comparable, Serializable {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
@@ -115,5 +116,36 @@ public class Sector {
 
     public void setMaxSeats(int maxSeats) {
         this.maxSeats = maxSeats;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Sector sector = (Sector) o;
+
+        if (!id.equals(sector.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Sector sector = (Sector) o;
+
+        int result = name.compareTo(sector.name);
+        if(result != 0) {
+            return result;
+        }
+
+        result = price.compareTo(sector.price);
+
+        return result;
     }
 }

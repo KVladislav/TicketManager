@@ -5,6 +5,7 @@ import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -18,6 +19,9 @@ import java.util.List;
  * Date: 06.06.2014
  * Time: 11:00
  */
+
+@Repository
+
 public class EventRepositoryImpl implements EventRepository {
     @Override
     public void addEvent(Event event) throws SQLException {
@@ -64,7 +68,7 @@ public class EventRepositoryImpl implements EventRepository {
         Event event = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            event = (Event) session.load(Event.class, id);
+            event = (Event) session.get(Event.class, id);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

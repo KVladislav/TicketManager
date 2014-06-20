@@ -38,17 +38,17 @@ public class Starter {
 
         Event event = new Event();
         event.setDate(new Date());
-        event.setDescription("football");
+        event.setDescription("Chernomorec Zaporozhe");
         event.setOperator(operator);
         eventRepository.addEvent(event);
-
+        Sector sector=null;
         for (int i = 0; i < 28; i++) {
-            Sector sector = new Sector();
+            sector = new Sector();
             sector.setEvent(event);
             sector.setName("Sector " + i);
             sector.setMaxRows(20);
             sector.setMaxSeats(50);
-            sector.setPrice(Double.valueOf(50 + i));
+            sector.setPrice(Double.valueOf(60 + i));
             sector.setOperator(operator);
             Ticket ticket = new Ticket();
             ticket.setRow(10);
@@ -59,6 +59,7 @@ public class Starter {
             ticket.setReserved(true);
             sectorRepository.addSector(sector);
             ticketRepository.addTicket(ticket);}
+        System.out.println(eventRepository.getEventById(event.getId()).getDescription());
 
         HibernateUtil.shutdown();
 
