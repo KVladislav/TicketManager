@@ -1,0 +1,35 @@
+.header{
+    width: 1000px;
+    border: 1px;
+    align-content: center;
+}
+.content{
+    width: 1000px;
+}
+.left_side{
+
+    width: 200px;
+    float: left;
+}
+.middle_side{
+    width: 570px;
+    float: left;
+}
+.right_side{
+    width: 200px;
+    float: left;
+}
+.footer{
+    width: 1000px;
+
+}
+table,th,td
+{
+border:1px solid black;
+}
+th{
+text-align:center;
+}
+select {
+margin: 10px;
+}

@@ -26,7 +26,7 @@ import java.util.TreeMap;
 public class Booking {
     private Service service = new Service();
 
-    @RequestMapping(value = "/Booking", method = RequestMethod.GET)
+    @RequestMapping(value = "/Booking.do", method = RequestMethod.GET)
     public String bookingGet(Model model) throws SQLException {
         List<Event> events = service.getAllEvents();
         if (events != null && events.size()>0) {
@@ -60,7 +60,7 @@ public class Booking {
             return "Booking";
     }
 
-    @RequestMapping(value = "Booking/setSectors", method = RequestMethod.POST)
+    @RequestMapping(value = "Booking/setSectors.do", method = RequestMethod.POST)
     public String bookingSetSectors(@RequestParam(value = "eventId", required=true) int eventId, Model model) throws SQLException {
         Event event = service.getEventById(eventId);
         model.addAttribute("event", event);
@@ -73,7 +73,7 @@ public class Booking {
         return "Booking";
     }
 
-    @RequestMapping(value = "Booking/setRow", method = RequestMethod.POST)
+    @RequestMapping(value = "Booking/setRow.do", method = RequestMethod.POST)
     public String bookingSetRow(@RequestParam(value = "sectorId", required=true) int sectorId, Model model) throws SQLException {
         Sector sector = service.getSectorById(sectorId);
         model.addAttribute("sector", sector);
@@ -85,7 +85,7 @@ public class Booking {
         return "Booking";
     }
 
-    @RequestMapping(value = "Booking/setSeat", method = RequestMethod.POST)
+    @RequestMapping(value = "Booking/setSeat.do", method = RequestMethod.POST)
     public String bookingSetSeat(@RequestParam(value = "row", required=true) int row, @ModelAttribute Sector sector, Model model) throws SQLException {
         Map<Integer,Boolean> seatsMap = new TreeMap<>();
         for (int i = 0; i < sector.getMaxSeats(); i++) {
@@ -96,7 +96,7 @@ public class Booking {
         return "Booking";
     }
 
-    @RequestMapping(value = "Booking", method = RequestMethod.POST)
+    @RequestMapping(value = "Booking.do", method = RequestMethod.POST)
     public String bookingOrder(@ModelAttribute(value = "row") int row , @RequestParam(value = "seats", required=true) int[] seats, @ModelAttribute Sector sector,  SessionStatus status, Model model) throws SQLException {
         for (int seat : seats) {
             if (service.isPlaceFree(sector, row, seat)) {
@@ -108,6 +108,6 @@ public class Booking {
             }
         status.setComplete();
         }
-        return "redirect:/Booking";
+        return "redirect:/Booking.do";
     }
 }

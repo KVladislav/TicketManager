@@ -14,7 +14,7 @@
     <title>Booking</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/Booking/setSectors" method="post" >
+<form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post" >
     <p><select size="10" name="eventId">
         <c:forEach items="${events}" var="evnt">
             <c:if test="${event.id==evnt.id}"><option value="${evnt.id}" onclick="this.form.submit()"selected>${evnt.description} ${evnt.date.day}.${evnt.date.month} ${event.date.hours}:${event.date.minutes}</option></c:if>
@@ -23,7 +23,7 @@
     </select></p>
 </form>
 
-<form action="${pageContext.request.contextPath}/Booking/setRow" method="post" >
+<form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post" >
     <p><select size="10" name="sectorId">
         <c:forEach items="${sectorsMap}" var="sectorEntry">
             <c:if test="${sector.id==sectorEntry.key.id}"><option value="${sectorEntry.key.id}" onclick="this.form.submit()" selected>${sectorEntry.key.name} price ${sectorEntry.key.price} free: ${sectorEntry.value}</option></c:if>
@@ -32,7 +32,7 @@
     </select></p>
 </form>
 
-<form action="${pageContext.request.contextPath}/Booking/setSeat" method="post" >
+<form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post" >
     <p><select size="10" name="row">
         <c:forEach items="${rowsMap}" var="rowEntry">
             <c:if test="${row==rowEntry.key}"><option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key} free: ${rowEntry.value}</option></c:if>
@@ -41,7 +41,7 @@
     </select></p>
 </form>
 
-<form action="${pageContext.request.contextPath}/Booking" method="post" >
+<form action="${pageContext.request.contextPath}/Booking.do" method="post" >
     <p><select multiple size="10" name="seats">
         <c:forEach items="${seatsMap}" var="seatEntry">
             <option value="${seatEntry.key}">${seatEntry.key} free: ${seatEntry.value}</option>
