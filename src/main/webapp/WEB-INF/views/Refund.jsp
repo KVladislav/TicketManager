@@ -5,6 +5,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@include file="header.jsp"%>
+<center><form class="form-search">
+    Поиск билета
+    <div class="input-append">
+        <input type="text" class="span2 search-query">
+        <button type="submit" class="btn">Search</button>
+    </div>
+</form>
+</center>
 
 </body>
 </html>
