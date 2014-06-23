@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-16">
@@ -8,8 +9,8 @@
         $(document).ready(function() {alert ("Helo");});
     </script>
     <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/main.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -17,12 +18,12 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">//bla</script>
     <![endif]-->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../js/jquery.min.js">//bla</script>
+    <script src="/resources/js/jquery.min.js">//bla</script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../js/bootstrap.min.js">//bla</script>
+    <script src="/resources/js/bootstrap.min.js">//bla</script>
     <!-- Include Bootstrap Select-->
-    <script type="text/javascript" src="../js/bootstrap-select.js">//bla</script>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap-select.css">
+    <script type="text/javascript" src="/resources/js/bootstrap-select.js">//bla</script>
+    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-select.css">
     <script type="text/javascript">
         $(window).on('load', function () {
 

@@ -58,6 +58,7 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+
             <!--<plugin>-->
                 <!--<groupId>org.apache.tomcat.maven</groupId>-->
                 <!--<artifactId>tomcat6-maven-plugin</artifactId>-->

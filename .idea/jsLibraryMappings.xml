@@ -3,6 +3,7 @@
   <component name="JavaScriptLibraryMappings">
     <file url="mock:///AllEvents.jsp" libraries="{html5shiv}" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/AllEvents.jsp" libraries="{jquery}" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Booking.jsp" libraries="{jquery-latest}" />
   </component>
 </project>
 
