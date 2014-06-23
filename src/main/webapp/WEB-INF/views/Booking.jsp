@@ -5,13 +5,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--
-  Created by IntelliJ IDEA.
-  User: Владислав
-  Date: 19.06.2014
-  Time: 19:17
-  To change this template use File | Settings | File Templates.
---%>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -20,10 +13,10 @@
 </head>
 <body>
 
-<div class="row">
-    <div class="span3">
+<div class="row" style="margin-left: 25%" >
+    <div class="span3" >
 
-        <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
+        <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post" >
             <p><select class="selectpicker" size="10" name="eventId" data-size="3">
                 <c:forEach items="${events}" var="evnt">
                     <c:if test="${event.id==evnt.id}">
