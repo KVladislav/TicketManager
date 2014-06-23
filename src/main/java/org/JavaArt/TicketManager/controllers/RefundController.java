@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @Controller
 @SessionAttributes({"pageName"})
 public class RefundController {
-    @RequestMapping(value = "/Refund.do", method = RequestMethod.GET)
+    @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.GET)
     public String refundGet(Model model) throws SQLException {
         model.addAttribute("pageName", 3);//set menu page number
         return "Refund";

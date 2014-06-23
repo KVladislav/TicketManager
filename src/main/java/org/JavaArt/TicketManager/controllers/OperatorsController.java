@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @Controller
 @SessionAttributes({"pageName"})
 public class OperatorsController {
-    @RequestMapping(value = "/Operators.do", method = RequestMethod.GET)
+    @RequestMapping(value = "Operators/Operators.do", method = RequestMethod.GET)
     public String operatorsGet(Model model) throws SQLException {
         model.addAttribute("pageName", 5);//set menu page number
         return "Operators";

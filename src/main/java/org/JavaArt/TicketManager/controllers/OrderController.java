@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @Controller
 @SessionAttributes({"pageName"})
 public class OrderController {
-    @RequestMapping(value = "/Order.do", method = RequestMethod.GET)
+    @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) throws SQLException {
         model.addAttribute("pageName", 1);//set menu page number
         return "Order";
