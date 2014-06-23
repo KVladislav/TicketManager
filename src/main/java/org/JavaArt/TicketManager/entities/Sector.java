@@ -139,13 +139,6 @@ public class Sector implements Comparable, Serializable {
     public int compareTo(Object o) {
         Sector sector = (Sector) o;
 
-        int result = name.compareTo(sector.name);
-        if(result != 0) {
-            return result;
-        }
-
-        result = price.compareTo(sector.price);
-
-        return result;
+        return id - sector.id;
     }
 }
