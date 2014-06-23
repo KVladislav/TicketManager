@@ -16,6 +16,7 @@
 <head>
     <!-- Bootstrap -->
     <link href="/resources/css/bootstrap.css" rel="stylesheet" media="screen">
+
 </head>
 <body>
 <div class="navbar">

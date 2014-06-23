@@ -26,7 +26,7 @@ import java.util.TreeMap;
 public class BookingController {
     private Service service = new Service();
 
-    @RequestMapping(value = "/Booking.do", method = RequestMethod.GET)
+    @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.GET)
     public String bookingGet(Model model) throws SQLException {
         model.addAttribute("pageName", 2);//set menu page number
         List<Event> events = service.getAllEvents();
@@ -97,7 +97,7 @@ public class BookingController {
         return "Booking";
     }
 
-    @RequestMapping(value = "Booking.do", method = RequestMethod.POST)
+    @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.POST)
     public String bookingOrder(@ModelAttribute(value = "row") int row , @RequestParam(value = "seats", required=true) int[] seats, @ModelAttribute Sector sector,  SessionStatus status, Model model) throws SQLException {
         for (int seat : seats) {
             if (service.isPlaceFree(sector, row, seat)) {
@@ -109,6 +109,6 @@ public class BookingController {
             }
         status.setComplete();
         }
-        return "redirect:/Booking.do";
+        return "redirect:/Booking/Booking.do";
     }
 }
