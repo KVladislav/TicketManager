@@ -5,6 +5,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@include file="header.jsp"%>
+<center>
+    <br><br><br><br><br>
+    <b> Поиск по номеру/фио</b>
 
+<form class="form-search">
+
+    <div class="input-append">
+        <input type="text" class="span3 search-query">
+        <button type="submit" class="btn">Поиск</button>
+    </div>
+    </form>
+
+</center>
 </body>
 </html>

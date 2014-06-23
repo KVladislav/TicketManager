@@ -41,8 +41,8 @@
     <%--</div> &MediumSpace; &MediumSpace; </head>--%>
     <%--<body>--%>
 
-    <div class="panel-heading" style="text-align:center;">List of events</div>
-    <div class="panel-body" style="padding:15px;">
+    <div class="panel-heading"  style="text-align:center;"><b>List of events</b></div>
+    <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
         <form action="${pageContext.request.contextPath}/Events.do" method="post">
             <div class="table responsive">
                 <table class="table table-bordered">
@@ -77,9 +77,10 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-md-8 col-md-offset-3">
+                   <center> <div class="col-md-8 col-md-offset-3">
                         <button type="submit" name="Order"class="btn btn-success btn-lg">Создать новое мероприятие</button>
                     </div>
+                   </center>
                 </div>
             </div>
         </form>
