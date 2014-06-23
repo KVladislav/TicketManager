@@ -16,7 +16,7 @@
 <html lang="ru">
 <head>
     <!-- Bootstrap -->
-    <link href="/resources/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" media="screen">
 </head>
 <body>
 
