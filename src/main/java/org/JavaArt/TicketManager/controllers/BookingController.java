@@ -21,13 +21,14 @@ import java.util.TreeMap;
  * Time: 18:06
  */
 @Controller
-@SessionAttributes({"events", "event", "sectorsMap", "sector", "row", "rowsMap", "seatsMap"})
+@SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "row", "rowsMap", "seatsMap"})
 
-public class Booking {
+public class BookingController {
     private Service service = new Service();
 
     @RequestMapping(value = "/Booking.do", method = RequestMethod.GET)
     public String bookingGet(Model model) throws SQLException {
+        model.addAttribute("pageName", 2);//set menu page number
         List<Event> events = service.getAllEvents();
         if (events != null && events.size()>0) {
             model.addAttribute("event", events.get(0));
