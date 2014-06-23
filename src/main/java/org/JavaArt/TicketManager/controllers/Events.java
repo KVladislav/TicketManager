@@ -15,13 +15,14 @@ import java.util.List;
 
 
 @Controller
-@SessionAttributes({"events", "event"})
+@SessionAttributes({"pageName", "events", "event"})
 
 public class Events {
     private Service service = new Service();
 
     @RequestMapping(value = "/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) throws SQLException {
+        model.addAttribute("pageName", 4);//set menu page number
         List<Event> events = service.getAllEvents();
         if (events != null && events.size()>0) {
         model.addAttribute("event", events.get(0));
