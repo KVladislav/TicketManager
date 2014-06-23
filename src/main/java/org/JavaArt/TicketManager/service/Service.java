@@ -27,6 +27,11 @@ public class Service {
         return events;
     }
 
+    public List<Event> getFutureEvents() throws SQLException {
+        List<Event> events = eventRepository.getFutureEvents();
+        return events;
+    }
+
     public Event getEventById(int id) throws SQLException {
         Event event = eventRepository.getEventById(id);
         return event;
@@ -60,5 +65,8 @@ public class Service {
 
     public void addEvent(Event event) throws SQLException{
         eventRepository.addEvent(event);
+    }
+    public void updateEvent(Event event) throws SQLException{
+        eventRepository.updateEvent(event);
     }
 }
