@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @SessionAttributes({"pageName", "events", "event"})
 
-public class Events {
+public class EventsController {
     private Service service = new Service();
 
     @RequestMapping(value = "/Events.do", method = RequestMethod.GET)
