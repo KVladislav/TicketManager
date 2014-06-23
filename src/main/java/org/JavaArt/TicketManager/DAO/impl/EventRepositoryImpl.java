@@ -111,7 +111,7 @@ public class EventRepositoryImpl implements EventRepository {
         Date date = new Date();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Event where eventDate >=:date");
+            Query query = session.createQuery("from Event where eventDate >=:date and isDeleted = false ");
             events = query.list();
         }
         catch (Exception e) {
