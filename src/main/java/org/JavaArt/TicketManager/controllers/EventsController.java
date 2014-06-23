@@ -20,7 +20,7 @@ import java.util.List;
 public class EventsController {
     private Service service = new Service();
 
-    @RequestMapping(value = "/Events.do", method = RequestMethod.GET)
+    @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) throws SQLException {
         model.addAttribute("pageName", 4);//set menu page number
         List<Event> events = service.getAllEvents();
@@ -33,7 +33,7 @@ public class EventsController {
 
 
 
-    @RequestMapping(value = "Events.do", method = RequestMethod.POST)
+    @RequestMapping(value = "Events/Events.do", method = RequestMethod.POST)
     public String eventOrder(@ModelAttribute(value = "id") int id , @RequestParam(value = "event", required=true) Operator operator, Time time, SessionStatus status, Model model) throws SQLException {
      //   for (int seat : seats) {
 
@@ -48,6 +48,6 @@ public class EventsController {
 
         status.setComplete();
       //  }
-        return "redirect:/Events.do";
+        return "redirect:Events/Events.do";
     }
 }
