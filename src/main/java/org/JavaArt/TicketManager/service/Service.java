@@ -58,4 +58,7 @@ public class Service {
         ticketRepository.addTicket(ticket);
     }
 
+    public void addEvent(Event event) throws SQLException{
+        eventRepository.addEvent(event);
+    }
 }
