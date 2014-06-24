@@ -32,7 +32,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "evnt", required=true) int eventId, Model model) throws SQLException {
+    public String eventsSetDelete(@RequestParam(value = "eventId", required=true) int eventId, Model model) throws SQLException {
         Event event = service.getEventById(eventId);
         event.setDeleted(true);
         service.updateEvent(event);

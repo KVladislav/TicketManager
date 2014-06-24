@@ -31,7 +31,10 @@
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
-                                <button type="submit" name="evnt" value="${evnt.id}" class="btn">Delete</button>
+                            <%--    <button type="submit" name="evnt" value="" class="btn">Delete</button> --%>
+
+                                <input type="hidden" value="${evnt.id}" name="eventId">
+                                <input class="submit" type="submit" value="Delete"/>
                                 </form>
                             </td>
                         </tr>
