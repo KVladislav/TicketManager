@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="hibernate.cfg.xml" uuid="bdb56d1b-f192-449f-b959-88bb1b93483c">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/MyDB</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/Tickets</jdbc-url>
       <user-name>postgres</user-name>
       <user-password>df9bdf9bdf9bdf9b</user-password>
       <libraries>
