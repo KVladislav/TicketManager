@@ -31,7 +31,7 @@
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
-                                <button type="submit" name="setDelete" value="${evnt.id}" class="btn">Delete</button>
+                                <button type="submit" name="evnt" value="${evnt.id}" class="btn">Delete</button>
                                 </form>
                             </td>
                         </tr>
