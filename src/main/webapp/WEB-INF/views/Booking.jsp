@@ -21,9 +21,9 @@
 </head>
 <body>
 
-<div class="booking">
+<div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="span4">
             Мероприятие
             <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
                 <p><select size="10" name="eventId" data-size="3" class="form-control">
@@ -41,7 +41,7 @@
             </form>
         </div>
 
-        <div class="col-md-3">
+        <div class="span4">
             Сектор
             <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post">
                 <p><select size="10" name="sectorId" class="form-control">
@@ -63,7 +63,7 @@
     <br>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="span4">
             Ряд:
             <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
                 <p><select size="10" name="row" class="form-control">
@@ -80,26 +80,42 @@
                 </select></p>
             </form>
         </div>
-        <div class="col-md-3">
+        <div class="span4">
             Место
-            <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
+            <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                 <p><select multiple size="10" name="seats" class="form-control">
                     <c:forEach items="${seatsMap}" var="seatEntry">
                         <option value="${seatEntry.key}">${seatEntry.key} free: ${seatEntry.value}</option>
                     </c:forEach>
-
                 </select>
         </div>
     </div>
     <br>
-
     <div class="row">
-
-        <div class="col-md-3">
-            <input type="submit" name="Order" class="btn btn-primary btn-lg">
+        <div class="span2">
+            <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Добавить">
             </form>
         </div>
+        <div class="span2">
+            <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
+            <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Отмена"></form>
+        </div>
+        <div class="span2">
+            <form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">
+            <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>
+        </div>
+        <div class="span6">
+            <td><h5 style="color:red">${errorMessage}</h5></td>
+        </div>
+
     </div>
+
+</div>
+<div class="container">
+    <c:forEach items="${tickets}" var="ticket">
+        ${ticket.z} free: ${seatEntry.value}</option>
+    </c:forEach>
+
 </div>
 </body>
 </html>

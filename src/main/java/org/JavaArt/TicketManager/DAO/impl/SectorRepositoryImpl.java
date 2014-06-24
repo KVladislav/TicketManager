@@ -30,6 +30,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.beginTransaction();
             session.save(sector);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -49,6 +50,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.beginTransaction();
             session.update(sector);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -107,6 +109,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.beginTransaction();
             session.delete(sector);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

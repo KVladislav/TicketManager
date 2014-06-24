@@ -32,6 +32,7 @@ public class EventRepositoryImpl implements EventRepository {
             session.beginTransaction();
             session.save(event);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -51,6 +52,7 @@ public class EventRepositoryImpl implements EventRepository {
             session.beginTransaction();
             session.update(event);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -78,8 +80,9 @@ public class EventRepositoryImpl implements EventRepository {
             if (session!=null && session.isOpen()) {
                 session.close();
             }
-            return event;
+
         }
+        return event;
 
 
     }
@@ -133,6 +136,7 @@ public class EventRepositoryImpl implements EventRepository {
             session.beginTransaction();
             session.delete(event);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

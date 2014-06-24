@@ -3,7 +3,6 @@ package org.JavaArt.TicketManager.DAO.impl;
 import org.JavaArt.TicketManager.DAO.ClientRepository;
 import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +27,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             session.beginTransaction();
             session.save(client);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -48,6 +48,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             session.beginTransaction();
             session.update(client);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -79,25 +80,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         return client;
     }
 
-    @Override
-    public Client getClientByPhone(String phone) throws SQLException {
-        Session session = null;
-        Client client = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Client where phone like '%:phone%'");
-            client = (Client) query.uniqueResult();
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return client;
-    }
+
 
     @Override
     public List<Client> getAllClients() throws SQLException {
@@ -126,6 +109,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             session.beginTransaction();
             session.delete(client);
             session.getTransaction().commit();
+            session.flush();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
