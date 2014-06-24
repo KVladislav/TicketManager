@@ -42,13 +42,13 @@ public class Starter {
         event.setOperator(operator);
         eventRepository.addEvent(event);
         Sector sector=null;
-        for (int i = 0; i < 28; i++) {
+        for (int i = 1; i < 28; i++) {
             sector = new Sector();
             sector.setEvent(event);
-            sector.setName("Sector " + i);
+            sector.setName(""+i);
             sector.setMaxRows(20);
             sector.setMaxSeats(50);
-            sector.setPrice(Double.valueOf(60 + i));
+            sector.setPrice((double)(50 + (int)(Math.random() * 151)));
             sector.setOperator(operator);
             Ticket ticket = new Ticket();
             ticket.setRow(10);

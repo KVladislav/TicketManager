@@ -23,5 +23,6 @@ public interface SectorRepository {
     public void deleteSector(Sector sector) throws SQLException;
 
     public List<Sector> getSectorsByEvent(Event event);
+    public List<Sector> getSectorsByEventOrderPrice(Event event);
 
 }
