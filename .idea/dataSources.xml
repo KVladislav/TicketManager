@@ -6,7 +6,7 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/Tickets</jdbc-url>
       <user-name>postgres</user-name>
-      <user-password>df9b</user-password>
+      <user-password>df9bdf9bdf9bdf9b</user-password>
       <libraries>
         <library>
           <url>file://C:\Users\Владислав\.m2\repository\postgresql\postgresql\9.1-901.jdbc4\postgresql-9.1-901.jdbc4.jar</url>
