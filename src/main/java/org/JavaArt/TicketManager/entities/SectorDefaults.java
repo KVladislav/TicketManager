@@ -3,18 +3,10 @@ package org.JavaArt.TicketManager.entities;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Vladislav Karpenko
- * Date: 18.06.2014
- * Time: 13:07
- */
-@Table(name = "sectordefaults")
+@Entity
+@Table(schema="public", name = "sectordefaults")
 public class SectorDefaults {
     @Id
     @GeneratedValue(generator = "increment")
