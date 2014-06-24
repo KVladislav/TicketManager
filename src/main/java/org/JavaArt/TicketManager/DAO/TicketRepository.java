@@ -22,6 +22,7 @@ public interface TicketRepository {
     public Ticket getTicketById(int id) throws SQLException;
     public List<Ticket> getAllTickets() throws SQLException;
     public void deleteTicket(Ticket ticket) throws SQLException;
+    public void deleteTickets(List<Ticket> tickets) throws SQLException;
     public int getFreeTicketsAmountBySector(Sector sector) throws SQLException;
     public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException;
     public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException;

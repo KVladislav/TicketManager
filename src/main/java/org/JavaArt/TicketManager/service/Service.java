@@ -54,6 +54,9 @@ public class Service {
     public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException{
         return ticketRepository.getFreeTicketsAmountBySectorRow(sector, row);
     }
+    public void deleteTickets(List<Ticket> tickets) throws SQLException {
+        ticketRepository.deleteTickets(tickets);
+    }
 
     public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException{
         return ticketRepository.isPlaceFree(sector, row, seat);
@@ -69,4 +72,5 @@ public class Service {
     public void updateEvent(Event event) throws SQLException{
         eventRepository.updateEvent(event);
     }
+
 }
