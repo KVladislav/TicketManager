@@ -29,6 +29,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             session.beginTransaction();
             session.save(operator);
             session.getTransaction().commit();
+            session.flush();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -46,6 +47,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             session.beginTransaction();
             session.update(operator);
             session.getTransaction().commit();
+            session.flush();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -98,6 +100,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             session.beginTransaction();
             session.delete(operator);
             session.getTransaction().commit();
+            session.flush();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

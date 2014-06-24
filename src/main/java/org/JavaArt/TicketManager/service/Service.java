@@ -7,7 +7,6 @@ import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,11 +42,6 @@ public class Service {
         return sectors;
     }
 
-    public List<Sector> getSectorsByEventOrderPrice(Event event){
-        List<Sector> sectors = sectorRepository.getSectorsByEventOrderPrice(event);
-        return sectors;
-    }
-
     public Sector getSectorById(int id) throws SQLException {
         Sector sector = sectorRepository.getSectorById(id);
         return sector;
@@ -74,30 +68,5 @@ public class Service {
     }
     public void updateEvent(Event event) throws SQLException{
         eventRepository.updateEvent(event);
-    }
-
-    public List<String> getLegenda (List<Sector> sector) throws SQLException{
-        List<Double> sortByPrice = new ArrayList();
-        List <String> legenda = new ArrayList();
-        int index=1;
-        sortByPrice.add(0,sector.get(0).getPrice());
-        for(int i=1;i< sector.size();i++){
-            if (sector.get(i).getPrice()>sector.get(i-1).getPrice()) {
-                sortByPrice.add(index,sector.get(i).getPrice());
-                index++;
-            }
-        }
-        StringBuffer buf = new StringBuffer(100);
-        for (int j=0;j<sortByPrice.size();j++){
-            buf.append(sortByPrice.get(j)).append(" грн.  Sector ");
-            for (int i=0;i<sector.size(); i++){
-                if((double)sector.get(i).getPrice()==(double)sortByPrice.get(j)) {
-                    buf.append(sector.get(i).getName()).append(", ");
-                }
-            }
-            legenda.add(j, buf.toString());
-            buf.delete(0,99);
-        }
-        return legenda;
     }
 }
