@@ -1,8 +1,7 @@
 package org.JavaArt.TicketManager.controllers;
 
-import org.JavaArt.TicketManager.entities.Event;
-import org.JavaArt.TicketManager.entities.Operator;
-import org.JavaArt.TicketManager.service.Service;
+import org.JavaArt.TicketManager.entities.*;
+import org.JavaArt.TicketManager.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,12 @@ import java.util.List;
 @SessionAttributes({"pageName", "events", "event"})
 
 public class EventsController {
-    private Service service = new Service();
+    private EventService eventService = new EventService();
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) throws SQLException {
         model.addAttribute("pageName", 4);//set menu page number
-        List<Event> events = service.getAllEvents();
+        List<Event> events = eventService.getAllEvents();
         if (events != null && events.size()>0) {
         model.addAttribute("event", events.get(0));
         model.addAttribute("events", events);
@@ -33,9 +32,9 @@ public class EventsController {
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
     public String eventsSetDelete(@RequestParam(value = "eventId", required=true) int eventId, Model model) throws SQLException {
-        Event event = service.getEventById(eventId);
+        Event event = eventService.getEventById(eventId);
         event.setDeleted(true);
-        service.updateEvent(event);
+        eventService.updateEvent(event);
         return "Events";
     }
 
@@ -50,7 +49,7 @@ public class EventsController {
             event.setDescription("");
             event.setOperator(operator);
             event.setTimeStamp(time);
-            service.addEvent(event);
+            eventService.addEvent(event);
 
         status.setComplete();
       //  }

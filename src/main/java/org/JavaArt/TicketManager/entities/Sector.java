@@ -78,7 +78,7 @@ public class Sector implements Comparable, Serializable {
         this.price = price;
     }
 
-    public boolean isDeleted() {
+    public boolean getDeleted() {
         return isDeleted;
     }
 
