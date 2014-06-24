@@ -64,7 +64,7 @@ public class Operator {
         this.name = name;
     }
 
-    public boolean isDeleted() {
+    public boolean getDeleted() {
         return isDeleted;
     }
 
