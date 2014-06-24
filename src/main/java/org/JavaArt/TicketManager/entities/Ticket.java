@@ -16,7 +16,7 @@ public class Ticket {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "sector_id")
     private Sector sector;
 
@@ -26,7 +26,7 @@ public class Ticket {
     @Column(name = "seat")
     private Integer seat;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "operator_id")
     private Operator operator;
 
@@ -37,7 +37,7 @@ public class Ticket {
     private Date timeStamp = new Date();
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "client_ID")
     private Client client;
 

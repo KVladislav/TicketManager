@@ -135,7 +135,7 @@ public class BookingController {
                 service.addTicket(ticket);
                 tickets.add(ticket);
             } else {
-                errorMessage += "Билет сектор " + sector.getName() + " ряд " + row + " место " + seat + " уже куплен" + "<br>";
+                errorMessage += sector.getEvent().getDescription() + " Сектор:" + sector.getName() + " Ряд: " + row + " Место:" + seat + " уже продан" + "<br>";
             }
 
         }
@@ -155,6 +155,7 @@ public class BookingController {
         service.deleteTickets(tickets);
         tickets.clear();
         status.setComplete();
+        errorMessage=null;
         return "redirect:/Booking/Booking.do";
     }
 }
