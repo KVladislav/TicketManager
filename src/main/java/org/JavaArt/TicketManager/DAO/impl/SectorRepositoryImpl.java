@@ -141,4 +141,24 @@ public class SectorRepositoryImpl implements SectorRepository {
         }
         return sectors;
     }
+
+    @Override
+    public List<Sector> getSectorsByEventOrderPrice(Event event) {
+        Session session = null;
+        List<Sector> sectors = null;// = new ArrayList<Zone>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY price");
+            sectors = query.list();
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        }
+        finally {
+            if (session!=null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return sectors;
+    }
 }
