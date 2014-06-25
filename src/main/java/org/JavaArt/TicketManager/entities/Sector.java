@@ -16,7 +16,7 @@ public class Sector implements Comparable, Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
@@ -34,7 +34,7 @@ public class Sector implements Comparable, Serializable {
     private Date timeStamp = new Date();
 
     @JoinColumn(name = "operator_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Operator operator;
 
     @Column(name = "MaxRows")

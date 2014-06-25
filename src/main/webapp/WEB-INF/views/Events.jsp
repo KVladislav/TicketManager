@@ -8,7 +8,6 @@
 
     <div class="panel-heading"  style="text-align:center;"><b>List of events</b></div>
     <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
-        <form action="${pageContext.request.contextPath}/Events.do" method="post">
             <div class="table responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -27,10 +26,14 @@
                             <td>${evnt.description}</td>
                             <td><fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm:ss"/></td>
                             <td>
+                                <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
+                                    <input type="hidden" name="eventId" value="${event.id}">
                                 <button type="submit" name="action" value="edit" class="btn">Edit</button>
+                                    </form>
                             </td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
+                                <form action="${pageContext.request.contextPath}/Events/setDelete.do.do" method="post">
+                                    <input type="hidden" name="eventId" value="${event.id}">
                                 <button type="submit" name="evnt" value="${evnt.id}" class="btn">Delete</button>
                                 </form>
                             </td>

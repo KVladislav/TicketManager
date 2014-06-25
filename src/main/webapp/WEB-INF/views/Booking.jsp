@@ -13,11 +13,33 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        .bs-example {
-            margin: 20px;
-        }
-    </style>
+
+    <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
+          type="text/css">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#my-select').multiSelect()
+        });
+    </script>
+
+    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-multiselect.js"></script>--%>
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-multiselect.css" type="text/css"/>--%>
+
+    <%--<script type="text/javascript">--%>
+    <%--$(document).ready(function() {--%>
+    <%--$('.multiselect').multiselect({--%>
+    <%--maxHeight: 200--%>
+    <%--});--%>
+    <%--});--%>
+    <%--</script>--%>
+
+    <%--<style type="text/css">--%>
+    <%--.bs-example {--%>
+    <%--margin: 20px;--%>
+    <%--}--%>
+    <%--</style>--%>
 </head>
 <body>
 <div class="container">
@@ -26,6 +48,7 @@
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <strong>Мероприятие</strong>
+
                     <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
                         <p><select size="10" name="eventId" data-size="3" class="form-control">
                             <c:forEach items="${events}" var="evnt">
@@ -43,6 +66,7 @@
                 </div>
                 <div class="col-md-6 column">
                     <strong>Сектор</strong>
+
                     <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post">
                         <p><select size="10" name="sectorId" class="form-control">
                             <c:forEach items="${sectorsMap}" var="sectorEntry">
@@ -61,14 +85,18 @@
                     </form>
                 </div>
             </div>
+            <%--TODO добавить стоимость в таблицу купленных--%>
+            <%--TODO добавить кнопку удаления билета--%>
             <div class="row clearfix">
-                <div class="col-md-6 column">
+                <div class="col-md-4 column">
                     <strong>Ряд</strong>
+
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
                         <p><select size="10" name="row" class="form-control">
                             <c:forEach items="${rowsMap}" var="rowEntry">
-                                <c:if test="${row==rowEntry.key}">
-                                    <option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key}
+                                <c:if test="${rowEntry.key==row}">
+                                    <option value="${rowEntry.key}" onclick="this.form.submit()"
+                                            selected>${rowEntry.key}
                                         free: ${rowEntry.value}</option>
                                 </c:if>
                                 <c:if test="${row!=rowEntry.key}">
@@ -81,22 +109,32 @@
                 </div>
                 <div class="col-md-6 column">
                     <strong>Место</strong>
+
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
-                        <p><select multiple size="10" name="seats" class="form-control">
+                        <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
+                            <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
+                            <%--<c:if test="${! seatEntry.value}">--%>
+                            <%--<option disabled="disabled" value="${seatEntry.key}">${seatEntry.key}</option>--%>
+                            <%--</c:if>--%>
+                            <%--<c:if test="${seatEntry.value}">--%>
+                            <%--<option value="${seatEntry.key}">${seatEntry.key}</option>--%>
+                            <%--</c:if>--%>
+
+                            <%--</c:forEach>--%>
                             <c:forEach items="${seatsMap}" var="seatEntry">
-                                <option value="${seatEntry.key}">${seatEntry.key} free: ${seatEntry.value}</option>
+                                <option value="${seatEntry}">${seatEntry}</option>
                             </c:forEach>
                         </select>
                 </div>
             </div>
             <div class="row clearfix">
                 <div class="col-md-4 column">
-                    <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Добавить">
-                    </form>
                 </div>
                 <div class="col-md-4 column">
-                    <form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">
-                        <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>
+                    <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Добавить">
+                    </form>
+                    <%--<form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">--%>
+                    <%--<input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>--%>
                 </div>
                 <div class="col-md-4 column">
                     <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
@@ -105,11 +143,55 @@
             </div>
         </div>
         <div class="col-md-6 column">
-            <c:forEach items="${tickets}" var="ticket">
-                ${ticket.sector.event.description} Сектор:${ticket.sector.name} Ряд:${ticket.row}-Место:${ticket.seat}<br>
-            </c:forEach>
-            <td><h5 style="color:red">${errorMessage}</h5></td>
+            <table class="table table-hover table-condensed">
+                <caption><strong>Заказ</strong></caption>
+                <thead>
+                <tr>
+                    <th>Мероприятие</th>
+                    <th>Сектор</th>
+                    <th>Ряд</th>
+                    <th>Место</th>
+                    <th>Цена</th>
+                </tr>
+                </thead>
 
+                <tbody>
+                <c:forEach items="${tickets}" var="ticket">
+                    <tr>
+                        <form name = "delTicket" action="${pageContext.request.contextPath}/Booking/dellTicket.do" method="post">
+                            <td>${ticket.sector.event.description}</td>
+                            <td>${ticket.sector.name}</td>
+                            <td>${ticket.row}</td>
+                            <td>${ticket.seat}</td>
+                            <td>${ticket.sector.price}</td>
+                            <td>
+                                <input type="hidden" name="ticketId" value="${ticket.id}">
+                                <a href="#" class="btn btn-success" onclick="document.delTicket.submit();">
+                                    Submit <i class="glyphicon-trash"></i>&nbsp; Icon
+                                </a>
+                            </td>
+                        </form>
+
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td><p class="alert-warning">${errorMessage}</p></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Стоимость заказа ${bookingPrice}</strong>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">
+                            <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Оформить"></form>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
