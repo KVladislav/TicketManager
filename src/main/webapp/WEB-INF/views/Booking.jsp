@@ -183,10 +183,11 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td><i class="icon-search"></i></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">
                             <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Оформить"></form>
+
                     </td>
 
                 </tr>
