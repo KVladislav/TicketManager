@@ -3,7 +3,9 @@ package org.JavaArt.TicketManager.controllers;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
-import org.JavaArt.TicketManager.service.Service;
+import org.JavaArt.TicketManager.service.EventService;
+import org.JavaArt.TicketManager.service.SectorService;
+import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +25,16 @@ import java.util.*;
 
 public class BookingController {
     private String errorMessage = "";
-    private Service service = new Service();
+    private TicketService ticketService = new TicketService();
+    private EventService eventService = new EventService();
+    private SectorService sectorService = new SectorService();
     private List<Ticket> tickets = new ArrayList<>();
     private Double bookingPrice=Double.valueOf(0);
 
     @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.GET)
     public String bookingGet(Model model) throws SQLException {
         model.addAttribute("pageName", 2);//set menu page number
-        List<Event> events = service.getAllEvents();
+        List<Event> events = eventService.getAllEvents();
         if (errorMessage!=null) {
             model.addAttribute("errorMessage", errorMessage);
 //            errorMessage = null;
@@ -52,7 +56,7 @@ public class BookingController {
             model.addAttribute("tickets", tickets);
             model.addAttribute("row", 0); //init set to fix crush for add button
 
-            List<Sector> sectors = service.getSectorsByEvent(lastEvent);
+            List<Sector> sectors = sectorService.getSectorsByEvent(lastEvent);
 
             if (lastSector == null) {
                 lastSector = sectors.get(0);
@@ -63,7 +67,7 @@ public class BookingController {
 
                 Map<Sector, Integer> sectorsMap = new TreeMap<>();
                 for (Sector sector : sectors) {
-                    sectorsMap.put(sector, service.getFreeTicketsAmountBySector(sector));
+                    sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
                 }
                 model.addAttribute("sectorsMap", sectorsMap);
 
@@ -86,12 +90,12 @@ public class BookingController {
 
     @RequestMapping(value = "Booking/setSectors.do", method = RequestMethod.POST)
     public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, Model model) throws SQLException {
-        Event event = service.getEventById(eventId);
+        Event event = eventService.getEventById(eventId);
         model.addAttribute("event", event);
-        List<Sector> sectors = service.getSectorsByEvent(event);
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
         Map<Sector, Integer> sectorsMap = new TreeMap<>();
         for (Sector sector : sectors) {
-            sectorsMap.put(sector, service.getFreeTicketsAmountBySector(sector));
+            sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
         }
         model.addAttribute("sectorsMap", sectorsMap);
         return "Booking";
@@ -99,11 +103,11 @@ public class BookingController {
 
     @RequestMapping(value = "Booking/setRow.do", method = RequestMethod.POST)
     public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, Model model) throws SQLException {
-        Sector sector = service.getSectorById(sectorId);
+        Sector sector = sectorService.getSectorById(sectorId);
         model.addAttribute("sector", sector);
         Map<Integer, Integer> rowsMap = new TreeMap<>();
         for (int i = 1; i <= sector.getMaxRows(); i++) {
-            rowsMap.put(i, service.getFreeTicketsAmountBySectorRow(sector, i));
+            rowsMap.put(i, ticketService.getFreeTicketsAmountBySectorRow(sector, i));
         }
         model.addAttribute("rowsMap", rowsMap);
         return "Booking";
@@ -117,7 +121,7 @@ public class BookingController {
 //        }
         Set<Integer> seatsMap = new TreeSet<>();
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
-            if (service.isPlaceFree(sector, row, i)) seatsMap.add(i);
+            if (ticketService.isPlaceFree(sector, row, i)) seatsMap.add(i);
         }
         model.addAttribute("row", row);
         model.addAttribute("seatsMap", seatsMap);
@@ -129,13 +133,13 @@ public class BookingController {
         if (seats == null) return "redirect:/Booking/Booking.do";
         errorMessage=" ";
         for (int seat : seats) {
-            if (service.isPlaceFree(sector, row, seat)) {
+            if (ticketService.isPlaceFree(sector, row, seat)) {
                 Ticket ticket = new Ticket();
                 ticket.setSector(sector);
                 ticket.setRow(row);
                 ticket.setSeat(seat);
                 bookingPrice=bookingPrice+sector.getPrice();
-                service.addTicket(ticket);
+                ticketService.addTicket(ticket);
                 tickets.add(ticket);
             } else {
                 errorMessage += sector.getEvent().getDescription() + " Сектор:" + sector.getName() + " Ряд: " + row + " Место:" + seat + " уже продан" + "<br>";
@@ -156,7 +160,7 @@ public class BookingController {
 
     @RequestMapping(value = "Booking/Cancel.do", method = RequestMethod.POST)
     public String bookingCancel(SessionStatus status) throws SQLException {
-        service.deleteTickets(tickets);
+        ticketService.deleteTickets(tickets);
         tickets.clear();
         bookingPrice=Double.valueOf(0);
         status.setComplete();
