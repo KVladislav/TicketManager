@@ -14,7 +14,7 @@ import java.util.TreeMap;
 
 
 @Controller
-@SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "row", "rowsMap", "seatsMap"})
+@SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "legenda", "row", "rowsMap", "seatsMap"})
 public class OrderController {
     private EventService eventService = new EventService();
     private TicketService ticketService = new TicketService();
@@ -26,7 +26,6 @@ public class OrderController {
         List<Event> events = eventService.getAllEvents();
         if (events != null && events.size()>0) {
             model.addAttribute("event", events.get(0));
-
             model.addAttribute("events", events);
 
             List<Sector> sectors = sectorService.getSectorsByEvent(events.get(0));
@@ -43,19 +42,17 @@ public class OrderController {
                 model.addAttribute("legenda", sectorService.getLegenda(sectorsOrderPrice));
 
                 Map<Integer,Integer> rowsMap = new TreeMap<>();
-                for (int i = 0; i < sectors.get(0).getMaxRows(); i++) {
+                for (int i = 1; i <=sectors.get(0).getMaxRows(); i++) {
                     rowsMap.put(i,ticketService.getFreeTicketsAmountBySectorRow(sectors.get(0), i));
                 }
                 model.addAttribute("rowsMap", rowsMap);
 
                 Map<Integer,Boolean> seatsMap = new TreeMap<>();
-                for (int i = 0; i < sectors.get(0).getMaxSeats(); i++) {
+                for (int i = 1; i <=sectors.get(0).getMaxSeats(); i++) {
                     seatsMap.put(i,ticketService.isPlaceFree(sectors.get(0), 1, i));
                 }
                 model.addAttribute("row", 1);
                 model.addAttribute("seatsMap", seatsMap);
-
-
             }
         }
         return "Order";
@@ -70,6 +67,8 @@ public class OrderController {
         for (Sector sector:sectors) {
             sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
         }
+        List<Sector> sectorsOrderPrice = sectorService.getSectorsByEventOrderPrice(event);
+        model.addAttribute("legenda", sectorService.getLegenda(sectorsOrderPrice));
         model.addAttribute("sectorsMap", sectorsMap);
         return "Order";
     }
@@ -79,7 +78,7 @@ public class OrderController {
         Sector sector = sectorService.getSectorById(sectorId);
         model.addAttribute("sector", sector);
         Map<Integer,Integer> rowsMap = new TreeMap<>();
-        for (int i = 0; i < sector.getMaxRows(); i++) {
+        for (int i = 1; i <=sector.getMaxRows(); i++) {
             rowsMap.put(i,ticketService.getFreeTicketsAmountBySectorRow(sector, i));
         }
         model.addAttribute("rowsMap", rowsMap);
@@ -89,7 +88,7 @@ public class OrderController {
     @RequestMapping(value = "Order/setSeat.do", method = RequestMethod.POST)
     public String orderSetSeat(@RequestParam(value = "row", required=true) int row, @ModelAttribute Sector sector, Model model) throws SQLException {
         Map<Integer,Boolean> seatsMap = new TreeMap<>();
-        for (int i = 0; i < sector.getMaxSeats(); i++) {
+        for (int i = 1; i <=sector.getMaxSeats(); i++) {
             seatsMap.put(i,ticketService.isPlaceFree(sector, row, i));
         }
         model.addAttribute("row", row);

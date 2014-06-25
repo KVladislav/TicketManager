@@ -42,7 +42,7 @@ public class SectorService {
             }
         }
         for (int j=0;j<sortByPrice.size();j++){
-            buf.append(sortByPrice.get(j)).append(" грн.  Sector ");
+            buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
             for (int i=0;i<sector.size(); i++){
                 if((double)sector.get(i).getPrice()==(double)sortByPrice.get(j)) {
                     buf.append(sector.get(i).getName()).append(", ");
