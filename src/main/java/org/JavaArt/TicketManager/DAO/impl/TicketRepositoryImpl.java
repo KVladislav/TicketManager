@@ -97,7 +97,13 @@ public class TicketRepositoryImpl implements TicketRepository {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "delete from Ticket where id = " + ticket.getId();
+            String hql;
+//            if (ticket.getId()!=null) {
+                hql = "delete from Ticket where id = " + ticket.getId();
+//            } else
+//            {hql = String.format("delete from Ticket where sector = %d and row = %d and seat = %d", ticket.getSector().getId(), ticket.getRow(), ticket.getSeat());
+//            }
+            System.out.println(hql);
             session.createQuery(hql).executeUpdate();
             session.flush();
 
