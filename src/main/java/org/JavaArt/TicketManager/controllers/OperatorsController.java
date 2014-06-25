@@ -8,12 +8,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.SQLException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Vladislav Karpenko
- * Date: 23.06.2014
- * Time: 12:06
- */
+
 @Controller
 @SessionAttributes({"pageName"})
 public class OperatorsController {

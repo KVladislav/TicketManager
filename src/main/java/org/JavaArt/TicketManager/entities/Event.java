@@ -67,7 +67,7 @@ public class Event {
         this.date = date;
     }
 
-    public boolean isDeleted() {
+    public boolean getDeleted() {
         return isDeleted;
     }
 

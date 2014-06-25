@@ -22,19 +22,20 @@
 <body>
 
 <div class="order">
+    <div class="panel-body" style="padding:15px; width:100%; margin-left: 10%">
     <div class="row">
         <div class="col-md-3">
-            Мероприятие
+            <h4 style="color:Blue">Mероприятие</h4>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
                 <p><select size="10" name="eventId" data-size="3" class="form-control">
                     <c:forEach items="${events}" var="evnt">
                         <c:if test="${event.id==evnt.id}">
                             <option value="${evnt.id}" onclick="this.form.submit()"
-                                    selected>${evnt.description} ${evnt.date.day}.${evnt.date.month} ${event.date.hours}:${event.date.minutes}</option>
+                                    selected>${evnt.description}, ${evnt.date}</option>
                         </c:if>
                         <c:if test="${event.id!=evnt.id}">
                             <option value="${evnt.id}"
-                                    onclick="this.form.submit()">${evnt.description} ${evnt.date.day}.${evnt.date.month} ${evnt.date.hours}:${evnt.date.minutes}</option>
+                                    onclick="this.form.submit()">${evnt.description}, ${evnt.date}</option>
                         </c:if>
                     </c:forEach>
                 </select></p>
@@ -42,18 +43,18 @@
         </div>
 
         <div class="col-md-3">
-            Сектор
+            <h4 style="color:Blue">Сектор</h4>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
                 <p><select size="10" name="sectorId" class="form-control">
                     <c:forEach items="${sectorsMap}" var="sectorEntry">
                         <c:if test="${sector.id==sectorEntry.key.id}">
                             <option value="${sectorEntry.key.id}" onclick="this.form.submit()"
-                                    selected>${sectorEntry.key.name} price ${sectorEntry.key.price}
-                                free: ${sectorEntry.value}</option>
+                                    selected>${sectorEntry.key.name}, ${sectorEntry.key.price}
+                                грн., свободно: ${sectorEntry.value}</option>
                         </c:if>
                         <c:if test="${sector.id!=sectorEntry.key.id}">
                             <option value="${sectorEntry.key.id}" onclick="this.form.submit()">${sectorEntry.key.name}
-                                price ${sectorEntry.key.price} free: ${sectorEntry.value}</option>
+                             , ${sectorEntry.key.price} грн., свободно: ${sectorEntry.value} мест</option>
                         </c:if>
                     </c:forEach>
                 </select></p>
@@ -61,9 +62,9 @@
         </div>
 
         <div class="col-md-3">
-            Легенда
+            <h4 style="color:Blue">Легенда</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
-                <p><select multiple size="10" name="Legend" class="form-control">
+                <p><select multiple size="10" name="Legend" >
                     <c:forEach items="${legenda}" var="leg">
                         <option value="${leg}"> ${leg}</option>
                     </c:forEach>
@@ -75,24 +76,24 @@
 
     <div class="row">
         <div class="col-md-3">
-            Ряд:
+            <h4 style="color:Blue">Ряд</h4>
             <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
                 <p><select size="10" name="row" class="form-control">
                     <c:forEach items="${rowsMap}" var="rowEntry">
                         <c:if test="${row==rowEntry.key}">
                             <option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key}
-                                free: ${rowEntry.value}</option>
+                                 ряд, свободно: ${rowEntry.value} мест</option>
                         </c:if>
                         <c:if test="${row!=rowEntry.key}">
                             <option value="${rowEntry.key}" onclick="this.form.submit()">${rowEntry.key}
-                                free: ${rowEntry.value}</option>
+                                ряд, свободно: ${rowEntry.value} мест</option>
                         </c:if>
                     </c:forEach>
                 </select></p>
             </form>
         </div>
         <div class="col-md-3">
-            Место
+            <h4 style="color:Blue">Место</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <p><select multiple size="10" name="seats" class="form-control">
                     <c:forEach items="${seatsMap}" var="seatEntry">
@@ -101,15 +102,12 @@
                 </select>
             </form>
         </div>
+
+
     </div>
     <br>
 
-    <div class="row">
 
-        <div class="col-md-3">
-            <input type="submit" name="Order" class="btn btn-primary btn-lg">
-            </form>
-        </div>
     </div>
 </div>
 </body>
