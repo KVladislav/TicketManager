@@ -20,6 +20,9 @@ public class Event {
     @Column
     private Date date = new Date();
 
+    @Column
+    private int BookingTimeOut;
+
     @Column(name = "isDeleted")
     private boolean isDeleted;
 
@@ -35,13 +38,6 @@ public class Event {
     public Event() {
     }
 
-    public Operator getOperator() {
-        return operator;
-    }
-
-    public void setOperator(Operator operator) {
-        this.operator = operator;
-    }
 
     public Integer getId() {
         return id;
@@ -67,7 +63,15 @@ public class Event {
         this.date = date;
     }
 
-    public boolean getDeleted() {
+    public int getBookingTimeOut() {
+        return BookingTimeOut;
+    }
+
+    public void setBookingTimeOut(int bookingTimeOut) {
+        BookingTimeOut = bookingTimeOut;
+    }
+
+    public boolean isDeleted() {
         return isDeleted;
     }
 
@@ -81,5 +85,13 @@ public class Event {
 
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public void setOperator(Operator operator) {
+        this.operator = operator;
     }
 }

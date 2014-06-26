@@ -36,6 +36,9 @@ public class Ticket {
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
 
+    @Column
+    private boolean isConfirmed;
+
 
     @ManyToOne
     @JoinColumn(name = "client_ID")
@@ -44,6 +47,14 @@ public class Ticket {
 
 
     public Ticket() {}
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean isConfirmed) {
+        this.isConfirmed = isConfirmed;
+    }
 
     public boolean isReserved() {
         return isReserved;

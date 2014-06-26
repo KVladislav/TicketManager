@@ -42,5 +42,9 @@ public class TicketService {
         ticketRepository.deleteTicket(ticket);
     }
 
+    public void updateTickets(List<Ticket> tickets) throws SQLException {
+        ticketRepository.updateTickets(tickets);
+    }
+
 }
 

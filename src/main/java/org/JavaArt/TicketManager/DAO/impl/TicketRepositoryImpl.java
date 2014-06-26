@@ -59,6 +59,13 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
+    public void updateTickets(List<Ticket> tickets) throws SQLException {
+        for (Ticket ticket : tickets) {
+            updateTicket(ticket);
+        }
+    }
+
+    @Override
     public Ticket getTicketById(int id) throws SQLException {
         Session session = null;
         Ticket event = null;

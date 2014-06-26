@@ -152,6 +152,11 @@ public class BookingController {
 
     @RequestMapping(value = "Booking/Finish.do", method = RequestMethod.POST)
     public String bookingFinish(SessionStatus status) throws SQLException {
+        for (Ticket ticket : tickets) {
+            ticket.setConfirmed(true);
+        }
+
+        ticketService.updateTickets(tickets);
         tickets.clear();
         bookingPrice=Double.valueOf(0);
         status.setComplete();

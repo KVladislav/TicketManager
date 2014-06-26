@@ -38,7 +38,7 @@ public class Starter {
 
         Event event = new Event();
         event.setDate(new Date());
-        event.setDescription("Chernomorec Zaporozhe");
+        event.setDescription("Черноморец Шахтер");
         event.setOperator(operator);
         eventRepository.addEvent(event);
         Sector sector=null;

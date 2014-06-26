@@ -19,6 +19,7 @@ import java.util.List;
 public interface TicketRepository {
     public void addTicket(Ticket ticket) throws SQLException;
     public void updateTicket(Ticket ticket) throws SQLException;
+    public void updateTickets(List<Ticket> tickets) throws SQLException;
     public Ticket getTicketById(int id) throws SQLException;
     public List<Ticket> getAllTickets() throws SQLException;
     public void deleteTicket(Ticket ticket) throws SQLException;
