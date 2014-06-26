@@ -81,25 +81,28 @@ public class TicketService {
     private class ClearNonConfirmedTickets implements Runnable {
 
         public void run() {
+            List<Ticket> tickets;
+            List<Ticket> ticketForRemove =new ArrayList<>();
             try {
-                List<Ticket> tickets;
-                List<Ticket> ticketForRemove =new ArrayList<>();
                 while (!Thread.currentThread().isInterrupted()) {
                     try {
                         tickets = getNonConfirmedTickets();
 
-                    if (tickets!=null) {
+                    if (tickets!=null && tickets.size()>0) {
                         for (Ticket ticket : tickets) {
                             if ((new Date().getTime() - ticket.getTimeStamp().getTime())> 60000*5 ) {
                                 ticketForRemove.add(ticket);
                             }
                         }
-                        ticketRepository.deleteTickets(ticketForRemove);
+                        if(ticketForRemove.size()>0) {
+                            ticketRepository.deleteTickets(ticketForRemove);
+                        }
+                        ticketForRemove.clear();
                     }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    TimeUnit.MILLISECONDS.sleep(300000);
+                    TimeUnit.MINUTES.sleep(1);
                 }
             } catch (InterruptedException e) {
                 System.out.println("Perform Thread Shutdown");

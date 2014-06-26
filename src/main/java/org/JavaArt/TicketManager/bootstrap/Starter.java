@@ -6,7 +6,6 @@ import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -61,10 +60,11 @@ public class Starter {
 //            ticketRepository.saveOrUpdateTicket(ticket);}
 //        System.out.println(eventRepository.getEventById(event.getId()).getDescription());
 
-        List<Ticket> tickets= ticketRepository.getNonConfirmedTickets();
-        for (Ticket ticket : tickets) {
-            System.out.println(ticket);
-        }
+        Ticket ticket =new Ticket();
+        ticketRepository.saveOrUpdateTicket(ticket);
+        ticketRepository.deleteTicket(ticket);
+        System.out.println(ticket.getId());
+        ticketRepository.saveOrUpdateTicket(ticket);
 
         HibernateUtil.shutdown();
 

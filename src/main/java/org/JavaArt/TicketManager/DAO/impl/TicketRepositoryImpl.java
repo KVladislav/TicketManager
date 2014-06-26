@@ -48,9 +48,13 @@ public class TicketRepositoryImpl implements TicketRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
+            if (ticket.getId()!=null && getTicketById(ticket.getId())!=null){
+                ticket.setId(null);
+            }
             session.saveOrUpdate(ticket);
             session.getTransaction().commit();
             session.flush();
+            session.clear();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -138,6 +142,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session.delete(ticket);
             session.getTransaction().commit();
             session.flush();
+            session.clear();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
