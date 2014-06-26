@@ -4,10 +4,10 @@ import org.JavaArt.TicketManager.DAO.TicketRepository;
 import org.JavaArt.TicketManager.DAO.impl.TicketRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -33,4 +33,14 @@ public class TicketService {
     public void addTicket(Ticket ticket) throws SQLException{
         ticketRepository.addTicket(ticket);
     }
+
+    public Ticket getTicketById(int ticketId) throws SQLException {
+        return ticketRepository.getTicketById(ticketId);
+    }
+
+    public void deleteTicket(Ticket ticket) throws SQLException {
+        ticketRepository.deleteTicket(ticket);
+    }
+
 }
+

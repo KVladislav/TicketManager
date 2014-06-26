@@ -167,4 +167,18 @@ public class BookingController {
         errorMessage=null;
         return "redirect:/Booking/Booking.do";
     }
+
+    @RequestMapping(value = "Booking/delTicket.do", method = RequestMethod.POST)
+    public String bookingDelTicket(@RequestParam(value = "ticketId", required = true) int ticketId, Model model) throws SQLException {
+        Ticket ticket = ticketService.getTicketById(ticketId);
+        ticketService.deleteTicket(ticket);
+        for (Ticket tckt : tickets) {
+            if (tckt.getId() == ticketId) {
+                tickets.remove(tckt);
+                break;
+            }
+        }
+        model.addAttribute("tickets", tickets);
+        return "Booking";
+    }
 }

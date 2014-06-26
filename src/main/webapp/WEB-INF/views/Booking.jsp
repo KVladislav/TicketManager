@@ -24,22 +24,6 @@
         });
     </script>
 
-    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap-multiselect.js"></script>--%>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-multiselect.css" type="text/css"/>--%>
-
-    <%--<script type="text/javascript">--%>
-    <%--$(document).ready(function() {--%>
-    <%--$('.multiselect').multiselect({--%>
-    <%--maxHeight: 200--%>
-    <%--});--%>
-    <%--});--%>
-    <%--</script>--%>
-
-    <%--<style type="text/css">--%>
-    <%--.bs-example {--%>
-    <%--margin: 20px;--%>
-    <%--}--%>
-    <%--</style>--%>
 </head>
 <body>
 <div class="container">
@@ -85,8 +69,6 @@
                     </form>
                 </div>
             </div>
-            <%--TODO добавить стоимость в таблицу купленных--%>
-            <%--TODO добавить кнопку удаления билета--%>
             <div class="row clearfix">
                 <div class="col-md-4 column">
                     <strong>Ряд</strong>
@@ -158,7 +140,7 @@
                 <tbody>
                 <c:forEach items="${tickets}" var="ticket">
                     <tr>
-                        <form name = "delTicket" action="${pageContext.request.contextPath}/Booking/dellTicket.do" method="post">
+                        <form name = "delTicket" action="${pageContext.request.contextPath}/Booking/delTicket.do" method="post">
                             <td>${ticket.sector.event.description}</td>
                             <td>${ticket.sector.name}</td>
                             <td>${ticket.row}</td>
@@ -166,9 +148,7 @@
                             <td>${ticket.sector.price}</td>
                             <td>
                                 <input type="hidden" name="ticketId" value="${ticket.id}">
-                                <a href="#" class="btn btn-success" onclick="document.delTicket.submit();">
-                                    Submit <i class="glyphicon-trash"></i>&nbsp; Icon
-                                </a>
+                                    <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();"><span class="glyphicon glyphicon-trash"></span></button>
                             </td>
                         </form>
 
