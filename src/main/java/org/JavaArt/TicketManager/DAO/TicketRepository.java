@@ -17,9 +17,9 @@ import java.util.List;
 @Repository
 
 public interface TicketRepository {
-    public void addTicket(Ticket ticket) throws SQLException;
-    public void updateTicket(Ticket ticket) throws SQLException;
-    public void updateTickets(List<Ticket> tickets) throws SQLException;
+    public void saveOrUpdateTicket(Ticket ticket) throws SQLException;
+//    public void updateTicket(Ticket ticket) throws SQLException;
+    public void saveOrUpdateTickets(List<Ticket> tickets) throws SQLException;
     public Ticket getTicketById(int id) throws SQLException;
     public List<Ticket> getAllTickets() throws SQLException;
     public void deleteTicket(Ticket ticket) throws SQLException;
@@ -27,5 +27,6 @@ public interface TicketRepository {
     public int getFreeTicketsAmountBySector(Sector sector) throws SQLException;
     public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException;
     public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException;
+    public List<Ticket> getNonConfirmedTickets() throws SQLException;
 
 }

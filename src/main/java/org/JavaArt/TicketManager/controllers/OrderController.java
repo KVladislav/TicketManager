@@ -17,7 +17,7 @@ import java.util.TreeMap;
 @SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "legenda", "row", "rowsMap", "seatsMap"})
 public class OrderController {
     private EventService eventService = new EventService();
-    private TicketService ticketService = new TicketService();
+    private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)

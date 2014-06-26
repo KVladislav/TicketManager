@@ -25,7 +25,7 @@ import java.util.*;
 
 public class BookingController {
     private String errorMessage = "";
-    private TicketService ticketService = new TicketService();
+    private TicketService ticketService = TicketService.getInstance();
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
     private List<Ticket> tickets = new ArrayList<>();
@@ -155,8 +155,7 @@ public class BookingController {
         for (Ticket ticket : tickets) {
             ticket.setConfirmed(true);
         }
-
-        ticketService.updateTickets(tickets);
+        ticketService.saveOrUpdateTickets(tickets);
         tickets.clear();
         bookingPrice=Double.valueOf(0);
         status.setComplete();

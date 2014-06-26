@@ -5,6 +5,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.annotation.PreDestroy;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,7 +34,9 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
+    @PreDestroy
     public static void shutdown() {
         getSessionFactory().close();
+        System.out.println("Perform ShutDown!!!");
     }
 }
