@@ -31,11 +31,13 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "eventId", required=true) int eventId, Model model) throws SQLException {
+    public String eventsSetDelete(@RequestParam(value = "eventId", required=true) int eventId, Model model,SessionStatus status) throws SQLException {
         Event event = eventService.getEventById(eventId);
         event.setDeleted(true);
         eventService.updateEvent(event);
-        return "Events";
+      //  return "Events";
+        status.setComplete();
+        return "redirect:/Events/Events.do";
     }
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.POST)

@@ -6,6 +6,7 @@ import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
@@ -93,7 +94,9 @@ public class EventRepositoryImpl implements EventRepository {
         List<Event> events = null;//new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            events = session.createCriteria(Event.class).addOrder( Order.asc("id") ).list();
+            events = session.createCriteria(Event.class)
+                    .add(Restrictions.eq("isDeleted", new Boolean("false")))
+                    .addOrder( Order.asc("id") ).list();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
