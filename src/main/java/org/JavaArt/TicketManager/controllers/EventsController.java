@@ -30,6 +30,13 @@ public class EventsController {
             return "Events";
     }
 
+    @RequestMapping(value = "NewEvent/NewEvent.do", method = RequestMethod.GET)
+    public String newEventGet(Model model) throws SQLException {
+        model.addAttribute("pageName", 7);//set menu page number
+
+        return "NewEvent";
+    }
+
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
     public String eventsSetDelete(@RequestParam(value = "eventId", required=true) int eventId, Model model,SessionStatus status) throws SQLException {
         Event event = eventService.getEventById(eventId);
@@ -38,6 +45,11 @@ public class EventsController {
       //  return "Events";
         status.setComplete();
         return "redirect:/Events/Events.do";
+    }
+
+    @RequestMapping(value = "Events/Redirect.do", method = RequestMethod.POST)
+    public String eventsRedirect(Model model,SessionStatus status) throws SQLException {
+        return "redirect:/NewEvent/NewEvent.do";
     }
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.POST)
