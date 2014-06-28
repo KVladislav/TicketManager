@@ -25,7 +25,7 @@
     <div class="panel-body" style="padding:1px; width:110%; margin-left: 5%">
     <div class="row">
         <div class="col-md-3">
-            <h4 style="color:Blue">Mероприятие</h4>
+            <h4 style="text-align:center; color:Blue">Mероприятие</h4>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
                 <p><select size="10" name="eventId" data-size="3" class="form-control">
                     <c:forEach items="${events}" var="evnt">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-md-3">
-            <h4 style="color:Blue">Сектор</h4>
+            <h4 style="text-align:center; color:Blue">Сектор</h4>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
                 <p><select size="10" name="sectorId" class="form-control">
                     <c:forEach items="${sectorsMap}" var="sectorEntry">
@@ -64,7 +64,7 @@
         </div>
 
         <div class="col-md-3">
-            <h4 style="color:Blue">Легенда</h4>
+            <h4 style="text-align:center; color:Blue">Легенда</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <p><select multiple size="10" name="Legend" class="form-control">
                     <c:forEach items="${legenda}" var="leg">
@@ -76,8 +76,8 @@
    </div>
 
    <div class="row">
-        <div class="col-md-3">
-            <h4 style="color:Blue">Ряд</h4>
+        <div class="col-md-2">
+            <h4 style="text-align:center; color:Blue">Ряд</h4>
             <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
                 <p><select size="10" name="row" class="form-control">
                     <c:forEach items="${rowsMap}" var="rowEntry">
@@ -93,16 +93,40 @@
                 </select></p>
             </form>
         </div>
-        <div class="col-md-3">
-            <h4 style="color:Blue">Место</h4>
-            <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
-                <p><select multiple size="10" name="seats" class="form-control">
-                    <c:forEach items="${seatsMap}" var="seatEntry">
-                        <option value="${seatEntry.key}">${seatEntry.key}. ${seatEntry.value}</option>
+        <div class="col-md-2">
+            <h4 style="text-align:center; color:Blue">Место</h4>
+            <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
+                <p><select multiple size="10" name="place" class="form-control">
+                    <c:forEach items="${seatsMap}" var="seat">
+                        <c:if test="${seat.value=='Статус: выкуплен'||seat.value=='Статус: забронирован'}">
+                            <option value="${seat.key}" style="color:Red">${seat.key}.
+                                    ${seat.value}</option>
+                        </c:if>
+                        <c:if test="${seat.value=='Статус:  в продаже'}">
+                             <option value="${seat.key}"onclick="this.form.submit()">${seat.key}.
+                                ${seat.value}</option>
+                        </c:if>
                     </c:forEach>
-                </select>
+                </select><p>
             </form>
         </div>
+
+       <div class="col-md-3">
+           <h4 style="text-align:center; color:Blue">Выбранные билеты</h4>
+            <table class="table table-bordered">
+               <thead>
+                   <th>Мероприятие</th>
+                   <th>Сектор</th>
+                   <th>Ряд</th>
+                   <th>Место</th>
+                   <th>Цена</th>
+               </thead>
+               <tbody>
+
+
+               </tbody>
+           </table>
+       </div>
 
 
     </div>
