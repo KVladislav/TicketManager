@@ -1,16 +1,13 @@
 package org.JavaArt.TicketManager.service;
 
-import org.JavaArt.TicketManager.DAO.TicketRepository;
-import org.JavaArt.TicketManager.DAO.impl.TicketRepositoryImpl;
-import org.JavaArt.TicketManager.entities.Sector;
-import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.DAO.*;
+import org.JavaArt.TicketManager.DAO.impl.*;
+import org.JavaArt.TicketManager.entities.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -76,6 +73,23 @@ public class TicketService {
         while (!executorService.isTerminated()) {
 
         }
+    }
+
+    public Map<Integer,String> seatStatus(Sector sector, int row) throws SQLException{
+        Map<Integer, String> seatsMap = new TreeMap<>();
+        List <Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector,row);
+        for (int i = 1; i <= sector.getMaxSeats(); i++) {
+            if (ticketRepository.isPlaceFree(sector, row, i)) seatsMap.put(i, "Статус:  в продаже");
+            else {
+                for (Ticket tic : ticket) {
+                    if (tic.getSeat() == i) {
+                        if (tic.getReserved()) seatsMap.put(i, "Статус: забронирован");
+                        else seatsMap.put(i, "Статус: выкуплен");
+                    }
+                }
+            }
+        }
+        return seatsMap;
     }
 
     private class ClearNonConfirmedTickets implements Runnable {

@@ -22,7 +22,7 @@
 <body>
 
 <div class="order">
-    <div class="panel-body" style="padding:15px; width:100%; margin-left: 10%">
+    <div class="panel-body" style="padding:1px; width:110%; margin-left: 5%">
     <div class="row">
         <div class="col-md-3">
             <h4 style="color:Blue">Mероприятие</h4>
@@ -31,11 +31,13 @@
                     <c:forEach items="${events}" var="evnt">
                         <c:if test="${event.id==evnt.id}">
                             <option value="${evnt.id}" onclick="this.form.submit()"
-                                    selected>${evnt.description}, ${evnt.date}</option>
+                                   selected> ${evnt.description},
+                                   <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                         </c:if>
                         <c:if test="${event.id!=evnt.id}">
                             <option value="${evnt.id}"
-                                    onclick="this.form.submit()">${evnt.description}, ${evnt.date}</option>
+                                   onclick="this.form.submit()">${evnt.description},
+                                   <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                         </c:if>
                     </c:forEach>
                 </select></p>
@@ -49,12 +51,12 @@
                     <c:forEach items="${sectorsMap}" var="sectorEntry">
                         <c:if test="${sector.id==sectorEntry.key.id}">
                             <option value="${sectorEntry.key.id}" onclick="this.form.submit()"
-                                    selected>${sectorEntry.key.name}, ${sectorEntry.key.price}
-                                грн., свободно: ${sectorEntry.value}</option>
+                                    selected>${sectorEntry.key.name} Сектор ${sectorEntry.key.price}
+                                грн. Свободно ${sectorEntry.value} мест</option>
                         </c:if>
                         <c:if test="${sector.id!=sectorEntry.key.id}">
                             <option value="${sectorEntry.key.id}" onclick="this.form.submit()">${sectorEntry.key.name}
-                             , ${sectorEntry.key.price} грн., свободно: ${sectorEntry.value} мест</option>
+                             Сектор ${sectorEntry.key.price} грн. Свободно ${sectorEntry.value} мест</option>
                         </c:if>
                     </c:forEach>
                 </select></p>
@@ -64,17 +66,16 @@
         <div class="col-md-3">
             <h4 style="color:Blue">Легенда</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
-                <p><select multiple size="10" name="Legend" >
+                <p><select multiple size="10" name="Legend" class="form-control">
                     <c:forEach items="${legenda}" var="leg">
                         <option value="${leg}"> ${leg}</option>
                     </c:forEach>
                 </select></p>
             </form>
         </div>
-    </div>
-    <br>
+   </div>
 
-    <div class="row">
+   <div class="row">
         <div class="col-md-3">
             <h4 style="color:Blue">Ряд</h4>
             <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
@@ -82,11 +83,11 @@
                     <c:forEach items="${rowsMap}" var="rowEntry">
                         <c:if test="${row==rowEntry.key}">
                             <option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key}
-                                 ряд, свободно: ${rowEntry.value} мест</option>
+                                 ряд. Свободно ${rowEntry.value} мест</option>
                         </c:if>
                         <c:if test="${row!=rowEntry.key}">
                             <option value="${rowEntry.key}" onclick="this.form.submit()">${rowEntry.key}
-                                ряд, свободно: ${rowEntry.value} мест</option>
+                                ряд. Свободно ${rowEntry.value} мест</option>
                         </c:if>
                     </c:forEach>
                 </select></p>
@@ -97,7 +98,7 @@
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <p><select multiple size="10" name="seats" class="form-control">
                     <c:forEach items="${seatsMap}" var="seatEntry">
-                        <option value="${seatEntry.key}">${seatEntry.key} free: ${seatEntry.value}</option>
+                        <option value="${seatEntry.key}">${seatEntry.key}. ${seatEntry.value}</option>
                     </c:forEach>
                 </select>
             </form>

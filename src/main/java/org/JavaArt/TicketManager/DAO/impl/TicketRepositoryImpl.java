@@ -192,6 +192,23 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
+    public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row) throws SQLException {
+        Session session = null;
+        List<Ticket> tickets = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets =session.createQuery("from Ticket where sector =" + sector.getId() + " and row=" + row).list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return tickets;
+    }
+
+    @Override
     public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException {
         Session session = null;
         int status = 0;

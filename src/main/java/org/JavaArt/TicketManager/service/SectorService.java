@@ -33,19 +33,20 @@ public class SectorService {
         List<Double> sortByPrice = new ArrayList();
         List <String> legenda = new ArrayList();
         StringBuffer buf = new StringBuffer(100);
-        int index=1;
+        int index;
         sortByPrice.add(0,sector.get(0).getPrice());
         for(int i=1;i< sector.size();i++){
-            if (sector.get(i).getPrice()>sector.get(i-1).getPrice()) {
-                sortByPrice.add(index,sector.get(i).getPrice());
-                index++;
-            }
+            if (sector.get(i).getPrice()>sector.get(i-1).getPrice())
+                sortByPrice.add(sector.get(i).getPrice());
         }
         for (int j=0;j<sortByPrice.size();j++){
             buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
+            index=0;
             for (int i=0;i<sector.size(); i++){
                 if((double)sector.get(i).getPrice()==(double)sortByPrice.get(j)) {
-                    buf.append(sector.get(i).getName()).append(", ");
+                    if (index==0) buf.append(sector.get(i).getName());
+                    if (index>0) buf.append(", ").append(sector.get(i).getName());
+                    index++;
                 }
             }
             legenda.add(j, buf.toString());
