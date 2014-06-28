@@ -20,22 +20,30 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
+    <script src="${pageContext.request.contextPath}/resources/css/bootstrap.css"></script>
     <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
           type="text/css">
     <script type="text/javascript"
-            src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.js" />'></script>
+            src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>
     <script type="text/javascript"
             src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>
-
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js">
+    </script>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#my-select').multiSelect()
+        $(document).on("hover", ".cont", function () {
+            $(this).children(".overlay").fadeIn("fast");
+        }, function () {
+            $(this).children(".overlay").fadeOut("fast");
         });
     </script>
+
 
 </head>
 
@@ -43,36 +51,120 @@
 <center>
 
 
-    <div class="control-group">
+    <div class="well">
         <label class="my-control-label" for="dateEvent">Date of event</label>
-        <input type="text" name="date" id="dateEvent" value="dd-mm-yyyy" />
-        <p> <script type="text/javascript"> calendar.set("dateEvent");</script></p>
+
+        <div id="datetimepicker1" class="input-append date">
+            <input data-format="dd-MM-yyyy" type="text" name="date" id="dateEvent"></input>
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                language: 'pt-BR'
+            });
+        });
+    </script>
+
+
+    <div class="well">
+        <label class="my-control-label" for="timeEvent">Time of event</label>
+
+        <div id="datetimepicker3" class="input-append">
+            <input data-format="hh:mm" type="text" name="time" id="timeEvent"></input>
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker3').datetimepicker({
+                pickDate: false
+            });
+        });
+    </script>
+
+
+    <div class="control-group">
+        <label class="my-control-label" for="outputName">Name</label>
+
+        <div class="my-controls">
+            <textarea rows="1" id="outputName" name="name"></textarea>
+        </div>
     </div>
 
-<div class="control-group">
-    <label class="my-control-label" for="outputTime">Time of event</label>
 
-    <select name="time" id="outputTime">
+    <div class="control-group">
+        <label class="my-control-label" for="outputDescription">Description</label>
 
-        <option value="12">12-00</option>
-        <option value="13">13-00</option>
-        <option value="14">14-00</option>
-        <option value="15">15-00</option>
-        <option value="16">16-00</option>
-        <option value="17">17-00</option>
-        <option value="18">18-00</option>
-        <option value="16">19-00</option>
-        <option value="17">20-00</option>
-        <option value="18">21-00</option>
-
-    </select>
-
-</div>
+        <div class="my-controls">
+            <textarea rows="5" id="outputDescription" name="description"></textarea>
+        </div>
+    </div>
 
 
+    <div class="well">
+        <label class="my-control-label" for="timeRemoveBooking">Removing the booking</label>
+
+        <div id="datetimepicker3" class="input-append">
+            <input data-format="hh:mm" type="text" name="timeRemoveBooking" id="timeRemoveBooking"></input>
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+            </span>
+        </div>
+        <img src="${pageContext.request.contextPath}/resources/img/Question.jpg"
+             alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
+             title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker3').datetimepicker({
+                pickDate: false
+            });
+        });
+    </script>
 
 
-<button type="submit" name="action" value="saveRec" class="btn btn-primary">Save</button>
+    <div class="panel-body" style="padding:20px; width:50%; margin-left: 10%">
+        <div class="table responsive">
+            <table class="table table-bordered" style="display:block;height:200px;overflow:auto;">
+                <thead>
+                <tr>
+                    <th>Sector</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="iter" begin="1" end="27">
 
+                    <tr>
+                        <td>
+                            <div>
+                                    ${iter} <br/>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="text" id="inputPrice" name="price">
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    &MediumSpace;
+    &MediumSpace;
+    <button type="submit" name="action" value="saveRec" class="btn btn-primary">Save</button>
+    &MediumSpace;
+    &MediumSpace;
 </center>
 

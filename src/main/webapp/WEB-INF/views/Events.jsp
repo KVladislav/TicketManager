@@ -31,6 +31,15 @@
 
 </head>
 
+&MediumSpace;
+&MediumSpace;
+<div class="panel-heading" style="text-align:center;"><b>
+    <a href="/NewEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Create the new
+        event</a>
+</b></div>
+
+&MediumSpace;
+&MediumSpace;
 <div class="panel-heading" style="text-align:center;"><b>List of events</b></div>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
     <div class="table responsive">
@@ -67,22 +76,8 @@
             </tbody>
         </table>
     </div>
+
     &MediumSpace;
     &MediumSpace;
-    <div class="container">
-        <div class="row">
-
-            <div style="text-align: center;">
-                <div class="col-md-8 col-md-offset-3">
-                    <%--     <form action="${pageContext.request.contextPath}/Events/Redirect.do" method="post"> --%>
-                         <a href="/NewEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Create the new
-                             event</a>
-                 <%--        </form>  --%>
-                         <%-- #newEvent<button type="submit" name="Order"class="btn btn-success btn-lg">Create the new event</button> --%>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 </div>
