@@ -13,6 +13,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,11 +82,11 @@ public class EventsController {
     }
 
     @RequestMapping(value = "NewEvent/addEvent.do", method = RequestMethod.POST)
-    public String bookingAddEvent(@RequestParam(value = "odate", required = true) String odate, String name, int time, SessionStatus status, HttpServletRequest request) throws SQLException {
+    public String bookingAddEvent(@RequestParam(value = "odate", required = true) String odate, String name, int time, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
         if (name == null) return "redirect:/NewEvent/NewEvent.do";
                 Event event = new Event();
-        long  ldate= Date.parse(odate);
-        Date trueDate = new Date(ldate);
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+                Date trueDate = format.parse(odate);
                 event.setDate(trueDate);
                 boolean isDeleted = false;
                 event.setDeleted(isDeleted);
@@ -101,7 +103,10 @@ public class EventsController {
             sector.setEvent(event);
             sector.setName("+i+");
             String param = request.getParameter("price" + i);
-            double somePrice = Double.parseDouble(param);
+            double somePrice = 0d;
+            if (param!=null&&param.isEmpty()==false){
+            somePrice = Double.parseDouble(param);}
+
             sector.setPrice(somePrice);
             sector.setMaxRows(50);
             sector.setDeleted(isDeleted);
