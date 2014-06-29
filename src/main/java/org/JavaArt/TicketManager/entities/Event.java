@@ -1,7 +1,7 @@
 package org.JavaArt.TicketManager.entities;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -32,11 +32,6 @@ public class Event {
     @JoinColumn(name = "operator_id")
     @ManyToOne(cascade = CascadeType.ALL)
     Operator operator;
-
-
-
-    public Event() {
-    }
 
 
     public Integer getId() {

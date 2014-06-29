@@ -1,23 +1,32 @@
 package org.JavaArt.TicketManager.controllers;
 
-import org.JavaArt.TicketManager.entities.*;
+import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Operator;
+import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.service.EventService;
+import org.JavaArt.TicketManager.service.SectorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 @Controller
-@SessionAttributes({"pageName", "events", "event"})
+@SessionAttributes({"pageName", "events", "event","sector","sectors"})
 
 public class EventsController {
     private EventService eventService = new EventService();
+    private String errorMessage = "";
+    private List<Event> events = new ArrayList<>();
+    private SectorService sectorService = new SectorService();
+    private List<Sector> sectors = new ArrayList<>();
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) throws SQLException {
@@ -69,4 +78,40 @@ public class EventsController {
       //  }
         return "redirect:Events/Events.do";
     }
+
+    @RequestMapping(value = "NewEvent/addEvent.do", method = RequestMethod.POST)
+    public String bookingAddEvent(@RequestParam(value = "odate", required = true) String odate, String name, int time, SessionStatus status, HttpServletRequest request) throws SQLException {
+        if (name == null) return "redirect:/NewEvent/NewEvent.do";
+                Event event = new Event();
+        long  ldate= Date.parse(odate);
+        Date trueDate = new Date(ldate);
+                event.setDate(trueDate);
+                boolean isDeleted = false;
+                event.setDeleted(isDeleted);
+                event.setDescription(name);
+            //    event.setOperator(operator);
+                Date nowDate = new Date();
+                event.setTimeStamp(nowDate);
+                event.setBookingTimeOut(time);
+                eventService.addEvent(event);
+                events.add(event);
+
+        for (int i=0; i<27; i++) {
+            Sector sector = new Sector();
+            sector.setEvent(event);
+            sector.setName("+i+");
+            String param = request.getParameter("price" + i);
+            double somePrice = Double.parseDouble(param);
+            sector.setPrice(somePrice);
+            sector.setMaxRows(50);
+            sector.setDeleted(isDeleted);
+            sectorService.addSector(sector);
+            sectors.add(sector);
+        }
+        status.setComplete();
+        return "redirect:/Booking/Booking.do";
+    }
+
+
+
 }
