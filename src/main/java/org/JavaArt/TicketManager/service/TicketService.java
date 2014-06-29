@@ -2,6 +2,7 @@ package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.*;
 import org.JavaArt.TicketManager.DAO.impl.*;
+import org.JavaArt.TicketManager.controllers.OrderController;
 import org.JavaArt.TicketManager.entities.*;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,10 @@ public class TicketService {
         ticketRepository.saveOrUpdateTickets(tickets);
     }
 
+    public void updateTickets(List<Ticket> tickets) throws SQLException {
+        ticketRepository.updateTickets(tickets);
+    }
+
     private List<Ticket> getNonConfirmedTickets() throws SQLException {
         return ticketRepository.getNonConfirmedTickets();
     }
@@ -83,8 +88,9 @@ public class TicketService {
             else {
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
-                        if (tic.getReserved()) seatsMap.put(i, "Статус: забронирован");
-                        else seatsMap.put(i, "Статус: выкуплен");
+                        if ((tic.getReserved()&&tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
+                        if (!tic.getReserved()&&tic.isConfirmed()) seatsMap.put(i, "Статус: выкуплен");
+                        if (!tic.isConfirmed()) seatsMap.put(i, "Статус: не утверждён");
                     }
                 }
             }

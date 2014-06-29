@@ -65,6 +65,32 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
+    public void updateTicket(Ticket ticket) throws SQLException {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(ticket);
+            session.getTransaction().commit();
+            session.flush();
+            session.clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public void updateTickets(List<Ticket> tickets) throws SQLException {
+        for (Ticket ticket : tickets) {
+            updateTicket(ticket);
+        }
+    }
+
+    @Override
     public void saveOrUpdateTickets(List<Ticket> tickets) throws SQLException {
         for (Ticket ticket : tickets) {
             saveOrUpdateTicket(ticket);
@@ -235,6 +261,4 @@ public class TicketRepositoryImpl implements TicketRepository {
         }
 
     }
-
-
 }

@@ -15,14 +15,14 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <style type="text/css">
         .bs-example {
-            margin: 20px;
+            margin: 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="order">
-    <div class="panel-body" style="padding:1px; width:110%; margin-left: 5%">
+    <div class="panel-body" style="padding:1px; width:115%; margin-left: 3%">
     <div class="row">
         <div class="col-md-3">
             <h4 style="text-align:center; color:Blue">Mероприятие</h4>
@@ -96,14 +96,19 @@
         <div class="col-md-2">
             <h4 style="text-align:center; color:Blue">Место</h4>
             <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
-                <p><select multiple size="10" name="place" class="form-control">
+                <p><select multiple size="10" id="select" name="seat" class="form-control" name="select">
+
                     <c:forEach items="${seatsMap}" var="seat">
                         <c:if test="${seat.value=='Статус: выкуплен'||seat.value=='Статус: забронирован'}">
                             <option value="${seat.key}" style="color:Red">${seat.key}.
                                     ${seat.value}</option>
                         </c:if>
+                        <c:if test="${seat.value=='Статус: не утверждён'}">
+                            <option value="${seat.key}" style="color:Blue">${seat.key}.
+                                    ${seat.value}</option>
+                        </c:if>
                         <c:if test="${seat.value=='Статус:  в продаже'}">
-                             <option value="${seat.key}"onclick="this.form.submit()">${seat.key}.
+                             <option value="${seat.key}"onclick="this.form.submit()" style="color:Green">${seat.key}.
                                 ${seat.value}</option>
                         </c:if>
                     </c:forEach>
@@ -111,28 +116,57 @@
             </form>
         </div>
 
-       <div class="col-md-3">
+       <div class="col-md-5 col-lg-offset-0 ">
            <h4 style="text-align:center; color:Blue">Выбранные билеты</h4>
-            <table class="table table-bordered">
+            <table class="table text-center table-bordered">
                <thead>
+               <form name = "delOrder" action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
                    <th>Мероприятие</th>
+                   <th>Дата</th>
                    <th>Сектор</th>
                    <th>Ряд</th>
                    <th>Место</th>
                    <th>Цена</th>
+                   <th>Delete</th>
+               </form>
                </thead>
                <tbody>
-
-
-               </tbody>
+               <c:forEach items="${orderList}" var="ord">
+                   <tr>
+                       <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do" method="post">
+                       <td>${ord.sector.event.description}</td>
+                       <td> <fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
+                       <td>${ord.sector.name}</td>
+                       <td>${ord.row}</td>
+                       <td>${ord.seat}</td>
+                       <td>${ord.sector.price}</td>
+                           <td>
+                               <input type="hidden" name="ticketId" value="${ord.id}">
+                               <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();"><span class="glyphicon glyphicon-trash"></span></button>
+                           </td>
+                       </form>
+                   </tr>
+                </c:forEach>
+                </tbody>
            </table>
        </div>
 
-
+      </div>
     </div>
-    <br>
 
-
+    <div class="col-md-7 col-lg-offset-4 ">
+    <tr>
+        <td>
+            <h4 style="text-align:center; color:Blue">Стоимость заказа: ${orderPrice} грн.</h4>
+        </td>
+        <td>
+            <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
+                <h4 style="text-align:center">
+                    <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Купить">
+                </h4>
+            </form>
+        </td>
+     </tr>
     </div>
 </div>
 </body>
