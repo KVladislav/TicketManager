@@ -4,11 +4,11 @@ import org.JavaArt.TicketManager.DAO.SectorRepository;
 import org.JavaArt.TicketManager.DAO.impl.SectorRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -53,5 +53,9 @@ public class SectorService {
             buf.delete(0,99);
         }
         return legenda;
+    }
+
+    public void addSector(Sector sector) throws SQLException{
+        sectorRepository.addSector(sector);
     }
 }
