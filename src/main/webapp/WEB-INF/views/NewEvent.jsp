@@ -344,7 +344,7 @@
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector21" name="sector21" value=1>
+            <input type="text" id="inputSector21" name="sector21" value=21>
         </div>
     </td>
     <td>
