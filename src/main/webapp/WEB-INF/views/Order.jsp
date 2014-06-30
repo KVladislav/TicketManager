@@ -15,19 +15,19 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <style type="text/css">
         .bs-example {
-            margin: 10px;
+            margin: 0px;
         }
     </style>
 </head>
 <body>
 
 <div class="order">
-    <div class="panel-body" style="padding:1px; width:115%; margin-left: 3%">
+    <div class="panel-body" style="padding:1px; width:120%; margin-left: 3%">
     <div class="row">
         <div class="col-md-3">
             <h4 style="text-align:center; color:Blue">Mероприятие</h4>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
-                <p><select size="10" name="eventId" data-size="3" class="form-control">
+                <p><select size="8" name="eventId" data-size="3" class="form-control">
                     <c:forEach items="${events}" var="evnt">
                         <c:if test="${event.id==evnt.id}">
                             <option value="${evnt.id}" onclick="this.form.submit()"
@@ -47,7 +47,7 @@
         <div class="col-md-3">
             <h4 style="text-align:center; color:Blue">Сектор</h4>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
-                <p><select size="10" name="sectorId" class="form-control">
+                <p><select size="8" name="sectorId" class="form-control">
                     <c:forEach items="${sectorsMap}" var="sectorEntry">
                         <c:if test="${sector.id==sectorEntry.key.id}">
                             <option value="${sectorEntry.key.id}" onclick="this.form.submit()"
@@ -66,7 +66,7 @@
         <div class="col-md-3">
             <h4 style="text-align:center; color:Blue">Легенда</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
-                <p><select multiple size="10" name="Legend" class="form-control">
+                <p><select multiple size="8" name="Legend" class="form-control">
                     <c:forEach items="${legenda}" var="leg">
                         <option value="${leg}"> ${leg}</option>
                     </c:forEach>
@@ -79,7 +79,7 @@
         <div class="col-md-2">
             <h4 style="text-align:center; color:Blue">Ряд</h4>
             <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
-                <p><select size="10" name="row" class="form-control">
+                <p><select size="12" name="row" class="form-control">
                     <c:forEach items="${rowsMap}" var="rowEntry">
                         <c:if test="${row==rowEntry.key}">
                             <option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key}
@@ -96,20 +96,36 @@
         <div class="col-md-2">
             <h4 style="text-align:center; color:Blue">Место</h4>
             <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
-                <p><select multiple size="10" id="select" name="seat" class="form-control" name="select">
+                <p><select multiple size="12" id="select" name="seat" class="form-control" name="select">
+                    <c:forEach items="${seatsMap}" var="seatEntry">
+                        <c:if test="${seat==seatEntry.key}">
+                            <c:if test="${seatEntry.value=='Статус: выкуплен'||seatEntry.value=='Статус: забронирован'}">
+                                <option value="${seatEntry.key}" style="color:Red" selected >${seatEntry.key}.
+                                        ${seatEntry.value}</option>
+                            </c:if>
+                            <c:if test="${seatEntry.value=='Статус: не утверждён'}">
+                                <option value="${seatEntry.key}" style="color:Blue" selected >${seatEntry.key}.
+                                        ${seatEntry.value}</option>
+                            </c:if>
+                            <c:if test="${seatEntry.value=='Статус:  в продаже'}">
+                                <option value="${seatEntry.key}"onclick="this.form.submit()" style="color:Green"
+                                       selected >${seatEntry.key}.${seatEntry.value}</option>
+                            </c:if>
+                        </c:if>
 
-                    <c:forEach items="${seatsMap}" var="seat">
-                        <c:if test="${seat.value=='Статус: выкуплен'||seat.value=='Статус: забронирован'}">
-                            <option value="${seat.key}" style="color:Red">${seat.key}.
-                                    ${seat.value}</option>
-                        </c:if>
-                        <c:if test="${seat.value=='Статус: не утверждён'}">
-                            <option value="${seat.key}" style="color:Blue">${seat.key}.
-                                    ${seat.value}</option>
-                        </c:if>
-                        <c:if test="${seat.value=='Статус:  в продаже'}">
-                             <option value="${seat.key}"onclick="this.form.submit()" style="color:Green">${seat.key}.
-                                ${seat.value}</option>
+                        <c:if test="${seat!=seatEntry.key}">
+                             <c:if test="${seatEntry.value=='Статус: выкуплен'||seatEntry.value=='Статус: забронирован'}">
+                                 <option value="${seatEntry.key}" style="color:Red">${seatEntry.key}.
+                                         ${seatEntry.value}</option>
+                             </c:if>
+                                <c:if test="${seatEntry.value=='Статус: не утверждён'}">
+                                    <option value="${seatEntry.key}" style="color:Blue">${seatEntry.key}.
+                                          ${seatEntry.value}</option>
+                             </c:if>
+                             <c:if test="${seatEntry.value=='Статус:  в продаже'}">
+                                     <option value="${seatEntry.key}"onclick="this.form.submit()" style="color:Green">${seatEntry.key}.
+                                      ${seatEntry.value}</option>
+                             </c:if>
                         </c:if>
                     </c:forEach>
                 </select><p>
@@ -127,7 +143,7 @@
                    <th>Ряд</th>
                    <th>Место</th>
                    <th>Цена</th>
-                   <th>Delete</th>
+                   <th>Отмена</th>
                </form>
                </thead>
                <tbody>
@@ -141,8 +157,10 @@
                        <td>${ord.seat}</td>
                        <td>${ord.sector.price}</td>
                            <td>
+
                                <input type="hidden" name="ticketId" value="${ord.id}">
-                               <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();"><span class="glyphicon glyphicon-trash"></span></button>
+                               <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();">
+                                   <span class="glyphicon glyphicon-trash" ></span></button>
                            </td>
                        </form>
                    </tr>
@@ -152,21 +170,18 @@
        </div>
 
       </div>
-    </div>
+   </div>
 
-    <div class="col-md-7 col-lg-offset-4 ">
-    <tr>
-        <td>
-            <h4 style="text-align:center; color:Blue">Стоимость заказа: ${orderPrice} грн.</h4>
-        </td>
-        <td>
+   <div class="col-md-7 col-lg-offset-4 ">
+
+            <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
+
             <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
                 <h4 style="text-align:center">
                     <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Купить">
                 </h4>
             </form>
-        </td>
-     </tr>
+
     </div>
 </div>
 </body>

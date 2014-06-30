@@ -20,12 +20,12 @@ public class OrderController {
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
-    private List<Ticket> order = new ArrayList<>();
+    static public List<Ticket> order = new ArrayList<>();
     private double orderPrice=0;
     private Event currentEvent=null;
     private Sector currentSector=null;
     private int currentRow=1;
-
+    private int currentSeat=1;
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) throws SQLException {
@@ -56,6 +56,7 @@ public class OrderController {
                 model.addAttribute("rowsMap", rowsMap1);
                 Map<Integer, String> seatsMap1 = ticketService.seatStatus( currentSector, currentRow);
                 model.addAttribute("row", currentRow);
+                model.addAttribute("seat", currentSeat);
                 model.addAttribute("seatsMap", seatsMap1);
                 model.addAttribute("orderPrice", orderPrice);
                 model.addAttribute("orderList", order);
@@ -85,8 +86,10 @@ public class OrderController {
         }
         model.addAttribute("rowsMap", rowsMap1);
         currentRow=1;
+        currentSeat=1;
         Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
         model.addAttribute("row", currentRow);
+        model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
         return "Order";
     }
@@ -102,8 +105,10 @@ public class OrderController {
         }
         model.addAttribute("rowsMap", rowsMap1);
         currentRow=1;
+        currentSeat=1;
         Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
         model.addAttribute("row", currentRow);
+        model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
         return "Order";
     }
@@ -114,8 +119,10 @@ public class OrderController {
 
         currentSector=sector;
         currentRow=row;
+        currentSeat=1;
         Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
         model.addAttribute("row",currentRow);
+        model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
         return "Order";
     }
@@ -127,6 +134,13 @@ public class OrderController {
         ticket.setSector(sector);
         ticket.setRow(row);
         ticket.setSeat(seat);
+        currentSeat=seat;
+        if (order.size()>0){
+            for (Ticket ord: order){
+                if(ord.getSector()==sector&&ord.getSeat()==seat&&ord.getRow()==row)
+                    return "redirect:/Order/Order.do";
+            }
+        }
         orderPrice+=sector.getPrice();
         ticketService.addTicket(ticket);
         order.add(ticket);
@@ -136,7 +150,7 @@ public class OrderController {
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
          public String orderDelTicket(@RequestParam(value = "ticketId", required = true)
-                                       int ticketId, Model model) throws SQLException {
+                                       int ticketId) throws SQLException {
         ticketService.deleteTicket( ticketService.getTicketById(ticketId));
         for (Ticket ticket : order) {
             if ((int)ticket.getId() == (int)ticketId) {
@@ -145,7 +159,6 @@ public class OrderController {
                 break;
             }
         }
-        model.addAttribute("orderList", order);
         return "redirect:/Order/Order.do";
     }
 
@@ -158,3 +171,11 @@ public class OrderController {
          return "redirect:/Order/Order.do";
      }
 }
+
+
+       /* for (Ticket tic1: ticketForRemove){
+                                for (Ticket tic2:orderForRemove){
+                                    if (tic1.equals(tic2))
+                                        OrderController.order.remove(orderForRemove.indexOf(tic2));
+                                }
+                            }*/
