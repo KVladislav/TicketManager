@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(schema="public", name = "event")
-public class Event {
+public class Event implements Comparable<Event>{
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
@@ -88,5 +88,17 @@ public class Event {
 
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+
+    @Override
+    public int compareTo(Event event) {
+        Date compareDate = ((Event) event).getDate();
+
+        //ascending order
+        return this.date.compareTo(compareDate);
+
+        //descending order
+        //return compareQuantity - this.quantity;
+
     }
 }

@@ -14,7 +14,8 @@
 <%@include file="header.jsp" %>
 
 <head>
-    <!-- Bootstrap -->
+
+       <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
@@ -27,15 +28,10 @@
             src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>
     <script type="text/javascript"
             src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.js">
-    </script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js">
-    </script>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
+
     <script type="text/javascript">
         $(document).on("hover", ".cont", function () {
             $(this).children(".overlay").fadeIn("fast");
@@ -43,7 +39,6 @@
             $(this).children(".overlay").fadeOut("fast");
         });
     </script>
-
 
 </head>
 
@@ -54,22 +49,33 @@
 <div class="well">
     <label class="my-control-label" for="dateEvent">Date of event</label>
 
-    <div id="datetimepicker1" class="input-append date">
-        <input data-format="dd-MM-yyyy hh:mm:ss" type="text" name="odate" id="dateEvent">
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+    </head>
+    <body>
+    <div id="datetimepicker" class="input-append date">
+        <input type="text" name="dateEvent" id="dateEvent">
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
     </div>
-</div>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
+    <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script type="text/javascript"
+            src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript"
+            src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript">
+        $('#datetimepicker').datetimepicker({
+            format: 'dd-MM-yyyy hh:mm:ss',
             language: 'pt-BR'
         });
-    });
-</script>
-
+    </script>
+</div>
 
 <div class="control-group">
     <label class="my-control-label" for="outputName">Name</label>
@@ -92,17 +98,16 @@
     <label class="my-control-label" for="timeRemoveBooking">Removing the booking</label>
 
     <div class="my-controls">
-        <textarea rows="5" id="timeRemoveBooking" name="time"></textarea>
+        <textarea rows="1" id="timeRemoveBooking" name="time"></textarea>
+        <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+             alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
+             title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
     </div>
-
-    <img src="${pageContext.request.contextPath}/resources/img/Question.jpg"
-         alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
-         title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
 </div>
 
 <div class="panel-body" style="padding:20px; width:50%; margin-left: 10%">
 <div class="table responsive">
-<table class="table table-bordered" style="display:block;height:200px;overflow:auto;">
+<table class="table table-bordered" style="display:block;height:400px;overflow:auto;">
 <thead>
 <tr>
     <th>Sector</th>
@@ -344,7 +349,7 @@
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector21" name="sector21" value=1>
+            <input type="text" id="inputSector21" name="sector21" value=21>
         </div>
     </td>
     <td>

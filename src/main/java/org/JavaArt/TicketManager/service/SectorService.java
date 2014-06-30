@@ -58,4 +58,9 @@ public class SectorService {
     public void addSector(Sector sector) throws SQLException{
         sectorRepository.addSector(sector);
     }
+
+    public void updateSector(Sector sector) throws SQLException{
+        sectorRepository.updateSector(sector);
+    }
 }
+

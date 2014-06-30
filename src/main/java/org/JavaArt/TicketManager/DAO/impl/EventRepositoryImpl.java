@@ -15,13 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Vladislav Karpenko
- * Date: 06.06.2014
- * Time: 11:00
- */
-
 @Repository
 
 public class EventRepositoryImpl implements EventRepository {
