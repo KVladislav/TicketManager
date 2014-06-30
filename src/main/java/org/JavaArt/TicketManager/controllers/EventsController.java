@@ -30,6 +30,8 @@ public class EventsController {
     private List<Event> events = new ArrayList<>();
     private SectorService sectorService = new SectorService();
     private List<Sector> sectors = new ArrayList<>();
+    public Event editEvent;
+
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) throws SQLException {
@@ -106,6 +108,24 @@ public class EventsController {
         }
         status.setComplete();
         return "redirect:/Events/Events.do";
+    }
+
+
+    @RequestMapping(value = "Events/Edit.do", method = RequestMethod.POST)
+    public String eventsEdit(@RequestParam(value = "eventId", required = true) int eventId, Model model, SessionStatus status) throws SQLException {
+        this.editEvent = eventService.getEventById(eventId);
+
+        return "redirect:/EditEvent/EditEvent.do";
+
+    }
+
+    @RequestMapping(value = "EditEvent/EditEvent.do", method = RequestMethod.GET)
+    public String editEventGet(Model model) throws SQLException {
+        model.addAttribute("pageName", 8);//set menu page number
+        model.addAttribute("event", editEvent);
+        List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
+        model.addAttribute("sectors", sectors);
+        return "EditEvent";
     }
 
 
