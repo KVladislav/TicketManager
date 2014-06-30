@@ -106,6 +106,9 @@
     <orderEntry type="library" name="Maven: org.apache.maven:maven-archiver:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-repository-builder:1.0-alpha-2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="bootstrap-datetimepicker.pt-BR" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>
 
