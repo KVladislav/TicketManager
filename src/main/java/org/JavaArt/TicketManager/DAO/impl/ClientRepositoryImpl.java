@@ -101,24 +101,24 @@ public class ClientRepositoryImpl implements ClientRepository {
         return clients;
     }
 
-    @Override
-    public void deleteClient(Client client) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(client);
-            session.getTransaction().commit();
-            session.flush();
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-    }
+//    @Override
+//    public void deleteClient(Client client) throws SQLException {
+//        Session session = null;
+//        try {
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            session.beginTransaction();
+//            session.delete(client);
+//            session.getTransaction().commit();
+//            session.flush();
+//        }
+//        catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//        }
+//        finally {
+//            if (session!=null && session.isOpen()) {
+//                session.close();
+//            }
+//        }
+//
+//    }
 }

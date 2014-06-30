@@ -20,5 +20,5 @@ public interface OperatorRepository {
     public void updateOperator(Operator operator) throws SQLException;
     public Operator getOperatorById(int id) throws SQLException;
     public List<Operator> getAllOperators() throws SQLException;
-    public void deleteOperator(Operator operator) throws SQLException;
+//    public void deleteOperator(Operator operator) throws SQLException;
 }

@@ -19,8 +19,7 @@ public interface SectorRepository {
     public void addSector(Sector sector) throws SQLException;
     public void updateSector(Sector sector) throws SQLException;
     public Sector getSectorById(int id) throws SQLException;
-    public List<Sector> getAllSectors() throws SQLException;
-    public void deleteSector(Sector sector) throws SQLException;
+//    public void deleteSector(Sector sector) throws SQLException;
 
     public List<Sector> getSectorsByEvent(Event event);
     public List<Sector> getSectorsByEventOrderPrice(Event event);

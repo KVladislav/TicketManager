@@ -21,5 +21,5 @@ public interface EventRepository {
     public Event getEventById(int id) throws SQLException;
     public List<Event> getFutureEvents() throws SQLException;
     public List<Event> getAllEvents() throws SQLException;
-    public void deleteEvent(Event event) throws SQLException;
+//    public void deleteEvent(Event event) throws SQLException;
 }

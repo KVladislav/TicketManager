@@ -96,22 +96,22 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         return operators;
     }
 
-    @Override
-    public void deleteOperator(Operator operator) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(operator);
-            session.getTransaction().commit();
-            session.flush();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-    }
+//    @Override
+//    public void deleteOperator(Operator operator) throws SQLException {
+//        Session session = null;
+//        try {
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            session.beginTransaction();
+//            session.delete(operator);
+//            session.getTransaction().commit();
+//            session.flush();
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//        } finally {
+//            if (session != null && session.isOpen()) {
+//                session.close();
+//            }
+//        }
+//
+//    }
 }

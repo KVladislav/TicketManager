@@ -83,44 +83,26 @@ public class SectorRepositoryImpl implements SectorRepository {
 
     }
 
-    @Override
-    public List<Sector> getAllSectors() throws SQLException {
-        Session session = null;
-        List<Sector> sectors = null;// = new ArrayList<Zone>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            sectors = session.createCriteria(Sector.class).list();
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return sectors;    }
-
-    @Override
-    public void deleteSector(Sector sector) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(sector);
-            session.getTransaction().commit();
-            session.flush();
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-    }
+//    @Override
+//    public void deleteSector(Sector sector) throws SQLException {
+//        Session session = null;
+//        try {
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            session.beginTransaction();
+//            session.delete(sector);
+//            session.getTransaction().commit();
+//            session.flush();
+//        }
+//        catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//        }
+//        finally {
+//            if (session!=null && session.isOpen()) {
+//                session.close();
+//            }
+//        }
+//
+//    }
 
     @Override
     public List<Sector> getSectorsByEvent(Event event) {
