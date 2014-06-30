@@ -4,6 +4,8 @@ import org.JavaArt.TicketManager.DAO.OperatorRepository;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
@@ -81,7 +83,9 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         List<Operator> operators = null;//new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            operators = session.createCriteria(Operator.class).list();
+            operators = session.createCriteria(Operator.class)
+                    .add(Restrictions.eq("isDeleted", new Boolean("false")))
+                    .addOrder(Order.asc("id")).list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
