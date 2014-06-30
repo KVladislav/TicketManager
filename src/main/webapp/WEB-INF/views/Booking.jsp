@@ -94,18 +94,17 @@
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                         <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
-                            <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
-                            <%--<c:if test="${! seatEntry.value}">--%>
-                            <%--<option disabled="disabled" value="${seatEntry.key}">${seatEntry.key}</option>--%>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${seatEntry.value}">--%>
-                            <%--<option value="${seatEntry.key}">${seatEntry.key}</option>--%>
-                            <%--</c:if>--%>
-
-                            <%--</c:forEach>--%>
                             <c:forEach items="${seatsMap}" var="seatEntry">
-                                <option value="${seatEntry}">${seatEntry}</option>
+                            <c:if test="${! seatEntry.value}">
+                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key}</option>
+                            </c:if>
+                            <c:if test="${seatEntry.value}">
+                            <option value="${seatEntry.key}">${seatEntry.key}</option>
+                            </c:if>
                             </c:forEach>
+                            <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
+                                <%--<option value="${seatEntry}">${seatEntry}</option>--%>
+                            <%--</c:forEach>--%>
                         </select>
                 </div>
             </div>
