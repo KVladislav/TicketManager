@@ -8,13 +8,14 @@ import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +24,7 @@ import java.util.TreeMap;
  * Time: 18:06
  */
 @Controller
-
+@SessionAttributes("bookingTimeOut")
 public class BookingController {
     private String errorMessage = null;
     private TicketService ticketService = TicketService.getInstance();
@@ -39,6 +40,7 @@ public class BookingController {
     private Event event;
     private double bookingPrice = 0;
     private int row = 1;
+    private Date bookingTimeOut;
 
 
     @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.GET)
@@ -135,6 +137,10 @@ public class BookingController {
     @RequestMapping(value = "Booking/addTicket.do", method = RequestMethod.POST)
     public String bookingAddTicket(@RequestParam(value = "seats", required = false) int[] seats, Model model) throws SQLException {
         if (seats != null) {
+            if(bookingTimeOut==null) {
+                bookingTimeOut = new Date();
+                model.addAttribute("bookingTimeOut", bookingTimeOut);
+            }
             for (int seat : seats) {
                 if (ticketService.isPlaceFree(sector, row, seat)) {
                     Ticket ticket = new Ticket();
@@ -153,7 +159,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/Finish.do", method = RequestMethod.POST)
-    public String bookingFinish(Model model) throws SQLException {
+    public String bookingFinish(SessionStatus sessionStatus) throws SQLException {
         for (Ticket ticket : tickets) {
             ticket.setConfirmed(true);
         }
@@ -161,16 +167,20 @@ public class BookingController {
         tickets.clear();
         bookingPrice = 0;
         errorMessage = null;
+        bookingTimeOut = null;
+        sessionStatus.setComplete();
 
         return "redirect:/Booking/Booking.do";
     }
 
-    @RequestMapping(value = "Booking/Cancel.do", method = RequestMethod.POST)
-    public String bookingCancel(Model model) throws SQLException {
+    @RequestMapping(value = "Booking/Cancel.do")
+    public String bookingCancel(SessionStatus sessionStatus) throws SQLException {
         ticketService.deleteTickets(tickets);
         tickets.clear();
         bookingPrice = 0;
         errorMessage = null;
+        bookingTimeOut = null;
+        sessionStatus.setComplete();
         return "redirect:/Booking/Booking.do";
     }
 
@@ -199,6 +209,7 @@ public class BookingController {
         model.addAttribute("row", row);
         model.addAttribute("seatsMap", seatsMap);
         model.addAttribute("rowsMap", rowsMap);
+//        model.addAttribute("bookingTimeOut", bookingTimeOut);
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
         }
