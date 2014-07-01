@@ -134,6 +134,8 @@ public class OrderController {
         ticket.setSector(sector);
         ticket.setRow(row);
         ticket.setSeat(seat);
+        ticket.setReserved(false);
+        ticket.setConfirmed(false);
         currentSeat=seat;
         if (order.size()>0){
             for (Ticket ord: order){

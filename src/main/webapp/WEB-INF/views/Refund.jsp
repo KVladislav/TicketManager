@@ -5,18 +5,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@include file="header.jsp"%>
-<center>
-    <br><br><br><br><br>
-    <b> Поиск по номеру/фио</b>
 
-<form class="form-search">
-
-    <div class="input-append">
-        <input type="text" class="span3 search-query">
-        <button type="submit" class="btn">Поиск</button>
+<!DOCTYPE html>
+<html lang="ru">
+<body>
+    <div class="Refund">
+    <center>
+         <br>
+            <h3 class="panel-heading" style=" color:Blue" >Возврат билета</h3>
+               <form action="${pageContext.request.contextPath}/Refund/Refund.do" method="post">
+                  <br><br>
+                  <h4> Поиск по номеру билета(ID)</h4>
+                  <td>
+                       <div>
+                            <input type="text" id="ticketId" name="ticketId" />
+                       </div>
+                  </td>
+                  <button type="submit" name="action" class="btn btn-primary">Delete</button>
+               </form>
+       </center>
     </div>
-    </form>
-
-</center>
 </body>
 </html>
+
