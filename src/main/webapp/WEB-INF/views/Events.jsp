@@ -61,13 +61,13 @@
                     <td><fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm:ss"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
-                            <input type="hidden" name="eventId" value="${event.id}">
-                            <button type="submit" name="action" value="edit" class="btn">Edit</button>
+                            <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">
+                            <button type="submit" name="evnt" value="${evnt.id}" class="btn">Edit</button>
                         </form>
                     </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
-                            <input type="hidden" name="eventId" value="${event.id}">
+                            <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">
                             <button type="submit" name="evnt" value="${evnt.id}" class="btn">Delete</button>
                         </form>
                     </td>

@@ -53,8 +53,8 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "eventId", required = true) int eventId, Model model, SessionStatus status) throws SQLException {
-        Event event = eventService.getEventById(eventId);
+    public String eventsSetDelete(@RequestParam(value = "evnt", required = true) int evnt, Model model, SessionStatus status) throws SQLException {
+        Event event = eventService.getEventById(evnt);
         event.setDeleted(true);
         eventService.updateEvent(event);
         List<Sector> sectors = sectorService.getSectorsByEvent(event);
@@ -62,6 +62,7 @@ public class EventsController {
             boolean isDeleted = true;
             sector.setDeleted(isDeleted);
             sectorService.updateSector(sector);
+            sectors.add(sector);
         }
 
         status.setComplete();
@@ -74,18 +75,19 @@ public class EventsController {
     }
 
     @RequestMapping(value = "NewEvent/addEvent.do", method = RequestMethod.POST)
-    public String bookingAddEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent, String name, String description, int time, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
-        if (name == null) return "redirect:/NewEvent/NewEvent.do";
+    public String bookingAddEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
+        if (description == null) return "redirect:/NewEvent/NewEvent.do";
         Event event = new Event();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         Date trueDate = format.parse(dateEvent);
         event.setDate(trueDate);
         boolean isDeleted = false;
         event.setDeleted(isDeleted);
-        event.setDescription(name + " " + description);
+        event.setDescription(" " + description);
         //    event.setOperator(operator);
         Date nowDate = new Date();
         event.setTimeStamp(nowDate);
+        int time = Integer.parseInt(timeRemoveBooking);
         event.setBookingTimeOut(time);
         eventService.addEvent(event);
         events.add(event);
@@ -112,20 +114,61 @@ public class EventsController {
 
 
     @RequestMapping(value = "Events/Edit.do", method = RequestMethod.POST)
-    public String eventsEdit(@RequestParam(value = "eventId", required = true) int eventId, Model model, SessionStatus status) throws SQLException {
-        this.editEvent = eventService.getEventById(eventId);
-
-        return "redirect:/EditEvent/EditEvent.do";
+    public String eventsEdit(@RequestParam(value = "evnt") int evnt, Model model, SessionStatus status, HttpServletRequest request) throws SQLException {
+        this.editEvent = eventService.getEventById(evnt);
+      //  String param = request.getParameter(String.valueOf(eventId));
+      return "redirect:/EditEvent/EditEvent.do";
 
     }
 
     @RequestMapping(value = "EditEvent/EditEvent.do", method = RequestMethod.GET)
-    public String editEventGet(Model model) throws SQLException {
+    public String editEventGet(Model model,SessionStatus statusEvent) throws SQLException {
         model.addAttribute("pageName", 8);//set menu page number
-        model.addAttribute("event", editEvent);
+        model.addAttribute("eventEdit", this.editEvent);
+        model.addAttribute("eventDescriptions", this.editEvent.getDescription());
+        model.addAttribute("eventBookingTimeOut", this.editEvent.getBookingTimeOut());
         List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
         model.addAttribute("sectors", sectors);
+
         return "EditEvent";
+    }
+
+
+    @RequestMapping(value = "EditEvent/editEventNow.do", method = RequestMethod.POST)
+    public String editEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent,int eventEditHidden, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
+        if (description == null) return "redirect:/EditEvent/EditEvent.do";
+        Event event = eventService.getEventById(eventEditHidden);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        Date trueDate = format.parse(dateEvent);
+        event.setDate(trueDate);
+        boolean isDeleted = false;
+        event.setDeleted(isDeleted);
+        event.setDescription(" " + description);
+        //    event.setOperator(operator);
+        Date nowDate = new Date();
+        event.setTimeStamp(nowDate);
+        int time = Integer.parseInt(timeRemoveBooking);
+        event.setBookingTimeOut(time);
+        eventService.updateEvent(event);
+        List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
+        int i =0;
+        for (Sector sector:sectors) {
+            sector.setEvent(event);
+            sector.setName("" + i);
+            String param = request.getParameter("price" + i);
+            i++;
+            double somePrice = 0d;
+            if (param != null && param.isEmpty() == false) {
+                somePrice = Double.parseDouble(param);
+            }
+            sector.setPrice(somePrice);
+            sector.setMaxRows(20);
+            sector.setMaxSeats(50);
+            sector.setDeleted(isDeleted);
+            sectorService.updateSector(sector);
+         }
+        status.setComplete();
+        return "redirect:/Events/Events.do";
     }
 
 
