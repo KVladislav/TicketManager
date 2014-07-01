@@ -82,12 +82,26 @@
                 <p><select size="12" name="row" class="form-control">
                     <c:forEach items="${rowsMap}" var="rowEntry">
                         <c:if test="${row==rowEntry.key}">
-                            <option value="${rowEntry.key}" onclick="this.form.submit()" selected>${rowEntry.key}
-                                 ряд. Свободно ${rowEntry.value} мест</option>
+                            <c:if test="${rowEntry.value==0}">
+                                <option value="${rowEntry.key}"onclick="this.form.submit()" style="color:Red" selected  >${rowEntry.key}
+                                    ряд. Свободных мест нет</option>
+                            </c:if>
+                            <c:if test="${rowEntry.value!=0}">
+                                <option value="${rowEntry.key}"onclick="this.form.submit()" selected>${rowEntry.key}
+                                    ряд. Свободно ${rowEntry.value} мест</option>
+
+                            </c:if>
                         </c:if>
                         <c:if test="${row!=rowEntry.key}">
-                            <option value="${rowEntry.key}" onclick="this.form.submit()">${rowEntry.key}
-                                ряд. Свободно ${rowEntry.value} мест</option>
+                            <c:if test="${rowEntry.value==0}">
+                                <option value="${rowEntry.key}"onclick="this.form.submit()" style="color:Red" selected  >${rowEntry.key}
+                                    ряд. Свободных мест нет</option>
+                            </c:if>
+                            <c:if test="${rowEntry.value!=0}">
+                                <option value="${rowEntry.key}" onclick="this.form.submit()" >${rowEntry.key}
+                                    ряд. Свободно ${rowEntry.value} мест</option>
+
+                            </c:if>
                         </c:if>
                     </c:forEach>
                 </select></p>
@@ -157,7 +171,6 @@
                        <td>${ord.seat}</td>
                        <td>${ord.sector.price}</td>
                            <td>
-
                                <input type="hidden" name="ticketId" value="${ord.id}">
                                <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();">
                                    <span class="glyphicon glyphicon-trash" ></span></button>
