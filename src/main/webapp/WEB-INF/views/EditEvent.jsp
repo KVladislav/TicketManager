@@ -44,6 +44,8 @@
 <div class="panel-heading" style="text-align:center;"><b>Edit event</b></div>
 <center>
 
+<form action="${pageContext.request.contextPath}/EditEvent/editEventNow.do" method="post">
+<input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
 
 <div class="well">
     <label class="my-control-label" for="dateEvent">Date of event</label>
@@ -54,8 +56,8 @@
     </head>
     <body>
     <div id="datetimepicker" class="input-append date">
-        <input type="text" name="dateEvent" id="dateEvent" value="${event.getDate()}">
-      <span class="add-on">
+        <input type="text" name="dateEvent" id="dateEvent" value="<fmt:formatDate value='${eventEdit.getDate()}' type='both' />"/>
+     <%--   <input type="text" name="dateEvent" id="dateEvent" value="${eventEdit.getDate()}"> --%>
         <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
       </span>
     </div>
@@ -74,30 +76,22 @@
             language: 'pt-BR'
         });
     </script>
+    </body>
 </div>
 
 <div class="control-group">
-    <label class="my-control-label" for="outputName">Name</label>
+    <label class="my-control-label" for="description">Description</label>
 
     <div class="my-controls">
-        <textarea rows="1" id="outputName" name="name" value="${event.getDescription()}"></textarea>
+        <input type="text" id="description" name="description" value="${eventDescriptions}">
     </div>
 </div>
 
-
-<div class="control-group">
-    <label class="my-control-label" for="outputDescription">Description</label>
-
-    <div class="my-controls">
-        <textarea rows="5" id="outputDescription" name="description" value="${event.getDescription()}"></textarea>
-    </div>
-</div>
 
 <div class="control-group">
     <label class="my-control-label" for="timeRemoveBooking">Removing the booking</label>
-
     <div class="my-controls">
-        <textarea rows="1" id="timeRemoveBooking" name="time" value="${event.getBookingTimeOut()}"></textarea>
+        <input type="text" id="timeRemoveBooking" name="timeRemoveBooking" value="${eventBookingTimeOut}">
         <img src="${pageContext.request.contextPath}/resources/img/Question.png"
              alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
              title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
@@ -452,7 +446,5 @@
 <button type="submit" name="action" class="btn btn-primary">Save</button>
 &MediumSpace;
 &MediumSpace;
-
 </form>
-
 </center>
