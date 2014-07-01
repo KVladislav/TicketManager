@@ -21,7 +21,7 @@ public class OrderController {
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
     static public List<Ticket> order = new ArrayList<>();
-    private double orderPrice=0;
+    static public double orderPrice=0;
     private Event currentEvent=null;
     private Sector currentSector=null;
     private int currentRow=1;
@@ -91,7 +91,7 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
-        return "Order";
+        return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/setRow.do", method = RequestMethod.POST)
@@ -110,7 +110,7 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
-        return "Order";
+        return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/setSeat.do", method = RequestMethod.POST)
@@ -124,12 +124,12 @@ public class OrderController {
         model.addAttribute("row",currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
-        return "Order";
+        return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
     public String orderAddTicket(@ModelAttribute(value = "row") int row, @RequestParam(value = "seat",
-                  required = true) int seat, @ModelAttribute Sector sector,  Model model) throws SQLException {
+                  required = true) int seat, @ModelAttribute Sector sector) throws SQLException {
         Ticket ticket = new Ticket();
         ticket.setSector(sector);
         ticket.setRow(row);
@@ -144,7 +144,6 @@ public class OrderController {
         orderPrice+=sector.getPrice();
         ticketService.addTicket(ticket);
         order.add(ticket);
-        model.addAttribute("orderList", order);
         return "redirect:/Order/Order.do";
     }
 
@@ -153,7 +152,7 @@ public class OrderController {
                                        int ticketId) throws SQLException {
         ticketService.deleteTicket( ticketService.getTicketById(ticketId));
         for (Ticket ticket : order) {
-            if ((int)ticket.getId() == (int)ticketId) {
+            if ((int)ticket.getId() == ticketId) {
                 order.remove(ticket);
                 orderPrice-=ticket.getSector().getPrice();
                 break;
@@ -171,11 +170,3 @@ public class OrderController {
          return "redirect:/Order/Order.do";
      }
 }
-
-
-       /* for (Ticket tic1: ticketForRemove){
-                                for (Ticket tic2:orderForRemove){
-                                    if (tic1.equals(tic2))
-                                        OrderController.order.remove(orderForRemove.indexOf(tic2));
-                                }
-                            }*/

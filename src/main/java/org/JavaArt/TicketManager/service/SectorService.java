@@ -43,7 +43,7 @@ public class SectorService {
             buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
             index=0;
             for (int i=0;i<sector.size(); i++){
-                if((double)sector.get(i).getPrice()==(double)sortByPrice.get(j)) {
+                if((double)sector.get(i).getPrice()==sortByPrice.get(j)) {
                     if (index==0) buf.append(sector.get(i).getName());
                     if (index>0) buf.append(", ").append(sector.get(i).getName());
                     index++;

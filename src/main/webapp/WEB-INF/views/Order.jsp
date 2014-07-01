@@ -99,7 +99,7 @@
                 <p><select multiple size="12" id="select" name="seat" class="form-control" name="select">
                     <c:forEach items="${seatsMap}" var="seatEntry">
                         <c:if test="${seat==seatEntry.key}">
-                            <c:if test="${seatEntry.value=='Статус: выкуплен'||seatEntry.value=='Статус: забронирован'}">
+                            <c:if test="${seatEntry.value=='Статус: продан'||seatEntry.value=='Статус: забронирован'}">
                                 <option value="${seatEntry.key}" style="color:Red" selected >${seatEntry.key}.
                                         ${seatEntry.value}</option>
                             </c:if>
@@ -114,7 +114,7 @@
                         </c:if>
 
                         <c:if test="${seat!=seatEntry.key}">
-                             <c:if test="${seatEntry.value=='Статус: выкуплен'||seatEntry.value=='Статус: забронирован'}">
+                             <c:if test="${seatEntry.value=='Статус: продан'||seatEntry.value=='Статус: забронирован'}">
                                  <option value="${seatEntry.key}" style="color:Red">${seatEntry.key}.
                                          ${seatEntry.value}</option>
                              </c:if>
@@ -169,20 +169,17 @@
            </table>
        </div>
 
+       <div class="col-md-7 col-lg-offset-3 ">
+           <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
+               <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
+               <h4 style="text-align:center">
+                   <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Купить">
+               </h4>
+           </form>
+       </div>
+
       </div>
    </div>
-
-   <div class="col-md-7 col-lg-offset-4 ">
-
-            <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
-
-            <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
-                <h4 style="text-align:center">
-                    <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Купить">
-                </h4>
-            </form>
-
-    </div>
 </div>
 </body>
 </html>

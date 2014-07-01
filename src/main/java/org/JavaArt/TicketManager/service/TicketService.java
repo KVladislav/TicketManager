@@ -89,7 +89,7 @@ public class TicketService {
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
                         if ((tic.getReserved()&&tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
-                        if (!tic.getReserved()&&tic.isConfirmed()) seatsMap.put(i, "Статус: выкуплен");
+                        if (!tic.getReserved()&&tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
                         if (!tic.isConfirmed()) seatsMap.put(i, "Статус: не утверждён");
                     }
                 }
@@ -115,7 +115,19 @@ public class TicketService {
                             }
                         }
                         if(ticketForRemove.size()>0) {
-                            ticketRepository.deleteTickets(ticketForRemove);
+                            if  (OrderController.order.size()>0){
+                                for (Ticket tic1: ticketForRemove){
+                                    for (Ticket tic2:OrderController.order){
+                                        if (((int)tic1.getRow()==tic2.getRow())&&((int)tic1.getSeat()==
+                                                tic2.getSeat())&&tic1.getSector().equals(tic2.getSector())){
+                                            OrderController.orderPrice-=tic2.getSector().getPrice();
+                                            OrderController.order.remove(tic2);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        ticketRepository.deleteTickets(ticketForRemove);
                         }
                         ticketForRemove.clear();
                     }
