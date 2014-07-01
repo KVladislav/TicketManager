@@ -24,7 +24,7 @@ import java.util.*;
  * Time: 18:06
  */
 @Controller
-@SessionAttributes("bookingTimeOut")
+@SessionAttributes({"bookingTimeOut", "pageName"})
 public class BookingController {
     private String errorMessage = null;
     private TicketService ticketService = TicketService.getInstance();
@@ -163,6 +163,7 @@ public class BookingController {
         for (Ticket ticket : tickets) {
             ticket.setConfirmed(true);
         }
+        //TODO сдеать проверку на свободность, если занят, то предупреждение с рефрешем заказа
         ticketService.saveOrUpdateTickets(tickets);
         tickets.clear();
         bookingPrice = 0;

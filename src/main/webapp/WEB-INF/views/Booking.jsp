@@ -43,7 +43,7 @@
 
         countdown(function () {
             alert('Заказ отменен');
-            <%--window.location.replace("${pageContext.request.contextPath}/Booking/Cancel.do");--%>
+            window.location.replace("${pageContext.request.contextPath}/Booking/Cancel.do");
         });
     }//]]>
 
