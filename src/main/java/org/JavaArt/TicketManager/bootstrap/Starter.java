@@ -34,7 +34,7 @@ public class Starter {
         Client client = new Client();
         client.setName("Client");
         client.setDescription("");
-        clientRepository.addClient(client);
+        clientRepository.saveOrUpdateClient(client);
 
 
         Event event = new Event();

@@ -89,7 +89,7 @@ public class EventRepositoryImpl implements EventRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             events = session.createCriteria(Event.class)
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
-                    .addOrder( Order.asc("id") ).list();
+                    .addOrder( Order.asc("date") ).list();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

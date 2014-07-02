@@ -32,6 +32,17 @@ public class TicketService {
         return ticketService;
     }
 
+    public int getTicketsAmountByClient(Client client) {
+        return ticketRepository.getTicketsAmountByClient(client);
+
+    }
+
+    public List<Ticket> getTicketsByClient(Client client){
+        return ticketRepository.getTicketsByClient(client);
+
+
+    }
+
     public int getFreeTicketsAmountBySector(Sector sector) throws SQLException {
         return ticketRepository.getFreeTicketsAmountBySector(sector);
     }

@@ -1,8 +1,10 @@
 package org.JavaArt.TicketManager.controllers;
 
+import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.service.ClientService;
 import org.JavaArt.TicketManager.service.EventService;
 import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
@@ -28,6 +30,7 @@ import java.util.*;
 public class BookingController {
     private String errorMessage = null;
     private TicketService ticketService = TicketService.getInstance();
+    private ClientService clientService = ClientService.getInstance();
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
     private List<Ticket> tickets = new ArrayList<>();
@@ -41,11 +44,70 @@ public class BookingController {
     private double bookingPrice = 0;
     private int row = 1;
     private Date bookingTimeOut;
+    //    private Map<Client, Integer[]> clients;
+    private Client client;
+
+    @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
+    public String bookingPaymentInit(Model model) throws SQLException {
+        model.addAttribute("pageName", 2);//set menu page number
+        model.addAttribute("client", client);
+        return "Clients";
+    }
+
+    @RequestMapping(value = "Booking/ProceedClientName.do", method = RequestMethod.POST)
+    public String bookingProceedClientName(Model model, @RequestParam(value = "clientName", required = true) String clientName,
+                                           @RequestParam(value = "action", required = true) String action) throws SQLException {
+        Map<Client, Integer[]> clients = new HashMap<>();
+        if (action.equals("NewClient")) {
+            client = new Client();
+            client.setName(clientName);
+            model.addAttribute(client);
+            return "NewClient";
+        } else {
+            List<Client> clientsList = clientService.getClientsByName(clientName);
+
+            if (clientsList != null) {
+                for (Client client1 : clientsList) {
+                    List<Ticket> tickets1 = ticketService.getTicketsByClient(client1);
+                    if (tickets1 != null && tickets1.size()>0) {
+                        int ticketAmount = tickets1.size();
+                        int bookingPrice=0;
+                        for (Ticket ticket : tickets1) {
+                            bookingPrice+=ticket.getSector().getPrice();
+                        }
+                        clients.put(client1, new Integer[]{ticketAmount, bookingPrice});
+                    }
+                }
+            }
+        }
+        model.addAttribute("clients", clients);
+        return "Clients";
+    }
+
+    @RequestMapping(value = "Booking/NewClientSave.do", method = RequestMethod.POST)
+    public String bookingNewClientSave(@RequestParam(value = "clientName", required = true) String
+                                               clientName, @RequestParam(value = "clientDescription", required = true) String clientDescription) throws
+            SQLException {
+        client.setName(clientName);
+        client.setDescription(clientDescription);
+        clientService.saveOrUpdateClient(client);
+        return "redirect:/Booking/Booking.do";
+    }
+
+    @RequestMapping(value = "Booking/ViewClient.do", method = RequestMethod.POST)
+    public String bookingViewClient(@RequestParam(value = "clientId", required = true) int clientId, Model
+            model) throws SQLException {
+        System.out.println(clientId);
+
+        return "Clients";
+    }
 
 
     @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.GET)
     public String bookingGet(Model model) throws SQLException {
-        model.addAttribute("pageName", 2);//set menu page number
+        if (client == null) {
+            return "redirect:/Booking/GetClient.do";
+        }
 
         events = eventService.getAllEvents();
         if (events != null && events.size() > 0) {
@@ -123,7 +185,8 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/setSeat.do", method = RequestMethod.POST)
-    public String bookingSetSeat(@RequestParam(value = "row", required = true) int row, Model model) throws SQLException {
+    public String bookingSetSeat(@RequestParam(value = "row", required = true) int row, Model model) throws
+            SQLException {
 
         this.row = row;
         seatsMap = new TreeMap<>();
@@ -135,9 +198,10 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/addTicket.do", method = RequestMethod.POST)
-    public String bookingAddTicket(@RequestParam(value = "seats", required = false) int[] seats, Model model) throws SQLException {
+    public String bookingAddTicket(@RequestParam(value = "seats", required = false) int[] seats, Model
+            model) throws SQLException {
         if (seats != null) {
-            if(bookingTimeOut==null) {
+            if (bookingTimeOut == null) {
                 bookingTimeOut = new Date();
                 model.addAttribute("bookingTimeOut", bookingTimeOut);
             }
@@ -147,6 +211,8 @@ public class BookingController {
                     ticket.setSector(sector);
                     ticket.setRow(row);
                     ticket.setSeat(seat);
+                    ticket.setClient(client);
+                    ticket.setReserved(true);
                     bookingPrice = bookingPrice + sector.getPrice();
                     ticketService.addTicket(ticket);
                     tickets.add(ticket);
@@ -171,7 +237,7 @@ public class BookingController {
         bookingTimeOut = null;
         sessionStatus.setComplete();
 
-        return "redirect:/Booking/Booking.do";
+        return "redirect:/Booking/GetClient.do";
     }
 
     @RequestMapping(value = "Booking/Cancel.do")
@@ -182,7 +248,7 @@ public class BookingController {
         errorMessage = null;
         bookingTimeOut = null;
         sessionStatus.setComplete();
-        return "redirect:/Booking/Booking.do";
+        return "redirect:/Booking/GetClient.do";
     }
 
     @RequestMapping(value = "Booking/delTicket.do", method = RequestMethod.POST)
@@ -210,6 +276,7 @@ public class BookingController {
         model.addAttribute("row", row);
         model.addAttribute("seatsMap", seatsMap);
         model.addAttribute("rowsMap", rowsMap);
+        model.addAttribute("client", client);
 //        model.addAttribute("bookingTimeOut", bookingTimeOut);
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);

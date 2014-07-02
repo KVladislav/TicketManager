@@ -18,23 +18,24 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <form class="form-search" action="${pageContext.request.contextPath}/Booking/GetClients.do" method="post"
-                  name="SearchClient">
-                <div class="input-append">
-                    <input type="text" name="searchWord" class="span8 search-query">
-                    <button type="submit" class="btn" onclick="document.SearchClient.submit()">Найти</button>
-                </div>
+            <form class="form-search" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do" method="post">
+                    <div class="input">
+                        <input class="span8" id="appendedInputButtons" size="16" type="text" name="clientName" required placeholder="Введите ФИО клиента" value="${client.name}">
+                        <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
+                        <button class="btn" type="submit" name="action" value="NewClient">Новая бронь</button>
+                    </div>
+                </form>
             </form>
         </div>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
+            <c:if test="${clients!=null}">
             <table class="table table-hover table-condensed">
                 <thead>
                 <tr>
                     <th>Клиент</th>
                     <th>Билеты</th>
-                    <th>Мероприятия</th>
                     <th>Цена</th>
                 </tr>
                 </thead>
@@ -45,14 +46,12 @@
                       method="post">
                     <c:forEach items="${clients}" var="clientEntry">
                         <tr>
-                            <td>${clientEntry.name}</td>
+                            <td>${clientEntry.key.name}</td>
                             <td>${clientEntry.value[0]}</td>
                             <td>${clientEntry.value[1]}</td>
-                            <td>${clientEntry.value[2]}</td>
                             <td>
                                 <input type="hidden" name="clientId" value="${client.id}">
-                                <button class="btn btn-default btn-xs" onclick="document.selectClient.submit();"><span
-                                        class="glyphicon glyphicon-trash"></span></button>
+                                <button class="btn" type="submit">Выбрать</button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -60,6 +59,7 @@
 
                 </tbody>
             </table>
+                </c:if>
 
         </div>
     </div>

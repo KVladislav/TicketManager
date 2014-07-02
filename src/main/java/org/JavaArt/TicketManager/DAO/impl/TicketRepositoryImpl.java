@@ -1,11 +1,13 @@
 package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.TicketRepository;
+import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -22,24 +24,6 @@ import java.util.List;
 @Repository
 
 public class TicketRepositoryImpl implements TicketRepository {
-
-//    @Override
-//    public void saveOrUpdateTicket(Ticket ticket) {
-//        Session session = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            session.saveOrUpdateTicket(ticket);
-//            session.getTransaction().commit();
-//            session.flush();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//    }
 
     @Override
     public void saveOrUpdateTicket(Ticket ticket) {
@@ -188,6 +172,56 @@ public class TicketRepositoryImpl implements TicketRepository {
                 session.close();
             }
         }
+    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Ticket> getTicketsByClient(Client client) {
+        Session session = null;
+        List<Ticket> tickets = null;
+//        List<Ticket> result = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets = session.createCriteria(Ticket.class)
+                    .add(Restrictions.eq("client", client))
+                    .add(Restrictions.eq("isReserved", true))
+                    .add(Restrictions.eq("isConfirmed", true))
+                    .addOrder(Order.asc("sector")).list();
+//            if (tickets != null) {
+//                result = new ArrayList<>();
+//                for (Ticket ticket : tickets) {
+//                    if (ticket.getSector().getEvent().getDate().getTime() > new Date().getTime()) {
+//                        result.add(ticket);
+//                    }
+//                }
+//            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return tickets;
+    }
+
+    @Override
+    public int getTicketsAmountByClient(Client client) {
+        Session session = null;
+        int counter = 0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            Query query = session.createQuery("select count (*) from Ticket where isReserved = true and isConfirmed = true and client =" + client.getId());
+            counter = ((Long) query.uniqueResult()).intValue();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return counter;
+
     }
 
     @Override
