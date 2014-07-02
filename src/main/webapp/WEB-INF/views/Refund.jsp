@@ -21,7 +21,12 @@
                             <input type="text" id="ticketId" name="ticketId" />
                        </div>
                   </td>
-                  <button type="submit" name="action" class="btn btn-primary">Delete</button>
+
+                   <form action="${pageContext.request.contextPath}/Refund/Refund.do" method="post" >
+                       <input type="hidden" name="ticketId" value="${ticket.id}">
+                       <button type="submit" name="${ticket.id}" value="FALSE" class="btn btn-primary">Delete</button>
+
+                   </form>
                </form>
        </center>
     </div>
