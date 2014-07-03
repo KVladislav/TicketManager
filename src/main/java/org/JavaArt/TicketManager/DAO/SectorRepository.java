@@ -16,10 +16,10 @@ import java.util.List;
 @Repository
 
 public interface SectorRepository {
-    public void addSector(Sector sector) throws SQLException;
-    public void updateSector(Sector sector) throws SQLException;
-    public Sector getSectorById(int id) throws SQLException;
-//    public void deleteSector(Sector sector) throws SQLException;
+    public void addSector(Sector sector);
+    public void updateSector(Sector sector);
+    public Sector getSectorById(int id);
+//    public void deleteSector(Sector sector);
 
     public List<Sector> getSectorsByEvent(Event event);
     public List<Sector> getSectorsByEventOrderPrice(Event event);

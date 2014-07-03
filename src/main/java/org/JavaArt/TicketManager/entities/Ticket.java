@@ -33,6 +33,10 @@ public class Ticket {
     @Column(name = "isReserved")
     private boolean isReserved;
 
+    @Column(name = "isDeleted")
+    private boolean isDeleted;
+
+
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
 
@@ -47,6 +51,14 @@ public class Ticket {
 
 
     public Ticket() {}
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
     public boolean isConfirmed() {
         return isConfirmed;

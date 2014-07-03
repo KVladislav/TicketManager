@@ -50,7 +50,7 @@
                             <td>${clientEntry.value[0]}</td>
                             <td>${clientEntry.value[1]}</td>
                             <td>
-                                <input type="hidden" name="clientId" value="${client.id}">
+                                <input type="hidden" name="clientId" value="${clientEntry.key.id}">
                                 <button class="btn" type="submit">Выбрать</button>
                             </td>
                         </tr>

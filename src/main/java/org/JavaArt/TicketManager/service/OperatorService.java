@@ -13,26 +13,26 @@ import java.util.List;
 public class OperatorService {
     private OperatorRepository operatorRepository = new OperatorRepositoryImpl();
 
-    public List<Operator> getAllOperators() throws SQLException {
+    public List<Operator> getAllOperators() {
         List<Operator> operators = operatorRepository.getAllOperators();
         return operators;
     }
     
-    public void deleteOperator(int id) throws SQLException {
+    public void deleteOperator(int id) {
         Operator operator = operatorRepository.getOperatorById(id);
         operator.setDeleted(true);
         operatorRepository.updateOperator(operator);
     }
     
-    public void editOperator(Operator operator) throws SQLException {
+    public void editOperator(Operator operator) {
         operatorRepository.updateOperator(operator);
     }
     
-    public void addOperator(Operator operator) throws SQLException {
+    public void addOperator(Operator operator) {
         operatorRepository.addOperator(operator);
     }
 
-    public Operator getOperatorById(int id) throws SQLException {
+    public Operator getOperatorById(int id) {
         Operator operator = operatorRepository.getOperatorById(id);
         return operator;
     }

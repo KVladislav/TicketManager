@@ -23,7 +23,7 @@ public class OperatorsController {
 
 
     @RequestMapping(value = "Operators/Operators.do", method = RequestMethod.GET)
-    public String operatorsGet(Model model) throws SQLException {
+    public String operatorsGet(Model model) {
         model.addAttribute("pageName", 5);//set menu page number
         List<Operator> operators = operatorService.getAllOperators();
         model.addAttribute("operators", operators);
@@ -31,21 +31,21 @@ public class OperatorsController {
     }
 
     @RequestMapping(value = "NewOperator/NewOperator.do", method = RequestMethod.GET)
-    public String newOperatortGet(Model model) throws SQLException {
+    public String newOperatortGet(Model model) {
         model.addAttribute("pageName", 8);//set menu page number
 
         return "NewOperator";
     }
 
     @RequestMapping(value = "Operators/OperatorsDelete.do", method = RequestMethod.POST)
-    public String operatorDelete(@RequestParam(value = "operatorId", required=true) int operatorId, Model model,SessionStatus status) throws SQLException {
+    public String operatorDelete(@RequestParam(value = "operatorId", required=true) int operatorId, Model model,SessionStatus status) {
         operatorService.deleteOperator(operatorId);
         status.setComplete();
         return "redirect:/Operators/Operators.do";
     }
 
     @RequestMapping(value = "EditOperator/OperatorsEditGet.do", method = RequestMethod.GET)
-    public String editOperatorGet(@RequestParam(value = "operatorId", required=true) int operatorId, Model model,SessionStatus status) throws SQLException {
+    public String editOperatorGet(@RequestParam(value = "operatorId", required=true) int operatorId, Model model,SessionStatus status) {
         model.addAttribute("pageName", 9);//set menu page number
         Operator operator = operatorService.getOperatorById(operatorId);
         model.addAttribute("operator", operator);
@@ -55,7 +55,7 @@ public class OperatorsController {
 
     @RequestMapping(value = "EditOperator/OperatorsEditSave.do", method = RequestMethod.POST)
     public String editOperatorSave(@RequestParam ("operatorId") int id, @RequestParam ("name") String name,@RequestParam ("surname") String surname,@RequestParam ("login") String login,
-                                   @RequestParam ("password") String password,@RequestParam ("description") String description, SessionStatus status) throws SQLException {
+                                   @RequestParam ("password") String password,@RequestParam ("description") String description, SessionStatus status) {
 
         Operator operator = operatorService.getOperatorById(id);
         operator.setName(name);
@@ -72,7 +72,7 @@ public class OperatorsController {
 
     @RequestMapping(value = "NewOperator/OperatorsAdd.do", method = RequestMethod.POST)
     public String operatorAdd (@RequestParam ("name") String name,@RequestParam ("surname") String surname,@RequestParam ("login") String login,
-                               @RequestParam ("password") String password,@RequestParam ("description") String description, SessionStatus status) throws SQLException {
+                               @RequestParam ("password") String password,@RequestParam ("description") String description, SessionStatus status) {
 
         Operator operator = new Operator();
         operator.setName(name);

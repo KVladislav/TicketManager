@@ -34,7 +34,7 @@ public class EventsController {
 
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
-    public String eventGet(Model model) throws SQLException {
+    public String eventGet(Model model) {
         model.addAttribute("pageName", 4);//set menu page number
         List<Event> events = eventService.getAllEvents();
         Collections.sort(events);
@@ -46,14 +46,14 @@ public class EventsController {
     }
 
     @RequestMapping(value = "NewEvent/NewEvent.do", method = RequestMethod.GET)
-    public String newEventGet(Model model) throws SQLException {
+    public String newEventGet(Model model) {
         model.addAttribute("pageName", 7);//set menu page number
 
         return "NewEvent";
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "evnt", required = true) int evnt, Model model, SessionStatus status) throws SQLException {
+    public String eventsSetDelete(@RequestParam(value = "evnt", required = true) int evnt, Model model, SessionStatus status) {
         Event event = eventService.getEventById(evnt);
         event.setDeleted(true);
         eventService.updateEvent(event);
@@ -70,12 +70,12 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/Redirect.do", method = RequestMethod.POST)
-    public String eventsRedirect(Model model, SessionStatus status) throws SQLException {
+    public String eventsRedirect(Model model, SessionStatus status) {
         return "redirect:/NewEvent/NewEvent.do";
     }
 
     @RequestMapping(value = "NewEvent/addEvent.do", method = RequestMethod.POST)
-    public String bookingAddEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
+    public String bookingAddEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException{
         if (description == null) return "redirect:/NewEvent/NewEvent.do";
         Event event = new Event();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -114,7 +114,7 @@ public class EventsController {
 
 
     @RequestMapping(value = "Events/Edit.do", method = RequestMethod.POST)
-    public String eventsEdit(@RequestParam(value = "evnt") int evnt, Model model, SessionStatus status, HttpServletRequest request) throws SQLException {
+    public String eventsEdit(@RequestParam(value = "evnt") int evnt, Model model, SessionStatus status, HttpServletRequest request) {
         this.editEvent = eventService.getEventById(evnt);
       //  String param = request.getParameter(String.valueOf(eventId));
       return "redirect:/EditEvent/EditEvent.do";
@@ -122,7 +122,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "EditEvent/EditEvent.do", method = RequestMethod.GET)
-    public String editEventGet(Model model,SessionStatus statusEvent) throws SQLException {
+    public String editEventGet(Model model,SessionStatus statusEvent) {
         model.addAttribute("pageName", 8);//set menu page number
         model.addAttribute("eventEdit", this.editEvent);
         model.addAttribute("eventDescriptions", this.editEvent.getDescription());

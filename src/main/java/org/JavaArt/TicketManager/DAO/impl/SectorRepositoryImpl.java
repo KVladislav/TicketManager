@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SectorRepositoryImpl implements SectorRepository {
     @Override
-    public void addSector(Sector sector) throws SQLException {
+    public void addSector(Sector sector) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -43,7 +43,7 @@ public class SectorRepositoryImpl implements SectorRepository {
     }
 
     @Override
-    public void updateSector(Sector sector) throws SQLException {
+    public void updateSector(Sector sector) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -64,7 +64,7 @@ public class SectorRepositoryImpl implements SectorRepository {
     }
 
     @Override
-    public Sector getSectorById(int id) throws SQLException {
+    public Sector getSectorById(int id) {
         Session session = null;
         Sector sector = null;
         try {
@@ -84,7 +84,7 @@ public class SectorRepositoryImpl implements SectorRepository {
     }
 
 //    @Override
-//    public void deleteSector(Sector sector) throws SQLException {
+//    public void deleteSector(Sector sector) {
 //        Session session = null;
 //        try {
 //            session = HibernateUtil.getSessionFactory().openSession();

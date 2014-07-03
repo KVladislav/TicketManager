@@ -13,24 +13,24 @@ import org.springframework.stereotype.Service;
 public class EventService {
     private EventRepository eventRepository = new EventRepositoryImpl();
 
-    public List<Event> getAllEvents() throws SQLException {
+    public List<Event> getAllEvents() {
         List<Event> events = eventRepository.getAllEvents();
         return events;
     }
 
-    public List<Event> getFutureEvents() throws SQLException {
+    public List<Event> getFutureEvents() {
         List<Event> events = eventRepository.getFutureEvents();
         return events;
     }
 
-    public Event getEventById(int id) throws SQLException {
+    public Event getEventById(int id) {
         Event event = eventRepository.getEventById(id);
         return event;
     }
-    public void addEvent(Event event) throws SQLException{
+    public void addEvent(Event event){
         eventRepository.addEvent(event);
     }
-    public void updateEvent(Event event) throws SQLException{
+    public void updateEvent(Event event){
         eventRepository.updateEvent(event);
     }
 }

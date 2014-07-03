@@ -31,4 +31,11 @@ public class ClientService {
         return clientRepository.getClientsByName(clientName);
     }
 
+    public Client getClientById(int clientId) {
+        return clientRepository.getClientById(clientId);
+    }
+
+    public void deleteClientsWithoutOrders(int minutes){
+        clientRepository.deleteClientsWithoutOrders(minutes);
+    }
 }

@@ -7,11 +7,13 @@ import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,6 +109,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         return ticket;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getAllTickets() {
         Session session = null;
@@ -124,23 +127,31 @@ public class TicketRepositoryImpl implements TicketRepository {
         return tickets;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Ticket> getNonConfirmedTickets() {
+    public void deleteNonConfirmedTickets(int minutes) {
         Session session = null;
-        List<Ticket> tickets = null;
+        Date date = new Date();
+        date.setTime(date.getTime()-60000*minutes);
+
+
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            tickets = session.createCriteria(Ticket.class).add(Restrictions.eq("isConfirmed", false)).list();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Ticket AS ticket WHERE ticket.isConfirmed = false AND ticket.timeStamp <= :endDate");
+            query.setTimestamp("endDate", date);
+            query.executeUpdate();
+            tx.commit();
+
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        }
+        finally {
+            if (session!=null && session.isOpen()) {
                 session.close();
             }
         }
-        return tickets;
-
-
     }
 
 
@@ -149,20 +160,19 @@ public class TicketRepositoryImpl implements TicketRepository {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-//            String hql;
-//            if (ticket.getId()!=null) {
-//                hql = "delete from Ticket where id = " + ticket.getId();
-//            } else
-//            {hql = String.format("delete from Ticket where sector = %d and row = %d and seat = %d", ticket.getSector().getId(), ticket.getRow(), ticket.getSeat());
-//            }
-//            System.out.println(hql);
-//            session.createQuery(hql).executeUpdate();
+
             if (getTicketById(ticket.getId()) != null) {
+                if (!ticket.isConfirmed()){
                 session.beginTransaction();
                 session.delete(ticket);
                 session.getTransaction().commit();
                 session.flush();
                 session.clear();
+                } else {
+                    ticket.setDeleted(true);
+                    saveOrUpdateTicket(ticket);
+                }
+
             }
 
         } catch (Exception e) {
@@ -211,7 +221,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
 
-            Query query = session.createQuery("select count (*) from Ticket where isReserved = true and isConfirmed = true and client =" + client.getId());
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isReserved = true and isDeleted = false and isConfirmed = true and client =%d", client.getId()));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -232,7 +242,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session = HibernateUtil.getSessionFactory().openSession();
 //              counter = ((Long) session.createCriteria(Ticket.class).setProjection(Projections.rowCount()).add(Restrictions.eq("sector", sector)).list().get(0)).intValue();
 
-            Query query = session.createQuery("select count (*) from Ticket where sector =" + sector.getId());
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d", sector.getId()));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -250,7 +260,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         int counter = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("select count (*) from Ticket where sector =" + sector.getId() + " and row=" + row);
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d and row=%d", sector.getId(), row));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -262,13 +272,14 @@ public class TicketRepositoryImpl implements TicketRepository {
         return sector.getMaxSeats() - counter;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row) {
         Session session = null;
         List<Ticket> tickets = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            tickets = session.createQuery("from Ticket where sector =" + sector.getId() + " and row=" + row).list();
+            tickets = session.createQuery(String.format("from Ticket where isDeleted = false and sector =%d and row=%d", sector.getId(), row)).list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -285,7 +296,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         int status = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("select count (*) from Ticket where sector =" + sector.getId() + " and row=" + row + " and seat=" + seat);
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d and row=%d and seat=%d", sector.getId(), row, seat));
             status = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

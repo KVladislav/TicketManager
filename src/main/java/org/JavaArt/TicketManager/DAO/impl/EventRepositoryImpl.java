@@ -19,7 +19,7 @@ import java.util.List;
 
 public class EventRepositoryImpl implements EventRepository {
     @Override
-    public void addEvent(Event event) throws SQLException {
+    public void addEvent(Event event) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -39,7 +39,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public void updateEvent(Event event) throws SQLException {
+    public void updateEvent(Event event) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -60,7 +60,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public Event getEventById(int id) throws SQLException {
+    public Event getEventById(int id) {
         Session session = null;
         Event event = null;
         try {
@@ -82,7 +82,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public List<Event> getAllEvents() throws SQLException {
+    public List<Event> getAllEvents() {
         Session session = null;
         List<Event> events = null;//new ArrayList<Event>();
         try {
@@ -104,7 +104,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public List<Event> getFutureEvents() throws SQLException {
+    public List<Event> getFutureEvents() {
         Session session = null;
         List<Event> events = new ArrayList<Event>();
         Date date = new Date();
@@ -125,7 +125,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
 //    @Override
-//    public void deleteEvent(Event event) throws SQLException {
+//    public void deleteEvent(Event event) {
 //        Session session = null;
 //        try {
 //            session = HibernateUtil.getSessionFactory().openSession();

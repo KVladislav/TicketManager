@@ -25,11 +25,11 @@ public class SectorService {
         return sectors;
     }
 
-    public Sector getSectorById(int id) throws SQLException {
+    public Sector getSectorById(int id) {
         Sector sector = sectorRepository.getSectorById(id);
         return sector;
     }
-    public List<String> getLegenda (List<Sector> sector) throws SQLException{
+    public List<String> getLegenda (List<Sector> sector){
         List<Double> sortByPrice = new ArrayList();
         List <String> legenda = new ArrayList();
         StringBuffer buf = new StringBuffer(100);
@@ -55,11 +55,11 @@ public class SectorService {
         return legenda;
     }
 
-    public void addSector(Sector sector) throws SQLException{
+    public void addSector(Sector sector){
         sectorRepository.addSector(sector);
     }
 
-    public void updateSector(Sector sector) throws SQLException{
+    public void updateSector(Sector sector){
         sectorRepository.updateSector(sector);
     }
 }

@@ -15,7 +15,7 @@ public class RefundController {
     private TicketService ticketService = TicketService.getInstance();
 
     @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.GET)
-    public String refundGet(Model model) throws SQLException {
+    public String refundGet(Model model) {
         model.addAttribute("pageName", 3);//set menu page number
         return "Refund";
     }

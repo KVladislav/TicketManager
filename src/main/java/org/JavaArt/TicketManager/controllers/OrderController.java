@@ -28,7 +28,7 @@ public class OrderController {
     private int currentSeat=1;
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
-    public String orderGet(Model model) throws SQLException {
+    public String orderGet(Model model) {
         model.addAttribute("pageName", 1);
         List<Event> events = eventService.getAllEvents();
         if (events != null && events.size() > 0) {
@@ -67,7 +67,7 @@ public class OrderController {
 
     @RequestMapping(value = "Order/setSectors.do", method = RequestMethod.POST)
     public String orderSetSectors(@RequestParam(value = "eventId", required = true)
-                                  int eventId, Model model) throws SQLException {
+                                  int eventId, Model model) {
         currentEvent = eventService.getEventById(eventId);
         model.addAttribute("event", currentEvent);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
@@ -96,7 +96,7 @@ public class OrderController {
 
     @RequestMapping(value = "Order/setRow.do", method = RequestMethod.POST)
     public String orderSetRow(@RequestParam(value = "sectorId", required = true) int sectorId,
-                              Model model) throws SQLException {
+                              Model model) {
         currentSector= sectorService.getSectorById(sectorId);
         model.addAttribute("sector", currentSector);
         Map<Integer, Integer> rowsMap1 = new TreeMap<>();
@@ -115,7 +115,7 @@ public class OrderController {
 
     @RequestMapping(value = "Order/setSeat.do", method = RequestMethod.POST)
     public String orderSetSeat(@RequestParam(value = "row", required = true) int row,
-                               @ModelAttribute Sector sector, Model model) throws SQLException {
+                               @ModelAttribute Sector sector, Model model) {
 
         currentSector=sector;
         currentRow=row;
@@ -129,7 +129,7 @@ public class OrderController {
 
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
     public String orderAddTicket(@ModelAttribute(value = "row") int row, @RequestParam(value = "seat",
-                  required = true) int seat, @ModelAttribute Sector sector) throws SQLException {
+                  required = true) int seat, @ModelAttribute Sector sector) {
         Ticket ticket = new Ticket();
         ticket.setSector(sector);
         ticket.setRow(row);
@@ -151,7 +151,7 @@ public class OrderController {
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
          public String orderDelTicket(@RequestParam(value = "ticketId", required = true)
-                                       int ticketId) throws SQLException {
+                                       int ticketId) {
         ticketService.deleteTicket( ticketService.getTicketById(ticketId));
         for (Ticket ticket : order) {
             if ((int)ticket.getId() == ticketId) {
@@ -164,7 +164,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
-     public String orderBuy() throws SQLException {
+     public String orderBuy() {
          for (Ticket ticket : order) ticket.setConfirmed(true);
          ticketService.updateTickets(order);
          order.clear();

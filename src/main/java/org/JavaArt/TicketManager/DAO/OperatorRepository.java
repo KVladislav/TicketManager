@@ -16,9 +16,9 @@ import java.util.List;
 @Repository
 
 public interface OperatorRepository {
-    public void addOperator (Operator operator) throws SQLException;
-    public void updateOperator(Operator operator) throws SQLException;
-    public Operator getOperatorById(int id) throws SQLException;
-    public List<Operator> getAllOperators() throws SQLException;
-//    public void deleteOperator(Operator operator) throws SQLException;
+    public void addOperator (Operator operator);
+    public void updateOperator(Operator operator);
+    public Operator getOperatorById(int id);
+    public List<Operator> getAllOperators();
+//    public void deleteOperator(Operator operator);
 }
