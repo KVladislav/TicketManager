@@ -23,12 +23,11 @@ import java.util.*;
 @SessionAttributes({"pageName", "events", "event", "sector", "sectors"})
 
 public class EventsController {
+    public Event editEvent;
     private EventService eventService = new EventService();
     private List<Event> events = new ArrayList<>();
     private SectorService sectorService = new SectorService();
     private List<Sector> sectors = new ArrayList<>();
-    public Event editEvent;
-
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) {
@@ -72,11 +71,9 @@ public class EventsController {
     }
 
     @RequestMapping(value = "NewEvent/addEvent.do", method = RequestMethod.POST)
-<<<<<<< .mine
+
     public String bookingAddEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent,String inputTime, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
-=======
-    public String bookingAddEvent(@RequestParam(value = "dateEvent", required = true) String dateEvent, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException{
->>>>>>> .theirs
+
         if (description == null) return "redirect:/NewEvent/NewEvent.do";
         Event event = new Event();
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -136,11 +133,9 @@ public class EventsController {
     }
 
     @RequestMapping(value = "EditEvent/EditEvent.do", method = RequestMethod.GET)
-<<<<<<< .mine
+
     public String editEventGet(Model model,SessionStatus statusEvent) throws SQLException, ParseException {
-=======
-    public String editEventGet(Model model,SessionStatus statusEvent) {
->>>>>>> .theirs
+
         model.addAttribute("pageName", 8);//set menu page number
         model.addAttribute("eventEdit", this.editEvent);
         model.addAttribute("eventDescriptions", this.editEvent.getDescription());
