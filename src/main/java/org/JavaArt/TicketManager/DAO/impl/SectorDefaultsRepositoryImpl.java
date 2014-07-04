@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     @Override
-    public void addSectorDefaults(SectorDefaults sectorDefaults) throws SQLException {
+    public void addSectorDefaults(SectorDefaults sectorDefaults) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -38,7 +37,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     }
 
     @Override
-    public void updateSectorDefaults(SectorDefaults sectorDefaults) throws SQLException {
+    public void updateSectorDefaults(SectorDefaults sectorDefaults) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -73,7 +72,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     }
 
     @Override
-    public List<SectorDefaults> getAllSectorDefaults() throws SQLException {
+    public List<SectorDefaults> getAllSectorDefaults() {
         Session session = null;
         List<SectorDefaults> zoneDefaults = null;//new ArrayList<Event>();
         try {
@@ -90,7 +89,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     }
 
     @Override
-    public void deleteSectorDefaults(SectorDefaults sectorDefaults) throws SQLException {
+    public void deleteSectorDefaults(SectorDefaults sectorDefaults) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();

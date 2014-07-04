@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(schema="public", name = "ticket")
+@Table(schema = "public", name = "ticket")
 public class Ticket {
 
     @Id
@@ -33,6 +33,10 @@ public class Ticket {
     @Column(name = "isReserved")
     private boolean isReserved;
 
+    @Column(name = "isDeleted")
+    private boolean isDeleted;
+
+
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
 
@@ -45,8 +49,16 @@ public class Ticket {
     private Client client;
 
 
+    public Ticket() {
+    }
 
-    public Ticket() {}
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
     public boolean isConfirmed() {
         return isConfirmed;
@@ -84,17 +96,25 @@ public class Ticket {
         this.row = row;
     }
 
-    public Integer getSeat() {return seat;}
+    public Integer getSeat() {
+        return seat;
+    }
 
-    public void setSeat(Integer seat) {this.seat = seat;}
+    public void setSeat(Integer seat) {
+        this.seat = seat;
+    }
 
-    public boolean getReserved() {return isReserved;}
+    public boolean getReserved() {
+        return isReserved;
+    }
 
     public void setReserved(boolean isReserved) {
         this.isReserved = isReserved;
     }
 
-    public Sector getSector() {return sector;}
+    public Sector getSector() {
+        return sector;
+    }
 
     public void setSector(Sector sector) {
         this.sector = sector;
@@ -108,7 +128,9 @@ public class Ticket {
         this.client = client;
     }
 
-    public Operator getOperator() {return operator;}
+    public Operator getOperator() {
+        return operator;
+    }
 
     public void setOperator(Operator operator) {
         this.operator = operator;

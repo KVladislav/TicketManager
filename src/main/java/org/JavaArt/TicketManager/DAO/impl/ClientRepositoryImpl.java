@@ -3,11 +3,14 @@ package org.JavaArt.TicketManager.DAO.impl;
 import org.JavaArt.TicketManager.DAO.ClientRepository;
 import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ import java.util.List;
 @Repository
 public class ClientRepositoryImpl implements ClientRepository {
     @Override
-    public void saveOrUpdateClient(Client client)  {
+    public void saveOrUpdateClient(Client client) {
 
         Session session = null;
         try {
@@ -28,12 +31,10 @@ public class ClientRepositoryImpl implements ClientRepository {
             session.saveOrUpdate(client);
             session.getTransaction().commit();
             session.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -46,19 +47,11 @@ public class ClientRepositoryImpl implements ClientRepository {
         List<Client> clients = null;//new ArrayList<Client>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            clients = session.createCriteria(Client.class).add(Restrictions.eq("isDeleted", new Boolean("false"))).add(Restrictions.ilike("name", "%"+clientName + "%")).list();
-
-//                    session.createQuery("FROM Client, Ticket, Sector, Event WHERE Ticket.sector = Sector AND Client = Ticket.client AND Sector.event = Event AND Event.date > ? order by name").setTimestamp(0, new Date()).list();
-
-//                    session.createCriteria(Client.class)
-//                    .add(Restrictions.eq("isDeleted", new Boolean("false")))
-//                    .addOrder(Order.asc("name")).list();
-        }
-        catch (Exception e) {
+            clients = session.createCriteria(Client.class).add(Restrictions.eq("isDeleted", new Boolean("false"))).add(Restrictions.ilike("name", "%" + clientName + "%")).list();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -66,18 +59,16 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public Client getClientById(int id)  {
+    public Client getClientById(int id) {
         Session session = null;
         Client client = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             client = (Client) session.get(Client.class, id);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -85,27 +76,48 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
 
-
     @Override
-    public List<Client> getAllClients()  {
+    public List<Client> getAllClients() {
         Session session = null;
         List<Client> clients = null;//new ArrayList<Client>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             clients = session.createCriteria(Client.class).list();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
         return clients;
     }
 
-//    @Override
+    @Override
+    public void deleteClientsWithoutOrders(int minutes) {
+        Session session = null;
+        Date date = new Date();
+        date.setTime(date.getTime() - 60000 * minutes);
+
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT client FROM Ticket AS ticket LEFT JOIN ticket.client AS client) AND client.timeStamp <= :endDate");
+            query.setTimestamp("endDate", date);
+            query.executeUpdate();
+            tx.commit();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    //    @Override
 //    public void deleteClient(Client client)  {
 //        Session session = null;
 //        try {

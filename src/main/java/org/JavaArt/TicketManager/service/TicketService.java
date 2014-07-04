@@ -1,32 +1,27 @@
 package org.JavaArt.TicketManager.service;
 
-import org.JavaArt.TicketManager.DAO.*;
-import org.JavaArt.TicketManager.DAO.impl.*;
-import org.JavaArt.TicketManager.controllers.OrderController;
-import org.JavaArt.TicketManager.entities.*;
+import org.JavaArt.TicketManager.DAO.TicketRepository;
+import org.JavaArt.TicketManager.DAO.impl.TicketRepositoryImpl;
+import org.JavaArt.TicketManager.entities.Client;
+import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PreDestroy;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 @Service
 public class TicketService {
-    private TicketRepository ticketRepository = new TicketRepositoryImpl();
-    private ExecutorService executorService;
     private static TicketService ticketService;
+    private TicketRepository ticketRepository = new TicketRepositoryImpl();
 
     private TicketService() {
-        executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(new ClearNonConfirmedTickets());
     }
 
     public static TicketService getInstance() {
-        if  (ticketService==null) {
+        if (ticketService == null) {
             ticketService = new TicketService();
         }
         return ticketService;
@@ -37,120 +32,68 @@ public class TicketService {
 
     }
 
-    public List<Ticket> getTicketsByClient(Client client){
+    public List<Ticket> getTicketsByClient(Client client) {
         return ticketRepository.getTicketsByClient(client);
 
 
     }
 
-    public int getFreeTicketsAmountBySector(Sector sector) throws SQLException {
+    public int getFreeTicketsAmountBySector(Sector sector) {
         return ticketRepository.getFreeTicketsAmountBySector(sector);
     }
 
-    public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException{
+    public int getFreeTicketsAmountBySectorRow(Sector sector, int row) {
         return ticketRepository.getFreeTicketsAmountBySectorRow(sector, row);
     }
 
-    public void deleteTickets(List<Ticket> tickets) throws SQLException {
+    public void deleteTickets(List<Ticket> tickets) {
         ticketRepository.deleteTickets(tickets);
     }
 
-    public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException{
+    public boolean isPlaceFree(Sector sector, int row, int seat) {
         return ticketRepository.isPlaceFree(sector, row, seat);
     }
 
-    public void addTicket(Ticket ticket) throws SQLException{
+    public void addTicket(Ticket ticket) {
         ticketRepository.saveOrUpdateTicket(ticket);
     }
 
-    public Ticket getTicketById(int ticketId) throws SQLException {
+    public Ticket getTicketById(int ticketId) {
         return ticketRepository.getTicketById(ticketId);
     }
 
-    public void deleteTicket(Ticket ticket) throws SQLException {
+    public void deleteTicket(Ticket ticket) {
         ticketRepository.deleteTicket(ticket);
     }
 
-    public void saveOrUpdateTickets(List<Ticket> tickets) throws SQLException {
+    public void saveOrUpdateTickets(List<Ticket> tickets) {
         ticketRepository.saveOrUpdateTickets(tickets);
     }
 
-    public void updateTickets(List<Ticket> tickets) throws SQLException {
+    public void updateTickets(List<Ticket> tickets) {
         ticketRepository.updateTickets(tickets);
     }
 
-    private List<Ticket> getNonConfirmedTickets() throws SQLException {
-        return ticketRepository.getNonConfirmedTickets();
+    public void deleteNonConfirmedTickets(int minutes) {
+        ticketRepository.deleteNonConfirmedTickets(minutes);
     }
 
-    @PreDestroy
-    public void shutdown() {
-        executorService.shutdownNow();
-        while (!executorService.isTerminated()) {
-
-        }
-    }
-
-    public Map<Integer,String> seatStatus(Sector sector, int row) throws SQLException{
+    public Map<Integer, String> seatStatus(Sector sector, int row) {
         Map<Integer, String> seatsMap = new TreeMap<>();
-        List <Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector,row);
+        List<Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector, row);
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
             if (ticketRepository.isPlaceFree(sector, row, i)) seatsMap.put(i, "Статус:  в продаже");
             else {
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
-                        if ((tic.getReserved()&&tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
-                        if (!tic.getReserved()&&tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
+                        if ((tic.getReserved() && tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
+                        if (!tic.getReserved() && tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
                         if (!tic.isConfirmed()) seatsMap.put(i, "Статус: не утверждён");
                     }
                 }
             }
         }
         return seatsMap;
-    }
-
-    private class ClearNonConfirmedTickets implements Runnable {
-
-        public void run() {
-            List<Ticket> tickets;
-            List<Ticket> ticketForRemove =new ArrayList<>();
-            try {
-                while (!Thread.currentThread().isInterrupted()) {
-                    try {
-                        tickets = getNonConfirmedTickets();
-
-                    if (tickets!=null && tickets.size()>0) {
-                        for (Ticket ticket : tickets) {
-                            if ((new Date().getTime() - ticket.getTimeStamp().getTime())> 60000*5 ) {
-                                ticketForRemove.add(ticket);
-                            }
-                        }
-                        if(ticketForRemove.size()>0) {
-                            if  (OrderController.order.size()>0){
-                                for (Ticket tic1: ticketForRemove){
-                                    for (Ticket tic2:OrderController.order){
-                                        if (((int)tic1.getRow()==tic2.getRow())&&((int)tic1.getSeat()==
-                                                tic2.getSeat())&&tic1.getSector().equals(tic2.getSector())){
-                                            OrderController.orderPrice-=tic2.getSector().getPrice();
-                                            OrderController.order.remove(tic2);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        ticketRepository.deleteTickets(ticketForRemove);
-                        }
-                        ticketForRemove.clear();
-                    }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    TimeUnit.MINUTES.sleep(1);
-                }
-            } catch (InterruptedException e) {
-                System.out.println("Perform Thread Shutdown");
-            }
-        }
     }
 }
 

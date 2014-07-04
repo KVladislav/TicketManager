@@ -1,8 +1,8 @@
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name>TicketManager</display-name>
+    <display-name>TicketManager</display-name>
     <welcome-file-list>
         <welcome-file>WEB-INF/views/header.jsp</welcome-file>
     </welcome-file-list>
@@ -20,8 +20,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <param-value>/WEB-INF/action-servlet.xml</param-value>
     </context-param>
     <listener>
+        <!--&lt;!&ndash;<listener-class>&ndash;&gt;-->
+        <!--&lt;!&ndash;org.springframework.web.context.ContextLoaderListener&ndash;&gt;-->
+        <!--&lt;!&ndash;</listener-class>&ndash;&gt;-->
         <listener-class>
-            org.springframework.web.context.ContextLoaderListener
+            org.JavaArt.TicketManager.service.ThreadService
         </listener-class>
     </listener>
 </web-app>
