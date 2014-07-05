@@ -108,9 +108,6 @@ public class OrderController {
         currentRow = 1;
         currentSeat = 1;
         Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
-
-
-
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
@@ -120,7 +117,6 @@ public class OrderController {
     @RequestMapping(value = "Order/setSeat.do", method = RequestMethod.POST)
     public String orderSetSeat(@RequestParam(value = "row", required = true) int row,
                                @ModelAttribute Sector sector, Model model) {
-
         currentSector = sector;
         currentRow = row;
         currentSeat = 1;
@@ -154,8 +150,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-         public String orderDelTicket(@RequestParam(value = "orderId", required = true)
-                                       int orderId){
+        public String orderDelTicket(@RequestParam(value = "orderId", required = true) int orderId){
         int index=orderId;
         for (Ticket ord : order) {
             if (ord.getId() == orderId) {
