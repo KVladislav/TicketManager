@@ -75,35 +75,30 @@
             language: 'pt-BR'
         });
     </script>
-</div>
-
-<div class="control-group">
-    <label class="my-control-label" for="outputName">Name</label>
-
-    <div class="my-controls">
-        <textarea rows="1" id="outputName" name="name"></textarea>
-    </div>
+    </body>
 </div>
 
 
 <div class="control-group">
-    <label class="my-control-label" for="outputDescription">Description</label>
+    <label class="my-control-label" for="description">Description</label>
 
     <div class="my-controls">
-        <textarea rows="5" id="outputDescription" name="description"></textarea>
+        <input type="text" id="description" name="description">
     </div>
 </div>
+
 
 <div class="control-group">
     <label class="my-control-label" for="timeRemoveBooking">Removing the booking</label>
-
     <div class="my-controls">
-        <textarea rows="1" id="timeRemoveBooking" name="time"></textarea>
+        <input type="text" id="timeRemoveBooking" name="timeRemoveBooking">
         <img src="${pageContext.request.contextPath}/resources/img/Question.png"
              alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
              title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
     </div>
 </div>
+
+
 
 <div class="panel-body" style="padding:20px; width:50%; margin-left: 10%">
 <div class="table responsive">
@@ -125,7 +120,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice1" name="price1">
+            <input type="text" id="inputPrice1" name="price0">
         </div>
     </td>
 </tr>
@@ -137,7 +132,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice2" name="price2">
+            <input type="text" id="inputPrice2" name="price1">
         </div>
     </td>
 </tr>
@@ -150,7 +145,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice3" name="price3">
+            <input type="text" id="inputPrice3" name="price2">
         </div>
     </td>
 </tr>
@@ -162,7 +157,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice4" name="price4">
+            <input type="text" id="inputPrice4" name="price3">
         </div>
     </td>
 </tr>
@@ -174,7 +169,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice5" name="price5">
+            <input type="text" id="inputPrice5" name="price4">
         </div>
     </td>
 </tr>
@@ -186,7 +181,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice6" name="price6">
+            <input type="text" id="inputPrice6" name="price5">
         </div>
     </td>
 </tr>
@@ -198,7 +193,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice7" name="price7">
+            <input type="text" id="inputPrice7" name="price6">
         </div>
     </td>
 </tr>
@@ -210,7 +205,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice8" name="price8">
+            <input type="text" id="inputPrice8" name="price7">
         </div>
     </td>
 </tr>
@@ -222,7 +217,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice9" name="price9">
+            <input type="text" id="inputPrice9" name="price8">
         </div>
     </td>
 </tr>
@@ -234,7 +229,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice10" name="price10">
+            <input type="text" id="inputPrice10" name="price9">
         </div>
     </td>
 </tr>
@@ -246,7 +241,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice11" name="price11">
+            <input type="text" id="inputPrice11" name="price10">
         </div>
     </td>
 </tr>
@@ -258,7 +253,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice12" name="price12">
+            <input type="text" id="inputPrice12" name="price11">
         </div>
     </td>
 </tr>
@@ -270,7 +265,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice13" name="price13">
+            <input type="text" id="inputPrice13" name="price12">
         </div>
     </td>
 </tr>
@@ -282,7 +277,19 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice15" name="price15">
+            <input type="text" id="inputPrice14" name="price13">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector15" name="sector15" value=14>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice15" name="price14">
         </div>
     </td>
 </tr>
@@ -294,7 +301,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice16" name="price16">
+            <input type="text" id="inputPrice16" name="price15">
         </div>
     </td>
 </tr>
@@ -306,7 +313,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice17" name="price17">
+            <input type="text" id="inputPrice17" name="price16">
         </div>
     </td>
 </tr>
@@ -318,7 +325,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice18" name="price18">
+            <input type="text" id="inputPrice18" name="price17">
         </div>
     </td>
 </tr>
@@ -330,7 +337,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice19" name="price19">
+            <input type="text" id="inputPrice19" name="price18">
         </div>
     </td>
 </tr>
@@ -342,7 +349,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice20" name="price20">
+            <input type="text" id="inputPrice20" name="price19">
         </div>
     </td>
 </tr>
@@ -354,7 +361,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice21" name="price21">
+            <input type="text" id="inputPrice21" name="price20">
         </div>
     </td>
 </tr>
@@ -366,7 +373,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice22" name="price22">
+            <input type="text" id="inputPrice22" name="price21">
         </div>
     </td>
 </tr>
@@ -378,7 +385,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice23" name="price23">
+            <input type="text" id="inputPrice23" name="price22">
         </div>
     </td>
 </tr>
@@ -390,7 +397,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice24" name="price24">
+            <input type="text" id="inputPrice24" name="price23">
         </div>
     </td>
 </tr>
@@ -402,7 +409,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice25" name="price25">
+            <input type="text" id="inputPrice25" name="price24">
         </div>
     </td>
 </tr>
@@ -414,7 +421,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice26" name="price26">
+            <input type="text" id="inputPrice26" name="price25">
         </div>
     </td>
 </tr>
@@ -426,7 +433,7 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice27" name="price27">
+            <input type="text" id="inputPrice27" name="price26">
         </div>
     </td>
 </tr>
