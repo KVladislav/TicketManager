@@ -11,9 +11,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp" %>
-
+<html lang="ru">
 <head>
-
+    <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css">
+    <script src="${pageContext.request.contextPath}/resources/js/date.js"></script>
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">
@@ -39,57 +40,204 @@
         });
     </script>
 
+
 </head>
 
-<div class="panel-heading" style="text-align:center;"><b>Edit event</b></div>
+<h1><div class="panel-heading" style="text-align:center;"><b>Редактирование мероприятия</b></div></h1>&MediumSpace;
 <center>
 
 <form action="${pageContext.request.contextPath}/EditEvent/editEventNow.do" method="post">
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
 
-<div class="well">
-    <label class="my-control-label" for="dateEvent">Date of event</label>
-
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-    </head>
-    <body>
-    <div id="datetimepicker" class="input-append date">
-        <input type="text" name="dateEvent" id="dateEvent" value="<fmt:formatDate value='${eventEdit.getDate()}' type='both' />"/>
-     <%--   <input type="text" name="dateEvent" id="dateEvent" value="${eventEdit.getDate()}"> --%>
-        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-      </span>
+<center>
+ <label class="my-control-label" for="dateEvent">Дата мероприятия</label>
+    <div class="control-group">
+         <input type="text" name="dateEvent" id="dateEvent" value="<fmt:formatDate value='${dateEvent}' type='date' />" />
+        <p> <script type="text/javascript"> calendar.set("dateEvent");</script></p>
     </div>
-    <script type="text/javascript"
-            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-    </script>
-    <script type="text/javascript"
-            src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
-    </script>
-    <script type="text/javascript"
-            src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-    </script>
-    <script type="text/javascript">
-        $('#datetimepicker').datetimepicker({
-            format: 'dd-MM-yyyy hh:mm:ss',
-            language: 'pt-BR'
-        });
-    </script>
-    </body>
-</div>
+
+    <label class="my-control-label" for="inputTime">Время мероприятия</label>
+    <div class="control-group">
+        <select name="inputTime" id="inputTime">
+
+            <c:if test="${eventTime.equals(inputTime)}">
+                <option  selected value="${eventTime}">${eventTime}</option>
+            </c:if>
+            <%--         --%>
+
+            <c:if test="${eventTime.equals('10-00')}">
+                <option selected  value="10-00">10-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('10-00')}">
+                <option value="10-00">10-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('10-30')}">
+                <option selected value="10-30">10-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('10-30')}">
+                <option value="10-30">10-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('11-00')}">
+                <option selected value="11-00">11-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('11-00')}">
+                <option value="11-00">11-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('11-30')}">
+                <option selected value="11-30">11-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('11-30')}">
+                <option value="11-30">11-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('12-00')}">
+            <option selected value="12-00">12-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('12-00')}">
+                <option value="12-00">12-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('12-30')}">
+                <option selected value="12-30">12-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('12-30')}">
+                <option value="12-30">12-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('13-00')}">
+                <option selected value="13-00">13-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('13-00')}">
+                <option value="13-00">13-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('13-30')}">
+                <option selected value="13-30">13-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('13-30')}">
+                <option value="13-30">13-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('14-00')}">
+                <option selected value="14-00">14-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('14-00')}">
+                <option value="14-00">14-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('14-30')}">
+                <option selected value="14-30">14-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('14-30')}">
+                <option value="14-30">14-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('15-00')}">
+                <option selected value="15-00">15-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('15-00')}">
+                <option value="15-00">15-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('15-30')}">
+                <option selected value="15-30">15-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('15-30')}">
+                <option value="15-30">15-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('16-00')}">
+                <option selected value="16-00">16-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('16-00')}">
+                <option value="16-00">16-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('16-30')}">
+                <option selected value="16-30">16-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('16-30')}">
+                <option value="16-30">16-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('17-00')}">
+                <option selected value="17-00">17-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('17-00')}">
+                <option value="17-00">17-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('17-30')}">
+                <option selected selected value="17-30">17-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('17-30')}">
+                <option value="17-30">17-30</option>
+            </c:if>
+            <option value="18-00">18-00</option>
+            <c:if test="${eventTime.equals('18-00')}">
+                <option selected value="18-00">18-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('18-00')}">
+                <option value="18-00">18-00</option>
+            </c:if>
+            <option value="18-00">18-30</option>
+           <c:if test="${eventTime.equals('18-30')}">
+            <option selected value="18-30">18-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('18-30')}">
+                <option value="18-30">18-30</option>
+            </c:if>
+            <option value="19-00">19-00</option>
+            <c:if test="${eventTime.equals('19-00')}">
+                <option selected value="19-00">19-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('19-00')}">
+                <option value="19-00">19-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('19-30')}">
+                <option selected value="19-30">19-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('19-30')}">
+                <option value="19-30">19-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('20-00')}">
+                <option selected value="20-00">20-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('20-00')}">
+                <option value="20-00">20-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('20-30')}">
+                <option selected value="20-30">20-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('20-30')}">
+                <option value="20-30">20-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('21-00')}">
+                <option selected value="21-00">21-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('21-00')}">
+                <option value="21-00">21-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('21-30')}">
+                <option selected value="21-30">21-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('21-30')}">
+                <option value="21-30">21-30</option>
+            </c:if>
+            <c:if test="${eventTime.equals('22-00')}">
+                <option selected value="22-00">22-00</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('22-00')}">
+                <option value="22-00">22-00</option>
+            </c:if>
+            <c:if test="${eventTime.equals('22-30')}">
+                <option selected value="22-30">22-30</option>
+            </c:if>
+            <c:if test="${!eventTime.equals('22-30')}">
+                <option value="22-30">22-30</option>
+            </c:if>
+
+        </select>
+    </div>
+ </center>
 
 <div class="control-group">
-    <label class="my-control-label" for="description">Description</label>
-
+    <label class="my-control-label" for="description">Наименование</label>
     <div class="my-controls">
-        <input type="text" id="description" name="description" value="${eventDescriptions}">
+        <textarea rows="5" id="description" name="description">${eventDescriptions}</textarea>
     </div>
 </div>
 
-
 <div class="control-group">
-    <label class="my-control-label" for="timeRemoveBooking">Removing the booking</label>
+    <label class="my-control-label" for="timeRemoveBooking">Установка времени удаления брони</label>
     <div class="my-controls">
         <input type="text" id="timeRemoveBooking" name="timeRemoveBooking" value="${eventBookingTimeOut}">
         <img src="${pageContext.request.contextPath}/resources/img/Question.png"
@@ -103,8 +251,8 @@
 <table class="table table-bordered" style="display:block;height:400px;overflow:auto;">
 <thead>
 <tr>
-    <th>Sector</th>
-    <th>Price</th>
+    <th>Сектор</th>
+    <th>Цена</th>
 </tr>
 </thead>
 `
@@ -113,24 +261,24 @@
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector1" name="sector1" value="1">
+            <input type="text" id="inputSector0" name="sector0" value="1">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice1" name="price1" value="${sectors.get(0).getPrice()}">
+            <input type="text" id="inputPrice0" name="price0" value="${sectors.get(0).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector2" name="sector2" value="2">
+            <input type="text" id="inputSector1" name="sector1" value="2">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice2" name="price2" value="${sectors.get(1).getPrice()}">
+            <input type="text" id="inputPrice1" name="price1" value="${sectors.get(1).getPrice()}">
         </div>
     </td>
 </tr>
@@ -138,300 +286,300 @@
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector3" name="sector3" value="3">
+            <input type="text" id="inputSector2" name="sector2" value="3">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice3" name="price3" value="${sectors.get(2).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector4" name="sector4" value="4">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice4" name="price4" value="${sectors.get(3).getPrice()}">
+            <input type="text" id="inputPrice2" name="price2" value="${sectors.get(2).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector5" name="sector5" value="4">
+            <input type="text" id="inputSector3" name="sector3" value="4">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice5" name="price5" value="${sectors.get(4).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector6" name="sector6" value="6">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice6" name="price6" value="${sectors.get(5).getPrice()}">
+            <input type="text" id="inputPrice3" name="price3" value="${sectors.get(3).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector7" name="sector7" value="7">
+            <input type="text" id="inputSector4" name="sector4" value="5">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice7" name="price7" value="${sectors.get(6).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector8" name="sector8" value="8">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice8" name="price8" value="${sectors.get(7).getPrice()}">
+            <input type="text" id="inputPrice4" name="price4" value="${sectors.get(4).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector9" name="sector9" value="9">
+            <input type="text" id="inputSector5" name="sector5" value="6">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice9" name="price9" value="${sectors.get(8).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector10" name="sector10" value="10">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice10" name="price10" value="${sectors.get(9).getPrice()}">
+            <input type="text" id="inputPrice5" name="price5" value="${sectors.get(5).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector11" name="sector11" value="11">
+            <input type="text" id="inputSector6" name="sector6" value="7">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice11" name="price11" value="${sectors.get(10).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector12" name="sector12" value="12">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice12" name="price12" value="${sectors.get(11).getPrice()}">
+            <input type="text" id="inputPrice6" name="price6" value="${sectors.get(6).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector13" name="sector13" value="13">
+            <input type="text" id="inputSector7" name="sector7" value="8">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice13" name="price13" value="${sectors.get(12).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector14" name="sector14" value="14">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice14" name="price14" value="${sectors.get(13).getPrice()}">
+            <input type="text" id="inputPrice7" name="price7" value="${sectors.get(7).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector15" name="sector15" value="15">
+            <input type="text" id="inputSector8" name="sector8" value="9">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice15" name="price15" value="${sectors.get(14).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector16" name="sector16" value="16">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice16" name="price16"  value="${sectors.get(15).getPrice()}">
+            <input type="text" id="inputPrice8" name="price8" value="${sectors.get(8).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector17" name="sector17" value="17">
+            <input type="text" id="inputSector9" name="sector9" value="10">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice17" name="price17" value="${sectors.get(16).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector18" name="sector18" value=18>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice18" name="price18" value="${sectors.get(17).getPrice()}">
+            <input type="text" id="inputPrice9" name="price9" value="${sectors.get(9).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector19" name="sector19" value=19>
+            <input type="text" id="inputSector10" name="sector10" value="11">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice19" name="price19" value="${sectors.get(18).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector20" name="sector20" value=20>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice20" name="price20" value="${sectors.get(19).getPrice()}">
+            <input type="text" id="inputPrice10" name="price10" value="${sectors.get(10).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector21" name="sector21" value=21>
+            <input type="text" id="inputSector11" name="sector11" value="12">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice21" name="price21" value="${sectors.get(20).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector22" name="sector22" value=22>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice22" name="price22" value="${sectors.get(21).getPrice()}">
+            <input type="text" id="inputPrice11" name="price11" value="${sectors.get(11).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector23" name="sector23" value=23>
+            <input type="text" id="inputSector12" name="sector12" value="13">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice23" name="price23" value="${sectors.get(22).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector24" name="sector24" value=24>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice24" name="price24" value="${sectors.get(23).getPrice()}">
+            <input type="text" id="inputPrice12" name="price12" value="${sectors.get(12).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector25" name="sector25" value=25>
+            <input type="text" id="inputSector13" name="sector13" value="14">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice25" name="price25" value="${sectors.get(24).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector26" name="sector26" value=26>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice26" name="price26" value="${sectors.get(25).getPrice()}">
+            <input type="text" id="inputPrice13" name="price13" value="${sectors.get(13).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector27" name="sector27" value=27>
+            <input type="text" id="inputSector14" name="sector14" value="15">
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice27" name="price27" value="${sectors.get(26).getPrice()}">
+            <input type="text" id="inputPrice14" name="price14" value="${sectors.get(14).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector15" name="sector15" value="16">
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice15" name="price15"  value="${sectors.get(15).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector16" name="sector16" value="17">
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice16" name="price16" value="${sectors.get(16).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector17" name="sector17" value=18>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice17" name="price17" value="${sectors.get(17).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector18" name="sector18" value=19>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice18" name="price18" value="${sectors.get(18).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector19" name="sector19" value=20>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice19" name="price19" value="${sectors.get(19).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector20" name="sector20" value=21>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice20" name="price20" value="${sectors.get(20).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector21" name="sector21" value=22>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice21" name="price21" value="${sectors.get(21).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector22" name="sector22" value=23>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice22" name="price22" value="${sectors.get(22).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector23" name="sector23" value=24>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice23" name="price23" value="${sectors.get(23).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector24" name="sector24" value=25>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice24" name="price24" value="${sectors.get(24).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector25" name="sector25" value=26>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice25" name="price25" value="${sectors.get(25).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector26" name="sector26" value=27>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice26" name="price26" value="${sectors.get(26).getPrice()}">
         </div>
     </td>
 </tr>
@@ -443,7 +591,7 @@
 
 &MediumSpace;
 &MediumSpace;
-<button type="submit" name="action" class="btn btn-primary">Save</button>
+<button type="submit" name="action" class="btn btn-primary">Сохранить</button>
 &MediumSpace;
 &MediumSpace;
 </form>

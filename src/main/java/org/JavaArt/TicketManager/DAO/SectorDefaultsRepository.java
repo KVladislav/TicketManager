@@ -3,7 +3,6 @@ package org.JavaArt.TicketManager.DAO;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,10 +15,14 @@ import java.util.List;
 @Repository
 
 public interface SectorDefaultsRepository {
-    public void addSectorDefaults(SectorDefaults sectorDefaults) throws SQLException;
-    public void updateSectorDefaults(SectorDefaults sectorDefaults) throws SQLException;
-    public SectorDefaults getSectorDefaultsById(int id) throws SQLException;
-    public List<SectorDefaults> getAllSectorDefaults() throws SQLException;
-    public void deleteSectorDefaults(SectorDefaults sectorDefaults) throws SQLException;
+    public void addSectorDefaults(SectorDefaults sectorDefaults);
+
+    public void updateSectorDefaults(SectorDefaults sectorDefaults);
+
+    public SectorDefaults getSectorDefaultsById(int id);
+
+    public List<SectorDefaults> getAllSectorDefaults();
+
+    public void deleteSectorDefaults(SectorDefaults sectorDefaults);
 
 }

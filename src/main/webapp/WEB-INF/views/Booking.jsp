@@ -28,11 +28,11 @@
     window.onload = function () {
         function countdown(callback) {
             var bar = document.getElementById('progress'),
-                    time = 0, max = 5*60,
+                    time = 0, max = 5 * 60,
                     int = setInterval(function () {
-                        if (${bookingTimeOut!=null}) {
-                            bar.style.width = Math.floor(((new Date().getTime() - ${bookingTimeOut.time})/1000 + time++ ) *100 / max) + '%';
-                            if (time - 1 + (new Date().getTime() - ${bookingTimeOut.time})/1000 >= max) {
+                        if (${bookingTime!=null}) {
+                            bar.style.width = Math.floor((${bookingTime} +time++ ) * 100 / max) + '%';
+                            if (time - 1 + ${bookingTime} >= max) {
                                 clearInterval(int);
                                 // 600ms - width animation time
                                 callback && setTimeout(callback, 600);
@@ -50,16 +50,16 @@
     </script>
 
     <%--<style type='text/css'>--%>
-        <%--body {--%>
-            <%--padding: 50px;--%>
-        <%--}--%>
+    <%--body {--%>
+    <%--padding: 50px;--%>
+    <%--}--%>
     <%--</style>--%>
 
 </head>
 <body>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-6 column">
+        <div class="col-md-7 column">
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <strong>Мероприятие</strong>
@@ -69,11 +69,11 @@
                             <c:forEach items="${events}" var="evnt">
                                 <c:if test="${event.id==evnt.id}">
                                     <option value="${evnt.id}" onclick="this.form.submit()"
-                                            selected>${evnt.description} ${evnt.date.day}.${evnt.date.month} ${event.date.hours}:${event.date.minutes}</option>
+                                            selected>${evnt.description} <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                                 </c:if>
                                 <c:if test="${event.id!=evnt.id}">
                                     <option value="${evnt.id}"
-                                            onclick="this.form.submit()">${evnt.description} ${evnt.date.day}.${evnt.date.month} ${evnt.date.hours}:${evnt.date.minutes}</option>
+                                            onclick="this.form.submit()">${evnt.description} <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                                 </c:if>
                             </c:forEach>
                         </select></p>
@@ -154,9 +154,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 column">
+        <div class="col-md-5 column">
             <table class="table table-hover table-condensed">
-                <caption><strong>Заказ</strong></caption>
+                <caption>
+                    <a href="#" class="btn btn-large btn-primary disabled">Клиент: ${client.name}</a>
+                </caption>
                 <thead>
                 <tr>
                     <th>Мероприятие</th>

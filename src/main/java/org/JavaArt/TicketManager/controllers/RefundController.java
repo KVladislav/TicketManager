@@ -3,8 +3,10 @@ package org.JavaArt.TicketManager.controllers;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.SQLException;
 
@@ -15,14 +17,14 @@ public class RefundController {
     private TicketService ticketService = TicketService.getInstance();
 
     @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.GET)
-    public String refundGet(Model model) throws SQLException {
+    public String refundGet(Model model) {
         model.addAttribute("pageName", 3);//set menu page number
         return "Refund";
     }
 
     @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.POST)
     public String refundPost(@RequestParam(value = "ticketId", required = true)
-                            int ticketId)throws SQLException {
+                             int ticketId) throws SQLException {
        /* if (bindingResult.hasErrors()) {
             System.out.println("Error");
             return "Refund/Refund.do";
