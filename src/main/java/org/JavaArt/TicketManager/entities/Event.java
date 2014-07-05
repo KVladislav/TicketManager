@@ -3,6 +3,7 @@ package org.JavaArt.TicketManager.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -66,9 +67,7 @@ public class Event implements Comparable<Event>{
         BookingTimeOut = bookingTimeOut;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
+    public boolean getDeleted() {return isDeleted;}
 
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
@@ -91,6 +90,7 @@ public class Event implements Comparable<Event>{
     }
 
     @Override
+    @NotNull
     public int compareTo(Event event) {
         Date compareDate = ((Event) event).getDate();
 

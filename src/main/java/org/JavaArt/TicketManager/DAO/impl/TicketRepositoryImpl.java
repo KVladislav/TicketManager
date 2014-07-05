@@ -160,7 +160,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session = HibernateUtil.getSessionFactory().openSession();
 
             if (getTicketById(ticket.getId()) != null) {
-                if (!ticket.isConfirmed()) {
+                if (!ticket.getConfirmed()) {
                     session.beginTransaction();
                     session.delete(ticket);
                     session.getTransaction().commit();

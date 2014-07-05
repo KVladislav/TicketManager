@@ -10,18 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 
 @Controller
 @SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "legenda",
         "row", "rowsMap", "seat", "seatsMap", "orderList", "orderPrice"})
 public class OrderController {
-    static public List<Ticket> order = new ArrayList<>();
-    static public double orderPrice = 0;
+    private ArrayList<Ticket> order = new ArrayList<>();
+    private double orderPrice = 0;
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
@@ -29,6 +26,7 @@ public class OrderController {
     private Sector currentSector = null;
     private int currentRow = 1;
     private int currentSeat = 1;
+    private int currentOrderId=1;
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) {
@@ -57,7 +55,7 @@ public class OrderController {
                     rowsMap1.put(i, ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
                 }
                 model.addAttribute("rowsMap", rowsMap1);
-                Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
+                Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
                 model.addAttribute("row", currentRow);
                 model.addAttribute("seat", currentSeat);
                 model.addAttribute("seatsMap", seatsMap1);
@@ -90,7 +88,7 @@ public class OrderController {
         model.addAttribute("rowsMap", rowsMap1);
         currentRow = 1;
         currentSeat = 1;
-        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
+        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
@@ -109,7 +107,10 @@ public class OrderController {
         model.addAttribute("rowsMap", rowsMap1);
         currentRow = 1;
         currentSeat = 1;
-        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
+        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
+
+
+
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
@@ -123,7 +124,7 @@ public class OrderController {
         currentSector = sector;
         currentRow = row;
         currentSeat = 1;
-        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow);
+        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
@@ -131,47 +132,55 @@ public class OrderController {
     }
 
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
-    public String orderAddTicket(@ModelAttribute(value = "row") int row, @RequestParam(value = "seat",
-            required = true) int seat, @ModelAttribute Sector sector) {
+    public String orderAddTicket(@ModelAttribute(value = "row") int row,
+                                 @RequestParam(value = "seat",required = true) int seat,
+                                 @ModelAttribute(value = "sector") Sector sector) {
         Ticket ticket = new Ticket();
         ticket.setSector(sector);
         ticket.setRow(row);
         ticket.setSeat(seat);
-        ticket.setReserved(false);
-        ticket.setConfirmed(false);
+        //ticket.setOperator(operator);
         currentSeat = seat;
         if (order.size() > 0) {
             for (Ticket ord : order) {
-                if (ord.getSector() == sector && ord.getSeat() == seat && ord.getRow() == row)
+                if (ord.getSector().equals(sector) && ord.getSeat() == seat && ord.getRow() == row)
                     return "redirect:/Order/Order.do";
             }
         }
-        orderPrice += sector.getPrice();
-        ticketService.addTicket(ticket);
+        ticket.setId(currentOrderId++);
         order.add(ticket);
+        orderPrice += sector.getPrice();
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-    public String orderDelTicket(@RequestParam(value = "ticketId", required = true)
-                                 int ticketId) {
-        ticketService.deleteTicket(ticketService.getTicketById(ticketId));
-        for (Ticket ticket : order) {
-            if ((int) ticket.getId() == ticketId) {
-                order.remove(ticket);
-                orderPrice -= ticket.getSector().getPrice();
+         public String orderDelTicket(@RequestParam(value = "orderId", required = true)
+                                       int orderId){
+        int index=orderId;
+        for (Ticket ord : order) {
+            if (ord.getId() == orderId) {
+                order.remove(ord);
+                orderPrice-=ord.getSector().getPrice();
+                currentOrderId--;
                 break;
             }
+        }
+        for (Ticket ord : order){
+            if (ord.getId()>orderId) ord.setId(index++);
         }
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
     public String orderBuy() {
-        for (Ticket ticket : order) ticket.setConfirmed(true);
-        ticketService.updateTickets(order);
+        for (Ticket ticket : order){
+            ticket.setConfirmed(true);
+            ticket.setId(null);
+            ticketService.addTicket(ticket);
+        }
         order.clear();
         orderPrice = 0;
+        currentOrderId=1;
         return "redirect:/Order/Order.do";
     }
 }

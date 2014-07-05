@@ -52,7 +52,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public boolean isDeleted() {
+    public boolean getDeleted() {
         return isDeleted;
     }
 
@@ -60,7 +60,7 @@ public class Ticket {
         this.isDeleted = isDeleted;
     }
 
-    public boolean isConfirmed() {
+    public boolean getConfirmed() {
         return isConfirmed;
     }
 
@@ -68,9 +68,11 @@ public class Ticket {
         this.isConfirmed = isConfirmed;
     }
 
-    public boolean isReserved() {
+    public boolean getReserved() {
         return isReserved;
     }
+
+    public void setReserved(boolean isReserved) {this.isReserved = isReserved;}
 
     public Date getTimeStamp() {
         return timeStamp;
@@ -96,25 +98,11 @@ public class Ticket {
         this.row = row;
     }
 
-    public Integer getSeat() {
-        return seat;
-    }
+    public Integer getSeat() {return seat;}
 
-    public void setSeat(Integer seat) {
-        this.seat = seat;
-    }
+    public void setSeat(Integer seat) {this.seat = seat;}
 
-    public boolean getReserved() {
-        return isReserved;
-    }
-
-    public void setReserved(boolean isReserved) {
-        this.isReserved = isReserved;
-    }
-
-    public Sector getSector() {
-        return sector;
-    }
+    public Sector getSector() {return sector;}
 
     public void setSector(Sector sector) {
         this.sector = sector;
@@ -128,9 +116,7 @@ public class Ticket {
         this.client = client;
     }
 
-    public Operator getOperator() {
-        return operator;
-    }
+    public Operator getOperator() {return operator;}
 
     public void setOperator(Operator operator) {
         this.operator = operator;

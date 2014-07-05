@@ -7,6 +7,7 @@ import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -78,17 +79,27 @@ public class TicketService {
         ticketRepository.deleteNonConfirmedTickets(minutes);
     }
 
-    public Map<Integer, String> seatStatus(Sector sector, int row) {
+    public Map<Integer, String> seatStatus(Sector sector, int row, ArrayList<Ticket> order) {
         Map<Integer, String> seatsMap = new TreeMap<>();
         List<Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector, row);
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
-            if (ticketRepository.isPlaceFree(sector, row, i)) seatsMap.put(i, "Статус:  в продаже");
-            else {
+            if (ticketRepository.isPlaceFree(sector, row, i)) {
+                if(order.size()>0&&order!=null){
+                    for (Ticket ord : order) {
+                        if (ord.getSector().equals(sector) && ord.getRow() == row && ord.getSeat() == i){
+                            seatsMap.put(i, "Статус: не утверждён");
+                            break;
+                        }
+                        else seatsMap.put(i, "Статус:  в продаже");
+                    }
+                }
+                else seatsMap.put(i, "Статус:  в продаже");
+            }
+            else{
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
-                        if ((tic.getReserved() && tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
-                        if (!tic.getReserved() && tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
-                        if (!tic.isConfirmed()) seatsMap.put(i, "Статус: не утверждён");
+                        if ((tic.getReserved() && tic.getConfirmed())) seatsMap.put(i, "Статус: забронирован");
+                        if (!tic.getReserved() && tic.getConfirmed()) seatsMap.put(i, "Статус: продан");
                     }
                 }
             }
