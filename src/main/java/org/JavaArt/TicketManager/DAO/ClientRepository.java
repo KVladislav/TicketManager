@@ -3,7 +3,6 @@ package org.JavaArt.TicketManager.DAO;
 import org.JavaArt.TicketManager.entities.Client;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,9 +15,14 @@ import java.util.List;
 @Repository
 
 public interface ClientRepository {
-    public void addClient(Client client)  throws SQLException;
-    public void updateClient(Client client)  throws SQLException;
-    public Client getClientById(int id)  throws SQLException;
-    public List<Client> getAllClients() throws SQLException;
-    public void deleteClient(Client client) throws SQLException;
+    public void saveOrUpdateClient(Client client);
+
+    public List<Client> getClientsByName(String clientName);
+
+    public void deleteClientsWithoutOrders(int minutes);
+
+    public Client getClientById(int id);
+
+    public List<Client> getAllClients();
+//    public void deleteClient(Client client) ;
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(schema="public", name = "ticket")
+@Table(schema = "public", name = "ticket")
 public class Ticket {
 
     @Id
@@ -33,6 +33,10 @@ public class Ticket {
     @Column(name = "isReserved")
     private boolean isReserved;
 
+    @Column(name = "isDeleted")
+    private boolean isDeleted;
+
+
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
 
@@ -45,10 +49,18 @@ public class Ticket {
     private Client client;
 
 
+    public Ticket() {
+    }
 
-    public Ticket() {}
+    public boolean getDeleted() {
+        return isDeleted;
+    }
 
-    public boolean isConfirmed() {
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public boolean getConfirmed() {
         return isConfirmed;
     }
 
@@ -56,9 +68,11 @@ public class Ticket {
         this.isConfirmed = isConfirmed;
     }
 
-    public boolean isReserved() {
+    public boolean getReserved() {
         return isReserved;
     }
+
+    public void setReserved(boolean isReserved) {this.isReserved = isReserved;}
 
     public Date getTimeStamp() {
         return timeStamp;
@@ -87,12 +101,6 @@ public class Ticket {
     public Integer getSeat() {return seat;}
 
     public void setSeat(Integer seat) {this.seat = seat;}
-
-    public boolean getReserved() {return isReserved;}
-
-    public void setReserved(boolean isReserved) {
-        this.isReserved = isReserved;
-    }
 
     public Sector getSector() {return sector;}
 

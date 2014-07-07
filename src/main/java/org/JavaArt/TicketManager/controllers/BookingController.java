@@ -1,8 +1,10 @@
 package org.JavaArt.TicketManager.controllers;
 
+import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.service.ClientService;
 import org.JavaArt.TicketManager.service.EventService;
 import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
@@ -21,159 +23,294 @@ import java.util.*;
  * Time: 18:06
  */
 @Controller
-@SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "row", "rowsMap", "seatsMap", "tickets","bookingPrice"})
-
+@SessionAttributes({"bookingTime", "pageName", "errorMessage", "tickets", "events", "sectorsMap", "rowsMap", "seatsMap", "sector", "event", "bookingPrice", "row", "bookingTimeOut", "client"})
 public class BookingController {
-    private String errorMessage = "";
+
     private TicketService ticketService = TicketService.getInstance();
+    private ClientService clientService = ClientService.getInstance();
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
-    private List<Ticket> tickets = new ArrayList<>();
-    private Double bookingPrice=Double.valueOf(0);
+
+//    private String errorMessage = null;
+//    private List<Ticket> tickets = new ArrayList<>();
+//    private List<Event> events;
+//    private List<Sector> sectors;
+//    private Map<Sector, Integer> sectorsMap;
+//    private Map<Integer, Integer> rowsMap;
+//    private Map<Integer, Boolean> seatsMap;
+//    private Sector sector;
+//    private Event event;
+//    private double bookingPrice = 0;
+//    private int row = 1;
+//    private Date bookingTimeOut;
+//    private Client client;
+
+    @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
+    public String bookingPaymentInit(Model model, SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
+        model.addAttribute("pageName", 2);//set menu page number
+        return "Clients";
+    }
+
+    @RequestMapping(value = "Booking/ProceedClientName.do", method = RequestMethod.POST)
+    public String bookingProceedClientName(Model model, @RequestParam(value = "clientName", required = true) String clientName,
+                                           @RequestParam(value = "action", required = true) String action) {
+        Map<Client, Integer[]> clients = new HashMap<>();
+        if (action.equals("NewClient")) {
+            Client client = new Client();
+            client.setName(clientName);
+            model.addAttribute(client);
+            return "NewClient";
+        } else {
+            List<Client> clientsList = clientService.getClientsByName(clientName);
+
+            if (clientsList != null) {
+                for (Client client1 : clientsList) {
+                    List<Ticket> tickets1 = ticketService.getTicketsByClient(client1);
+                    if (tickets1 != null && tickets1.size() > 0) {
+                        int ticketAmount = tickets1.size();
+                        int bookingPrice = 0;
+                        for (Ticket ticket : tickets1) {
+                            bookingPrice += ticket.getSector().getPrice();
+                        }
+                        clients.put(client1, new Integer[]{ticketAmount, bookingPrice});
+                    }
+                }
+            }
+        }
+        model.addAttribute("clients", clients);
+        return "Clients";
+    }
+
+    @RequestMapping(value = "Booking/NewClientSave.do", method = RequestMethod.POST)
+    public String bookingNewClientSave(Model model, @RequestParam(value = "clientName", required = true) String
+            clientName, @RequestParam(value = "clientDescription", required = true) String clientDescription) throws
+            SQLException {
+        Client client = (Client) model.asMap().get("client");
+        client.setName(clientName);
+        client.setDescription(clientDescription);
+        clientService.saveOrUpdateClient(client);
+        return "redirect:/Booking/Booking.do";
+    }
+
+    @RequestMapping(value = "Booking/ViewClient.do", method = RequestMethod.POST)
+    public String bookingViewClient(@RequestParam(value = "clientId", required = true) int clientId, Model
+            model) {
+        System.out.println(clientId);
+        Client client = clientService.getClientById(clientId);
+        List<Ticket> tickets = ticketService.getTicketsByClient(client);
+        model.addAttribute("client", client);
+        model.addAttribute("tickets", tickets);
+
+        return "ClientBooking";
+    }
+
 
     @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.GET)
-    public String bookingGet(Model model) throws SQLException {
-        model.addAttribute("pageName", 2);//set menu page number
-        List<Event> events = eventService.getAllEvents();
-        if (errorMessage!=null) {
-            model.addAttribute("errorMessage", errorMessage);
-//            errorMessage = null;
+    public String bookingGet(Model model) {
+        if (model.asMap().get("client") == null) {
+            return "redirect:/Booking/GetClient.do";
         }
-        model.addAttribute("bookingPrice", bookingPrice);
+
+        List<Event> events;
+        Event event = null;
+        List<Sector> sectors;
+        Sector sector = null;
+        Map<Sector, Integer> sectorsMap = new TreeMap<>();
+        Map<Integer, Integer> rowsMap = new TreeMap<>();
+        Integer row = 1;
+        Map<Integer, Boolean> seatsMap = new TreeMap<>();
+
+
+        events = eventService.getAllEvents();
         if (events != null && events.size() > 0) {
-            Event lastEvent = null;
-            Sector lastSector = null;
-            if (tickets.size() > 0) {
-                lastEvent = tickets.get(tickets.size() - 1).getSector().getEvent();
-                lastSector = tickets.get(tickets.size() - 1).getSector();
-            }
-            if (lastEvent == null) {
-                lastEvent = events.get(0);
-            }
+            event = events.get(0);
 
-            model.addAttribute("event", lastEvent);
-            model.addAttribute("events", events);
-            model.addAttribute("tickets", tickets);
-            model.addAttribute("row", 0); //init set to fix crush for add button
-
-            List<Sector> sectors = sectorService.getSectorsByEvent(lastEvent);
-
-            if (lastSector == null) {
-                lastSector = sectors.get(0);
-            }
-
+            sectors = sectorService.getSectorsByEvent(event);
             if (sectors != null && sectors.size() > 0) {
-                model.addAttribute("sector", lastSector);
+                sector = sectors.get(0);
 
-                Map<Sector, Integer> sectorsMap = new TreeMap<>();
-                for (Sector sector : sectors) {
-                    sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
+                for (Sector sector1 : sectors) {
+                    sectorsMap.put(sector1, ticketService.getFreeTicketsAmountBySector(sector1));
                 }
-                model.addAttribute("sectorsMap", sectorsMap);
 
-//                Map<Integer, Integer> rowsMap = new TreeMap<>();
-//                for (int i = 1; i <= lastSector.getMaxRows(); i++) {
-//                    rowsMap.put(i, service.getFreeTicketsAmountBySectorRow(lastSector, i));
-//                }
-//                model.addAttribute("rowsMap", rowsMap);
+                for (int i = 1; i <= sector.getMaxRows(); i++) {
+                    rowsMap.put(i, ticketService.getFreeTicketsAmountBySectorRow(sector, i));
+                }
 
-//                Map<Integer, Boolean> seatsMap = new TreeMap<>();
-//                for (int i = 0; i < lastSector.getMaxSeats(); i++) {
-//                    seatsMap.put(i, service.isPlaceFree(lastSector, 1, i));
-//                }
-//                model.addAttribute("row", lastRow);
-//                model.addAttribute("seatsMap", seatsMap);
+                for (int i = 1; i <= sector.getMaxSeats(); i++) {
+                    seatsMap.put(i, ticketService.isPlaceFree(sector, 1, i));
+                }
             }
         }
+        model.addAttribute("event", event);
+        model.addAttribute("events", events);
+        model.addAttribute("sector", sector);
+        model.addAttribute("sectorsMap", sectorsMap);
+        model.addAttribute("row", row);
+        model.addAttribute("seatsMap", seatsMap);
+        model.addAttribute("rowsMap", rowsMap);
+        model.addAttribute("bookingPrice", 0d);
+
         return "Booking";
     }
 
     @RequestMapping(value = "Booking/setSectors.do", method = RequestMethod.POST)
-    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, Model model) throws SQLException {
+    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, Model
+            model) {
         Event event = eventService.getEventById(eventId);
-        model.addAttribute("event", event);
         List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        Sector sector = null;
         Map<Sector, Integer> sectorsMap = new TreeMap<>();
-        for (Sector sector : sectors) {
-            sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
+        Map<Integer, Integer> rowsMap = new TreeMap<>();
+        Integer row = 1;
+        Map<Integer, Boolean> seatsMap = new TreeMap<>();
+
+        if (sectors != null && sectors.size() > 0) {
+            sector = sectors.get(0);
+
+            for (Sector sector1 : sectors) {
+                sectorsMap.put(sector1, ticketService.getFreeTicketsAmountBySector(sector1));
+            }
+
+            for (int i = 1; i <= sector.getMaxRows(); i++) {
+                rowsMap.put(i, ticketService.getFreeTicketsAmountBySectorRow(sector, i));
+            }
+
+            for (int i = 1; i <= sector.getMaxSeats(); i++) {
+                seatsMap.put(i, ticketService.isPlaceFree(sector, 1, i));
+            }
         }
+
+        model.addAttribute("event", event);
+        model.addAttribute("sector", sector);
         model.addAttribute("sectorsMap", sectorsMap);
+        model.addAttribute("row", row);
+        model.addAttribute("seatsMap", seatsMap);
+        model.addAttribute("rowsMap", rowsMap);
+
+        if (model.asMap().get("bookingTimeOut") != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.asMap().get("bookingTimeOut")).getTime()) / 1000);
+        }
+
         return "Booking";
     }
 
     @RequestMapping(value = "Booking/setRow.do", method = RequestMethod.POST)
-    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, Model model) throws SQLException {
+    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, Model
+            model) {
         Sector sector = sectorService.getSectorById(sectorId);
-        model.addAttribute("sector", sector);
         Map<Integer, Integer> rowsMap = new TreeMap<>();
+        Integer row = 1;
+        Map<Integer, Boolean> seatsMap = new TreeMap<>();
+
         for (int i = 1; i <= sector.getMaxRows(); i++) {
             rowsMap.put(i, ticketService.getFreeTicketsAmountBySectorRow(sector, i));
         }
+
+        for (int i = 1; i <= sector.getMaxSeats(); i++) {
+            seatsMap.put(i, ticketService.isPlaceFree(sector, 1, i));
+        }
+
+        model.addAttribute("sector", sector);
+        model.addAttribute("row", row);
+        model.addAttribute("seatsMap", seatsMap);
         model.addAttribute("rowsMap", rowsMap);
+        if (model.asMap().get("bookingTimeOut") != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.asMap().get("bookingTimeOut")).getTime()) / 1000);
+        }
         return "Booking";
     }
 
     @RequestMapping(value = "Booking/setSeat.do", method = RequestMethod.POST)
-    public String bookingSetSeat(@RequestParam(value = "row", required = true) int row, @ModelAttribute Sector sector, Model model) throws SQLException {
-//        Map<Integer, Boolean> seatsMap = new TreeMap<>();
-//        for (int i = 1; i <= sector.getMaxSeats(); i++) {
-//            seatsMap.put(i, service.isPlaceFree(sector, row, i));
-//        }
-        Set<Integer> seatsMap = new TreeSet<>();
+    public String bookingSetSeat(@RequestParam(value = "row", required = true) Integer row, @ModelAttribute("sector") Sector sector, Model model) throws
+            SQLException {
+
+
+        Map<Integer, Boolean> seatsMap = new TreeMap<>();
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
-            if (ticketService.isPlaceFree(sector, row, i)) seatsMap.add(i);
+            seatsMap.put(i, ticketService.isPlaceFree(sector, row, i));
         }
+
         model.addAttribute("row", row);
         model.addAttribute("seatsMap", seatsMap);
+        if (model.asMap().get("bookingTimeOut") != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.asMap().get("bookingTimeOut")).getTime()) / 1000);
+        }
         return "Booking";
     }
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "Booking/addTicket.do", method = RequestMethod.POST)
-    public String bookingAddTicket(@ModelAttribute(value = "row") int row, @RequestParam(value = "seats", required = false) int[] seats, @ModelAttribute Sector sector, SessionStatus status, Model model) throws SQLException {
-        if (seats == null) return "redirect:/Booking/Booking.do";
-        errorMessage=" ";
-        for (int seat : seats) {
-            if (ticketService.isPlaceFree(sector, row, seat)) {
-                Ticket ticket = new Ticket();
-                ticket.setSector(sector);
-                ticket.setRow(row);
-                ticket.setSeat(seat);
-                bookingPrice=bookingPrice+sector.getPrice();
-                ticketService.addTicket(ticket);
-                tickets.add(ticket);
-            } else {
-                errorMessage += sector.getEvent().getDescription() + " Сектор:" + sector.getName() + " Ряд: " + row + " Место:" + seat + " уже продан" + "<br>";
-            }
+    public String bookingAddTicket(Model model, @RequestParam(value = "seats", required = false) int[] seats,
+                                   @ModelAttribute("sector") Sector sector,
+                                   @ModelAttribute("row") Integer row,
+                                   @ModelAttribute("client") Client client,
+                                   @ModelAttribute("bookingPrice") Double bookingPrice) {
 
+        Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
+        if (bookingTimeOut == null) {
+            bookingTimeOut = new Date();
         }
-        status.setComplete();
+        if (bookingPrice == null) {
+            bookingPrice = 0d;
+        }
+        List<Ticket> tickets = (List) model.asMap().get("tickets");
+        if (tickets == null) {
+            tickets = new ArrayList<>();
+        }
+
+        String errorMessage = (String) model.asMap().get("errorMessage");
+        if (seats != null) {
+            for (int seat : seats) {
+                if (ticketService.isPlaceFree(sector, row, seat)) {
+                    Ticket ticket = new Ticket();
+                    ticket.setSector(sector);
+                    ticket.setRow(row);
+                    ticket.setSeat(seat);
+                    ticket.setClient(client);
+                    ticket.setReserved(true);
+                    bookingPrice = bookingPrice + sector.getPrice();
+                    ticketService.addTicket(ticket);
+                    tickets.add(ticket);
+                } else {
+                    errorMessage += sector.getEvent().getDescription() + " Сектор:" + sector.getName() + " Ряд: " + row + " Место:" + seat + " уже продан" + "<br>";
+                }
+            }
+        }
+        model.addAttribute("tickets", tickets);
+        model.addAttribute("bookingPrice", bookingPrice);
+        model.addAttribute("bookingTimeOut", bookingTimeOut);
+        model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
+
+        if (errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+        }
+
         return "redirect:/Booking/Booking.do";
     }
 
     @RequestMapping(value = "Booking/Finish.do", method = RequestMethod.POST)
-    public String bookingFinish(SessionStatus status) throws SQLException {
+    public String bookingFinish(SessionStatus sessionStatus, @ModelAttribute("tickets") List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
             ticket.setConfirmed(true);
         }
+        //TODO сдеать проверку на свободность, если занят, то предупреждение с рефрешем заказа
         ticketService.saveOrUpdateTickets(tickets);
-        tickets.clear();
-        bookingPrice=Double.valueOf(0);
-        status.setComplete();
-        return "redirect:/Booking/Booking.do";
+        sessionStatus.setComplete();
+        return "redirect:/Booking/GetClient.do";
     }
 
-    @RequestMapping(value = "Booking/Cancel.do", method = RequestMethod.POST)
-    public String bookingCancel(SessionStatus status) throws SQLException {
+    @RequestMapping(value = "Booking/Cancel.do")
+    public String bookingCancel(SessionStatus sessionStatus, @ModelAttribute("tickets") List<Ticket> tickets) {
         ticketService.deleteTickets(tickets);
-        tickets.clear();
-        bookingPrice=Double.valueOf(0);
-        status.setComplete();
-        errorMessage=null;
-        return "redirect:/Booking/Booking.do";
+        sessionStatus.setComplete();
+        return "redirect:/Booking/GetClient.do";
     }
 
     @RequestMapping(value = "Booking/delTicket.do", method = RequestMethod.POST)
-    public String bookingDelTicket(@RequestParam(value = "ticketId", required = true) int ticketId, Model model) throws SQLException {
+    public String bookingDelTicket(@RequestParam(value = "ticketId", required = true) int ticketId, Model
+            model, @ModelAttribute("tickets") List<Ticket> tickets) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         ticketService.deleteTicket(ticket);
         for (Ticket tckt : tickets) {
@@ -182,7 +319,10 @@ public class BookingController {
                 break;
             }
         }
-        model.addAttribute("tickets", tickets);
+        if (model.asMap().get("bookingTimeOut") != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.asMap().get("bookingTimeOut")).getTime()) / 1000);
+        }
         return "Booking";
     }
+
 }

@@ -1,16 +1,19 @@
 package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.TicketRepository;
+import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,34 +27,26 @@ import java.util.List;
 
 public class TicketRepositoryImpl implements TicketRepository {
 
-//    @Override
-//    public void saveOrUpdateTicket(Ticket ticket) throws SQLException {
-//        Session session = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            session.saveOrUpdateTicket(ticket);
-//            session.getTransaction().commit();
-//            session.flush();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//    }
-
     @Override
-    public void saveOrUpdateTicket(Ticket ticket) throws SQLException {
+    public void saveOrUpdateTicket(Ticket ticket) {
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            if (ticket.getId()!=null && getTicketById(ticket.getId())!=null){
-                ticket.setId(null);
+            if (ticket.getId() == null) {
+                session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
+                session.save(ticket);
+            } else {
+                if (getTicketById(ticket.getId()) == null) {
+                    ticket.setId(null);
+                    session = HibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    session.save(ticket);
+                } else {
+                    session = HibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    session.update(ticket);
+                }
             }
-            session.saveOrUpdate(ticket);
             session.getTransaction().commit();
             session.flush();
             session.clear();
@@ -65,7 +60,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public void updateTicket(Ticket ticket) throws SQLException {
+    public void updateTicket(Ticket ticket) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -84,26 +79,26 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public void updateTickets(List<Ticket> tickets) throws SQLException {
+    public void updateTickets(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
             updateTicket(ticket);
         }
     }
 
     @Override
-    public void saveOrUpdateTickets(List<Ticket> tickets) throws SQLException {
+    public void saveOrUpdateTickets(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
             saveOrUpdateTicket(ticket);
         }
     }
 
     @Override
-    public Ticket getTicketById(int id) throws SQLException {
+    public Ticket getTicketById(int id) {
         Session session = null;
-        Ticket event = null;
+        Ticket ticket = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            event = (Ticket) session.load(Ticket.class, id);
+            ticket = (Ticket) session.get(Ticket.class, id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -111,11 +106,12 @@ public class TicketRepositoryImpl implements TicketRepository {
                 session.close();
             }
         }
-        return event;
+        return ticket;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Ticket> getAllTickets() throws SQLException {
+    public List<Ticket> getAllTickets() {
         Session session = null;
         List<Ticket> tickets = null;// = new ArrayList<Ticket>();
         try {
@@ -131,13 +127,82 @@ public class TicketRepositoryImpl implements TicketRepository {
         return tickets;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Ticket> getNonConfirmedTickets() throws SQLException {
+    public void deleteNonConfirmedTickets(int minutes) {
         Session session = null;
-        List<Ticket> tickets = null;
+        Date date = new Date();
+        date.setTime(date.getTime() - 60000 * minutes);
+
+
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            tickets = session.createCriteria(Ticket.class).add(Restrictions.eq("isConfirmed", false)).list();
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Ticket AS ticket WHERE ticket.isConfirmed = false AND ticket.timeStamp <= :endDate");
+            query.setTimestamp("endDate", date);
+            query.executeUpdate();
+            tx.commit();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+
+    @Override
+    public void deleteTicket(Ticket ticket) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            if (getTicketById(ticket.getId()) != null) {
+                if (!ticket.getConfirmed()) {
+                    session.beginTransaction();
+                    session.delete(ticket);
+                    session.getTransaction().commit();
+                    session.flush();
+                    session.clear();
+                } else {
+                    ticket.setDeleted(true);
+                    saveOrUpdateTicket(ticket);
+                }
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Ticket> getTicketsByClient(Client client) {
+        Session session = null;
+        List<Ticket> tickets = null;
+//        List<Ticket> result = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets = session.createCriteria(Ticket.class)
+                    .add(Restrictions.eq("client", client))
+                    .add(Restrictions.eq("isReserved", true))
+                    .add(Restrictions.eq("isConfirmed", true))
+                    .addOrder(Order.asc("sector")).list();
+//            if (tickets != null) {
+//                result = new ArrayList<>();
+//                for (Ticket ticket : tickets) {
+//                    if (ticket.getSector().getEvent().getDate().getTime() > new Date().getTime()) {
+//                        result.add(ticket);
+//                    }
+//                }
+//            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -146,30 +211,17 @@ public class TicketRepositoryImpl implements TicketRepository {
             }
         }
         return tickets;
-
-
     }
 
-
     @Override
-    public void deleteTicket(Ticket ticket) throws SQLException {
+    public int getTicketsAmountByClient(Client client) {
         Session session = null;
+        int counter = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-//            String hql;
-//            if (ticket.getId()!=null) {
-//                hql = "delete from Ticket where id = " + ticket.getId();
-//            } else
-//            {hql = String.format("delete from Ticket where sector = %d and row = %d and seat = %d", ticket.getSector().getId(), ticket.getRow(), ticket.getSeat());
-//            }
-//            System.out.println(hql);
-//            session.createQuery(hql).executeUpdate();
-            session.beginTransaction();
-            session.delete(ticket);
-            session.getTransaction().commit();
-            session.flush();
-            session.clear();
 
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isReserved = true and isDeleted = false and isConfirmed = true and client =%d", client.getId()));
+            counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -177,17 +229,19 @@ public class TicketRepositoryImpl implements TicketRepository {
                 session.close();
             }
         }
+        return counter;
+
     }
 
     @Override
-    public int getFreeTicketsAmountBySector(Sector sector) throws SQLException {
+    public int getFreeTicketsAmountBySector(Sector sector) {
         Session session = null;
         int counter = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
 //              counter = ((Long) session.createCriteria(Ticket.class).setProjection(Projections.rowCount()).add(Restrictions.eq("sector", sector)).list().get(0)).intValue();
 
-            Query query = session.createQuery("select count (*) from Ticket where sector =" + sector.getId());
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d", sector.getId()));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -200,12 +254,12 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public int getFreeTicketsAmountBySectorRow(Sector sector, int row) throws SQLException {
+    public int getFreeTicketsAmountBySectorRow(Sector sector, int row) {
         Session session = null;
         int counter = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("select count (*) from Ticket where sector =" + sector.getId() + " and row=" + row);
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d and row=%d", sector.getId(), row));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -217,13 +271,14 @@ public class TicketRepositoryImpl implements TicketRepository {
         return sector.getMaxSeats() - counter;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row) throws SQLException {
+    public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row) {
         Session session = null;
         List<Ticket> tickets = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            tickets =session.createQuery("from Ticket where sector =" + sector.getId() + " and row=" + row).list();
+            tickets = session.createQuery(String.format("from Ticket where isDeleted = false and sector =%d and row=%d", sector.getId(), row)).list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -235,12 +290,12 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public boolean isPlaceFree(Sector sector, int row, int seat) throws SQLException {
+    public boolean isPlaceFree(Sector sector, int row, int seat) {
         Session session = null;
         int status = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("select count (*) from Ticket where sector =" + sector.getId() + " and row=" + row + " and seat=" + seat);
+            Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d and row=%d and seat=%d", sector.getId(), row, seat));
             status = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -253,7 +308,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public void deleteTickets(List<Ticket> tickets) throws SQLException {
+    public void deleteTickets(List<Ticket> tickets) {
         if (tickets != null) {
             for (Ticket ticket : tickets) {
                 deleteTicket(ticket);

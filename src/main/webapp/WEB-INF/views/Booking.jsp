@@ -24,11 +24,42 @@
         });
     </script>
 
+    <script type='text/javascript'>//<![CDATA[
+    window.onload = function () {
+        function countdown(callback) {
+            var bar = document.getElementById('progress'),
+                    time = 0, max = 5 * 60,
+                    int = setInterval(function () {
+                        if (${bookingTime!=null}) {
+                            bar.style.width = Math.floor((${bookingTime} +time++ ) * 100 / max) + '%';
+                            if (time - 1 + ${bookingTime} >= max) {
+                                clearInterval(int);
+                                // 600ms - width animation time
+                                callback && setTimeout(callback, 600);
+                            }
+                        }
+                    }, 1000);
+        }
+
+        countdown(function () {
+            alert('Заказ отменен');
+            window.location.replace("${pageContext.request.contextPath}/Booking/Cancel.do");
+        });
+    }//]]>
+
+    </script>
+
+    <%--<style type='text/css'>--%>
+    <%--body {--%>
+    <%--padding: 50px;--%>
+    <%--}--%>
+    <%--</style>--%>
+
 </head>
 <body>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-6 column">
+        <div class="col-md-7 column">
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <strong>Мероприятие</strong>
@@ -38,11 +69,11 @@
                             <c:forEach items="${events}" var="evnt">
                                 <c:if test="${event.id==evnt.id}">
                                     <option value="${evnt.id}" onclick="this.form.submit()"
-                                            selected>${evnt.description} ${evnt.date.day}.${evnt.date.month} ${event.date.hours}:${event.date.minutes}</option>
+                                            selected>${evnt.description} <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                                 </c:if>
                                 <c:if test="${event.id!=evnt.id}">
                                     <option value="${evnt.id}"
-                                            onclick="this.form.submit()">${evnt.description} ${evnt.date.day}.${evnt.date.month} ${evnt.date.hours}:${evnt.date.minutes}</option>
+                                            onclick="this.form.submit()">${evnt.description} <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                                 </c:if>
                             </c:forEach>
                         </select></p>
@@ -94,18 +125,17 @@
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                         <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
-                            <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
-                            <%--<c:if test="${! seatEntry.value}">--%>
-                            <%--<option disabled="disabled" value="${seatEntry.key}">${seatEntry.key}</option>--%>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${seatEntry.value}">--%>
-                            <%--<option value="${seatEntry.key}">${seatEntry.key}</option>--%>
-                            <%--</c:if>--%>
-
-                            <%--</c:forEach>--%>
                             <c:forEach items="${seatsMap}" var="seatEntry">
-                                <option value="${seatEntry}">${seatEntry}</option>
+                                <c:if test="${! seatEntry.value}">
+                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key}</option>
+                                </c:if>
+                                <c:if test="${seatEntry.value}">
+                                    <option value="${seatEntry.key}">${seatEntry.key}</option>
+                                </c:if>
                             </c:forEach>
+                            <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
+                            <%--<option value="${seatEntry}">${seatEntry}</option>--%>
+                            <%--</c:forEach>--%>
                         </select>
                 </div>
             </div>
@@ -124,9 +154,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 column">
+        <div class="col-md-5 column">
             <table class="table table-hover table-condensed">
-                <caption><strong>Заказ</strong></caption>
+                <caption>
+                    <a href="#" class="btn btn-large btn-primary disabled">Клиент: ${client.name}</a>
+                </caption>
                 <thead>
                 <tr>
                     <th>Мероприятие</th>
@@ -140,7 +172,8 @@
                 <tbody>
                 <c:forEach items="${tickets}" var="ticket">
                     <tr>
-                        <form name = "delTicket" action="${pageContext.request.contextPath}/Booking/delTicket.do" method="post">
+                        <form name="delTicket" action="${pageContext.request.contextPath}/Booking/delTicket.do"
+                              method="post">
                             <td>${ticket.sector.event.description}</td>
                             <td>${ticket.sector.name}</td>
                             <td>${ticket.row}</td>
@@ -148,7 +181,8 @@
                             <td>${ticket.sector.price}</td>
                             <td>
                                 <input type="hidden" name="ticketId" value="${ticket.id}">
-                                    <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();"><span class="glyphicon glyphicon-trash"></span></button>
+                                <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();"><span
+                                        class="glyphicon glyphicon-trash"></span></button>
                             </td>
                         </form>
 
@@ -160,10 +194,19 @@
                 <tr>
                     <td>
                         <strong>Стоимость заказа ${bookingPrice}</strong>
+
+                        <div class="progress">
+                            <div class="bar" id="progress">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+
                     </td>
                     <td></td>
-                    <td></td>
-                    <td><i class="icon-search"></i></td>
+                    <td>
+
+                    </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">
                             <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Оформить"></form>

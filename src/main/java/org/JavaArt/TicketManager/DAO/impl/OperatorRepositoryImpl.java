@@ -9,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
 public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
-    public void addOperator(Operator operator) throws SQLException {
+    public void addOperator(Operator operator) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -42,7 +41,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public void updateOperator(Operator operator) throws SQLException {
+    public void updateOperator(Operator operator) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -61,7 +60,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public Operator getOperatorById(int id) throws SQLException {
+    public Operator getOperatorById(int id) {
         Session session = null;
         Operator operator = null;
         try {
@@ -78,7 +77,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public List<Operator> getAllOperators() throws SQLException {
+    public List<Operator> getAllOperators() {
         Session session = null;
         List<Operator> operators = null;//new ArrayList<Event>();
         try {
@@ -96,22 +95,22 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         return operators;
     }
 
-    @Override
-    public void deleteOperator(Operator operator) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(operator);
-            session.getTransaction().commit();
-            session.flush();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-    }
+//    @Override
+//    public void deleteOperator(Operator operator) {
+//        Session session = null;
+//        try {
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            session.beginTransaction();
+//            session.delete(operator);
+//            session.getTransaction().commit();
+//            session.flush();
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//        } finally {
+//            if (session != null && session.isOpen()) {
+//                session.close();
+//            }
+//        }
+//
+//    }
 }
