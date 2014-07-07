@@ -98,17 +98,15 @@ public class EventRepositoryImpl implements EventRepository {
     public List<Event> getFutureEvents() {
         Session session = null;
         List<Event> events = new ArrayList<Event>();
-        Date date = new Date();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Event where date >=" + date + " and isDeleted = false ");
-            events = query.list();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
+            events = session.createQuery ("FROM Event WHERE isDeleted = false and date > CURRENT_TIMESTAMP").list();
             }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        }
+        finally {
+            if (session != null && session.isOpen())  session.close();
         }
         return events;
     }

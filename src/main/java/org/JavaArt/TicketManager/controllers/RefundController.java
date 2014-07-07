@@ -4,40 +4,52 @@ import org.JavaArt.TicketManager.entities.*;
 import org.JavaArt.TicketManager.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
-@SessionAttributes({"pageName", "DeletingTicket",})
+@SessionAttributes({"pageName", "error", "message"})
 
 public class RefundController {
     private TicketService ticketService = TicketService.getInstance();
     private Ticket ticket;
+
     @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.GET)
     public String refundGet(Model model) {
         model.addAttribute("pageName", 3);
+        model.addAttribute("error", "");
+        model.addAttribute("message", "");
         return "Refund";
     }
 
     @RequestMapping(value = "Refund/Find.do", method = RequestMethod.POST)
-    public String refundPost(@RequestParam(value = "ticketId", required = true) int ticketId, Model model){
-       /* if (bindingResult.hasErrors()) {
-            System.out.println("Error");
-            return "Refund/Refund.do";
-        }*/
-        ticket = ticketService.getTicketById(ticketId);
-        model.addAttribute(ticket);
-        model.addAttribute("DeletingTicket", ticket);
-        return "Refund";
+    public String refundPost(@RequestParam(value = "ticketId", required = true)
+                             String ticketId, Model model){
+        try{
+            int id=Integer.parseInt(ticketId);
+            ticket = ticketService.getTicketById(id);
+            if (ticket!=null){
+                model.addAttribute(ticket);
+                model.addAttribute("error", "");
+            }
+            else model.addAttribute("error", "Такой билет не продан");
+        }
+        catch (Exception e){
+            model.addAttribute("error", "Повторите ввод ID");
+        }
+        finally {
+            model.addAttribute("message", "");
+            return "Refund";
+        }
     }
 
     @RequestMapping(value = "Refund/Delete.do", method = RequestMethod.POST)
-    public String deletePost(){
-        System.out.println(ticket.getId());
+    public String deletePost(Model model){
         ticketService.deleteTicket(ticket);
-        return "redirect:/Refund/Refund.do";
+        model.addAttribute("message", "Билет возвращен в продажу");
+        return "Refund";
     }
 }
 

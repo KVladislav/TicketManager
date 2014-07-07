@@ -16,12 +16,6 @@ import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Vladislav Karpenko
- * Date: 06.06.2014
- * Time: 11:00
- */
 
 @Repository
 
@@ -60,32 +54,6 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public void updateTicket(Ticket ticket) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(ticket);
-            session.getTransaction().commit();
-            session.flush();
-            session.clear();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-    }
-
-    @Override
-    public void updateTickets(List<Ticket> tickets) {
-        for (Ticket ticket : tickets) {
-            updateTicket(ticket);
-        }
-    }
-
-    @Override
     public void saveOrUpdateTickets(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
             saveOrUpdateTicket(ticket);
@@ -99,6 +67,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             ticket = (Ticket) session.get(Ticket.class, id);
+            if ((ticket!=null)&&ticket.getDeleted()==true) ticket=null;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

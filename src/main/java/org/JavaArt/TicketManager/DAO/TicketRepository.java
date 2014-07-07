@@ -19,13 +19,9 @@ import java.util.List;
 public interface TicketRepository {
     public void saveOrUpdateTicket(Ticket ticket);
 
-    public void updateTicket(Ticket ticket);
-
     public List<Ticket> getTicketsByClient(Client client);
 
     public int getTicketsAmountByClient(Client client);
-
-    public void updateTickets(List<Ticket> tickets);
 
     public void saveOrUpdateTickets(List<Ticket> tickets);
 

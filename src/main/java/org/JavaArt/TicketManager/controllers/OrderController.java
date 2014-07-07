@@ -31,7 +31,7 @@ public class OrderController {
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) {
         model.addAttribute("pageName", 1);
-        List<Event> events = eventService.getAllEvents();
+        List<Event> events = eventService.getFutureEvents();
         if (events != null && events.size() > 0) {
             if (currentEvent == null) currentEvent = events.get(0);
             model.addAttribute("event", currentEvent);

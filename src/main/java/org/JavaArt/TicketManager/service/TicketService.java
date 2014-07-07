@@ -71,10 +71,6 @@ public class TicketService {
         ticketRepository.saveOrUpdateTickets(tickets);
     }
 
-    public void updateTickets(List<Ticket> tickets) {
-        ticketRepository.updateTickets(tickets);
-    }
-
     public void deleteNonConfirmedTickets(int minutes) {
         ticketRepository.deleteNonConfirmedTickets(minutes);
     }
