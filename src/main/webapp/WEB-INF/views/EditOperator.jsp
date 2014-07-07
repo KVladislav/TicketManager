@@ -47,7 +47,7 @@
 
 </head>
 
-<div class="panel-heading" style="text-align:center;"><b>Edit operator</b></div>
+<div class="panel-heading" style="text-align:center;"><b>Редактирование оператора</b></div>
 <center>
     <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditSave.do" method="post">
 
@@ -56,35 +56,35 @@
 
         <input type="hidden" name="operatorId" value="${operator.id}">
         <div class="control-group">
-            <label class="my-control-label" for="name">Name</label>
+            <label class="my-control-label" for="name">Имя</label>
 
             <div class="my-controls">
                 <textarea rows="1" id="name" name="name">${operator.name}</textarea>
             </div>
         </div>
         <div class="control-group">
-            <label class="my-control-label" for="surname">Surname</label>
+            <label class="my-control-label" for="surname">Фамилия</label>
 
             <div class="my-controls">
                 <textarea rows="1" id="surname" name="surname">${operator.surname}</textarea>
             </div>
         </div>
         <div class="control-group">
-            <label class="my-control-label" for="login">Login</label>
+            <label class="my-control-label" for="login">Логин</label>
 
             <div class="my-controls">
                 <textarea rows="1" id="login" name="login">${operator.login}</textarea>
             </div>
         </div>
         <div class="control-group">
-            <label class="my-control-label" for="password">Password</label>
+            <label class="my-control-label" for="password">Пароль</label>
 
             <div class="my-controls">
                 <textarea rows="1" id="password" name="password">${operator.password}</textarea>
             </div>
         </div>
         <div class="control-group">
-            <label class="my-control-label" for="description">Description</label>
+            <label class="my-control-label" for="description">Описание</label>
 
             <div class="my-controls">
                 <textarea rows="5" id="description" name="description">${operator.description}</textarea>
@@ -94,7 +94,7 @@
 
         &MediumSpace;
         &MediumSpace;
-        <button type="submit" name="action" class="btn btn-primary">Save</button>
+        <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
         &MediumSpace;
         &MediumSpace;
 

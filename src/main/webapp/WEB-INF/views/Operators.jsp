@@ -34,24 +34,23 @@
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading" style="text-align:center;"><b>
-    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Create the new
-        operator</a>
+    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создать нового оператора</a>
 </b></div>
 
 &MediumSpace;
 &MediumSpace;
-<div class="panel-heading" style="text-align:center;"><b>List of operators</b></div>
+<div class="panel-heading" style="text-align:center;"><b>Список операторов</b></div>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
     <div class="table responsive">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Login</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Логин</th>
+                <th>Редактировать</th>
+                <th>Удалить</th>
             </tr>
             </thead>
             <tbody>
@@ -64,13 +63,13 @@
                     <td>
                         <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditGet.do" method="get">
                             <input type="hidden" name="operatorId" value="${operator.id}">
-                            <button type="submit" name="action" value="edit" class="btn">Edit</button>
+                            <button type="submit" name="action" value="edit" class="btn">Редактировать</button>
                         </form>
                     </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Operators/OperatorsDelete.do" method="post">
                             <input type="hidden" name="operatorId" value="${operator.id}">
-                            <button type="submit" name="action" value="delete" class="btn">Delete</button>
+                            <button type="submit" name="action" value="delete" class="btn">Удалить</button>
                         </form>
                     </td>
                 </tr>
