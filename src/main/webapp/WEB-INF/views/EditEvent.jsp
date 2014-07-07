@@ -261,24 +261,26 @@
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector0" name="sector0" value="1">
+            <input type="text" id="inputSector0" name="sector0" value="1" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice0" name="price0" value="${sectors.get(0).getPrice()}">
+            <input type="text" id="inputPrice0" required pattern="^[0-9]+$" title="только числа" name="price0"
+                   value="${sectors.get(0).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector1" name="sector1" value="2">
+            <input type="text" id="inputSector1" name="sector1" value="2" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice1" name="price1" value="${sectors.get(1).getPrice()}">
+            <input type="text" id="inputPrice1" required pattern="^[0-9]+$" title="только числа" name="price1"
+                   value="${sectors.get(1).getPrice()}">
         </div>
     </td>
 </tr>
@@ -286,300 +288,325 @@
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector2" name="sector2" value="3">
+            <input type="text" id="inputSector2" name="sector2" value="3" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice2" name="price2" value="${sectors.get(2).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector3" name="sector3" value="4">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice3" name="price3" value="${sectors.get(3).getPrice()}">
+            <input type="text" id="inputPrice2" required pattern="^[0-9]+$" title="только числа" name="price2"
+                   value="${sectors.get(2).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector4" name="sector4" value="5">
+            <input type="text" id="inputSector3" name="sector3" value="4" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice4" name="price4" value="${sectors.get(4).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector5" name="sector5" value="6">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice5" name="price5" value="${sectors.get(5).getPrice()}">
+            <input type="text" id="inputPrice3" required pattern="^[0-9]+$" title="только числа" name="price3"
+                   value="${sectors.get(3).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector6" name="sector6" value="7">
+            <input type="text" id="inputSector4" name="sector4" value="5" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice6" name="price6" value="${sectors.get(6).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector7" name="sector7" value="8">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice7" name="price7" value="${sectors.get(7).getPrice()}">
+            <input type="text" id="inputPrice4" required pattern="^[0-9]+$" title="только числа" name="price4"
+                   value="${sectors.get(4).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector8" name="sector8" value="9">
+            <input type="text" id="inputSector5" name="sector5" value="6" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice8" name="price8" value="${sectors.get(8).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector9" name="sector9" value="10">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice9" name="price9" value="${sectors.get(9).getPrice()}">
+            <input type="text" id="inputPrice5" required pattern="^[0-9]+$" title="только числа" name="price5"
+                   value="${sectors.get(5).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector10" name="sector10" value="11">
+            <input type="text" id="inputSector6" name="sector6" value="7" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice10" name="price10" value="${sectors.get(10).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector11" name="sector11" value="12">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice11" name="price11" value="${sectors.get(11).getPrice()}">
+            <input type="text" id="inputPrice6" required pattern="^[0-9]+$" title="только числа" name="price6"
+                   value="${sectors.get(6).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector12" name="sector12" value="13">
+            <input type="text" id="inputSector7" name="sector7" value="8" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice12" name="price12" value="${sectors.get(12).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector13" name="sector13" value="14">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice13" name="price13" value="${sectors.get(13).getPrice()}">
+            <input type="text" id="inputPrice7" required pattern="^[0-9]+$" title="только числа" name="price7"
+                   value="${sectors.get(7).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector14" name="sector14" value="15">
+            <input type="text" id="inputSector8" name="sector8" value="9" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice14" name="price14" value="${sectors.get(14).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector15" name="sector15" value="16">
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice15" name="price15"  value="${sectors.get(15).getPrice()}">
+            <input type="text" id="inputPrice8" required pattern="^[0-9]+$" title="только числа" name="price8"
+                   value="${sectors.get(8).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector16" name="sector16" value="17">
+            <input type="text" id="inputSector9" name="sector9" value="10" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice16" name="price16" value="${sectors.get(16).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector17" name="sector17" value=18>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice17" name="price17" value="${sectors.get(17).getPrice()}">
+            <input type="text" id="inputPrice9" required pattern="^[0-9]+$" title="только числа" name="price9"
+                   value="${sectors.get(9).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector18" name="sector18" value=19>
+            <input type="text" id="inputSector10" name="sector10" value="11" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice18" name="price18" value="${sectors.get(18).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector19" name="sector19" value=20>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice19" name="price19" value="${sectors.get(19).getPrice()}">
+            <input type="text" id="inputPrice10" required pattern="^[0-9]+$" title="только числа" name="price10"
+                   value="${sectors.get(10).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector20" name="sector20" value=21>
+            <input type="text" id="inputSector11" name="sector11" value="12" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice20" name="price20" value="${sectors.get(20).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector21" name="sector21" value=22>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice21" name="price21" value="${sectors.get(21).getPrice()}">
+            <input type="text" id="inputPrice11" required pattern="^[0-9]+$" title="только числа" name="price11"
+                   value="${sectors.get(11).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector22" name="sector22" value=23>
+            <input type="text" id="inputSector12" name="sector12" value="13" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice22" name="price22" value="${sectors.get(22).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector23" name="sector23" value=24>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice23" name="price23" value="${sectors.get(23).getPrice()}">
+            <input type="text" id="inputPrice12" required pattern="^[0-9]+$" title="только числа" name="price12"
+                   value="${sectors.get(12).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector24" name="sector24" value=25>
+            <input type="text" id="inputSector13" name="sector13" value="14" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice24" name="price24" value="${sectors.get(24).getPrice()}">
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div>
-            <input type="text" id="inputSector25" name="sector25" value=26>
-        </div>
-    </td>
-    <td>
-        <div>
-            <input type="text" id="inputPrice25" name="price25" value="${sectors.get(25).getPrice()}">
+            <input type="text" id="inputPrice13" required pattern="^[0-9]+$" title="только числа" name="price13"
+                   value="${sectors.get(13).getPrice()}">
         </div>
     </td>
 </tr>
 <tr>
     <td>
         <div>
-            <input type="text" id="inputSector26" name="sector26" value=27>
+            <input type="text" id="inputSector14" name="sector14" value="15" readonly>
         </div>
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice26" name="price26" value="${sectors.get(26).getPrice()}">
+            <input type="text" id="inputPrice14" required pattern="^[0-9]+$" title="только числа" name="price14"
+                   value="${sectors.get(14).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector15" name="sector15" value="16" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice15" required pattern="^[0-9]+$" title="только числа" name="price15"
+                   value="${sectors.get(15).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector16" name="sector16" value="17" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice16" required pattern="^[0-9]+$" title="только числа" name="price16"
+                   value="${sectors.get(16).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector17" name="sector17" value="18" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice17" required pattern="^[0-9]+$" title="только числа" name="price17"
+                   value="${sectors.get(17).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector18" name="sector18" value="19" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice18" required pattern="^[0-9]+$" title="только числа" name="price18"
+                   value="${sectors.get(18).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector19" name="sector19" value="20" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice19" required pattern="^[0-9]+$" title="только числа" name="price19"
+                   value="${sectors.get(19).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector20" name="sector20" value="21" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice20" required pattern="^[0-9]+$" title="только числа" name="price20"
+                   value="${sectors.get(20).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector21" name="sector21" value="22" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice21" required pattern="^[0-9]+$" title="только числа" name="price21"
+                   value="${sectors.get(21).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector22" name="sector22" value="23" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice22" required pattern="^[0-9]+$" title="только числа" name="price22"
+                   value="${sectors.get(22).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector23" name="sector23" value="24" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice23" required pattern="^[0-9]+$" title="только числа" name="price23"
+                   value="${sectors.get(23).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector24" name="sector24" value="25" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice24" required pattern="^[0-9]+$" title="только числа" name="price24"
+                   value="${sectors.get(24).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector25" name="sector25" value="A" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice25" required pattern="^[0-9]+$" title="только числа" name="price25"
+                   value="${sectors.get(25).getPrice()}">
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div>
+            <input type="text" id="inputSector26" name="sector26" value="D" readonly>
+        </div>
+    </td>
+    <td>
+        <div>
+            <input type="text" id="inputPrice26" required pattern="^[0-9]+$" title="только числа" name="price26"
+                   value="${sectors.get(26).getPrice()}">
         </div>
     </td>
 </tr>
