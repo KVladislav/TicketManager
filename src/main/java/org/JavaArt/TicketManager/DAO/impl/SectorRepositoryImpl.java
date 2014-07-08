@@ -100,7 +100,7 @@ public class SectorRepositoryImpl implements SectorRepository {
     @Override
     public List<Sector> getSectorsByEvent(Event event) {
         Session session = null;
-        List<Sector> sectors = null;// = new ArrayList<Zone>();
+        List<Sector> sectors = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY id");
@@ -118,7 +118,7 @@ public class SectorRepositoryImpl implements SectorRepository {
     @Override
     public List<Sector> getSectorsByEventOrderPrice(Event event) {
         Session session = null;
-        List<Sector> sectors = null;// = new ArrayList<Zone>();
+        List<Sector> sectors = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY price");

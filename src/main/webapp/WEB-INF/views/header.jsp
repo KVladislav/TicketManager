@@ -44,8 +44,8 @@
                     <c:otherwise><li><a href="${pageContext.request.contextPath}/Operators/Operators.do">Операторы</a></li></c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${pageName==7}"><li class="active"><a href="${pageContext.request.contextPath}/Sectors/Sectors.do">Настройка стадиона</a></li> </c:when>
-                    <c:otherwise><li><a href="${pageContext.request.contextPath}/Sectors/Sectors.do">Настройка стадиона</a></li></c:otherwise>
+                    <c:when test="${pageName==7}"><li class="active"><a href="${pageContext.request.contextPath}/Sectors/ViewSectors.do">Настройка стадиона</a></li> </c:when>
+                    <c:otherwise><li><a href="${pageContext.request.contextPath}/Sectors/ViewSectors.do">Настройка стадиона</a></li></c:otherwise>
                 </c:choose>
             </ul>
         </div>

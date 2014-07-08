@@ -4,6 +4,8 @@ import org.JavaArt.TicketManager.DAO.SectorDefaultsRepository;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
@@ -71,13 +73,17 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         return sectorDefaults;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<SectorDefaults> getAllSectorDefaults() {
         Session session = null;
-        List<SectorDefaults> zoneDefaults = null;//new ArrayList<Event>();
+        List<SectorDefaults> sectorDefaults = null;//new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            zoneDefaults = session.createCriteria(SectorDefaults.class).list();
+            sectorDefaults = session.createCriteria(SectorDefaults.class).
+                    add(Restrictions.eq("isDeleted", false)).
+                    addOrder(Order.asc("sectorName")).list();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -85,24 +91,12 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
                 session.close();
             }
         }
-        return zoneDefaults;
+        return sectorDefaults;
     }
 
     @Override
     public void deleteSectorDefaults(SectorDefaults sectorDefaults) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(sectorDefaults);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
+        sectorDefaults.setDeleted(true);
+        updateSectorDefaults(sectorDefaults);
     }
 }
