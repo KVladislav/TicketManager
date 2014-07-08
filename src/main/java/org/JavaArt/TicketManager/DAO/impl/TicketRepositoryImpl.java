@@ -16,12 +16,6 @@ import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Vladislav Karpenko
- * Date: 06.06.2014
- * Time: 11:00
- */
 
 @Repository
 
@@ -60,32 +54,6 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public void updateTicket(Ticket ticket) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(ticket);
-            session.getTransaction().commit();
-            session.flush();
-            session.clear();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-    }
-
-    @Override
-    public void updateTickets(List<Ticket> tickets) {
-        for (Ticket ticket : tickets) {
-            updateTicket(ticket);
-        }
-    }
-
-    @Override
     public void saveOrUpdateTickets(List<Ticket> tickets) {
         if (tickets==null) {
             return;
@@ -102,6 +70,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             ticket = (Ticket) session.get(Ticket.class, id);
+            if ((ticket!=null)&&ticket.isDeleted()==true) ticket=null;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -135,7 +104,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     public void deleteNonConfirmedTickets(int minutes) {
         Session session = null;
         Date date = new Date();
-        date.setTime(date.getTime()-60000*minutes);
+        date.setTime(date.getTime() - 60000 * minutes);
 
 
         try {
@@ -158,6 +127,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
 
+
     @Override
     public void deleteTicket(Ticket ticket) {
         Session session = null;
@@ -165,12 +135,12 @@ public class TicketRepositoryImpl implements TicketRepository {
             session = HibernateUtil.getSessionFactory().openSession();
 
             if (getTicketById(ticket.getId()) != null) {
-                if (!ticket.isConfirmed()){
-                session.beginTransaction();
-                session.delete(ticket);
-                session.getTransaction().commit();
-                session.flush();
-                session.clear();
+                if (!ticket.isConfirmed()) {
+                    session.beginTransaction();
+                    session.delete(ticket);
+                    session.getTransaction().commit();
+                    session.flush();
+                    session.clear();
                 } else {
                     ticket.setDeleted(true);
                     saveOrUpdateTicket(ticket);
@@ -186,6 +156,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             }
         }
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getTicketsByClient(Client client) {

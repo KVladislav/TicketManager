@@ -70,19 +70,15 @@ public class TicketService {
         ticketRepository.saveOrUpdateTickets(tickets);
     }
 
-    public void updateTickets(List<Ticket> tickets) {
-        ticketRepository.updateTickets(tickets);
-    }
-
     public void deleteNonConfirmedTickets(int minutes) {
         ticketRepository.deleteNonConfirmedTickets(minutes);
     }
 
-    public Map<Integer, String> seatStatus(Sector sector, int row, ArrayList<Ticket> order) {
+    public Map<Integer, String> seatStatus(Sector sector, int row, List<Ticket> order) {
         Map<Integer, String> seatsMap = new TreeMap<>();
         List<Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector, row);
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
-            if (ticketRepository.isPlaceFree(sector, row, i)) {
+            if (ticketRepository.isPlaceFree(sector, row, i)==0) {
                 if(order.size()>0&&order!=null){
                     for (Ticket ord : order) {
                         if (ord.getSector().equals(sector) && ord.getRow() == row && ord.getSeat() == i){
@@ -97,8 +93,8 @@ public class TicketService {
             else{
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
-                        if ((tic.getReserved() && tic.getConfirmed())) seatsMap.put(i, "Статус: забронирован");
-                        if (!tic.getReserved() && tic.getConfirmed()) seatsMap.put(i, "Статус: продан");
+                        if ((tic.getReserved() && tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
+                        if (!tic.getReserved() && tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
                     }
                 }
             }

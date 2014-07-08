@@ -21,7 +21,6 @@ public interface TicketRepository {
 
     public List<Ticket> getTicketsByClient(Client client);
     public int getTicketsAmountByClient(Client client);
-    public void updateTickets(List<Ticket> tickets);
     public void saveOrUpdateTickets(List<Ticket> tickets);
     public Ticket getTicketById(int id);
     public List<Ticket> getAllTickets();
