@@ -15,58 +15,65 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-3 column"></div>
+        <div class="col-md-5 column">
+            <table class="table table-hover table-condensed">
+                <caption>
+                    <h1><code>Настройка секторов стадиона</code>
+                    </h1></caption>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Название</th>
+                        <th>Кол-во рядов</th>
+                        <th>Мест в ряду</th>
+                        <th>Цена</th>
+                    </tr>
+                    </thead>
 
-<table class="table table-hover table-condensed">
-    <caption>
-        <a href="#" class="btn btn-large btn-primary disabled">Настройка секторов стадиона
-    </caption>
-    <thead>
-    <tr>
-        <th colspan="2">Название</th>
-        <th>Кол-во рядов</th>
-        <th>Мест в ряду</th>
-        <th>Цена</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <c:forEach items="${sectorDefaultsList}" var="sector">
-        <form name="sectorDefaults" action="${pageContext.request.contextPath}/Sectors/Modify.do"
-              method="post">
-            <tr>
-                <td colspan="2">
-                    <input class="span1" size="16" type="text" name="sectorName" required
-                           placeholder="Название сектора" value="${sector.sectorName}">
-                </td>
-                <td>
-                    <input class="span1" size="16" type="text" name="maxRows" required
-                           placeholder="Рядов" value="${sector.maxRows}">
-                </td>
-                <td>
-                    <input class="span1" size="16" type="text" name="maxSeats" required
-                           placeholder="Мест" value="${sector.maxSeats}">
-                </td>
-                <td>
-                    <input class="span1" size="16" type="text" name="defaultPrice" required
-                           placeholder="Цена" value="${sector.defaultPrice}">
-                <td>
-                    <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
-                    <button type="submit" name="action" value="save" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-floppy-disk"></span></button>
-                </td>
-                <td>
-                    <button type="submit" name="action" value="clone" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-export"></span></button>
-                </td>
-                <td>
-                    <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-trash"></span></button>
-                </td>
-            </tr>
-        </form>
-    </c:forEach>
-    </tbody>
-</table>
+                    <tbody>
+                    <c:forEach items="${sectorDefaultsList}" var="sector">
+                        <form name="sectorDefaults" action="${pageContext.request.contextPath}/Sectors/Modify.do"
+                              method="post">
+                            <tr>
+                                <td colspan="2">
+                                    <input class="span1" size="16" type="text" name="sectorName" required
+                                           placeholder="Название сектора" value="${sector.sectorName}">
+                                </td>
+                                <td>
+                                    <input class="span1" size="16" type="text" name="maxRows" required
+                                           placeholder="Рядов" value="${sector.maxRows}">
+                                </td>
+                                <td>
+                                    <input class="span1" size="16" type="text" name="maxSeats" required
+                                           placeholder="Мест" value="${sector.maxSeats}">
+                                </td>
+                                <td>
+                                    <input class="span1" size="16" type="text" name="defaultPrice" required
+                                           placeholder="Цена" value="${sector.defaultPrice}">
+                                <td>
+                                    <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
+                                    <button type="submit" name="action" value="save" class="btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                </td>
+                                <td>
+                                    <button type="submit" name="action" value="clone" class="btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-export"></span></button>
+                                </td>
+                                <td>
+                                    <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-trash"></span></button>
+                                </td>
+                            </tr>
+                        </form>
+                    </c:forEach>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4 column"></div>
+</div>
 
 
 </body>

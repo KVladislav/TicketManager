@@ -85,7 +85,7 @@
         <div class="col-md-6 column">
             <table class="table table-hover table-condensed">
                 <caption>
-                    <a href="#" class="btn btn-large btn-primary disabled">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="d.MM.yyyy H:mm"/></a>
+                    <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="d.MM.yyyy H:mm"/></code></h3>
                 </caption>
                 <thead>
                 <tr>

@@ -153,14 +153,14 @@
                     </div>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Добавить">
+                    <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
                     </form>
                     <%--<form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">--%>
                     <%--<input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>--%>
                 </div>
                 <div class="col-md-4 column">
                     <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
-                        <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Отмена"></form>
+                        <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Отмена"></form>
                 </div>
             </div>
         </div>
