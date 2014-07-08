@@ -18,7 +18,7 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-3 column"></div>
-        <div class="col-md-5 column">
+        <div class="col-md-6 column">
             <table class="table table-hover table-condensed">
                 <caption>
                     <h1><code>Настройка секторов стадиона</code>
@@ -38,7 +38,7 @@
                               method="post">
                             <tr>
                                 <td colspan="2">
-                                    <input class="span1" size="16" type="text" name="sectorName" required
+                                    <input class="span2" size="16" type="text" name="sectorName" required
                                            placeholder="Название сектора" value="${sector.sectorName}">
                                 </td>
                                 <td>
@@ -50,7 +50,7 @@
                                            placeholder="Мест" value="${sector.maxSeats}">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" type="text" name="defaultPrice" required
+                                    <input class="span2" size="16" type="text" name="defaultPrice" required
                                            placeholder="Цена" value="${sector.defaultPrice}">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
@@ -72,7 +72,7 @@
             </table>
         </div>
     </div>
-    <div class="col-md-4 column"></div>
+    <div class="col-md-3 column"></div>
 </div>
 
 
