@@ -31,7 +31,7 @@
                     time = 0, max = 5 * 60,
                     int = setInterval(function () {
                         if (${bookingTime!=null}) {
-                            bar.style.width = Math.floor((${bookingTime} + time++ ) * 100 / max) + '%';
+                            bar.style.width = Math.floor((${bookingTime} +time++ ) * 100 / max) + '%';
                             if (time - 1 + ${bookingTime} >= max) {
                                 clearInterval(int);
                                 // 600ms - width animation time

@@ -16,9 +16,13 @@ import java.util.List;
 
 public interface ClientRepository {
     public void saveOrUpdateClient(Client client);
+
     public List<Client> getClientsByName(String clientName);
+
     public void deleteClientsWithoutOrders(int minutes);
+
     public Client getClientById(int id);
+
     public List<Client> getAllClients();
     public void deleteClient(Client client) ;
 }

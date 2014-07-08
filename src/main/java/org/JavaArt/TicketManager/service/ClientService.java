@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class ClientService {
-    private ClientRepository clientRepository = new ClientRepositoryImpl();
     private static ClientService clientService;
+    private ClientRepository clientRepository = new ClientRepositoryImpl();
 
     private ClientService() {
     }
@@ -27,7 +27,7 @@ public class ClientService {
         clientRepository.saveOrUpdateClient(client);
     }
 
-    public List<Client> getClientsByName(String clientName){
+    public List<Client> getClientsByName(String clientName) {
         return clientRepository.getClientsByName(clientName);
     }
 
@@ -35,7 +35,7 @@ public class ClientService {
         return clientRepository.getClientById(clientId);
     }
 
-    public void deleteClientsWithoutOrders(int minutes){
+    public void deleteClientsWithoutOrders(int minutes) {
         clientRepository.deleteClientsWithoutOrders(minutes);
     }
     public void deleteClient(Client client) {

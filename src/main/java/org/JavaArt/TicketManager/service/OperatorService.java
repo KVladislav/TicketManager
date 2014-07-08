@@ -5,7 +5,6 @@ import org.JavaArt.TicketManager.DAO.impl.OperatorRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -17,17 +16,17 @@ public class OperatorService {
         List<Operator> operators = operatorRepository.getAllOperators();
         return operators;
     }
-    
+
     public void deleteOperator(int id) {
         Operator operator = operatorRepository.getOperatorById(id);
         operator.setDeleted(true);
         operatorRepository.updateOperator(operator);
     }
-    
+
     public void editOperator(Operator operator) {
         operatorRepository.updateOperator(operator);
     }
-    
+
     public void addOperator(Operator operator) {
         operatorRepository.addOperator(operator);
     }

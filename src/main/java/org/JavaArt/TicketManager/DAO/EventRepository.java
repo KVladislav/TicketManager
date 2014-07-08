@@ -16,9 +16,13 @@ import java.util.List;
 
 public interface EventRepository {
     public void addEvent(Event event);
+
     public void updateEvent(Event event);
+
     public Event getEventById(int id);
+
     public List<Event> getFutureEvents();
+
     public List<Event> getAllEvents();
 //    public void deleteEvent(Event event);
 }

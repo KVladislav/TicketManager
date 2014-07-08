@@ -10,7 +10,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,12 +26,10 @@ public class EventRepositoryImpl implements EventRepository {
             session.save(event);
             session.getTransaction().commit();
             session.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -47,12 +44,10 @@ public class EventRepositoryImpl implements EventRepository {
             session.update(event);
             session.getTransaction().commit();
             session.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -66,12 +61,10 @@ public class EventRepositoryImpl implements EventRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             event = (Event) session.get(Event.class, id);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
 
@@ -89,13 +82,11 @@ public class EventRepositoryImpl implements EventRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             events = session.createCriteria(Event.class)
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
-                    .addOrder( Order.asc("date") ).list();
-        }
-        catch (Exception e) {
+                    .addOrder(Order.asc("date")).list();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -107,19 +98,15 @@ public class EventRepositoryImpl implements EventRepository {
     public List<Event> getFutureEvents() {
         Session session = null;
         List<Event> events = new ArrayList<Event>();
-        Date date = new Date();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Event where date >=" + date + " and isDeleted = false ");
-            events = query.list();
-        }
+            events = session.createQuery ("FROM Event WHERE isDeleted = false and date > CURRENT_TIMESTAMP").list();
+            }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         }
         finally {
-            if (session!=null && session.isOpen()) {
-                session.close();
-            }
+            if (session != null && session.isOpen())  session.close();
         }
         return events;
     }

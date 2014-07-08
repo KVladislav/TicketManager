@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp" %>
-
+<html lang="ru">
 <head>
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -34,23 +34,22 @@
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading" style="text-align:center;"><b>
-    <a href="/NewEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Create the new
-        event</a>
+    <a href="/NewEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового мероприятия</a>
 </b></div>
 
 &MediumSpace;
 &MediumSpace;
-<div class="panel-heading" style="text-align:center;"><b>List of events</b></div>
+<h1><div class="panel-heading" style="text-align:center;"><b>Список мероприятий</b></div></h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
     <div class="table responsive">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>##</th>
-                <th>Name of event</th>
-                <th>Date</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Наименование</th>
+                <th>Дата</th>
+                <th>Редактировать</th>
+                <th>Удалить</th>
             </tr>
             </thead>
             <tbody>
@@ -61,14 +60,14 @@
                     <td><fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm:ss"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
-                            <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">
-                            <button type="submit" name="evnt" value="${evnt.id}" class="btn">Edit</button>
+                                <%--    <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}"> --%>
+                            <button type="submit" name="evnt" value="${evnt.id}" class="btn">Редактировать</button>
                         </form>
                     </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
-                            <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">
-                            <button type="submit" name="evnt" value="${evnt.id}" class="btn">Delete</button>
+                                <%--       <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}"> --%>
+                            <button type="submit" name="evnt" value="${evnt.id}" class="btn">Удалить</button>
                         </form>
                     </td>
                 </tr>

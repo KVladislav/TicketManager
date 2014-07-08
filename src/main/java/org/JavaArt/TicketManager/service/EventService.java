@@ -3,10 +3,9 @@ package org.JavaArt.TicketManager.service;
 import org.JavaArt.TicketManager.DAO.EventRepository;
 import org.JavaArt.TicketManager.DAO.impl.EventRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Event;
-
-import java.sql.SQLException;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -27,10 +26,12 @@ public class EventService {
         Event event = eventRepository.getEventById(id);
         return event;
     }
-    public void addEvent(Event event){
+
+    public void addEvent(Event event) {
         eventRepository.addEvent(event);
     }
-    public void updateEvent(Event event){
+
+    public void updateEvent(Event event) {
         eventRepository.updateEvent(event);
     }
 }

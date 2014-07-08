@@ -60,7 +60,7 @@ public class Client {
         this.name = name;
     }
 
-    public boolean isDeleted() {
+    public boolean getDeleted() {
         return isDeleted;
     }
 

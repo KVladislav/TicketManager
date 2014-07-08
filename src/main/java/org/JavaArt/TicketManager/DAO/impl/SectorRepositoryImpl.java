@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -31,12 +30,10 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.save(sector);
             session.getTransaction().commit();
             session.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -51,12 +48,10 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.update(sector);
             session.getTransaction().commit();
             session.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -70,12 +65,10 @@ public class SectorRepositoryImpl implements SectorRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             sector = (Sector) session.get(Sector.class, id);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
             return sector;
@@ -112,12 +105,10 @@ public class SectorRepositoryImpl implements SectorRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY id");
             sectors = query.list();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -132,12 +123,10 @@ public class SectorRepositoryImpl implements SectorRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY price");
             sectors = query.list();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
