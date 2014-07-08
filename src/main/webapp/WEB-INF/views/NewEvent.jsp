@@ -139,7 +139,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice0" required pattern="^[0-9]+$" title="только числа" name="price0">
+            <input type="text" id="inputPrice0" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price0">
         </div>
     </td>
 </tr>
@@ -151,7 +152,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice1" name="price1">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice1"
+                   name="price1">
         </div>
     </td>
 </tr>
@@ -164,7 +166,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice2" name="price2">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice2"
+                   name="price2">
         </div>
     </td>
 </tr>
@@ -176,7 +179,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice3" name="price3">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice3"
+                   name="price3">
         </div>
     </td>
 </tr>
@@ -188,7 +192,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice4" name="price4">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice4"
+                   name="price4">
         </div>
     </td>
 </tr>
@@ -200,7 +205,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice5" name="price5">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice5"
+                   name="price5">
         </div>
     </td>
 </tr>
@@ -212,7 +218,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice6" name="price6">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice6"
+                   name="price6">
         </div>
     </td>
 </tr>
@@ -224,7 +231,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice7" name="price7">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice7"
+                   name="price7">
         </div>
     </td>
 </tr>
@@ -236,7 +244,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice8" name="price8">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice8"
+                   name="price8">
         </div>
     </td>
 </tr>
@@ -248,7 +257,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice9" name="price9">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice9"
+                   name="price9">
         </div>
     </td>
 </tr>
@@ -260,7 +270,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice10" name="price10">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice10"
+                   name="price10">
         </div>
     </td>
 </tr>
@@ -272,7 +283,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice11" name="price11">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice11"
+                   name="price11">
         </div>
     </td>
 </tr>
@@ -284,7 +296,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice12" name="price12">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice12"
+                   name="price12">
         </div>
     </td>
 </tr>
@@ -296,7 +309,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice13" name="price13">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice13"
+                   name="price13">
         </div>
     </td>
 </tr>
@@ -308,7 +322,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice14" name="price14">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice14"
+                   name="price14">
         </div>
     </td>
 </tr>
@@ -320,7 +335,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice15" name="price15">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice15"
+                   name="price15">
         </div>
     </td>
 </tr>
@@ -332,7 +348,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice16" name="price16">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice16"
+                   name="price16">
         </div>
     </td>
 </tr>
@@ -344,7 +361,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice17" name="price17">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice17"
+                   name="price17">
         </div>
     </td>
 </tr>
@@ -356,7 +374,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice18" name="price18">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice18"
+                   name="price18">
         </div>
     </td>
 </tr>
@@ -368,7 +387,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice19" name="price19">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice19"
+                   name="price19">
         </div>
     </td>
 </tr>
@@ -380,7 +400,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice20" name="price20">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice20"
+                   name="price20">
         </div>
     </td>
 </tr>
@@ -392,7 +413,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice21" name="price21">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice21"
+                   name="price21">
         </div>
     </td>
 </tr>
@@ -404,7 +426,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice22" name="price22">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice22"
+                   name="price22">
         </div>
     </td>
 </tr>
@@ -416,7 +439,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice23" name="price23">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice23"
+                   name="price23">
         </div>
     </td>
 </tr>
@@ -428,7 +452,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice24" name="price24">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice24"
+                   name="price24">
         </div>
     </td>
 </tr>
@@ -440,7 +465,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice25" name="price25">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice25"
+                   name="price25">
         </div>
     </td>
 </tr>
@@ -452,7 +478,8 @@
     </td>
     <td>
         <div>
-            <input type="text" required pattern="^[0-9]+$" title="только числа" id="inputPrice26" name="price26">
+            <input type="text" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа" id="inputPrice26"
+                   name="price26">
         </div>
     </td>
 </tr>
