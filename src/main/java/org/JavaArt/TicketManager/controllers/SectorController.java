@@ -50,7 +50,6 @@ public class SectorController {
         }
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
             if (sectorDefaults.getId() == sectorDefaultsId) {
-
                 if (action.equals("delete")) {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);
                     sectorDefaultsList.remove(sectorDefaults);
@@ -62,6 +61,18 @@ public class SectorController {
                     sectorDefaults.setDefaultPrice(defaultPrice);
                     sectorDefaults.setMaxRows(maxRows);
                     sectorDefaults.setMaxSeats(maxSeats);
+                    sectorDefaultsService.updateSectorDefaults(sectorDefaults);
+                    break;
+                }
+
+                if (action.equals("clone")) {
+                    SectorDefaults sectorDefaultsClone = new SectorDefaults();
+                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName());
+                    sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
+                    sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
+                    sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());
+                    sectorDefaultsList.add(sectorDefaultsClone);
+                    sectorDefaultsService.addSectorDefaults(sectorDefaultsClone);
                     break;
                 }
             }

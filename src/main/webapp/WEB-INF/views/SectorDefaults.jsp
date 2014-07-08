@@ -55,6 +55,10 @@
                         <span class="glyphicon glyphicon-floppy-disk"></span></button>
                 </td>
                 <td>
+                    <button type="submit" name="action" value="clone" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-export"></span></button>
+                </td>
+                <td>
                     <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
                         <span class="glyphicon glyphicon-trash"></span></button>
                 </td>
