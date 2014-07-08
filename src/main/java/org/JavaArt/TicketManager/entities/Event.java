@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(schema="public", name = "event")
+@Table(name = "event")
 public class Event implements Comparable<Event>{
     @Id
     @GeneratedValue(generator = "increment")

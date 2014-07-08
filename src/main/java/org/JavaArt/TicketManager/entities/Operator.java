@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(schema="public", name = "operator")
+@Table(name = "operator")
 public class Operator {
     @Id
     @GeneratedValue(generator = "increment")

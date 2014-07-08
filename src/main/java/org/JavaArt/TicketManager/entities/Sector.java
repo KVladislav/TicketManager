@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(schema="public", name = "sector")
+@Table(name = "sector")
 public class Sector implements Comparable, Serializable {
     @Id
     @GeneratedValue(generator = "increment")

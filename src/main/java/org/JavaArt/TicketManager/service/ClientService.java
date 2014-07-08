@@ -38,4 +38,7 @@ public class ClientService {
     public void deleteClientsWithoutOrders(int minutes){
         clientRepository.deleteClientsWithoutOrders(minutes);
     }
+    public void deleteClient(Client client) {
+        clientRepository.deleteClient(client);
+    }
 }

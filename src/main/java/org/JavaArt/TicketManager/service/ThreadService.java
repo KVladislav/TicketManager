@@ -54,8 +54,8 @@ public class ThreadService implements ServletContextListener {
         public void run() {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
-                    clientService.deleteClientsWithoutOrders(5);
-                    TimeUnit.MINUTES.sleep(1);
+                    clientService.deleteClientsWithoutOrders(100);
+                    TimeUnit.MINUTES.sleep(100);
                 }
             } catch (InterruptedException e) {
                 System.out.println("Perform Thread Shutdown");

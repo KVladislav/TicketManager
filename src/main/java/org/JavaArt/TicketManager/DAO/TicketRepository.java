@@ -30,7 +30,7 @@ public interface TicketRepository {
     public int getFreeTicketsAmountBySector(Sector sector);
     public int getFreeTicketsAmountBySectorRow(Sector sector, int row);
     public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row);
-    public boolean isPlaceFree(Sector sector, int row, int seat);
+    public int isPlaceFree(Sector sector, int row, int seat);
     public void deleteNonConfirmedTickets(int minutes);
 
 }

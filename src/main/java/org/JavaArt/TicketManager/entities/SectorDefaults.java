@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 @Entity
-@Table(schema="public", name = "sectordefaults")
+@Table(name = "sectordefaults")
 public class SectorDefaults {
     @Id
     @GeneratedValue(generator = "increment")

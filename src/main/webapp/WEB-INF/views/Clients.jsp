@@ -18,48 +18,50 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <form class="form-search" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do" method="post">
-                    <div class="input">
-                        <input class="span8" id="appendedInputButtons" size="16" type="text" name="clientName" required placeholder="Введите ФИО клиента" value="${client.name}">
-                        <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
-                        <button class="btn" type="submit" name="action" value="NewClient">Новая бронь</button>
-                    </div>
-                </form>
+            <form class="form-search" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do"
+                  method="post">
+                <div class="input">
+                    <input class="span8" id="appendedInputButtons" size="16" type="text" name="clientName" required
+                           placeholder="Введите ФИО клиента" value="${client.name}">
+                    <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
+                    <button class="btn" type="submit" name="action" value="NewClient">Новая бронь</button>
+                </div>
             </form>
         </div>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <c:if test="${clients!=null}">
-            <table class="table table-hover table-condensed">
-                <thead>
-                <tr>
-                    <th>Клиент</th>
-                    <th>Билеты</th>
-                    <th>Цена</th>
-                </tr>
-                </thead>
+            <c:if test="${bookingClients!=null}">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Клиент</th>
+                        <th>Дата заказа</th>
+                        <th>Билеты</th>
+                        <th>Цена</th>
+                    </tr>
+                    </thead>
 
-                <tbody>
+                    <tbody>
 
-                <form name="selectClient" action="${pageContext.request.contextPath}/Booking/ViewClient.do"
-                      method="post">
-                    <c:forEach items="${clients}" var="clientEntry">
-                        <tr>
-                            <td>${clientEntry.key.name}</td>
-                            <td>${clientEntry.value[0]}</td>
-                            <td>${clientEntry.value[1]}</td>
-                            <td>
-                                <input type="hidden" name="clientId" value="${clientEntry.key.id}">
-                                <button class="btn" type="submit">Выбрать</button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </form>
+                    <form name="selectClient" action="${pageContext.request.contextPath}/Booking/ViewClient.do"
+                          method="post">
+                        <c:forEach items="${bookingClients}" var="clientEntry">
+                            <tr>
+                                <td>${clientEntry.key.name}</td>
+                                <td><fmt:formatDate value="${clientEntry.key.timeStamp}" pattern="d.MM.yyyy H:mm"/></td>
+                                <td>${clientEntry.value[0]}</td>
+                                <td>${clientEntry.value[1]}</td>
+                                <td>
+                                    <button class="btn" name="clientId" value="${clientEntry.key.id}" type="submit">Выбрать</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </form>
 
-                </tbody>
-            </table>
-                </c:if>
+                    </tbody>
+                </table>
+            </c:if>
 
         </div>
     </div>

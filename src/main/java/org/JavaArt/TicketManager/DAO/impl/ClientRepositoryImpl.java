@@ -112,9 +112,11 @@ public class ClientRepositoryImpl implements ClientRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
-            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT client FROM Ticket AS ticket LEFT JOIN ticket.client AS client) AND client.timeStamp <= :endDate");
+//            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT distinct client FROM Ticket AS ticket LEFT JOIN ticket.client AS client) AND client.timeStamp <= :endDate");
+            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT distinct ticket.client FROM Ticket AS ticket) AND client.timeStamp <= :endDate");
+
             query.setTimestamp("endDate", date);
-            query.executeUpdate();
+            System.out.println("delete " + query.executeUpdate() + " client(s) without tickets");
             tx.commit();
 
         }
@@ -128,24 +130,9 @@ public class ClientRepositoryImpl implements ClientRepository {
         }
     }
 
-    //    @Override
-//    public void deleteClient(Client client)  {
-//        Session session = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            session.delete(client);
-//            session.getTransaction().commit();
-//            session.flush();
-//        }
-//        catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-//        }
-//        finally {
-//            if (session!=null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//    }
+        @Override
+    public void deleteClient(Client client)  {
+        client.setDeleted(true);
+
+    }
 }

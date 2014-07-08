@@ -20,5 +20,5 @@ public interface ClientRepository {
     public void deleteClientsWithoutOrders(int minutes);
     public Client getClientById(int id);
     public List<Client> getAllClients();
-//    public void deleteClient(Client client) ;
+    public void deleteClient(Client client) ;
 }

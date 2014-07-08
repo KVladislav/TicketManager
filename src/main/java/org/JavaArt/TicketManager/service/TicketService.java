@@ -50,7 +50,7 @@ public class TicketService {
         ticketRepository.deleteTickets(tickets);
     }
 
-    public boolean isPlaceFree(Sector sector, int row, int seat) {
+    public int isPlaceFree(Sector sector, int row, int seat) {
         return ticketRepository.isPlaceFree(sector, row, seat);
     }
 
@@ -82,7 +82,7 @@ public class TicketService {
         Map<Integer, String> seatsMap = new TreeMap<>();
         List<Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector, row);
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
-            if (ticketRepository.isPlaceFree(sector, row, i)) seatsMap.put(i, "Статус:  в продаже");
+            if (ticketRepository.isPlaceFree(sector, row, i)==0) seatsMap.put(i, "Статус:  в продаже");
             else {
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
