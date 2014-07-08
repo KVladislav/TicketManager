@@ -100,7 +100,10 @@ public class EventRepositoryImpl implements EventRepository {
         List<Event> events = new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            events = session.createQuery ("FROM Event WHERE isDeleted = false and date > CURRENT_TIMESTAMP").list();
+            Query query = session.createQuery ("FROM Event WHERE isDeleted = false and date > :currientDate");
+            query.setTimestamp("currientDate", new Date());
+            events = (List<Event>) query.list();
+
             }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

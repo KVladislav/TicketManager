@@ -200,7 +200,7 @@ public class BookingController {
 
         List<Event> events;
         Event event = (Event) model.asMap().get("bookingEvent");
-        events = eventService.getAllEvents();
+        events = eventService.getFutureEvents();
         if (events == null || events.size() == 0) {
             return "redirect:/Booking/GetClient.do";
         }
