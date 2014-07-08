@@ -93,8 +93,8 @@ public class TicketService {
             else{
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
-                        if ((tic.getReserved() && tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
-                        if (!tic.getReserved() && tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
+                        if ((tic.isReserved() && tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
+                        if (!tic.isReserved() && tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
                     }
                 }
             }

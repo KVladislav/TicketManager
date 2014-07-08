@@ -100,8 +100,6 @@ public class Ticket {
 
     public void setSeat(Integer seat) {this.seat = seat;}
 
-    public boolean getReserved() {return isReserved;}
-
     public void setReserved(boolean isReserved) {
         this.isReserved = isReserved;
     }
