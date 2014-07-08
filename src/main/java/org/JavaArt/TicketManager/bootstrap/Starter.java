@@ -2,6 +2,7 @@ package org.JavaArt.TicketManager.bootstrap;
 
 import org.JavaArt.TicketManager.DAO.*;
 import org.JavaArt.TicketManager.DAO.impl.*;
+import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 
 /**
@@ -17,11 +18,11 @@ public class Starter {
         EventRepository eventRepository = new EventRepositoryImpl();
         ClientRepository clientRepository = new ClientRepositoryImpl();
         OperatorRepository operatorRepository = new OperatorRepositoryImpl();
-
+        SectorDefaultsRepository sectorDefaultsRepository = new SectorDefaultsRepositoryImpl();
 
 //        Event event = new Event();
 //        event.setDate(new Date());
-//        event.setDescription("Ла-ла-ла-ла-ла-ла");
+//        event.setDescription("Черноморец - Шахтер");
 //        eventRepository.addEvent(event);
 //        Sector sector=null;
 //        for (int i = 1; i < 28; i++) {
@@ -31,21 +32,11 @@ public class Starter {
 //            sector.setMaxRows(20);
 //            sector.setMaxSeats(50);
 //            sector.setPrice((double)(50 + (int)(Math.random() * 151)));
-//            Ticket ticket = new Ticket();
-//            ticket.setRow(10);
-//            ticket.setSeat(15);
-//            ticket.setSector(sector);
-//            ticket.setReserved(true);
 //            sectorRepository.addSector(sector);
-//            ticketRepository.saveOrUpdateTicket(ticket);}
-//        System.out.println(eventRepository.getEventById(event.getId()).getDescription());
-//
-//        Ticket ticket =new Ticket();
-//        ticketRepository.saveOrUpdateTicket(ticket);
-//        ticketRepository.deleteTicket(ticket);
-//        System.out.println(ticket.getId());
-//        ticketRepository.saveOrUpdateTicket(ticket);
-        clientRepository.deleteClientsWithoutOrders(1);
+
+        SectorDefaults sectorDefaults = new SectorDefaults();
+        sectorDefaults.setSectorName("3");
+        sectorDefaultsRepository.addSectorDefaults(sectorDefaults);
         HibernateUtil.shutdown();
 
     }
