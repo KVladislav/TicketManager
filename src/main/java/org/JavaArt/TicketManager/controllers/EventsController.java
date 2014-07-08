@@ -20,7 +20,7 @@ import java.util.*;
 
 
 @Controller
-@SessionAttributes({"pageName", "errorMessage", "events", "event", "sector", "sectors"})
+@SessionAttributes({"pageName", "eventErrorMessage", "errorMessageEdit", "events", "event", "sector", "sectors"})
 
 public class EventsController {
     public Event editEvent;
@@ -80,7 +80,7 @@ public class EventsController {
     public String bookingAddEvent(Model model, @RequestParam(value = "dateEvent", required = true) String dateEvent, String inputTime, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
 
         //   if (description == null||dateEvent.equals("")) return "redirect:/NewEvent/NewEvent.do";
-        String errorMessage = (String) model.asMap().get("errorMessage");
+        String eventErrorMessage = (String) model.asMap().get("errorMessage");
         if (!description.equals("") && !dateEvent.equals("") && !inputTime.equals("") && !timeRemoveBooking.equals("")) {
             Event event = new Event();
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -135,21 +135,24 @@ public class EventsController {
                 sectors.add(sector);
             }
         } else {
+            if (eventErrorMessage == null) {
+                eventErrorMessage = "" + "<br>";
+            }
             if (description.equals("")) {
-                errorMessage += " Заполните наименование мероприятия!" + "<br>";
+                eventErrorMessage += " Заполните наименование мероприятия!" + "<br>";
             }
             if (dateEvent.equals("")) {
-                errorMessage += " Заполните день мероприятия!" + "<br>";
+                eventErrorMessage += " Заполните день мероприятия!" + "<br>";
             }
             if (inputTime.equals("")) {
-                errorMessage += " Заполните время мероприятия!" + "<br>";
+                eventErrorMessage += " Заполните время мероприятия!" + "<br>";
             }
             if (timeRemoveBooking.equals("")) {
-                errorMessage += " Заполните время удаления брони мероприятия!" + "<br>";
+                eventErrorMessage += " Заполните время удаления брони мероприятия!" + "<br>";
             }
         }
-        if (errorMessage != null) {
-            model.addAttribute("errorMessage", errorMessage);
+        if (eventErrorMessage != null && !eventErrorMessage.equals("")) {
+            model.addAttribute("eventErrorMessage", eventErrorMessage);
             return "redirect:/NewEvent/NewEvent.do";
         }
         status.setComplete();
@@ -173,6 +176,7 @@ public class EventsController {
         model.addAttribute("eventEdit", this.editEvent);
         model.addAttribute("eventDescriptions", this.editEvent.getDescription());
         model.addAttribute("eventBookingTimeOut", this.editEvent.getBookingTimeOut());
+
         Date date = editEvent.getDate();
 
         GregorianCalendar gc = new GregorianCalendar();
@@ -207,7 +211,7 @@ public class EventsController {
     @RequestMapping(value = "EditEvent/editEventNow.do", method = RequestMethod.POST)
     public String editEvent(Model model, @RequestParam(value = "dateEvent", required = true) String dateEvent, String inputTime, int eventEditHidden, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
         ///  if (description == null || dateEvent.equals("")) return "redirect:/EditEvent/EditEvent.do";
-        String errorMessage = (String) model.asMap().get("errorMessage");
+        String errorMessageEdit = "";  //(String) model.asMap().get("errorMessageEdit")
         if (!description.equals("") && !dateEvent.equals("") && !inputTime.equals("") && !timeRemoveBooking.equals("")) {
             Event event = eventService.getEventById(eventEditHidden);
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -236,10 +240,8 @@ public class EventsController {
             event.setBookingTimeOut(time);
             eventService.updateEvent(event);
             List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
-            int i = 0;
+            int i = 1;
             for (Sector sector : sectors) {
-                sector.setEvent(event);
-                sector.setName("" + i);
                 String param = request.getParameter("price" + i);
                 i++;
                 double somePrice = 0d;
@@ -247,28 +249,28 @@ public class EventsController {
                     somePrice = Double.parseDouble(param);
                 }
                 sector.setPrice(somePrice);
-                sector.setMaxRows(20);
-                sector.setMaxSeats(50);
-                sector.setDeleted(isDeleted);
                 sectorService.updateSector(sector);
             }
         } else {
+            if (errorMessageEdit == null) {
+                errorMessageEdit = "" + "<br>";
+            }
             if (description.equals("")) {
-                errorMessage += " Заполните наименование мероприятия!" + "<br>";
+                errorMessageEdit += " Заполните наименование мероприятия!" + "<br>";
             }
             if (dateEvent.equals("")) {
-                errorMessage += " Заполните день мероприятия!" + "<br>";
+                errorMessageEdit += " Заполните день мероприятия!" + "<br>";
             }
             if (inputTime.equals("")) {
-                errorMessage += " Заполните время мероприятия!" + "<br>";
+                errorMessageEdit += " Заполните время мероприятия!" + "<br>";
             }
             if (timeRemoveBooking.equals("")) {
-                errorMessage += " Заполните время удаления брони мероприятия!" + "<br>";
+                errorMessageEdit += " Заполните время удаления брони мероприятия!" + "<br>";
             }
         }
-        if (errorMessage != null) {
-            model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/NewEvent/NewEvent.do";
+        if (errorMessageEdit != null && !errorMessageEdit.equals("")) {
+            model.addAttribute("errorMessageEdit", errorMessageEdit);
+            return "redirect:/EditEvent/EditEvent.do";
         }
         status.setComplete();
         return "redirect:/Events/Events.do";
