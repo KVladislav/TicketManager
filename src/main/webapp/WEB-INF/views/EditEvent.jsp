@@ -49,6 +49,8 @@
 <form action="${pageContext.request.contextPath}/EditEvent/editEventNow.do" method="post">
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
 
+<p class="alert-error">${errorMessage}</p>
+
 <center>
  <label class="my-control-label" for="dateEvent">Дата мероприятия</label>
     <div class="control-group">
@@ -266,7 +268,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice0" required pattern="^[0-9]+$" title="только числа" name="price0"
+            <input type="text" id="inputPrice0" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price0"
                    value="${sectors.get(0).getPrice()}">
         </div>
     </td>
@@ -279,7 +282,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice1" required pattern="^[0-9]+$" title="только числа" name="price1"
+            <input type="text" id="inputPrice1" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price1"
                    value="${sectors.get(1).getPrice()}">
         </div>
     </td>
@@ -293,7 +297,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice2" required pattern="^[0-9]+$" title="только числа" name="price2"
+            <input type="text" id="inputPrice2" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price2"
                    value="${sectors.get(2).getPrice()}">
         </div>
     </td>
@@ -306,7 +311,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice3" required pattern="^[0-9]+$" title="только числа" name="price3"
+            <input type="text" id="inputPrice3" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price3"
                    value="${sectors.get(3).getPrice()}">
         </div>
     </td>
@@ -319,7 +325,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice4" required pattern="^[0-9]+$" title="только числа" name="price4"
+            <input type="text" id="inputPrice4" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price4"
                    value="${sectors.get(4).getPrice()}">
         </div>
     </td>
@@ -332,7 +339,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice5" required pattern="^[0-9]+$" title="только числа" name="price5"
+            <input type="text" id="inputPrice5" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price5"
                    value="${sectors.get(5).getPrice()}">
         </div>
     </td>
@@ -345,7 +353,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice6" required pattern="^[0-9]+$" title="только числа" name="price6"
+            <input type="text" id="inputPrice6" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price6"
                    value="${sectors.get(6).getPrice()}">
         </div>
     </td>
@@ -358,7 +367,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice7" required pattern="^[0-9]+$" title="только числа" name="price7"
+            <input type="text" id="inputPrice7" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price7"
                    value="${sectors.get(7).getPrice()}">
         </div>
     </td>
@@ -371,7 +381,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice8" required pattern="^[0-9]+$" title="только числа" name="price8"
+            <input type="text" id="inputPrice8" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price8"
                    value="${sectors.get(8).getPrice()}">
         </div>
     </td>
@@ -384,7 +395,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice9" required pattern="^[0-9]+$" title="только числа" name="price9"
+            <input type="text" id="inputPrice9" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price9"
                    value="${sectors.get(9).getPrice()}">
         </div>
     </td>
@@ -397,7 +409,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice10" required pattern="^[0-9]+$" title="только числа" name="price10"
+            <input type="text" id="inputPrice10" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price10"
                    value="${sectors.get(10).getPrice()}">
         </div>
     </td>
@@ -410,7 +423,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice11" required pattern="^[0-9]+$" title="только числа" name="price11"
+            <input type="text" id="inputPrice11" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price11"
                    value="${sectors.get(11).getPrice()}">
         </div>
     </td>
@@ -423,7 +437,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice12" required pattern="^[0-9]+$" title="только числа" name="price12"
+            <input type="text" id="inputPrice12" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price12"
                    value="${sectors.get(12).getPrice()}">
         </div>
     </td>
@@ -436,7 +451,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice13" required pattern="^[0-9]+$" title="только числа" name="price13"
+            <input type="text" id="inputPrice13" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price13"
                    value="${sectors.get(13).getPrice()}">
         </div>
     </td>
@@ -449,7 +465,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice14" required pattern="^[0-9]+$" title="только числа" name="price14"
+            <input type="text" id="inputPrice14" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price14"
                    value="${sectors.get(14).getPrice()}">
         </div>
     </td>
@@ -462,7 +479,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice15" required pattern="^[0-9]+$" title="только числа" name="price15"
+            <input type="text" id="inputPrice15" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price15"
                    value="${sectors.get(15).getPrice()}">
         </div>
     </td>
@@ -475,7 +493,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice16" required pattern="^[0-9]+$" title="только числа" name="price16"
+            <input type="text" id="inputPrice16" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price16"
                    value="${sectors.get(16).getPrice()}">
         </div>
     </td>
@@ -488,7 +507,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice17" required pattern="^[0-9]+$" title="только числа" name="price17"
+            <input type="text" id="inputPrice17" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price17"
                    value="${sectors.get(17).getPrice()}">
         </div>
     </td>
@@ -501,7 +521,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice18" required pattern="^[0-9]+$" title="только числа" name="price18"
+            <input type="text" id="inputPrice18" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price18"
                    value="${sectors.get(18).getPrice()}">
         </div>
     </td>
@@ -514,7 +535,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice19" required pattern="^[0-9]+$" title="только числа" name="price19"
+            <input type="text" id="inputPrice19" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price19"
                    value="${sectors.get(19).getPrice()}">
         </div>
     </td>
@@ -527,7 +549,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice20" required pattern="^[0-9]+$" title="только числа" name="price20"
+            <input type="text" id="inputPrice20" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price20"
                    value="${sectors.get(20).getPrice()}">
         </div>
     </td>
@@ -540,7 +563,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice21" required pattern="^[0-9]+$" title="только числа" name="price21"
+            <input type="text" id="inputPrice21" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price21"
                    value="${sectors.get(21).getPrice()}">
         </div>
     </td>
@@ -553,7 +577,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice22" required pattern="^[0-9]+$" title="только числа" name="price22"
+            <input type="text" id="inputPrice22" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price22"
                    value="${sectors.get(22).getPrice()}">
         </div>
     </td>
@@ -566,7 +591,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice23" required pattern="^[0-9]+$" title="только числа" name="price23"
+            <input type="text" id="inputPrice23" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price23"
                    value="${sectors.get(23).getPrice()}">
         </div>
     </td>
@@ -579,7 +605,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice24" required pattern="^[0-9]+$" title="только числа" name="price24"
+            <input type="text" id="inputPrice24" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price24"
                    value="${sectors.get(24).getPrice()}">
         </div>
     </td>
@@ -592,7 +619,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice25" required pattern="^[0-9]+$" title="только числа" name="price25"
+            <input type="text" id="inputPrice25" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price25"
                    value="${sectors.get(25).getPrice()}">
         </div>
     </td>
@@ -605,7 +633,8 @@
     </td>
     <td>
         <div>
-            <input type="text" id="inputPrice26" required pattern="^[0-9]+$" title="только числа" name="price26"
+            <input type="text" id="inputPrice26" required pattern="^([0-9]*)\.([0-9]*)+$" title="только числа"
+                   name="price26"
                    value="${sectors.get(26).getPrice()}">
         </div>
     </td>
