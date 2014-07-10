@@ -18,11 +18,12 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" media="screen">
 </head>
 <body>
-<center>
     <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="#">TicketManager</a>
-            <ul class="nav">
+            <ul class="nav navbar-nav navbar-brand">
+                <c:choose>
+                    <c:when test="${pageName==0}"><li class="active"><a href="/">TicketManager</a></li></c:when>
+                    <c:otherwise><li><a href="/">TicketManager</a></li></c:otherwise>
+                </c:choose>
                 <c:choose>
                     <c:when test="${pageName==1}"><li class="active"><a href="${pageContext.request.contextPath}/Order/Order.do">Продажа</a></li></c:when>
                     <c:otherwise><li><a href="${pageContext.request.contextPath}/Order/Order.do">Продажа</a></li></c:otherwise>
@@ -48,9 +49,6 @@
                     <c:otherwise><li><a href="${pageContext.request.contextPath}/Sectors/ViewSectors.do">Настройка стадиона</a></li></c:otherwise>
                 </c:choose>
             </ul>
-        </div>
     </div>
-</center>
-
 </body>
 </html>

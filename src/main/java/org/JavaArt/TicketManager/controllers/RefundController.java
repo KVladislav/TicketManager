@@ -17,7 +17,7 @@ public class RefundController {
     private Ticket ticket;
 
     @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.GET)
-    public String refundGet(Model model) {
+    public String refundRefund(Model model) {
         model.addAttribute("pageName", 3);
         model.addAttribute("error", "");
         model.addAttribute("message", "");
@@ -25,12 +25,12 @@ public class RefundController {
     }
 
     @RequestMapping(value = "Refund/Find.do", method = RequestMethod.POST)
-    public String refundPost(@RequestParam(value = "ticketId", required = true)
+    public String refundFind(@RequestParam(value = "ticketId", required = true)
                              String ticketId, Model model){
         try{
             int id=Integer.parseInt(ticketId);
             ticket = ticketService.getTicketById(id);
-            if (ticket!=null){
+            if (ticket!=null && ticket.isConfirmed()==true && ticket.isReserved()==false){
                 model.addAttribute(ticket);
                 model.addAttribute("error", "");
             }
@@ -46,9 +46,11 @@ public class RefundController {
     }
 
     @RequestMapping(value = "Refund/Delete.do", method = RequestMethod.POST)
-    public String deletePost(Model model){
+    public String refundDelete (Model model){
+        if (ticket==null) return "redirect:/Refund/Refund.do";
         ticketService.deleteTicket(ticket);
         model.addAttribute("message", "Билет возвращен в продажу");
+        ticket=null;
         return "Refund";
     }
 }
