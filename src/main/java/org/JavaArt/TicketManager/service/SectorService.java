@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 @Service
@@ -15,23 +17,36 @@ public class SectorService {
     private SectorRepository sectorRepository = new SectorRepositoryImpl();
 
     public List<Sector> getSectorsByEvent(Event event) {
-        List<Sector> sectors = sectorRepository.getSectorsByEvent(event);
-        return sectors;
+        return sectorRepository.getSectorsByEvent(event);
+    }
+
+    public Map<Double,List<Sector>> getSectorsByEventSortedByPrice(Event event) {
+        List<Sector> sectors = getSectorsByEvent(event);
+        Map<Double,List<Sector>> sectorsMap = new TreeMap<>();
+        for (Sector sector : sectors){
+            List<Sector> orderedSectors = sectorsMap.get(sector.getPrice());
+            if (orderedSectors==null) {
+                orderedSectors = new ArrayList<>();
+                orderedSectors.add(sector);
+                sectorsMap.put(sector.getPrice(), orderedSectors);
+            } else {
+                orderedSectors.add(sector);
+            }
+        }
+        return sectorsMap;
     }
 
     public List<Sector> getSectorsByEventOrderPrice(Event event) {
-        List<Sector> sectors = sectorRepository.getSectorsByEventOrderPrice(event);
-        return sectors;
+        return sectorRepository.getSectorsByEventOrderPrice(event);
     }
 
     public Sector getSectorById(int id) {
-        Sector sector = sectorRepository.getSectorById(id);
-        return sector;
+        return sectorRepository.getSectorById(id);
     }
 
     public List<String> getLegenda(List<Sector> sector) {
-        List<Double> sortByPrice = new ArrayList();
-        List<String> legenda = new ArrayList();
+        List<Double> sortByPrice = new ArrayList<>();
+        List<String> legenda = new ArrayList<>();
         StringBuilder buf = new StringBuilder(100);
         int index;
         sortByPrice.add(0, sector.get(0).getPrice());
