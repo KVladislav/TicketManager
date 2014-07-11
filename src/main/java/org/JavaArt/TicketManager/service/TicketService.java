@@ -74,27 +74,27 @@ public class TicketService {
         ticketRepository.deleteNonConfirmedTickets(minutes);
     }
 
-    public Map<Integer, String> seatStatus(Sector sector, int row, List<Ticket> order) {
-        Map<Integer, String> seatsMap = new TreeMap<>();
+    public Map<Byte, Byte> seatStatus(Sector sector, int row, List<Ticket> order) {
+        Map<Byte, Byte> seatsMap = new TreeMap<>();
         List<Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector, row);
-        for (int i = 1; i <= sector.getMaxSeats(); i++) {
+        for (byte i = 1; i <= sector.getMaxSeats(); i++) {
             if (ticketRepository.isPlaceFree(sector, row, i)==0) {
                 if(order.size()>0&&order!=null){
                     for (Ticket ord : order) {
                         if (ord.getSector().equals(sector) && ord.getRow() == row && ord.getSeat() == i){
-                            seatsMap.put(i, "Статус: не утверждён");
+                            seatsMap.put(i, (byte)4);  //не утвержден(находится в заказе)
                             break;
                         }
-                        else seatsMap.put(i, "Статус:  в продаже");
+                        else seatsMap.put(i, (byte)3); //в продаже
                     }
                 }
-                else seatsMap.put(i, "Статус:  в продаже");
+                else seatsMap.put(i, (byte)3); //в продаже
             }
             else{
                 for (Ticket tic : ticket) {
                     if (tic.getSeat() == i) {
-                        if ((tic.isReserved() && tic.isConfirmed())) seatsMap.put(i, "Статус: забронирован");
-                        if (!tic.isReserved() && tic.isConfirmed()) seatsMap.put(i, "Статус: продан");
+                        if ((tic.isReserved() && tic.isConfirmed())) seatsMap.put(i,(byte)2); //забронирован
+                        if (!tic.isReserved() && tic.isConfirmed()) seatsMap.put(i, (byte)1); //продан
                     }
                 }
             }
