@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -42,15 +43,15 @@
                                            placeholder="Название сектора" value="${sector.sectorName}">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" type="text" name="maxRows" required
+                                    <input class="span1" size="16" type="number" name="maxRows" required
                                            placeholder="Рядов" value="${sector.maxRows}">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" type="text" name="maxSeats" required
+                                    <input class="span1" size="16" type="number" name="maxSeats" required
                                            placeholder="Мест" value="${sector.maxSeats}">
                                 </td>
                                 <td>
-                                    <input class="span2" size="16" type="text" name="defaultPrice" required
+                                    <input class="span2" size="16" type="number" name="defaultPrice" required
                                            placeholder="Цена" value="${sector.defaultPrice}">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">

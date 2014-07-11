@@ -25,13 +25,17 @@ import java.util.*;
 @Controller
 @SessionAttributes({"bookingTime", "pageName", "bookingErrorMessage", "bookingTickets",
         "bookingEvents", "bookingSectorsMap", "bookingRowsMap", "bookingSeatsMap",
-        "bookingSector", "bookingEvent", "bookingPrice", "bookingRow", "bookingTimeOut", "bookingClient"})
+        "bookingSector", "bookingEvent", "bookingPrice", "bookingRow", "bookingTimeOut", "bookingClient", "sectorsGroupedMap"})
 public class BookingController {
 
     private TicketService ticketService = TicketService.getInstance();
     private ClientService clientService = ClientService.getInstance();
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
+
+    //TODO добавить столбец сгорания брони
+    //TODO сделать тред удаления сгоревшей брони
+    //TODO авторизация
 
 
     @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
@@ -228,11 +232,13 @@ public class BookingController {
         }
         if (sector == null) sector = sectors.get(0);
 
+        Map<Double,List<Sector>> sectorsGroupedMap = sectorService.getSectorsByEventSortedByPrice(event);
         for (Sector sector1 : sectors) {
             sectorsMap.put(sector1, ticketService.getFreeTicketsAmountBySector(sector1));
         }
 
         model.addAttribute("bookingSectorsMap", sectorsMap);
+        model.addAttribute("sectorsGroupedMap", sectorsGroupedMap);
         model.addAttribute("bookingEvent", event);
 
         bookingSetRow(sector.getId(), model);
