@@ -10,10 +10,10 @@
 <head>
     <!-- Bootstrap -->
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" media="screen">--%>
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#my-select').multiSelect()
@@ -163,14 +163,18 @@
                             <td></td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
-                                    <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
+                                    <input type="submit" name="Order" class="btn btn-primary btn-sm"
+                                           value="Добавить билет">
                                 </form>
                             </td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do" method="post">
-                                    <input type="submit" name="Order" class="btn btn-primary btn-sm"
-                                           value="Забронировать">
-                                </form>
+                                <c:if test="${bookingTimeOut!=null}">
+                                    <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
+                                          method="post">
+                                        <input type="submit" name="Order" class="btn btn-primary btn-sm"
+                                               value="Забронировать">
+                                    </form>
+                                </c:if>
                             </td>
                             <td></td>
                             <td></td>

@@ -9,10 +9,10 @@
 <html lang="ru">
 <head>
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
 
     <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
           type="text/css">
@@ -89,7 +89,7 @@
                             <c:forEach items="${bookingSectorsMap}" var="sectorEntry">
                                 <c:if test="${bookingSector.id==sectorEntry.key.id}">
                                     <option value="${sectorEntry.key.id}" onclick="this.form.submit()"
-                                            selected>${sectorEntry.key.name} price ${sectorEntry.key.price}
+                                            selected>${sectorEntry.key.name} цена ${sectorEntry.key.price}
                                         свободно: ${sectorEntry.value}</option>
                                 </c:if>
                                 <c:if test="${bookingSector.id!=sectorEntry.key.id}">
@@ -193,6 +193,7 @@
                     </c:forEach>
                 </c:forEach>
                 </tbody>
+
             </table>
         </div>
     </div>
