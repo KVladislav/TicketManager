@@ -34,9 +34,14 @@ public class RefundController {
                 model.addAttribute(ticket);
                 model.addAttribute("error", "");
             }
-            else model.addAttribute("error", "Такой билет не продан");
+            else{
+                ticket=null;
+                model.addAttribute("error", "Такой билет не продан");
+            }
+
         }
         catch (Exception e){
+            ticket=null;
             model.addAttribute("error", "Повторите ввод ID");
         }
         finally {
@@ -49,8 +54,8 @@ public class RefundController {
     public String refundDelete (Model model){
         if (ticket==null) return "redirect:/Refund/Refund.do";
         ticketService.deleteTicket(ticket);
-        model.addAttribute("message", "Билет возвращен в продажу");
         ticket=null;
+        model.addAttribute("message", "Билет возвращен в продажу");
         return "Refund";
     }
 }

@@ -17,7 +17,7 @@
              <td><br>
              <div>
                   <input path="id" errors path="error"  id="ticketId"required pattern="^[0-9]+$"
-                         title="Числа без пробелов" name="ticketId" />
+                         title="Целые числа без пробелов" name="ticketId" />
                   <button type="submit" name="action" class="btn btn-primary">Поиск билета</button>
                   <h3 style="text-align:center; color:Red">${error}</h3>
              </div>

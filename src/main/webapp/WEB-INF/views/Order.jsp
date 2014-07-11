@@ -206,12 +206,11 @@
 
        <div class="col-md-7 col-lg-offset-3 ">
            <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
+               <h5 style="text-align:center; color:Green">${message}</h5>
                <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
-               <h4 style="text-align:center">
-                   <input type="submit" name="Order" class="btn btn-primary btn-lg" value="Купить">
+               <h4 style="text-align:center"><input type="submit" name="Order"
+                                                    class="btn btn-primary btn-lg" value="Купить"></h4>
 
-               </h4>
-               <h4 style="text-align:center; color:Green">${message}</h4>
            </form>
        </div>
 

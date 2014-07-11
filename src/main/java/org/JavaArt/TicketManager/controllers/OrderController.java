@@ -61,7 +61,6 @@ public class OrderController {
                 model.addAttribute("seatsMap", seatsMap1);
                 model.addAttribute("orderPrice", orderPrice);
                 model.addAttribute("orderList", order);
-                model.addAttribute("message", "");
             }
         }
         return "Order";
@@ -93,6 +92,7 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
+        model.addAttribute("message", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -112,6 +112,7 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
+        model.addAttribute("message", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -125,13 +126,14 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
+        model.addAttribute("message", "");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
     public String orderAddTicket(@ModelAttribute(value = "row") int row,
                                  @ModelAttribute(value = "sector") Sector sector,
-                                 @RequestParam(value = "seat") int seat) {
+                                 @RequestParam(value = "seat") int seat, Model model) {
         Ticket ticket = new Ticket();
         ticket.setSector(sector);
         ticket.setRow(row);
@@ -147,11 +149,12 @@ public class OrderController {
         ticket.setId(currentOrderId++);
         order.add(ticket);
         orderPrice += sector.getPrice();
+        model.addAttribute("message", "Билет добавлен в заказ");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-        public String orderDelTicket(@RequestParam(value = "orderId") int orderId){
+        public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model){
         int index=orderId;
         for (Ticket ord : order) {
             if (ord.getId() == orderId) {
@@ -164,11 +167,17 @@ public class OrderController {
         for (Ticket ord : order){
             if (ord.getId()>orderId) ord.setId(index++);
         }
+        model.addAttribute("message", "Билет удалён из заказа");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
     public String orderBuy(Model model) {
+        if (order.size()==0)  {
+            model.addAttribute("message", "");
+            return "redirect:/Order/Order.do";
+        }
+
         for (Ticket ticket : order){
             ticket.setConfirmed(true);
             ticket.setId(null);
@@ -177,7 +186,7 @@ public class OrderController {
         order.clear();
         orderPrice = 0;
         currentOrderId=1;
-        model.addAttribute("message", "Билеты куплены");
-        return "Order";
+        model.addAttribute("message", "Билеты из заказа куплены");
+        return "redirect:/Order/Order.do";
     }
 }
