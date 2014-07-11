@@ -15,13 +15,13 @@ import java.util.*;
 
 @Controller
 @SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "legenda",
-        "row", "rowsMap", "seat", "seatsMap", "orderList", "orderPrice"})
+        "row", "rowsMap", "seat", "seatsMap", "orderList", "orderPrice", "message"})
 public class OrderController {
-    private ArrayList<Ticket> order = new ArrayList<>();
-    private double orderPrice = 0;
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
+    private ArrayList<Ticket> order = new ArrayList<>();
+    private double orderPrice = 0;
     private Event currentEvent = null;
     private Sector currentSector = null;
     private int currentRow = 1;
@@ -42,20 +42,20 @@ public class OrderController {
                 if (currentSector == null) currentSector = sectors.get(0);
                 model.addAttribute("sector", currentSector);
 
-                Map<Sector, Integer> sectorsMap = new TreeMap<>();
+                Map<Sector, Short> sectorsMap = new TreeMap<>();
                 for (Sector sector : sectors) {
-                    sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
+                    sectorsMap.put(sector,(short) ticketService.getFreeTicketsAmountBySector(sector));
                 }
                 model.addAttribute("sectorsMap", sectorsMap);
                 List<Sector> sectorsOrderPrice = sectorService.getSectorsByEventOrderPrice(currentEvent);
                 model.addAttribute("legenda", sectorService.getLegenda(sectorsOrderPrice));
 
-                Map<Integer, Integer> rowsMap1 = new TreeMap<>();
-                for (int i = 1; i <= currentSector.getMaxRows(); i++) {
-                    rowsMap1.put(i, ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
+                Map<Byte, Byte> rowsMap1 = new TreeMap<>();
+                for (byte i = 1; i <= currentSector.getMaxRows(); i++) {
+                    rowsMap1.put(i, (byte)ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
                 }
                 model.addAttribute("rowsMap", rowsMap1);
-                Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
+                Map<Byte, Byte> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
                 model.addAttribute("row", currentRow);
                 model.addAttribute("seat", currentSeat);
                 model.addAttribute("seatsMap", seatsMap1);
@@ -72,26 +72,27 @@ public class OrderController {
         currentEvent = eventService.getEventById(eventId);
         model.addAttribute("event", currentEvent);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
-        Map<Sector, Integer> sectorsMap = new TreeMap<>();
+        Map<Sector, Short> sectorsMap = new TreeMap<>();
         for (Sector sector : sectors) {
-            sectorsMap.put(sector, ticketService.getFreeTicketsAmountBySector(sector));
+            sectorsMap.put(sector, (short)ticketService.getFreeTicketsAmountBySector(sector));
         }
         List<Sector> sectorsOrderPrice = sectorService.getSectorsByEventOrderPrice(currentEvent);
         model.addAttribute("legenda", sectorService.getLegenda(sectorsOrderPrice));
         model.addAttribute("sectorsMap", sectorsMap);
         currentSector = sectors.get(0);
         model.addAttribute("sector", currentSector);
-        Map<Integer, Integer> rowsMap1 = new TreeMap<>();
-        for (int i = 1; i <= currentSector.getMaxRows(); i++) {
-            rowsMap1.put(i, ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
+        Map<Byte, Byte> rowsMap1 = new TreeMap<>();
+        for (byte i = 1; i <= currentSector.getMaxRows(); i++) {
+            rowsMap1.put(i, (byte)ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
         }
         model.addAttribute("rowsMap", rowsMap1);
         currentRow = 1;
         currentSeat = 1;
-        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
+        Map<Byte, Byte>  seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
+        model.addAttribute("message", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -100,17 +101,18 @@ public class OrderController {
                               Model model) {
         currentSector = sectorService.getSectorById(sectorId);
         model.addAttribute("sector", currentSector);
-        Map<Integer, Integer> rowsMap1 = new TreeMap<>();
-        for (int i = 1; i <= currentSector.getMaxRows(); i++) {
-            rowsMap1.put(i, ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
+        Map<Byte, Byte> rowsMap1 = new TreeMap<>();
+        for (byte i = 1; i <= currentSector.getMaxRows(); i++) {
+            rowsMap1.put(i, (byte)ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
         }
         model.addAttribute("rowsMap", rowsMap1);
         currentRow = 1;
         currentSeat = 1;
-        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
+        Map<Byte, Byte> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
+        model.addAttribute("message", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -120,17 +122,18 @@ public class OrderController {
         currentSector = sector;
         currentRow = row;
         currentSeat = 1;
-        Map<Integer, String> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
+        Map<Byte, Byte> seatsMap1 = ticketService.seatStatus(currentSector, currentRow, order);
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
+        model.addAttribute("message", "");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
     public String orderAddTicket(@ModelAttribute(value = "row") int row,
-                                 @RequestParam(value = "seat",required = true) int seat,
-                                 @ModelAttribute(value = "sector") Sector sector) {
+                                 @ModelAttribute(value = "sector") Sector sector,
+                                 @RequestParam(value = "seat") int seat, Model model) {
         Ticket ticket = new Ticket();
         ticket.setSector(sector);
         ticket.setRow(row);
@@ -146,11 +149,12 @@ public class OrderController {
         ticket.setId(currentOrderId++);
         order.add(ticket);
         orderPrice += sector.getPrice();
+        model.addAttribute("message", "Билет добавлен в заказ");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-        public String orderDelTicket(@RequestParam(value = "orderId", required = true) int orderId){
+        public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model){
         int index=orderId;
         for (Ticket ord : order) {
             if (ord.getId() == orderId) {
@@ -163,11 +167,17 @@ public class OrderController {
         for (Ticket ord : order){
             if (ord.getId()>orderId) ord.setId(index++);
         }
+        model.addAttribute("message", "Билет удалён из заказа");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
-    public String orderBuy() {
+    public String orderBuy(Model model) {
+        if (order.size()==0)  {
+            model.addAttribute("message", "");
+            return "redirect:/Order/Order.do";
+        }
+
         for (Ticket ticket : order){
             ticket.setConfirmed(true);
             ticket.setId(null);
@@ -176,6 +186,7 @@ public class OrderController {
         order.clear();
         orderPrice = 0;
         currentOrderId=1;
+        model.addAttribute("message", "Билеты из заказа куплены");
         return "redirect:/Order/Order.do";
     }
 }
