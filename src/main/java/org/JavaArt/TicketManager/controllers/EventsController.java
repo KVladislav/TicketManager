@@ -50,7 +50,7 @@ public class EventsController {
         List<SectorDefaults> sectorsDefaults = sectorDefaultsService.getAllSectorDefaults();
         Collections.sort(sectorsDefaults);
         if (sectorsDefaults.size() != 0) {
-
+            sectorsAdded.clear();
             List copy = new ArrayList(sectorsDefaults);
             for (Iterator<SectorDefaults> it = copy.iterator(); it.hasNext(); ) {
                 SectorDefaults sectorDefaults = it.next();
@@ -62,6 +62,7 @@ public class EventsController {
                 sectorsAdded.add(sector);
                 sectorService.addSector(sector);
                 model.addAttribute("id" + sector.getId(), sector.getId());
+                model.addAttribute("name" + sector.getName(), sector.getName());
             }
         }
         if (sectorsAdded != null && sectorsAdded.size() > 0) {
@@ -140,9 +141,11 @@ public class EventsController {
             for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
                 Sector sector = it.next();
                 String stringPrice = request.getParameter("id" + sector.getId());
+                String stringName = request.getParameter("name" + sector.getName());
                 double priceTrue = Double.parseDouble(stringPrice);
                 sector.setPrice(priceTrue);
                 sector.setEvent(event);
+                sector.setName(stringName);
                 sectorsAdded.add(sector);
                 sectorService.addSector(sector);
             }
@@ -195,8 +198,8 @@ public class EventsController {
         int year = gc.get(GregorianCalendar.YEAR);
         int mon = gc.get(GregorianCalendar.MONTH);
         int day = gc.get(GregorianCalendar.DATE);
-        int ho = gc.get(GregorianCalendar.HOUR_OF_DAY);
-        int mi = gc.get(GregorianCalendar.MINUTE);
+        int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
+        int min = gc.get(GregorianCalendar.MINUTE);
         GregorianCalendar calendarN = new GregorianCalendar();
         calendarN.set(year, mon, day, 0, 0, 0);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -204,10 +207,10 @@ public class EventsController {
         Date trueDate = dateFormat.parse(localisedDate);
         model.addAttribute("dateEvent", trueDate);
         String timeEvent = "";
-        if (mi == 0) {
-            timeEvent = "" + ho + "-" + "00";
+        if (min == 0) {
+            timeEvent = "" + hour + "-" + "00";
         } else {
-            timeEvent = "" + ho + "-" + mi;
+            timeEvent = "" + hour + "-" + min;
         }
         model.addAttribute("eventTime", timeEvent);
         List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);

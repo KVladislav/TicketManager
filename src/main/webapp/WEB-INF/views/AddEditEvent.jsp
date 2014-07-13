@@ -270,7 +270,7 @@
 
         <div class="my-controls">
             <input type="text" id="timeRemoveBooking" name="timeRemoveBooking" value="${eventBookingTimeOut}"
-                   required pattern="^[1-9][0-9]{1,2}$" title="Только целое положительное число от одной до двух цифр!">
+                   required pattern="[1-9]\d{0,1}?" title="Только целое положительное число от одной до двух цифр!">
             <img src="${pageContext.request.contextPath}/resources/img/Question.png"
                  alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
                  title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
@@ -293,7 +293,7 @@
 
         <tr>
             <td>
-                <input type="text" name="sectorName" required placeholder="Сектор" value="${sector.name}">
+                <input type="text" name="name${sector.name}" required placeholder="Сектор" value="${sector.name}">
             </td>
             <td>
 
