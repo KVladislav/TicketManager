@@ -45,12 +45,11 @@ public class SectorController {
                                 Model model) {
 
 
-
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
-        if (sectorDefaultsList==null) {
+        if (sectorDefaultsList == null) {
             SectorDefaults sectorDefaults = new SectorDefaults();
             sectorDefaults.setSectorName("1");
-            sectorDefaultsList=new ArrayList<>();
+            sectorDefaultsList = new ArrayList<>();
             sectorDefaultsList.add(sectorDefaults);
             sectorDefaultsService.addSectorDefaults(sectorDefaults);
         }
@@ -64,7 +63,11 @@ public class SectorController {
                 }
 
                 if (action.equals("save")) {
-                    sectorDefaults.setSectorName(sectorName);
+
+                    SectorDefaults sectorDefaultsTest = sectorDefaultsService.getSectorDefaultsByName(sectorName);
+                    if (sectorDefaultsTest==null || sectorDefaults.getSectorName().equals(sectorDefaultsTest.getSectorName())) {
+                        sectorDefaults.setSectorName(sectorName);
+                    }
                     try {
                         Double defaultPrice = Double.parseDouble(defaultPriceString);
                         sectorDefaults.setDefaultPrice(Math.abs(defaultPrice));
@@ -80,7 +83,7 @@ public class SectorController {
 
                 if (action.equals("clone")) {
                     SectorDefaults sectorDefaultsClone = new SectorDefaults();
-                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName());
+                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName() + "_");
                     sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
                     sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
                     sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());

@@ -99,4 +99,25 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         sectorDefaults.setDeleted(true);
         updateSectorDefaults(sectorDefaults);
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public SectorDefaults getSectorDefaultsByName(String name) {
+        Session session = null;
+        SectorDefaults sectorDefaults = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            sectorDefaults = (SectorDefaults) session.createCriteria(SectorDefaults.class).
+                    add(Restrictions.eq("isDeleted", false)).
+                    add(Restrictions.eq("sectorName", name)).uniqueResult();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return sectorDefaults;
+
+          }
 }
