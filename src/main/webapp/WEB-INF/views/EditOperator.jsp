@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Lora
-  Date: 27.06.2014
-  Time: 23:56
-  To change this template use File | Settings | File Templates.
---%>
 <%--suppress ALL --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -77,10 +70,10 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="my-control-label" for="password">Пароль</label>
+            <label class="my-control-label"   type="password" for="password">Пароль</label>
 
             <div class="my-controls">
-                <textarea rows="1" id="password" name="password">${operator.password}</textarea>
+                <textarea rows="1" id="password"  type="password" name="password">${operator.password}</textarea>
             </div>
         </div>
         <div class="control-group">

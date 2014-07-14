@@ -4,17 +4,16 @@ import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.service.OperatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
 @Controller
-@SessionAttributes({"pageName", "operators", "operator"})
+@SessionAttributes({"pageName", "operators", "operator", "error"})
 public class OperatorsController {
 
     OperatorService operatorService = new OperatorService();
@@ -25,13 +24,14 @@ public class OperatorsController {
         model.addAttribute("pageName", 5);//set menu page number
         List<Operator> operators = operatorService.getAllOperators();
         model.addAttribute("operators", operators);
+        model.addAttribute("error", "");
         return "Operators";
     }
 
     @RequestMapping(value = "NewOperator/NewOperator.do", method = RequestMethod.GET)
     public String newOperatortGet(Model model) {
         model.addAttribute("pageName", 8);//set menu page number
-
+        model.addAttribute("error", "");
         return "NewOperator";
     }
 
@@ -68,17 +68,26 @@ public class OperatorsController {
 
 
     @RequestMapping(value = "NewOperator/OperatorsAdd.do", method = RequestMethod.POST)
-    public String operatorAdd(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("login") String login,
-                              @RequestParam("password") String password, @RequestParam("description") String description, SessionStatus status) {
-
-        Operator operator = new Operator();
-        operator.setName(name);
-        operator.setSurname(surname);
-        operator.setLogin(login);
-        operator.setPassword(password);
-        operator.setDescription(description);
+    public String operatorAdd(@ModelAttribute("operator") @Valid Operator operator, BindingResult bindingResult,
+                              Model model) {
+        if (bindingResult.hasErrors()) {
+            return "NewOperator";
+        }
         operatorService.addOperator(operator);
-        status.setComplete();
+        /*List<Operator> operators = operatorService.getAllOperators();
+        for (Operator oper: operators){
+            if (oper.getName().equals(operator.getName())&&oper.getSurname().equals(operator.getSurname())){
+                model.addAttribute("error", "Оператор с таким именем и фамилией уже существует");
+                operator=null;
+                return "NewOperator";
+            }
+            if (oper.getLogin().equals(operator.getLogin())){
+                model.addAttribute("error", "Такой логин уже есть. Введите другой лигин");
+                operator=null;
+                return "NewOperator";
+            }
+        }
+        operatorService.addOperator(operator);*/
         return "redirect:/Operators/Operators.do";
     }
 

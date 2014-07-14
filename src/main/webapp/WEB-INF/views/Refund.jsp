@@ -13,12 +13,12 @@
     <center>
          <h3 class="panel-heading" style=" color:Blue" >Возврат билета</h3>
          <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
-             <br><h4> Поиск по номеру билета(ID)</h4>
+             <br><h4> Поиск по номеру билета</h4>
              <td><br>
              <div>
-                  <input path="id" errors path="error"  id="ticketId"required pattern="^[0-9]+$"
-                         title="Целые числа без пробелов" name="ticketId" />
-                  <button type="submit" name="action" class="btn btn-primary">Поиск билета</button>
+                  <input path="id" errors path="error"  id="ticketId"required pattern="^[0-9]+$" title="Целые числа
+                    без пробелов" style="text-align:center" required placeholder="Введите ID билета" name="ticketId"/>
+                  <button type="submit" name="action" class="btn btn-primary" >Поиск билета</button>
                   <h3 style="text-align:center; color:Red">${error}</h3>
              </div>
              <br><br>
