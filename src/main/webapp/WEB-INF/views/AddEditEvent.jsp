@@ -260,8 +260,8 @@
 
         <div class="my-controls">
             <textarea rows="5" id="description" maxlength="50" name="description"
-                      required pattern="^[a-z][A-Z]*$" title="Только целое положительное число от одной до двух цифр!">
-                ${eventDescriptions}</textarea>
+                      required pattern="^[a-z][A-Z]*$" title="Наименование не должно быть пустым - до 50 знаков!">
+                ${eventDescriptions.trim()}</textarea>
         </div>
     </div>
 
@@ -270,7 +270,7 @@
 
         <div class="my-controls">
             <input type="text" id="timeRemoveBooking" name="timeRemoveBooking" value="${eventBookingTimeOut}"
-                   required pattern="[1-9]\d{0,1}?" title="Только целое положительное число от одной до двух цифр!">
+                   required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
             <img src="${pageContext.request.contextPath}/resources/img/Question.png"
                  alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
                  title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>

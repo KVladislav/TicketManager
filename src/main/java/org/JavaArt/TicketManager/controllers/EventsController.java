@@ -128,7 +128,7 @@ public class EventsController {
             event.setDate(trueDate);
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
-            event.setDescription(" " + description);
+            event.setDescription("" + description.trim());
             //    event.setOperator(operator);
             Date nowDate = new Date();
             event.setTimeStamp(nowDate);
@@ -191,7 +191,9 @@ public class EventsController {
         model.addAttribute("pageName", 7);
         model.addAttribute("eventEdit", editEvent);
         model.addAttribute("eventDescriptions", editEvent.getDescription());
-        model.addAttribute("eventBookingTimeOut", editEvent.getBookingTimeOut());
+        Date fullEventBookingTimeOut = editEvent.getBookingTimeOut();
+        int eventBookingTimeOut = (int) (editEvent.getDate().getTime() - fullEventBookingTimeOut.getTime()) / 60000;
+        model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
 
         Date date = editEvent.getDate();
         GregorianCalendar gc = new GregorianCalendar();
@@ -246,7 +248,7 @@ public class EventsController {
 
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
-            event.setDescription(" " + description);
+            event.setDescription("" + description.trim());
             //    event.setOperator(operator);
             Date nowDate = new Date();
             event.setTimeStamp(nowDate);
