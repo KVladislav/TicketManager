@@ -29,9 +29,10 @@ public class ThreadService implements ServletContextListener {
         System.out.println("Thread started");
         ticketService = TicketService.getInstance();
         clientService = ClientService.getInstance();
-        executorService = Executors.newFixedThreadPool(2);
+        executorService = Executors.newFixedThreadPool(3);
         executorService.execute(new ClearNonConfirmedTickets());
         executorService.execute(new ClearEmptyClients());
+        executorService.execute(new ClearExpiredBookedTickets());
 
     }
 
@@ -44,7 +45,7 @@ public class ThreadService implements ServletContextListener {
                     TimeUnit.MINUTES.sleep(1);
                 }
             } catch (InterruptedException e) {
-                System.out.println("Perform Thread Shutdown");
+                System.out.println("Perform ClearNonConfirmedTickets Thread Shutdown");
             }
         }
     }
@@ -58,23 +59,21 @@ public class ThreadService implements ServletContextListener {
                     TimeUnit.MINUTES.sleep(100);
                 }
             } catch (InterruptedException e) {
-                System.out.println("Perform Thread Shutdown");
+                System.out.println("Perform ClearEmptyClients Thread Shutdown");
             }
         }
     }
 
-    private class ClearOverdueBookedTickets implements Runnable {
+    private class ClearExpiredBookedTickets implements Runnable {
 
         public void run() {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
-
-
-
-                    TimeUnit.MINUTES.sleep(100);
+                    ticketService.deleteExpiredBookedTickets();
+                    TimeUnit.MINUTES.sleep(1);
                 }
             } catch (InterruptedException e) {
-                System.out.println("Perform Thread Shutdown");
+                System.out.println("Perform ClearExpiredBookedTickets Thread Shutdown");
             }
         }
     }

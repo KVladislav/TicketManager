@@ -34,6 +34,7 @@ public class BookingController {
     private SectorService sectorService = new SectorService();
 
     //TODO сделать тред удаления сгоревшей брони
+    //TODO сделать проверку при бронировании не вышла ли дата
     //TODO авторизация
 
 

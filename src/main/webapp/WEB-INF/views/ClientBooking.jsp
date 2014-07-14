@@ -122,7 +122,8 @@
                                     <%--<jsp:useBean id="dateValue" class="java.util.Date" />--%>
                                     <%--<jsp:setProperty name="dateValue" property="time" value="${ticket.sector.event.date.time-ticket.sector.event.bookingTimeOut*60000}" />--%>
                                     <%--<small><fmt:formatDate value="${dateValue}" pattern="dd/MM/yy H:mm" /></p></small>--%>
-                                <small>${ticket.sector.event.bookingTimeOut} минут</small>
+                                <small><fmt:formatDate value="${ticket.sector.event.bookingTimeOut}"
+                                                       pattern="dd/MM/yy H:mm"/></small>
                                 </td>
                                 <td>
                                     <small>${ticket.sector.name}</small>

@@ -22,7 +22,7 @@ public class Event implements Comparable<Event>{
     private Date date = new Date();
 
     @Column
-    private Date BookingTimeOut;
+    private Date bookingTimeOut;
 
     @Column(name = "isDeleted")
     private boolean isDeleted;
@@ -60,14 +60,12 @@ public class Event implements Comparable<Event>{
     }
 
     public Date getBookingTimeOut() {
-        return BookingTimeOut;
+        return bookingTimeOut;
     }
 
     public void setBookingTimeOut(Date bookingTimeOut) {
-        BookingTimeOut = bookingTimeOut;
+        this.bookingTimeOut = bookingTimeOut;
     }
-
-    public boolean getDeleted() {return isDeleted;}
 
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;

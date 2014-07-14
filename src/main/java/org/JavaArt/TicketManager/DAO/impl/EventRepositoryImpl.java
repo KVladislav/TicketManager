@@ -100,7 +100,7 @@ public class EventRepositoryImpl implements EventRepository {
         List<Event> events = new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery ("FROM Event WHERE isDeleted = false and date > :currientDate");
+            Query query = session.createQuery ("FROM Event WHERE isDeleted = false and date > :currientDate order by date");
             query.setTimestamp("currientDate", new Date());
             events = (List<Event>) query.list();
 
