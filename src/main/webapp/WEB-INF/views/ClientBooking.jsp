@@ -88,7 +88,7 @@
                     <table class="table table-hover table-condensed">
                         <caption>
                             <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                               pattern="d.MM.yyyy H:mm"/></code></h3>
+                                                               pattern="dd/MM/yy H:mm"/></code></h3>
                         </caption>
                         <thead>
                         <tr>
