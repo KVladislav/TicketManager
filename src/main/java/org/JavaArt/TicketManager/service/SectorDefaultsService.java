@@ -34,4 +34,8 @@ public class SectorDefaultsService {
     public void deleteSectorDefaults(SectorDefaults sectorDefaults) {
         sectorDefaultsRepository.deleteSectorDefaults(sectorDefaults);
     }
+
+    public SectorDefaults getSectorDefaultsByName(String name) {
+        return sectorDefaultsRepository.getSectorDefaultsByName(name);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class SectorController {
     @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.POST)
     public String sectorsModify(@RequestParam(value = "action") String action,
                                 @RequestParam(value = "sectorDefaultsId") Integer sectorDefaultsId,
-                                @RequestParam(value = "defaultPrice") Double defaultPrice,
+                                @RequestParam(value = "defaultPrice") String defaultPriceString,
                                 @RequestParam(value = "sectorName") String sectorName,
                                 @RequestParam(value = "maxRows") Integer maxRows,
                                 @RequestParam(value = "maxSeats") Integer maxSeats,
@@ -45,9 +46,14 @@ public class SectorController {
 
 
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
-        if (sectorDefaultsList==null) {
-            return "SectorDefaults";
+        if (sectorDefaultsList == null) {
+            SectorDefaults sectorDefaults = new SectorDefaults();
+            sectorDefaults.setSectorName("1");
+            sectorDefaultsList = new ArrayList<>();
+            sectorDefaultsList.add(sectorDefaults);
+            sectorDefaultsService.addSectorDefaults(sectorDefaults);
         }
+
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
             if (sectorDefaults.getId() == sectorDefaultsId) {
                 if (action.equals("delete")) {
@@ -57,17 +63,27 @@ public class SectorController {
                 }
 
                 if (action.equals("save")) {
-                    sectorDefaults.setSectorName(sectorName);
-                    sectorDefaults.setDefaultPrice(defaultPrice);
-                    sectorDefaults.setMaxRows(maxRows);
-                    sectorDefaults.setMaxSeats(maxSeats);
+
+                    SectorDefaults sectorDefaultsTest = sectorDefaultsService.getSectorDefaultsByName(sectorName);
+                    if (sectorDefaultsTest==null || sectorDefaults.getSectorName().equals(sectorDefaultsTest.getSectorName())) {
+                        sectorDefaults.setSectorName(sectorName);
+                    }
+                    try {
+                        Double defaultPrice = Double.parseDouble(defaultPriceString);
+                        sectorDefaults.setDefaultPrice(Math.abs(defaultPrice));
+                    } catch (Exception e) {
+
+                    }
+
+                    sectorDefaults.setMaxRows(Math.abs(maxRows));
+                    sectorDefaults.setMaxSeats(Math.abs(maxSeats));
                     sectorDefaultsService.updateSectorDefaults(sectorDefaults);
                     break;
                 }
 
                 if (action.equals("clone")) {
                     SectorDefaults sectorDefaultsClone = new SectorDefaults();
-                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName());
+                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName() + "_");
                     sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
                     sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
                     sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());

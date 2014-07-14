@@ -31,5 +31,6 @@ public interface TicketRepository {
     public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row);
     public int isPlaceFree(Sector sector, int row, int seat);
     public void deleteNonConfirmedTickets(int minutes);
+    public void deleteExpiredBookedTickets();
 
 }

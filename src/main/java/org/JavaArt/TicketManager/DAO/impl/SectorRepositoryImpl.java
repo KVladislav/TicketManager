@@ -76,26 +76,12 @@ public class SectorRepositoryImpl implements SectorRepository {
 
     }
 
-//    @Override
-//    public void deleteSector(Sector sector) {
-//        Session session = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            session.delete(sector);
-//            session.getTransaction().commit();
-//            session.flush();
-//        }
-//        catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-//        }
-//        finally {
-//            if (session!=null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//    }
+    @Override
+    public void deleteSector(Sector sector) {
+        sector.setDeleted(true);
+        updateSector(sector);
+
+    }
 
     @Override
     public List<Sector> getSectorsByEvent(Event event) {

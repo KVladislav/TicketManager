@@ -20,7 +20,7 @@ public interface SectorRepository {
     public void updateSector(Sector sector);
 
     public Sector getSectorById(int id);
-//    public void deleteSector(Sector sector);
+    public void deleteSector(Sector sector);
 
     public List<Sector> getSectorsByEvent(Event event);
 
