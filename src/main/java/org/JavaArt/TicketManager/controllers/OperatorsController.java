@@ -68,13 +68,41 @@ public class OperatorsController {
 
 
     @RequestMapping(value = "NewOperator/OperatorsAdd.do", method = RequestMethod.POST)
-    public String operatorAdd(@ModelAttribute("operator") @Valid Operator operator, BindingResult bindingResult,
+    public String operatorAdd(@RequestParam("name") String name,
+                              @RequestParam("surname") String surname,
+                              @RequestParam("login") String login,
+                              @RequestParam("password") String password,
+                              @RequestParam("password1") String password1,
+                              @RequestParam("description") String description,
                               Model model) {
-        if (bindingResult.hasErrors()) {
+
+        if (!password.equals(password1)) {
+            model.addAttribute("error", "Повторите ввод пароля");
             return "NewOperator";
         }
-        operatorService.addOperator(operator);
-        /*List<Operator> operators = operatorService.getAllOperators();
+        if (name.length()>12){
+            model.addAttribute("error", "Имя: максимум 12 символов");
+            return "NewOperator";
+        }
+        if (surname.length()>15){
+            model.addAttribute("error", "Фимилия: максимум 15 символов");
+            return "NewOperator";
+        }
+        if (login.length()<3||login.length()>12){
+            model.addAttribute("error", "Логин: минимум 3 символа, максимум 12 ");
+            return "NewOperator";
+        }
+        if (password.length()<6||password.length()>15){
+            model.addAttribute("error", "Пароль: минимум 6 символа, максимум 15 ");
+            return "NewOperator";
+        }
+        Operator operator = new Operator();
+        operator.setName(name);
+        operator.setSurname(surname);
+        operator.setLogin(login);
+        operator.setPassword(password);
+        operator.setDescription(description);
+        List<Operator> operators = operatorService.getAllOperators();
         for (Operator oper: operators){
             if (oper.getName().equals(operator.getName())&&oper.getSurname().equals(operator.getSurname())){
                 model.addAttribute("error", "Оператор с таким именем и фамилией уже существует");
@@ -87,7 +115,7 @@ public class OperatorsController {
                 return "NewOperator";
             }
         }
-        operatorService.addOperator(operator);*/
+        operatorService.addOperator(operator);
         return "redirect:/Operators/Operators.do";
     }
 

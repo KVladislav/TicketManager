@@ -20,18 +20,10 @@ public class Operator {
     private Integer id;
 
     @NotEmpty
-    @Pattern(regexp="^[a-zA-Z]+$",
-            message="Буквы без пробелов.")
-    @Size(min=1, max=12,
-            message="Минимум 1 символ, максимум 12 символов.")
     @Column(name="name", nullable = false, length = 15)
     private String name;
 
     @NotEmpty
-    @Pattern(regexp="^[a-zA-Z]+$",
-            message="Буквы без пробелов.")
-    @Size(min=1, max=15,
-            message="Минимум 1 символ, максимум 15 символов.")
     @Column(name="surname", nullable = false, length = 20)
     private String surname;
 
@@ -44,17 +36,11 @@ public class Operator {
     @Column(name="description", length = 500)
     private String description;
 
-    @Size(min=3, max=10,
-            message="Логин: минимум 3 символа, максимум 10 символов.")
-    @Pattern(regexp="^[a-zA-Z0-9]+$",
-            message="Буквы и цифры без пробелов.")
+    @NotEmpty
     @Column(name="login")
     private String login;
 
-    @Size(min=6, max=16,
-            message="Пароль: минимум 6 символов, максимум 16 символов.")
-    @Pattern(regexp="^[a-zA-Z0-9]+$",
-            message="Буквы и цифры без пробелов.")
+    @NotEmpty
     @Column(name="password", nullable = false)
     private String password;
 

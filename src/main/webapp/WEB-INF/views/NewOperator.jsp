@@ -17,34 +17,40 @@
     <center>
      <form action="${pageContext.request.contextPath}/NewOperator/OperatorsAdd.do" method="post">
          <div>
-             <input path="id" errors path="error"  id="name" required pattern="^[a-zA-Z]+$"  title="Буквы без пробелов"
-                    maxlength="12" style="text-align:center" required placeholder="Имя"  name="name">
+               <input  type="text" name="name" required pattern="^[a-zA-Z]+$" title="Буквы без пробелов"
+                   style="text-align:center" required placeholder="Имя" >
          </div>
          <br>
          <div>
-             <input path="id" errors path="error" id="surname" required pattern="^[a-zA-Z]+$"
-                    title="Буквы без пробелов" maxlength="15" style="text-align:center"
-                    required placeholder="Фамилия"  name="surname">
+             <input type="text" name="surname" required pattern="^[a-zA-Z]+$" title="Буквы без пробелов"
+                    maxlength="15" style="text-align:center" required placeholder="Фамилия" >
          </div>
          <br>
          <div>
-             <input path="id" errors path="error"  id="login" style="text-align:center" required placeholder="Логин"  name="login">
+             <input type="text" name="login" required pattern="^[a-zA-Z0-9]+$"
+                    title="Буквы и цифры без пробелов."
+                    style="text-align:center" required placeholder="Логин">
          </div>
          <br>
          <div>
-             <input path="id" errors path="error"  id="password" required pattern="^[a-zA-Z0-9]+$"
-                      minlength="6"  maxlength="15" title="Буквы и цифры без пробелов. Минимум 6 символов."
-                    style="text-align:center" required placeholder="Пароль" type="password"  name="password">
+             <input type="password" name="password"  required pattern="^[a-zA-Z0-9]+$"
+                    title="Буквы и цифры без пробелов."
+                    style="text-align:center" required placeholder="Пароль" >
          </div>
          <br>
-
+         <div>
+             <input type="password" name="password1"  required pattern="^[a-zA-Z0-9]+$"
+                    title="Буквы и цифры без пробелов."
+                    style="text-align:center" required placeholder="Повторите пароль" >
+         </div>
+         <br>
          <div class="control-group">
              <div class="my-controls">
               <textarea rows="5" id="description" style="text-align:center"
                   name="description"></textarea>
              </div>
          </div>
-         <h3 style="text-align:center; color:Red">${error}</h3>
+         <h4 style="text-align:center; color:Red">${error}</h4>
         <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
      </form>
 </center>
