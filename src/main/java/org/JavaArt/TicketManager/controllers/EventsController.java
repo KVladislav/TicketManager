@@ -133,7 +133,9 @@ public class EventsController {
             Date nowDate = new Date();
             event.setTimeStamp(nowDate);
             int time = Integer.parseInt(timeRemoveBooking);
-            event.setBookingTimeOut(time);
+
+            event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 86400));
+            //  event.setBookingTimeOut(time);
             eventService.addEvent(event);
             events.add(event);
 
@@ -249,7 +251,8 @@ public class EventsController {
             Date nowDate = new Date();
             event.setTimeStamp(nowDate);
             int time = Integer.parseInt(timeRemoveBooking);
-            event.setBookingTimeOut(time);
+            event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 86400));
+            //     event.setBookingTimeOut(time);
             eventService.updateEvent(event);
             List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
 
