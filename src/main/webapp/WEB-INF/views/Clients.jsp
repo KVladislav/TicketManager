@@ -17,11 +17,11 @@
 <body>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-12 column">
+        <div class="col-md-10 column col-md-offset-1">
             <form class="form-inline" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do"
                   method="post">
                 <div class="form-group">
-                    <input class="form-control" id="appendedInputButtons" size="111" type="text" name="clientName"
+                    <input class="form-control " id="appendedInputButtons" size="111" type="text" name="clientName"
                            required placeholder="Введите ФИО клиента" value="${client.name}">
                 </div>
                 <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
@@ -31,7 +31,8 @@
     </div>
 </div>
 <div class="row clearfix">
-    <div class="col-md-12 column">
+    <div class="col-md-8 column col-md-offset-2">
+        <br>
         <c:if test="${bookingClients!=null}">
             <table class="table table-hover table-condensed">
                 <thead>

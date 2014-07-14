@@ -62,4 +62,20 @@ public class ThreadService implements ServletContextListener {
             }
         }
     }
+
+    private class ClearOverdueBookedTickets implements Runnable {
+
+        public void run() {
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+
+
+
+                    TimeUnit.MINUTES.sleep(100);
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Perform Thread Shutdown");
+            }
+        }
+    }
 }

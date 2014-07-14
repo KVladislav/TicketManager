@@ -169,7 +169,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 column col-lg-offset-2">
+        <div class="col-md-3 column col-md-offset-2">
             <table class="table table-hover table-condensed">
                 <caption>
                     <h3><code>Легенда</code></h3>
