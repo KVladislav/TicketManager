@@ -128,7 +128,7 @@ public class EventsController {
             event.setDate(trueDate);
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
-            event.setDescription("" + description.trim());
+            event.setDescription("" + description.trim().replaceAll("\\u00A0", ""));
             //    event.setOperator(operator);
             Date nowDate = new Date();
             event.setTimeStamp(nowDate);
@@ -190,7 +190,7 @@ public class EventsController {
     public String editEventGet(Model model) throws SQLException, ParseException {  // , @RequestParam("eventEdit") Event eventEdit
         model.addAttribute("pageName", 7);
         model.addAttribute("eventEdit", editEvent);
-        model.addAttribute("eventDescriptions", editEvent.getDescription());
+        model.addAttribute("eventDescriptions", (editEvent.getDescription()).trim().replaceAll("\\u00A0", ""));
         Date fullEventBookingTimeOut = editEvent.getBookingTimeOut();
         int eventBookingTimeOut = (int) (editEvent.getDate().getTime() - fullEventBookingTimeOut.getTime()) / 60000;
         model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
@@ -248,7 +248,7 @@ public class EventsController {
 
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
-            event.setDescription("" + description.trim());
+            event.setDescription("" + description.trim().replaceAll("\\u00A0", ""));
             //    event.setOperator(operator);
             Date nowDate = new Date();
             event.setTimeStamp(nowDate);
