@@ -114,6 +114,27 @@ public class EventRepositoryImpl implements EventRepository {
         return events;
     }
 
+    @Override
+    public Event getEventByDate(Date date) {
+        Session session = null;
+        Event event = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            event = (Event) session.get(Event.class, date);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+
+        }
+        return event;
+
+
+    }
+
+
 //    @Override
 //    public void deleteEvent(Event event) {
 //        Session session = null;
@@ -134,4 +155,6 @@ public class EventRepositoryImpl implements EventRepository {
 //        }
 //
 //    }
+
+
 }
