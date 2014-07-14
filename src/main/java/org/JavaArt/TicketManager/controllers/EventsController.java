@@ -125,14 +125,15 @@ public class EventsController {
             rightAgain.add(Calendar.HOUR, intHour);
             rightAgain.add(Calendar.MINUTE, intMin);
             trueDate = rightAgain.getTime();
-            if (isYetEvent(trueDate) == true) {
+    /*        if (eventService.getEventByDate(trueDate) == null) {
                 event.setDate(trueDate);
             } else {
                 eventErrorMessage += " Мероприятие на эту дату уже существует!" + "<br>";
                 model.addAttribute("eventErrorMessage", eventErrorMessage);
                 return "redirect:/AddEditEvent/NewEvent.do";
             }
-            //  event.setDate(trueDate);
+           */
+            event.setDate(trueDate);
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
             event.setDescription("" + description.trim().replaceAll("\\u00A0", ""));
@@ -251,13 +252,15 @@ public class EventsController {
             rightAgain.add(Calendar.HOUR, intHour);
             rightAgain.add(Calendar.MINUTE, intMin);
             trueDate = rightAgain.getTime();
-            if (isYetEvent(trueDate) == true) {
+        /*    if (eventService.getEventByDate(trueDate) == null) {
                 event.setDate(trueDate);
             } else {
                 errorMessageEdit += " Мероприятие на эту дату уже существует!" + "<br>";
                 model.addAttribute("errorMessageEdit", errorMessageEdit);
                 return "redirect:/AddEditEvent/EditEvent.do";
             }
+            */
+            event.setDate(trueDate);
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
             event.setDescription("" + description.trim().replaceAll("\\u00A0", ""));
