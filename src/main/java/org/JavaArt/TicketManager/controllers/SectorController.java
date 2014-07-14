@@ -38,11 +38,12 @@ public class SectorController {
     @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.POST)
     public String sectorsModify(@RequestParam(value = "action") String action,
                                 @RequestParam(value = "sectorDefaultsId") Integer sectorDefaultsId,
-                                @RequestParam(value = "defaultPrice") Double defaultPrice,
+                                @RequestParam(value = "defaultPrice") String defaultPriceString,
                                 @RequestParam(value = "sectorName") String sectorName,
                                 @RequestParam(value = "maxRows") Integer maxRows,
                                 @RequestParam(value = "maxSeats") Integer maxSeats,
                                 Model model) {
+
 
 
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
@@ -53,6 +54,7 @@ public class SectorController {
             sectorDefaultsList.add(sectorDefaults);
             sectorDefaultsService.addSectorDefaults(sectorDefaults);
         }
+
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
             if (sectorDefaults.getId() == sectorDefaultsId) {
                 if (action.equals("delete")) {
@@ -63,7 +65,13 @@ public class SectorController {
 
                 if (action.equals("save")) {
                     sectorDefaults.setSectorName(sectorName);
-                    sectorDefaults.setDefaultPrice(Math.abs(defaultPrice));
+                    try {
+                        Double defaultPrice = Double.parseDouble(defaultPriceString);
+                        sectorDefaults.setDefaultPrice(Math.abs(defaultPrice));
+                    } catch (Exception e) {
+
+                    }
+
                     sectorDefaults.setMaxRows(Math.abs(maxRows));
                     sectorDefaults.setMaxSeats(Math.abs(maxSeats));
                     sectorDefaultsService.updateSectorDefaults(sectorDefaults);
