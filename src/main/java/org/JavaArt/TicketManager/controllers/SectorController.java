@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,11 @@ public class SectorController {
 
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
         if (sectorDefaultsList==null) {
-            return "SectorDefaults";
+            SectorDefaults sectorDefaults = new SectorDefaults();
+            sectorDefaults.setSectorName("1");
+            sectorDefaultsList=new ArrayList<>();
+            sectorDefaultsList.add(sectorDefaults);
+            sectorDefaultsService.addSectorDefaults(sectorDefaults);
         }
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
             if (sectorDefaults.getId() == sectorDefaultsId) {
@@ -58,9 +63,9 @@ public class SectorController {
 
                 if (action.equals("save")) {
                     sectorDefaults.setSectorName(sectorName);
-                    sectorDefaults.setDefaultPrice(defaultPrice);
-                    sectorDefaults.setMaxRows(maxRows);
-                    sectorDefaults.setMaxSeats(maxSeats);
+                    sectorDefaults.setDefaultPrice(Math.abs(defaultPrice));
+                    sectorDefaults.setMaxRows(Math.abs(maxRows));
+                    sectorDefaults.setMaxSeats(Math.abs(maxSeats));
                     sectorDefaultsService.updateSectorDefaults(sectorDefaults);
                     break;
                 }
