@@ -12,44 +12,49 @@
     <link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
 </head>
-
-<div class="panel-heading" style="text-align:center;"><b>Создание нового оператора</b></div>
+<h3 style="text-align:center; color:Blue"><b>Создание нового оператора</b></h3>
     <center>
      <form action="${pageContext.request.contextPath}/NewOperator/OperatorsAdd.do" method="post">
+         <label>Имя*</label>
          <div>
-              <input  type="text" name="name" size=20 maxlength=12 required pattern="^[a-zA-Z]+$"
-                       title="Буквы без пробелов." style="text-align:center" required placeholder="Имя" >
+
+              <input  type="text" name="name" size=20 maxlength=12 required pattern="^[a-zA-Zа-яА-Я]+$"
+                       title="Буквы без пробелов." style="text-align:center" required placeholder="Обязательное поле" >
          </div>
          <br>
+         <label>Фамилия*</label>
          <div>
-              <input type="text" name="surname" size=20 maxlength=15 required pattern="^[a-zA-Z]+$"
-                    title="Буквы без пробелов" style="text-align:center" required placeholder="Фамилия" >
+              <input type="text" name="surname" size=20 maxlength=15 required pattern="^[a-zA-Zа-яА-Я]+$"
+                    title="Буквы без пробелов" style="text-align:center" required placeholder="Обязательное поле" >
          </div>
          <br>
+         <label>Логин*</label>
          <div>
-              <input type="text" name="login" size=20 maxlength=10 required pattern="^[a-zA-Z0-9]+$"
-                    title="Логин должен состоять из латинских символов и цифр."
-                    style="text-align:center" required placeholder="Логин">
+              <input type="text" name="login" size=20 maxlength=10 required pattern="^[a-zA-Z0-9]{3,}$"
+                    title="Логин должен состоять из латинских букв и цифр от 3 до 10 символов"
+                    style="text-align:center" required placeholder="Обязательное поле">
          </div>
          <br>
+         <label>Пароль*</label>
          <div>
-             <input type="password" name="password" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]+$"
-                    title="Пароль должен состоять из латинских символов и цифр."
-                    style="text-align:center" required placeholder="Пароль">
+             <input type="password" name="password" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]{6,}$"
+                    title="Пароль должен состоять из латинских букв и цифр от 6 до 15 символов."
+                    style="text-align:center" required placeholder="Обязательное поле">
          </div>
          <br>
+         <label>Повторите пароль*</label>
          <div>
-             <input type="password" name="password1" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]+$"
-                    title="Пароль должен состоять из латинских символов и цифр."
-                    style="text-align:center" required placeholder="Повторите пароль">
+             <input type="password" name="passwordRepeat" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]{6,}$"
+                    title="Пароль должен состоять из латинских букв и цифр от 6 до 15 символов."
+                    style="text-align:center" required placeholder="Обязательное поле">
          </div>
          <br>
-         <div class="control-group">
-             <div class="my-controls">
-              <textarea rows="5" id="description" style="text-align:center"
-                  name="description"></textarea>
-             </div>
+         <label>Дополнительная информация*</label>
+         <div>
+             <input type="text" name="description" size=40 maxlength=50
+                    style="text-align:center">
          </div>
+                  <br>
          <h4 style="text-align:center; color:Red">${error}</h4>
         <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
      </form>

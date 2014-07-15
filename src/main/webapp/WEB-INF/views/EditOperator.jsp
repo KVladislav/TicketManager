@@ -11,50 +11,54 @@
     <link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
 </head>
-
-<div class="panel-heading" style="text-align:center;"><b>Редактирование оператора</b></div>
+<h3 style="text-align:center; color:Blue"><b>Редактирование оператора</b></h3>
 <center>
     <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditSave.do" method="post">
-
-
-
-
         <input type="hidden" name="operatorId" value="${operator.id}">
-        <div class="control-group">
-            <label class="my-control-label" for="name">Имя</label>
-
-            <div class="my-controls">
-                <textarea rows="1" id="name" name="name">${operator.name}</textarea>
-            </div>
+        <label>Имя*</label>
+        <div>
+              <input type="text" name="name" size=20 maxlength=12 required pattern="^[a-zA-Zа-яА-Я]+$"
+                     title="Буквы без пробелов." style="text-align:center" value="${operator.name}">
         </div>
-        <div class="control-group">
-            <label class="my-control-label" for="surname">Фамилия</label>
-
-            <div class="my-controls">
-                <textarea rows="1" id="surname" name="surname">${operator.surname}</textarea>
-            </div>
+        <br>
+        <label>Фамилия*</label>
+        <div>
+            <input type="text" name="surname" size=20 maxlength=15 required pattern="^[a-zA-Zа-яА-Я]+$"
+                   title="Буквы без пробелов." style="text-align:center" value="${operator.surname}">
         </div>
-        <div class="control-group">
-            <label class="my-control-label" for="login">Логин</label>
-
-            <div class="my-controls">
-                <textarea rows="1" id="login" name="login">${operator.login}</textarea>
-            </div>
+        <br>
+        <label>Логин*</label>
+        <div>
+            <input type="text" name="login" size=20 maxlength=10 required pattern="^[a-zA-Z0-9]{3,}$"
+                   title="Логин должен состоять из латинских букв и цифр от 3 до 10 символов."
+                   style="text-align:center" value="${operator.login}">
         </div>
-        <div class="control-group">
-            <label class="my-control-label"   type="password" for="password">Пароль</label>
-
-            <div class="my-controls">
-                <textarea rows="1" id="password"  type="password" name="password">${operator.password}</textarea>
-            </div>
+        <br>
+        <label>Старый пароль*</label>
+        <div>
+            <input type="password" name="password" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]{6,}$"
+                   title="Пароль должен состоять из латинских букв и цифр от 6 до 10 символов."
+                   style="text-align:center" required placeholder="Обязательное поле">
         </div>
-        <div class="control-group">
-            <label class="my-control-label" for="description">Описание</label>
-
-            <div class="my-controls">
-                <textarea rows="5" id="description" name="description">${operator.description}</textarea>
-            </div>
+        <br>
+        <label>Новый пароль*</label>
+        <div>
+            <input type="password" name="passwordNew" size=34 maxlength=15
+                   style="text-align:center" placeholder="Обязательно при смене пароля">
         </div>
+        <br>
+        <label>Подтвердите новый пароль*</label>
+        <div>
+            <input type="password" name="passwordNewRepeat" size=34 maxlength=15
+                   style="text-align:center" placeholder="Обязательно при смене пароля">
+        </div>
+        <br>
+        <label>Дополнительная информация*</label>
+        <div>
+            <input type="text" name="description" size=50 maxlength=50
+                   style="text-align:center" value="${operator.description}">
+        </div>
+        <h4 style="text-align:center; color:Red">${error}</h4>
         <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
      </form>
 </center>
