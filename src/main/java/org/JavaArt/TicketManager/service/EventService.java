@@ -40,4 +40,7 @@ public class EventService {
         Event event = eventRepository.getEventByDate(date);
         return event;
     }
+    public List<Event> getFutureBookableEvents() {
+        return eventRepository.getFutureBookableEvents();
+    }
 }

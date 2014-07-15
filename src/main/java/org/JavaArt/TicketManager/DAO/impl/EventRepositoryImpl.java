@@ -133,6 +133,26 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
 
+    @Override
+    public List<Event> getFutureBookableEvents() {
+        Session session = null;
+        List<Event> events = new ArrayList<Event>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery ("FROM Event WHERE isDeleted = false and bookingTimeOut > :currientDate order by date");
+            query.setTimestamp("currientDate", new Date());
+            events = (List<Event>) query.list();
+
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        }
+        finally {
+            if (session != null && session.isOpen())  session.close();
+        }
+        return events;
+    }
+
 //    @Override
 //    public void deleteEvent(Event event) {
 //        Session session = null;
