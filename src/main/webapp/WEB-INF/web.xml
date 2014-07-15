@@ -17,14 +17,29 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/action-servlet.xml</param-value>
+        <param-value>
+            /WEB-INF/action-servlet.xml
+            /WEB-INF/spring-security.xml
+        </param-value>
     </context-param>
     <listener>
-        <!--&lt;!&ndash;<listener-class>&ndash;&gt;-->
-        <!--&lt;!&ndash;org.springframework.web.context.ContextLoaderListener&ndash;&gt;-->
-        <!--&lt;!&ndash;</listener-class>&ndash;&gt;-->
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <listener>
         <listener-class>
             org.JavaArt.TicketManager.service.ThreadService
         </listener-class>
     </listener>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 </web-app>

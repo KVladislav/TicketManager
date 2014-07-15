@@ -34,4 +34,7 @@ public class EventService {
     public void updateEvent(Event event) {
         eventRepository.updateEvent(event);
     }
+    public List<Event> getFutureBookableEvents() {
+        return eventRepository.getFutureBookableEvents();
+    }
 }

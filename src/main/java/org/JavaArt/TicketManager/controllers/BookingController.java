@@ -33,8 +33,6 @@ public class BookingController {
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
 
-    //TODO сделать тред удаления сгоревшей брони
-    //TODO сделать проверку при бронировании не вышла ли дата
     //TODO авторизация
 
 
@@ -204,7 +202,7 @@ public class BookingController {
 
         List<Event> events;
         Event event = (Event) model.asMap().get("bookingEvent");
-        events = eventService.getFutureEvents();
+        events = eventService.getFutureBookableEvents();
         if (events == null || events.size() == 0) {
             return "redirect:/Booking/GetClient.do";
         }

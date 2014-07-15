@@ -14,12 +14,12 @@
     <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
 </head>
-<body>
+<body onload='document.searchForm.clientName.focus();'>
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-10 column col-md-offset-1">
             <form class="form-inline" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do"
-                  method="post">
+                  method="post" name="searchForm">
                 <div class="form-group">
                     <input class="form-control " id="appendedInputButtons" size="111" type="text" name="clientName"
                            required placeholder="Введите ФИО клиента" value="${client.name}">

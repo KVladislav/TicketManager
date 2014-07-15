@@ -22,6 +22,7 @@ public interface EventRepository {
     public Event getEventById(int id);
 
     public List<Event> getFutureEvents();
+    public List<Event> getFutureBookableEvents();
 
     public List<Event> getAllEvents();
 //    public void deleteEvent(Event event);
