@@ -17,7 +17,7 @@
                 password-parameter="password" />
         <!--<logout logout-success-url="/login.do?logout" />-->
         <!-- enable csrf protection -->
-        <csrf/>
+        <!--<csrf/>-->
     </http>
 
     <authentication-manager>
