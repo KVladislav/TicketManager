@@ -29,15 +29,15 @@
         <br>
         <label>Логин*</label>
         <div>
-            <input type="text" name="login" size=20 maxlength=10 required pattern="^[a-zA-Z0-9]+$"
-                   title="Логин должен состоять из латинских букв и цифр."
+            <input type="text" name="login" size=20 maxlength=10 required pattern="^[a-zA-Z0-9]{3,}$"
+                   title="Логин должен состоять из латинских букв и цифр от 3 до 10 символов."
                    style="text-align:center" value="${operator.login}">
         </div>
         <br>
         <label>Старый пароль*</label>
         <div>
-            <input type="password" name="password" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]+$"
-                   title="Пароль должен состоять из латинских букв и цифр."
+            <input type="password" name="password" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]{6,}$"
+                   title="Пароль должен состоять из латинских букв и цифр от 6 до 10 символов."
                    style="text-align:center" required placeholder="Обязательное поле">
         </div>
         <br>

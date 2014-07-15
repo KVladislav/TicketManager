@@ -59,10 +59,6 @@ public class OperatorsController {
                                    @RequestParam("passwordNew") String passwordNew,
                                    @RequestParam("passwordNewRepeat") String passwordNewRepeat,
                                    @RequestParam("description") String description, Model model) {
-        if (login.length()<3){
-            model.addAttribute("error", "Измените логин: минимум 3 символа. ");
-            return "EditOperator";
-        }
         Operator operator = operatorService.getOperatorById(id);
         if (!password.equals(operator.getPassword())) {
             model.addAttribute("error", "Пароль введён неверно. Повторите попытку.");
@@ -103,14 +99,6 @@ public class OperatorsController {
                               @RequestParam("passwordRepeat") String passwordRepeat,
                               @RequestParam("description") String description,
                               Model model) {
-        if (login.length()<3){
-            model.addAttribute("error", "Измените логин: минимум 3 символа. ");
-            return "NewOperator";
-        }
-        if (password.length()<6){
-            model.addAttribute("error", "Измените пароль: минимум 6 символов. ");
-            return "NewOperator";
-        }
         if (!password.equals(passwordRepeat)) {
             model.addAttribute("error", "Повторите ввод пароля.");
             return "NewOperator";
