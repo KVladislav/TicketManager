@@ -17,31 +17,31 @@
     <center>
      <form action="${pageContext.request.contextPath}/NewOperator/OperatorsAdd.do" method="post">
          <div>
-               <input  type="text" name="name" required pattern="^[a-zA-Z]+$" title="Буквы без пробелов"
-                   style="text-align:center" required placeholder="Имя" >
+              <input  type="text" name="name" size=20 maxlength=12 required pattern="^[a-zA-Z]+$"
+                       title="Буквы без пробелов." style="text-align:center" required placeholder="Имя" >
          </div>
          <br>
          <div>
-             <input type="text" name="surname" required pattern="^[a-zA-Z]+$" title="Буквы без пробелов"
-                    maxlength="15" style="text-align:center" required placeholder="Фамилия" >
+              <input type="text" name="surname" size=20 maxlength=15 required pattern="^[a-zA-Z]+$"
+                    title="Буквы без пробелов" style="text-align:center" required placeholder="Фамилия" >
          </div>
          <br>
          <div>
-             <input type="text" name="login" required pattern="^[a-zA-Z0-9]+$"
-                    title="Буквы и цифры без пробелов."
+              <input type="text" name="login" size=20 maxlength=10 required pattern="^[a-zA-Z0-9]+$"
+                    title="Логин должен состоять из латинских символов и цифр."
                     style="text-align:center" required placeholder="Логин">
          </div>
          <br>
          <div>
-             <input type="password" name="password"  required pattern="^[a-zA-Z0-9]+$"
-                    title="Буквы и цифры без пробелов."
-                    style="text-align:center" required placeholder="Пароль" >
+             <input type="password" name="password" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]+$"
+                    title="Пароль должен состоять из латинских символов и цифр."
+                    style="text-align:center" required placeholder="Пароль">
          </div>
          <br>
          <div>
-             <input type="password" name="password1"  required pattern="^[a-zA-Z0-9]+$"
-                    title="Буквы и цифры без пробелов."
-                    style="text-align:center" required placeholder="Повторите пароль" >
+             <input type="password" name="password1" size=20 maxlength=15 required pattern="^[a-zA-Z0-9]+$"
+                    title="Пароль должен состоять из латинских символов и цифр."
+                    style="text-align:center" required placeholder="Повторите пароль">
          </div>
          <br>
          <div class="control-group">
