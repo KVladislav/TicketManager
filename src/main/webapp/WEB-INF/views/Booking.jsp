@@ -152,10 +152,15 @@
             </div>
             <div class="row clearfix">
                 <div class="col-md-4 column">
+                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Осталось до отмены заказа">
                     <div class="progress">
                         <div class="progress-bar progress-bar-danger" id="progress" role="progressbar">
                         </div>
                     </div>
+                        </a>
+                    <script>
+                        $("a.my-tool-tip").tooltip();
+                    </script>
                 </div>
                 <div class="col-md-4 column">
                     <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
@@ -172,7 +177,7 @@
         <div class="col-md-3 column col-md-offset-2">
             <table class="table table-hover table-condensed">
                 <caption>
-                    <h3><code>Легенда</code></h3>
+                    <h3><code>Сектора по ценам</code></h3>
                 </caption>
                 <thead>
                 </thead>

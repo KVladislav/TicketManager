@@ -82,7 +82,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             sectorDefaults = session.createCriteria(SectorDefaults.class).
                     add(Restrictions.eq("isDeleted", false)).
-                    addOrder(Order.asc("id")).list();
+                    addOrder(Order.asc("sectorName")).list();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

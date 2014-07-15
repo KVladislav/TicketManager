@@ -20,6 +20,7 @@
         });
     </script>
 
+
     <script type='text/javascript'>//<![CDATA[
     window.onload = function () {
         function countdown(callback) {
@@ -94,7 +95,7 @@
                         <tr>
                             <th colspan="3">Мероприятие</th>
                             <th colspan="2">Дата</th>
-                            <th colspan="1">Отмена за</th>
+                            <th colspan="1">Отмена</th>
                             <th colspan="1">Сектор</th>
                             <th colspan="1">Ряд</th>
                             <th colspan="1">Место</th>
@@ -108,10 +109,13 @@
                               method="post">
                             <c:forEach items="${bookingTickets}" var="ticket">
 
-                                <c:if test="${ticket.confirmed==false}"><tr class="danger"></c:if>
-                                <c:if test="${ticket.confirmed==true}"><tr></c:if>
-
+                                <tr>
                                 <td colspan="3">
+                                    <c:if test="${ticket.confirmed==false}"><a data-toggle="tooltip" class="my-tool-tip" data-placement="left" title="Не подтвержден"><i class="glyphicon glyphicon-unchecked"></i></a>  </c:if>
+                                    <c:if test="${ticket.confirmed==true}"><a data-toggle="tooltip" class="my-tool-tip" data-placement="left" title="Подтвержден"><i class="glyphicon glyphicon-check"></i></a> </c:if>
+
+
+
                                     <small>${ticket.sector.event.description}</small>
                                 </td>
                                 <td colspan="2">
@@ -152,17 +156,23 @@
                                 <strong>Стоимость заказа ${bookingPrice}</strong>
                             </td>
                             <td colspan="7">
+                                <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Осталось до отмены заказа">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-danger" id="progress" role="progressbar">
                                     </div>
                                 </div>
+                                    </a>
+
+                                <script>
+                                    $("a.my-tool-tip").tooltip();
+                                </script>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
                                 <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do" method="post">
-                                    <input type="submit" name="Order" class="btn btn-primary btn-sm"
+                                    <input type="submit" name="Order" class="btn btn-danger btn-sm"
                                            value="Отмена брони">
                                 </form>
                             </td>
@@ -189,7 +199,7 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/Booking/BookingPayment.do"
                                       method="post">
-                                    <input type="submit" name="Order" class="btn btn-primary btn-sm"
+                                    <input type="submit" name="Order" class="btn btn-primary btn-lg"
                                            value="Выкуп брони">
                                 </form>
                             </td>

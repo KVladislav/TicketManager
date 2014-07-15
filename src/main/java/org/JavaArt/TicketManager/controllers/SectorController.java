@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +25,18 @@ public class SectorController {
 
 
     @RequestMapping(value = "Sectors/ViewSectors.do", method = RequestMethod.GET)
-    public String sectorsInit(Model model, SessionStatus sessionStatus) {
+    public String sectorsInit(Model model) {
 //        sessionStatus.setComplete();
         model.addAttribute("pageName", 7);//set menu page number
         List<SectorDefaults> sectorDefaultsList = sectorDefaultsService.getAllSectorDefaults();
+        if (sectorDefaultsList.size() == 0) {
+            SectorDefaults sectorDefaults = new SectorDefaults();
+            sectorDefaults.setSectorName("1");
+            sectorDefaultsList = new ArrayList<>();
+            sectorDefaultsList.add(sectorDefaults);
+            sectorDefaultsService.addSectorDefaults(sectorDefaults);
+        }
+
         model.addAttribute("sectorDefaultsList", sectorDefaultsList);
         return "SectorDefaults";
     }
@@ -46,17 +53,10 @@ public class SectorController {
 
 
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
-        if (sectorDefaultsList == null) {
-            SectorDefaults sectorDefaults = new SectorDefaults();
-            sectorDefaults.setSectorName("1");
-            sectorDefaultsList = new ArrayList<>();
-            sectorDefaultsList.add(sectorDefaults);
-            sectorDefaultsService.addSectorDefaults(sectorDefaults);
-        }
 
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
             if (sectorDefaults.getId() == sectorDefaultsId) {
-                if (action.equals("delete")) {
+                if (action.equals("delete") && sectorDefaultsList.size()>1) {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);
                     sectorDefaultsList.remove(sectorDefaults);
                     break;
@@ -80,10 +80,9 @@ public class SectorController {
                     sectorDefaultsService.updateSectorDefaults(sectorDefaults);
                     break;
                 }
-
-                if (action.equals("clone")) {
+                if (action.equals("clone") && sectorDefaultsService.getSectorDefaultsByName(sectorName + " копия")==null) {
                     SectorDefaults sectorDefaultsClone = new SectorDefaults();
-                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName() + "_");
+                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName() + " копия");
                     sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
                     sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
                     sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());
