@@ -302,4 +302,28 @@ public class TicketRepositoryImpl implements TicketRepository {
         }
 
     }
+    @Override
+    public void deleteExpiredBookedTickets(){
+        Session session = null;
+        Date dateNow = new Date();
+
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+//            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT distinct client FROM Ticket AS ticket LEFT JOIN ticket.client AS client) AND client.timeStamp <= :endDate");
+//            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT distinct ticket.client FROM Ticket AS ticket) AND client.timeStamp <= :endDate");
+            Query query = session.createQuery("UPDATE FROM Ticket AS ticket set ticket.isDeleted=true WHERE ticket.sector in (select sector from Sector as sector where sector.event in (select event FROM Event as event WHERE event.bookingTimeOut <= :dateNow)) and ticket.isConfirmed=true and ticket.isReserved=true and ticket.isDeleted = false");
+            query.setTimestamp("dateNow", dateNow);
+            System.out.println("delete " + query.executeUpdate() + " expired booked ticket(s)");
+            tx.commit();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
 }

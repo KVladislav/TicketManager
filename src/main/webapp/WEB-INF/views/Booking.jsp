@@ -153,7 +153,7 @@
             <div class="row clearfix">
                 <div class="col-md-4 column">
                     <div class="progress">
-                        <div class="bar" id="progress">
+                        <div class="progress-bar progress-bar-danger" id="progress" role="progressbar">
                         </div>
                     </div>
                 </div>
@@ -169,10 +169,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 column col-lg-offset-2">
+        <div class="col-md-3 column col-md-offset-2">
             <table class="table table-hover table-condensed">
                 <caption>
-                    <h3><code>Сектора по ценам</code></h3>
+                    <h3><code>Легенда</code></h3>
                 </caption>
                 <thead>
                 </thead>

@@ -2,7 +2,6 @@ package org.JavaArt.TicketManager.bootstrap;
 
 import org.JavaArt.TicketManager.DAO.*;
 import org.JavaArt.TicketManager.DAO.impl.*;
-import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 
 /**
@@ -24,20 +23,30 @@ public class Starter {
 //        event.setDate(new Date());
 //        event.setDescription("Черноморец - Шахтер");
 //        eventRepository.addEvent(event);
-//        Sector sector=null;
+//        Sector sector;
 //        for (int i = 1; i < 28; i++) {
 //            sector = new Sector();
 //            sector.setEvent(event);
-//            sector.setName(""+i);
+//            sector.setName("" + i);
 //            sector.setMaxRows(20);
 //            sector.setMaxSeats(50);
-//            sector.setPrice((double)(50 + (int)(Math.random() * 151)));
+//            sector.setPrice((double) (50 + (int) (Math.random() * 151)));
 //            sectorRepository.addSector(sector);
+//        }
+//
+//        SectorDefaults sectorDefaults = new SectorDefaults();
+//        sectorDefaults.setSectorName("1");
+//        sectorDefaultsRepository.addSectorDefaults(sectorDefaults);
 
-        SectorDefaults sectorDefaults = new SectorDefaults();
-        sectorDefaults.setSectorName("3");
-        sectorDefaultsRepository.addSectorDefaults(sectorDefaults);
+
+
+//        Ticket ticket = new Ticket();
+//        ticket.setReserved(true);
+//        ticket.setDeleted(false);
+//        ticket.setConfirmed(true);
+        ticketRepository.deleteExpiredBookedTickets();
         HibernateUtil.shutdown();
+
 
     }
 }

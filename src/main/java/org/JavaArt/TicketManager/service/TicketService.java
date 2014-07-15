@@ -27,6 +27,10 @@ public class TicketService {
         return ticketService;
     }
 
+    public void deleteExpiredBookedTickets() {
+        ticketRepository.deleteExpiredBookedTickets();
+    }
+
     public int getTicketsAmountByClient(Client client) {
         return ticketRepository.getTicketsAmountByClient(client);
 

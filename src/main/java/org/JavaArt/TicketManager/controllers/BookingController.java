@@ -33,8 +33,8 @@ public class BookingController {
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
 
-    //TODO добавить столбец сгорания брони
     //TODO сделать тред удаления сгоревшей брони
+    //TODO сделать проверку при бронировании не вышла ли дата
     //TODO авторизация
 
 

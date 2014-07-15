@@ -5,6 +5,7 @@ import org.JavaArt.TicketManager.DAO.impl.EventRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Event;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,5 +34,10 @@ public class EventService {
 
     public void updateEvent(Event event) {
         eventRepository.updateEvent(event);
+    }
+
+    public Event getEventByDate(Date date) {
+        Event event = eventRepository.getEventByDate(date);
+        return event;
     }
 }

@@ -4,39 +4,33 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 @Table(name = "sectordefaults")
-public class SectorDefaults {
+public class SectorDefaults implements Comparable<SectorDefaults> {
+    @JoinColumn(name = "operator_id")
+    @ManyToOne
+    Operator operator;
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
     private int id;
-
     @NotEmpty
     @Column(name = "SectorName", nullable = false)
     private String sectorName;
-
     @Column(name = "MaxRows")
     private int maxRows;
-
     @Column(name = "MaxSeats")
     private int maxSeats;
-
     @Column(name = "defaultPrice")
     private double defaultPrice;
-
     @Column(name = "isDeleted")
     private boolean isDeleted;
-
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
-
-    @JoinColumn(name = "operator_id")
-    @ManyToOne
-    Operator operator;
 
     public boolean isDeleted() {
         return isDeleted;
@@ -102,4 +96,21 @@ public class SectorDefaults {
         this.defaultPrice = defaultPrice;
     }
 
+    @Override
+    @NotNull
+    public int compareTo(SectorDefaults sector) {
+        String compareSectorDefaults = ((SectorDefaults) sector).sectorName;
+        try {
+            //ascending order
+            return
+                    Integer.parseInt(this.sectorName) - Integer.parseInt(compareSectorDefaults);
+        } catch (Exception e) {
+
+            //descending order
+            //return compareQuantity - this.quantity;
+
+            return this.sectorName.compareTo(compareSectorDefaults);
+
+        }
+    }
 }

@@ -34,7 +34,8 @@
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading" style="text-align:center;"><b>
-    <a href="/NewEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового мероприятия</a>
+    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового
+        мероприятия</a>
 </b></div>
 
 &MediumSpace;
@@ -57,7 +58,7 @@
                 <tr>
                     <td>${theCount.count}</td>
                     <td>${evnt.description}</td>
-                    <td><fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm:ss"/></td>
+                    <td><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm:ss"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
                             <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">

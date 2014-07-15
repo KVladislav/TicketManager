@@ -51,7 +51,7 @@
                                            placeholder="Мест" value="${sector.maxSeats}">
                                 </td>
                                 <td>
-                                    <input class="span2" size="16" type="number" name="defaultPrice" required
+                                    <input class="span2" size="16" type="text" name="defaultPrice" required
                                            placeholder="Цена" value="${sector.defaultPrice}">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">

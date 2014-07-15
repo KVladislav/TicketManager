@@ -49,7 +49,7 @@
 
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-6 column">
+        <div class="col-md-4 column">
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <form class="form" action="${pageContext.request.contextPath}/Booking/ClientSave.do"
@@ -58,7 +58,7 @@
                             <label class="control-label" for="clientName">ФИО</label>
 
                             <div class="controls">
-                                <input class="span6" id="clientName" type="text" name="clientName" required
+                                <input class="form-control" id="clientName" type="text" name="clientName" required
                                        value="${bookingClient.name}">
                             </div>
                         </div>
@@ -68,7 +68,7 @@
 
                             <div class="controls">
 
-                                <textarea rows="3" class="span6" id="clientDescription" name="clientDescription"
+                                <textarea rows="3" class="form-control" id="clientDescription" name="clientDescription"
                                           placeholder="Описание">${bookingClient.description}</textarea> <br>
                                 <button class="btn btn-primary btn-sm" type="submit">Сохранить</button>
                             </div>
@@ -82,18 +82,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 column">
+        <div class="col-md-8 column">
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <table class="table table-hover table-condensed">
                         <caption>
                             <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                               pattern="d.MM.yyyy H:mm"/></code></h3>
+                                                               pattern="dd/MM/yy H:mm"/></code></h3>
                         </caption>
                         <thead>
                         <tr>
                             <th colspan="3">Мероприятие</th>
                             <th colspan="2">Дата</th>
+                            <th colspan="1">Отмена за</th>
                             <th colspan="1">Сектор</th>
                             <th colspan="1">Ряд</th>
                             <th colspan="1">Место</th>
@@ -107,7 +108,7 @@
                               method="post">
                             <c:forEach items="${bookingTickets}" var="ticket">
 
-                                <c:if test="${ticket.confirmed==false}"><tr class="error"></c:if>
+                                <c:if test="${ticket.confirmed==false}"><tr class="danger"></c:if>
                                 <c:if test="${ticket.confirmed==true}"><tr></c:if>
 
                                 <td colspan="3">
@@ -115,7 +116,14 @@
                                 </td>
                                 <td colspan="2">
                                     <small><fmt:formatDate value="${ticket.sector.event.date}"
-                                                           pattern="d.MM.yyyy H:mm"/></small>
+                                                           pattern="dd/MM/yy H:mm"/></small>
+                                </td>
+                                <td colspan="1">
+                                    <%--<jsp:useBean id="dateValue" class="java.util.Date" />--%>
+                                    <%--<jsp:setProperty name="dateValue" property="time" value="${ticket.sector.event.date.time-ticket.sector.event.bookingTimeOut*60000}" />--%>
+                                    <%--<small><fmt:formatDate value="${dateValue}" pattern="dd/MM/yy H:mm" /></p></small>--%>
+                                <small><fmt:formatDate value="${ticket.sector.event.bookingTimeOut}"
+                                                       pattern="dd/MM/yy H:mm"/></small>
                                 </td>
                                 <td>
                                     <small>${ticket.sector.name}</small>
@@ -144,8 +152,8 @@
                                 <strong>Стоимость заказа ${bookingPrice}</strong>
                             </td>
                             <td colspan="7">
-                                <div class="progress progress-danger">
-                                    <div class="bar" id="progress">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" id="progress" role="progressbar">
                                     </div>
                                 </div>
                             </td>

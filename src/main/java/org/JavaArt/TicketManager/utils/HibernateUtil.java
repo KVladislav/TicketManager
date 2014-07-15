@@ -37,6 +37,6 @@ public class HibernateUtil {
     @PreDestroy
     public static void shutdown() {
         getSessionFactory().close();
-        System.out.println("Perform ShutDown!!!");
+        System.out.println("Perform Hibernate ShutDown!!!");
     }
 }
