@@ -5,6 +5,7 @@ import org.JavaArt.TicketManager.DAO.impl.EventRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Event;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
