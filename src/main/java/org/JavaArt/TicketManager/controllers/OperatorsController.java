@@ -42,10 +42,11 @@ public class OperatorsController {
     }
 
     @RequestMapping(value = "EditOperator/OperatorsEditGet.do", method = RequestMethod.GET)
-    public String editOperatorGet(@RequestParam(value = "operatorId", required = true) int operatorId, Model model, SessionStatus status) {
+    public String editOperatorGet(@RequestParam(value = "operatorId", required = true) int operatorId, Model model) {
         model.addAttribute("pageName", 9);//set menu page number
         Operator operator = operatorService.getOperatorById(operatorId);
         model.addAttribute("operator", operator);
+        model.addAttribute("error", "");
         return "EditOperator";
     }
 
@@ -55,14 +56,40 @@ public class OperatorsController {
                                    @RequestParam("surname") String surname,
                                    @RequestParam("login") String login,
                                    @RequestParam("password") String password,
+                                   @RequestParam("passwordNew") String passwordNew,
+                                   @RequestParam("passwordNewRepeat") String passwordNewRepeat,
                                    @RequestParam("description") String description, Model model) {
-
+        if (login.length()<3){
+            model.addAttribute("error", "Измените логин: минимум 3 символа. ");
+            return "EditOperator";
+        }
         Operator operator = operatorService.getOperatorById(id);
+        if (!password.equals(operator.getPassword())) {
+            model.addAttribute("error", "Пароль введён неверно. Повторите попытку.");
+            return "EditOperator";
+        }
+        if (passwordNew.length()>0&&passwordNew.length()<6){
+            model.addAttribute("error", "Измените новый пароль: минимум 6 символов. ");
+            return "EditOperator";
+        }
+
+        if (passwordNew.length()>0&&!passwordNew.equals(passwordNewRepeat)) {
+            model.addAttribute("error", "Повторите ввод нового пароля.");
+            return "EditOperator";
+        }
+        if (passwordNew.length()>0) operator.setPassword(passwordNew);
+        else operator.setPassword(password);
         operator.setName(name);
         operator.setSurname(surname);
         operator.setLogin(login);
-        operator.setPassword(password);
         operator.setDescription(description);
+        List<Operator> operators = operatorService.getAllOperators();
+        for (Operator oper: operators){
+            if (oper.getLogin().equals(operator.getLogin())&&!oper.getId().equals(operator.getId())){
+                model.addAttribute("error", "Такой логин занят. Введите другой логин.");
+                return "EditOperator";
+            }
+        }
         operatorService.editOperator(operator);
         return "redirect:/Operators/Operators.do";
     }
@@ -73,7 +100,7 @@ public class OperatorsController {
                               @RequestParam("surname") String surname,
                               @RequestParam("login") String login,
                               @RequestParam("password") String password,
-                              @RequestParam("password1") String password1,
+                              @RequestParam("passwordRepeat") String passwordRepeat,
                               @RequestParam("description") String description,
                               Model model) {
         if (login.length()<3){
@@ -84,7 +111,7 @@ public class OperatorsController {
             model.addAttribute("error", "Измените пароль: минимум 6 символов. ");
             return "NewOperator";
         }
-        if (!password.equals(password1)) {
+        if (!password.equals(passwordRepeat)) {
             model.addAttribute("error", "Повторите ввод пароля.");
             return "NewOperator";
         }
@@ -96,20 +123,12 @@ public class OperatorsController {
         operator.setDescription(description);
         List<Operator> operators = operatorService.getAllOperators();
         for (Operator oper: operators){
-            if (oper.getName().equals(operator.getName())&&oper.getSurname().equals(operator.getSurname())){
-                model.addAttribute("error", "Оператор с таким именем и фамилией уже существует.");
-                operator=null;
-                return "NewOperator";
-            }
             if (oper.getLogin().equals(operator.getLogin())){
-                model.addAttribute("error", "Такой логин занят. Введите другой лигин.");
-                operator=null;
+                model.addAttribute("error", "Такой логин занят. Введите другой логин.");
                 return "NewOperator";
             }
         }
         operatorService.addOperator(operator);
         return "redirect:/Operators/Operators.do";
     }
-
-
 }
