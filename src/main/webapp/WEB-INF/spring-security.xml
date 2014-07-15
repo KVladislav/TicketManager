@@ -8,7 +8,8 @@
 
 <http pattern="/css/**" security="none" />
     <http auto-config="true">
-        <intercept-url pattern="/secure/**" access="ROLE_USER" />
+        <intercept-url pattern="/secure/**" />
+        <access-denied-handler error-page="/login.do" />
         <form-login
                 login-page="/login.do"
                 default-target-url="/"
