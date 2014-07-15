@@ -34,6 +34,11 @@ public class EventService {
     public void updateEvent(Event event) {
         eventRepository.updateEvent(event);
     }
+
+    public Event getEventByDate(Date date) {
+        Event event = eventRepository.getEventByDate(date);
+        return event;
+    }
     public List<Event> getFutureBookableEvents() {
         return eventRepository.getFutureBookableEvents();
     }

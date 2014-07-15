@@ -12,34 +12,15 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
-    <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
-          type="text/css">
-    <script type="text/javascript"
-            src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.js" />'></script>
-    <script type="text/javascript"
-            src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>
-
-
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
-            type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#my-select').multiSelect()
-        });
-    </script>
-
 </head>
 
-&MediumSpace;
-&MediumSpace;
+<br><br>
 <div class="panel-heading" style="text-align:center;"><b>
-    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создать нового оператора</a>
+    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Добавить нового оператора</a>
 </b></div>
 
-&MediumSpace;
-&MediumSpace;
-<div class="panel-heading" style="text-align:center;"><b>Список операторов</b></div>
+<br>
+<h4><div class="panel-heading" style="text-align:center;"><b>Список операторов</b></div></h4>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
     <div class="table responsive">
         <table class="table table-bordered">
@@ -77,8 +58,4 @@
             </tbody>
         </table>
     </div>
-
-    &MediumSpace;
-    &MediumSpace;
-
 </div>

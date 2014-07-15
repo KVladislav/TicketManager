@@ -4,9 +4,11 @@ package org.JavaArt.TicketManager.entities;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+
 
 @Entity
 @Table(name = "operator")
@@ -34,15 +36,11 @@ public class Operator {
     @Column(name="description", length = 500)
     private String description;
 
-    @Size(min=3, max=10,
-            message="login must be between 3 and 10 characters long.")
-    @Pattern(regexp="^[a-zA-Z0-9]+$",
-            message="login must be alphanumeric with no spaces")
+    @NotEmpty
     @Column(name="login")
     private String login;
 
-    @Size(min=6, max=16,
-            message="The password must be at least 6 characters long.")
+    @NotEmpty
     @Column(name="password", nullable = false)
     private String password;
 

@@ -18,6 +18,7 @@ public class RefundController {
 
     @RequestMapping(value = "Refund/Refund.do", method = RequestMethod.GET)
     public String refundRefund(Model model) {
+        ticket=null;
         model.addAttribute("pageName", 3);
         model.addAttribute("error", "");
         model.addAttribute("message", "");
@@ -38,7 +39,6 @@ public class RefundController {
                 ticket=null;
                 model.addAttribute("error", "Такой билет не продан");
             }
-
         }
         catch (Exception e){
             ticket=null;

@@ -269,7 +269,7 @@
     <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони </label>
 
     <div class="my-controls">
-        <input type="text" id="timeRemoveBooking" name="timeRemoveBooking" value="${eventBookingTimeOut}"
+        <input type="text" id="timeRemoveBooking" maxlength="50" name="timeRemoveBooking" value="${eventBookingTimeOut}"
                required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
         <img src="${pageContext.request.contextPath}/resources/img/Question.png"
              alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
@@ -293,14 +293,14 @@
 
                 <tr>
                     <td>
-                        <input type="text" name="name${sector.name}" required placeholder="Сектор"
+                        <input type="text" readonly name="name${sector.name}" required placeholder="Сектор"
                                value="${sector.name}">
                     </td>
                     <td>
 
                         <div>
-                            <input type="text" required pattern="^\d+\.\d{0,2}$"
-                                   title="только double числа с точкой и от нуля до двух знаков после запятой"
+                            <input type="text" maxlength="50" required pattern="^\d+\.{0,1}\d{0,2}$"
+                                   title="только числа до двух знаков после запятой"
                                    name="id${sector.id}" placeholder="Цена" value="${sector.price}">
                         </div>
                     </td>
