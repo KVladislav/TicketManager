@@ -38,7 +38,7 @@ public class BookingController {
 
     @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
     public String bookingPaymentInit(Model model, SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
+        //sessionStatus.setComplete();
         model.addAttribute("pageName", 2);//set menu page number
         return "Clients";
     }
