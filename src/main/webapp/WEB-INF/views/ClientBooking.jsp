@@ -39,7 +39,7 @@
         }
 
         countdown(function () {
-            alert('Заказ отменен');
+            alert('Изменения отменены');
             window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
         });
     }//]]>
@@ -59,7 +59,8 @@
                             <label class="control-label" for="clientName">ФИО</label>
 
                             <div class="controls">
-                                <input class="form-control" maxlength="50" id="clientName" type="text" name="clientName" required
+                                <input class="form-control" maxlength="50" id="clientName" type="text" name="clientName"
+                                       required
                                        value="${bookingClient.name}"
                                        pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,49}"
                                        title="Не пустое, не начинатся с пробела, до 30 знаков">
@@ -71,7 +72,8 @@
 
                             <div class="controls">
 
-                                <textarea style="resize:none" rows="3" class="form-control" id="clientDescription" name="clientDescription"
+                                <textarea style="resize:none" rows="3" class="form-control" id="clientDescription"
+                                          name="clientDescription"
                                           placeholder="Описание">${bookingClient.description}</textarea> <br>
                                 <button class="btn btn-primary btn-sm" type="submit">Сохранить</button>
                             </div>
@@ -79,11 +81,19 @@
                     </form>
                 </div>
             </div>
-            <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <div class="has-error">${bookingErrorMessage}</div>
-                </div>
-            </div>
+            <%--<div class="row clearfix">--%>
+                <%--<div class="col-md-12 column">--%>
+                    <%--<c:if test="${bookingErrorMessage != null}">--%>
+                        <%--<div class="alert alert-warning alert-dismissible" role="alert">--%>
+                            <%--<button type="button" class="close" data-dismiss="alert"><span--%>
+                                    <%--aria-hidden="true">&times;</span><span--%>
+                                    <%--class="sr-only">Close</span></button>--%>
+                            <%--<strong>${bookingErrorMessage}</strong>--%>
+                        <%--</div>--%>
+                    <%--</c:if>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+
         </div>
         <div class="col-md-8 column">
             <div class="row clearfix">
@@ -95,7 +105,8 @@
                         </caption>
                         <thead>
                         <tr>
-                            <th colspan="3">Мероприятие</th>
+                            <th>#</th>
+                            <th colspan="2">Мероприятие</th>
                             <th colspan="1">Статус</th>
                             <th colspan="1">Дата</th>
                             <th colspan="1">Отмена</th>
@@ -108,16 +119,20 @@
                         </thead>
 
                         <tbody>
-                        <form name="delTicket" action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
+                        <form name="delTicket"
+                              action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
                               method="post">
+                            <c:set var="number" value="1"/>
                             <c:forEach items="${bookingTickets}" var="ticket">
                                 <tr>
-                                    <td colspan="3">
+                                    <td>${number}</td>
+                                    <c:set var="number" value="${number+1}"/>
+                                    <td colspan="2">
                                         <small>${ticket.sector.event.description}</small>
                                     </td>
                                     <td>
                                         <c:if test="${ticket.confirmed==false}">
-                                            <span class="label label-danger">Не подтвержден</span>
+                                            <span class="label label-warning">Не подтвержден</span>
                                         </c:if>
                                         <c:if test="${ticket.confirmed==true}">
                                             <small>Забронирован</small>
@@ -152,6 +167,44 @@
                                 </tr>
                             </c:forEach>
                         </form>
+
+                        <c:forEach items="${bookingErrorTickets}" var="ticket">
+                            <tr class="alert-warning">
+                                <td><span class="glyphicon glyphicon-warning-sign"></span></td>
+                                <td colspan="2">
+                                    <small>${ticket.sector.event.description}</small>
+                                </td>
+                                <td>
+                                    <span class="label label-danger">УЖЕ ПРОДАН</span>
+                                </td>
+                                <td colspan="1">
+                                    <small><fmt:formatDate value="${ticket.sector.event.date}"
+                                                           pattern="dd.MM.yy H:mm"/></small>
+                                </td>
+                                <td colspan="1">
+                                    <small><fmt:formatDate value="${ticket.sector.event.bookingTimeOut}"
+                                                           pattern="dd.MM.yy H:mm"/></small>
+                                </td>
+                                <td>
+                                    <small>${ticket.sector.name}</small>
+                                </td>
+                                <td>
+                                    <small>${ticket.row}</small>
+                                </td>
+                                <td>
+                                    <small>${ticket.seat}</small>
+                                </td>
+                                <td>
+                                    <small>${ticket.sector.price}</small>
+                                </td>
+
+                                <td>
+
+                                </td>
+                            </tr>
+                        </c:forEach>
+
+
                         <tr>
                             <td colspan="3">
                                 <strong>Стоимость заказа ${bookingPrice}</strong>

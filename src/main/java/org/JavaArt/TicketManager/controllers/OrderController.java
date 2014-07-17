@@ -188,6 +188,7 @@ public class OrderController {
             order.add(ticket);
             orderPrice += sector.getPrice();
         }
+        model.addAttribute("seat", currentSeat);
         if (seat.length==1) model.addAttribute("message", "Билет добавлен в заказ");
         if (seat.length>1) model.addAttribute("message", "Билеты добавлены в заказ");
         return "redirect:/Order/Order.do";
@@ -263,10 +264,18 @@ public class OrderController {
             }
         }
         StringBuilder idBuy = new StringBuilder(200);
-        for (Ticket ticket : order){
-            ticket.setConfirmed(true);
-            idBuy.append(ticket.getId()).append("  ");
-            ticketService.addTicket(ticket);
+        for (Ticket ticket : order) {
+            if (ticketService.getTicketById(ticket.getId()).isConfirmed()) {
+                model.addAttribute("error", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
+                order.remove(ticket);
+                orderPrice -= ticket.getSector().getPrice();
+                return "redirect:/Order/Order.do";
+            }
+        }
+        for (Ticket ticket : order) {
+             ticket.setConfirmed(true);
+             idBuy.append(ticket.getId()).append("  ");
+             ticketService.addTicket(ticket);
         }
         if (order.size()==1) model.addAttribute("message", "Билет ID = "+ idBuy +" из заказа куплен");
         if (order.size()>1) model.addAttribute("message", "Билеты ID = "+ idBuy +" из заказа куплены");

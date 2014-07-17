@@ -16,15 +16,15 @@
         <property name="hibernate.connection.characterEncoding">utf8</property>
 
 
-    <!--   <property name="connection.driver_class">org.postgresql.Driver</property>
+       <!--<property name="connection.driver_class">org.postgresql.Driver</property>
        <property name="connection.url">jdbc:postgresql://localhost:5432/Tickets</property>
        <property name="databasename">Tickets</property>
        <property name="connection.username">postgres</property>
        <property name="connection.password">1111</property>
        <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
        <property name="connection.schemaname">public</property>
-       <property name="hibernate.connection.characterEncoding">utf8</property>-->
-
+       <property name="hibernate.connection.characterEncoding">utf8</property>
+-->
 
 
         <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
@@ -38,7 +38,7 @@
         <!--<property name="hibernate.connection.characterEncoding">utf8</property>-->
 
 
-        <property name="connection.pool_size">10</property>
+        <property name="connection.pool_size">2</property>
         <property name="hibernate.connection.autocommit">false</property>
         <property name="current_session_context_class">thread</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
