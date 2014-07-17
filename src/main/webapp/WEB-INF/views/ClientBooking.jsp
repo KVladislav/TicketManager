@@ -40,7 +40,7 @@
 
         countdown(function () {
             alert('Заказ отменен');
-            window.location.replace("${pageContext.request.contextPath}/Booking/CancelOrder.do");
+            window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
         });
     }//]]>
 
@@ -59,8 +59,10 @@
                             <label class="control-label" for="clientName">ФИО</label>
 
                             <div class="controls">
-                                <input class="form-control" id="clientName" type="text" name="clientName" required
-                                       value="${bookingClient.name}">
+                                <input class="form-control" maxlength="50" id="clientName" type="text" name="clientName" required
+                                       value="${bookingClient.name}"
+                                       pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,49}"
+                                       title="Не пустое, не начинатся с пробела, до 30 знаков">
                             </div>
                         </div>
 
@@ -172,6 +174,9 @@
                                         </div>
                                     </div>
                                 </a>
+                                <script>
+                                    $("a.my-tool-tip").tooltip();
+                                </script>
                             </c:if>
                         </div>
                     </div>
