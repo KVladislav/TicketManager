@@ -281,8 +281,6 @@ public class TicketRepositoryImpl implements TicketRepository {
                 if (!ticket.isConfirmed()) return 1; //в обработке
                 if (ticket.isReserved()) return 2; //в резерве
 
-
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

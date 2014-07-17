@@ -41,19 +41,19 @@
                    style="text-align:center" required placeholder="Обязательное поле">
         </div>
         <br>
-        <label>Новый пароль*</label>
+        <label>Новый пароль</label>
         <div>
-            <input type="password" name="passwordNew" size=34 maxlength=15
-                   style="text-align:center" placeholder="Обязательно при смене пароля">
+            <input type="password" name="passwordNew" size=38 maxlength=15
+                   style="text-align:center" placeholder="Обязательно при изменении пароля">
         </div>
         <br>
-        <label>Подтвердите новый пароль*</label>
+        <label>Подтвердите новый пароль</label>
         <div>
-            <input type="password" name="passwordNewRepeat" size=34 maxlength=15
-                   style="text-align:center" placeholder="Обязательно при смене пароля">
+            <input type="password" name="passwordNewRepeat" size=38 maxlength=15
+                   style="text-align:center" placeholder="Обязательно при изменении пароля">
         </div>
         <br>
-        <label>Дополнительная информация*</label>
+        <label>Дополнительная информация</label>
         <div>
             <input type="text" name="description" size=50 maxlength=50
                    style="text-align:center" value="${operator.description}">

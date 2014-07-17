@@ -9,11 +9,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Bootstrap -->
-    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" media="screen">--%>
-    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
-    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
-    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
 </head>
 <body>
 <div class="container">
@@ -36,23 +31,29 @@
                     <tbody>
                     <c:forEach items="${sectorDefaultsList}" var="sector">
                         <form name="sectorDefaults" action="${pageContext.request.contextPath}/Sectors/Modify.do"
-                              method="post">
+                              method="post" role="form">
                             <tr>
                                 <td colspan="2">
-                                    <input class="span2" size="16" type="text" name="sectorName" required
-                                           placeholder="Название сектора" value="${sector.sectorName}">
+                                    <input class="span2" size="16" maxlength="10" type="text" name="sectorName" required
+                                           placeholder="Название сектора" value="${sector.sectorName}"
+                                           pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
+                                           title="Не пустое, не начинатся с пробела, до 10 знаков">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" type="number" name="maxRows" required
-                                           placeholder="Рядов" value="${sector.maxRows}">
+                                    <input class="span1" size="16"  name="maxRows" required
+                                           placeholder="Рядов" value="${sector.maxRows}"
+                                           pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" type="number" name="maxSeats" required
-                                           placeholder="Мест" value="${sector.maxSeats}">
+                                    <input class="span1" size="16" name="maxSeats" required
+                                           placeholder="Мест" value="${sector.maxSeats}"
+                                           pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input class="span2" size="16" type="text" name="defaultPrice" required
-                                           placeholder="Цена" value="${sector.defaultPrice}">
+                                    <input class="span2" size="16" type="text" maxlength="8" name="defaultPrice" required
+                                           placeholder="Цена" value="${sector.defaultPrice}"
+                                           required pattern="[1-9][0-9]{0,4}\.{0,1}[0-9]{0,2}"
+                                           title="В интервале [1-99999] до двух знаков после запятой">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
                                     <button type="submit" name="action" value="save" class="btn btn-default btn-xs">
@@ -75,7 +76,6 @@
     </div>
     <div class="col-md-3 column"></div>
 </div>
-
-
+<%@include file="footer.jsp" %>
 </body>
 </html>

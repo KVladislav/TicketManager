@@ -49,7 +49,7 @@
                     style="text-align:center" required placeholder="Обязательное поле">
          </div>
          <br>
-         <label>Дополнительная информация*</label>
+         <label>Дополнительная информация</label>
          <div>
              <input type="text" name="description" size=40 maxlength=50
                     style="text-align:center">

@@ -42,8 +42,8 @@
         }
 
         countdown(function () {
-            alert('Заказ отменен');
-            window.location.replace("${pageContext.request.contextPath}/Booking/CancelOrder.do");
+            alert('Изменения отменены');
+            window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
         });
     }//]]>
 
@@ -133,7 +133,7 @@
                                     </option>
                                 </c:if>
                                 <c:if test="${seatEntry.value==2}">
-                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в резерве]
+                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [забронирован]
                                     </option>
                                 </c:if>
                                 <c:if test="${seatEntry.value==3}">
@@ -152,15 +152,18 @@
             </div>
             <div class="row clearfix">
                 <div class="col-md-4 column">
-                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Осталось до отмены заказа">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" id="progress" role="progressbar">
-                        </div>
-                    </div>
+                    <c:if test="${bookingTimeOut!=null}">
+                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                           title="Осталось до отмены заказа">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-danger" id="progress" role="progressbar">
+                                </div>
+                            </div>
                         </a>
-                    <script>
-                        $("a.my-tool-tip").tooltip();
-                    </script>
+                        <script>
+                            $("a.my-tool-tip").tooltip();
+                        </script>
+                    </c:if>
                 </div>
                 <div class="col-md-4 column">
                     <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
@@ -186,13 +189,13 @@
                 <c:forEach items="${sectorsGroupedMap}" var="mapEntry">
                     <tr style="background-color: #D1D1D1;">
                         <td>
-                                <strong>${mapEntry.key} грн:</strong>
+                            <strong>${mapEntry.key} грн:</strong>
                         </td>
                     </tr>
                     <c:forEach items="${mapEntry.value}" var="sortedSector">
                         <tr>
                             <td>
-                                    Сектор: ${sortedSector.name} свободно: ${bookingSectorsMap[sortedSector]}
+                                Сектор: ${sortedSector.name} свободно: ${bookingSectorsMap[sortedSector]}
                             </td>
                         </tr>
                     </c:forEach>
