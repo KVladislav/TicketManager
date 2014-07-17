@@ -128,7 +128,7 @@
                 <p><select multiple size="12" id="select" name="seat" class="form-control" name="select">
                     <c:forEach items="${seatsMap}" var="seatEntry">
                         <c:if test="${seat==seatEntry.key}">
-                            <c:if test="${seatEntry.value==1}">
+                            <c:if test="${seatEntry.value==3}">
                                 <option value="${seatEntry.key}" style="color:Red" selected >
                                 ${seatEntry.key}. (продан)</option>
                             </c:if>
@@ -136,29 +136,29 @@
                                 <option value="${seatEntry.key}" style="color:Red" selected >
                                         ${seatEntry.key}. (забронирован)</option>
                             </c:if>
-                            <c:if test="${seatEntry.value==4}">
+                            <c:if test="${seatEntry.value==1}">
                                 <option value="${seatEntry.key}" style="color:Blue" selected >${seatEntry.key}.
                                     (не утверждён)</option>
                             </c:if>
-                            <c:if test="${seatEntry.value==3}">
+                            <c:if test="${seatEntry.value==0}">
                                 <option value="${seatEntry.key} "onclick="this.form.submit()" style="color:Green"
                                        selected >${seatEntry.key}. (в продаже)</option>
                             </c:if>
                         </c:if>
 
                         <c:if test="${seat!=seatEntry.key}">
-                             <c:if test="${seatEntry.value==1}">
+                             <c:if test="${seatEntry.value==3}">
                                  <option value="${seatEntry.key}" style="color:Red">${seatEntry.key}. (продан)</option>
                              </c:if>
                              <c:if test="${seatEntry.value==2}">
                                  <option value="${seatEntry.key}" style="color:Red">
                                  ${seatEntry.key}. (забронирован)</option>
                              </c:if>
-                             <c:if test="${seatEntry.value==4}">
+                             <c:if test="${seatEntry.value==1}">
                                     <option value="${seatEntry.key}" style="color:Blue">${seatEntry.key}.
                                         (не утверждён)</option>
                              </c:if>
-                             <c:if test="${seatEntry.value==3}">
+                             <c:if test="${seatEntry.value==0}">
                                      <option value="${seatEntry.key} "onclick="this.form.submit()" style="color:Green">
                                      ${seatEntry.key}. (в продаже)</option>
                              </c:if>
@@ -172,7 +172,7 @@
            <h4 style="text-align:center; color:Blue">Выбранные билеты</h4>
             <table class="table text-center table-bordered">
                <thead>
-                   <th>№</th>
+                   <th>ID</th>
                    <th>Мероприятие</th>
                    <th>Дата</th>
                    <th>Сектор</th>
@@ -207,6 +207,7 @@
        <div class="col-md-7 col-lg-offset-3 ">
            <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
                <h5 style="text-align:center; color:Green">${message}</h5>
+               <h5 style="text-align:center; color:Blue">${error}</h5>
                <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
                <h4 style="text-align:center"><input type="submit" name="Order"
                                                     class="btn btn-primary btn-lg" value="Купить"></h4>
