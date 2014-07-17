@@ -17,9 +17,7 @@
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+
 
 </head>
 <body>
@@ -89,5 +87,7 @@
             </div>
         </div>
     </nav>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

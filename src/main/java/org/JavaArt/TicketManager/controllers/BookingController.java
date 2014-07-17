@@ -10,9 +10,11 @@ import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -23,7 +25,7 @@ import java.util.*;
  * Time: 18:06
  */
 @Controller
-@SessionAttributes({"bookingTime", "pageName", "bookingErrorMessage", "bookingTickets",
+@SessionAttributes({"pageName", "bookingErrorMessage", "bookingTickets",
         "bookingEvents", "bookingSectorsMap", "bookingRowsMap", "bookingSeatsMap",
         "bookingSector", "bookingEvent", "bookingPrice", "bookingRow", "bookingTimeOut", "bookingClient", "sectorsGroupedMap"})
 public class BookingController {
@@ -37,15 +39,16 @@ public class BookingController {
 
 
     @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
-    public String bookingPaymentInit(Model model, SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-        model.addAttribute("pageName", 2);//set menu page number
+    public String bookingPaymentInit(SessionStatus session, ModelMap model) {
+        session.setComplete();
+        model.addAttribute("pageName", 2);
         return "Clients";
     }
 
     @RequestMapping(value = "Booking/ProceedClientName.do", method = RequestMethod.POST)
-    public String bookingProceedClientName(Model model, @RequestParam(value = "clientName", required = true) String clientName,
+    public String bookingProceedClientName(HttpSession session, ModelMap model, @RequestParam(value = "clientName", required = true) String clientName,
                                            @RequestParam(value = "action", required = true) String action) {
+        model.addAttribute("pageName", 2);
         Map<Client, Integer[]> clients = new HashMap<>();
         if (action.equals("NewClient")) {
             Client client = new Client();
@@ -182,15 +185,30 @@ public class BookingController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Booking/CancelOrder.do")
-    public String bookingCancelOrder(SessionStatus sessionStatus, Model model) {
+    public String bookingCancelOrder(SessionStatus session, Model model) {
         List<Ticket> tickets = (List) model.asMap().get("bookingTickets");
         if (tickets != null) {
             ticketService.deleteTickets(tickets);
         }
         Client client = (Client) model.asMap().get("bookingClient");
         clientService.deleteClient(client);
-        sessionStatus.setComplete();
-        return "redirect:/Booking/GetClient.do";
+        session.setComplete();
+        return "Clients";
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "Booking/UndoOrder.do")
+    public String bookingUndoOrder(Model model, SessionStatus session) {
+        List<Ticket> tickets = (List) model.asMap().get("bookingTickets");
+        if (tickets != null) {
+            for (Ticket ticket : tickets) {
+                if(ticket!=null && !ticket.isConfirmed()) {
+                    ticketService.deleteTicket(ticket);
+                }
+            }
+        }
+        session.setComplete();
+        return "Clients";
     }
 
 
@@ -341,7 +359,6 @@ public class BookingController {
         }
 
         return "ClientBooking";
-//        return "Booking";
     }
 
     @SuppressWarnings("unchecked")
@@ -350,27 +367,5 @@ public class BookingController {
         return "ClientBooking";
     }
 
-//    @RequestMapping(value = "Booking/delTicket.do", method = RequestMethod.POST)
-//    public String bookingDelTicket(@RequestParam(value = "ticketId", required = true) int ticketId, Model
-//            model, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
-//        Ticket ticket = ticketService.getTicketById(ticketId);
-//        if (ticket != null) {
-//            ticketService.deleteTicket(ticket);
-//            for (Ticket tckt : tickets) {
-//                if (tckt.getId() == ticketId) {
-//                    tickets.remove(tckt);
-//                    break;
-//                }
-//            }
-//            if (model.asMap().get("bookingTimeOut") != null) {
-//                model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.asMap().get("bookingTimeOut")).getTime()) / 1000);
-//            }
-//
-//            double bookingPrice = (Double) model.asMap().get("bookingPrice");
-//            bookingPrice -= ticket.getSector().getPrice();
-//            model.addAttribute("bookingPrice", bookingPrice);
-//        }
-//        return "Booking";
-//    }
 
 }
