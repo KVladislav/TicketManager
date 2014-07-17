@@ -40,7 +40,9 @@
 
 &MediumSpace;
 &MediumSpace;
-<h1><div class="panel-heading" style="text-align:center;"><b>Список мероприятий</b></div></h1>
+<h1>
+    <div class="panel-heading" style="text-align:center;"><b>Список мероприятий</b></div>
+</h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
     <div class="table responsive">
         <table class="table table-bordered">
@@ -61,13 +63,12 @@
                     <td><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm:ss"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
-                            <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">
+                                <%--          <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}"> --%>
                             <button type="submit" name="evnt" value="${evnt.id}" class="btn">Редактировать</button>
                         </form>
                     </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
-                            <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}">
                             <button type="submit" name="evnt" value="${evnt.id}" class="btn">Удалить</button>
                         </form>
                     </td>

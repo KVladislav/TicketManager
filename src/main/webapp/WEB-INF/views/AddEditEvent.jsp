@@ -42,6 +42,63 @@
         });
     </script>
 
+    <script language="JavaScript">
+        <!--
+        // Пишем функцию, определяющую координаты
+        function defPosition(event) {
+            var x = y = 0;
+            if (document.attachEvent != null) { // Internet Explorer & Opera
+                x = window.event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+                y = window.event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+            } else if (!document.attachEvent && document.addEventListener) { // Gecko
+                x = event.clientX + window.scrollX;
+                y = event.clientY + window.scrollY;
+            } else {
+                // Do nothing
+            }
+            return {x: x, y: y};
+        }
+        // Простая проверка
+        // С помощью document.write выведем координаты прямо в окно браузера
+        // Они будут обновлять при движении мыши
+        document.onmousemove = function (event) {
+            var event = event || window.event;
+//document.getElementById('help').innerHTML = "x = " + defPosition(event).x + ", y = " + defPosition(event).y;
+
+//Здесь координаты присваиватся положению слоя относительно окна и к координате х плюсуется 15 пикселов, чтоб курсор не был на подсказке.
+            document.getElementById('help').style.left = defPosition(event).x + 15 + "px";
+            document.getElementById('help').style.top = defPosition(event).y + "px";
+        }
+
+        //Функция, которая делает видимым наш слой и вкладывает в него необходимый текст.
+        function helpBox(title, text) {
+//Вкладываем текст
+            document.getElementById('helpTitle').innerHTML = title;
+            document.getElementById('helpText').innerHTML = text;
+
+//Делаем видимым\невидимым
+            if (document.getElementById('help').style.display == 'none') {
+                document.getElementById('help').style.display = 'block';
+            } else {
+                document.getElementById('help').style.display = 'none';
+            }
+        }
+
+        // -->
+    </script>
+
+    <script language="JavaScript">
+        function ValidFormFields(frm) {
+            for (var i = 0; i < frm.elements.length; i++) {
+                if (document.frmAddArticle.elements[i].value == "") {
+                    alert('Не все поля заполнены!');
+                    return false;
+                }
+                return true;
+            }
+        }
+    </script>
+
 
     <title>
         <c:if test="${empty eventEdit.id}"> Создание нового мероприятия </c:if>
@@ -59,14 +116,16 @@
 </h1>&MediumSpace;&MediumSpace;
 <p class="alert-error">${eventErrorMessage}</p>
 
-<form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+<form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
+      onsubmit="return ValidFormFields(this)"></c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
     <div class="panel-heading" style="text-align:center;"><b> Редактирование мероприятия </b></div>
 </h1>&MediumSpace;&MediumSpace;
 <p class="alert-error">${errorMessageEdit}</p>
 
-<form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"></c:if>
+<form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
+      onsubmit="return ValidFormFields(this)"></c:if>
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
 
 <center>
@@ -183,26 +242,23 @@
                 <option value="17-00">17-00</option>
             </c:if>
             <c:if test="${eventTime.equals('17-30')}">
-                <option selected selected value="17-30">17-30</option>
+                <option selected value="17-30">17-30</option>
             </c:if>
             <c:if test="${!eventTime.equals('17-30')}">
                 <option value="17-30">17-30</option>
             </c:if>
-            <option value="18-00">18-00</option>
             <c:if test="${eventTime.equals('18-00')}">
                 <option selected value="18-00">18-00</option>
             </c:if>
             <c:if test="${!eventTime.equals('18-00')}">
                 <option value="18-00">18-00</option>
             </c:if>
-            <option value="18-00">18-30</option>
             <c:if test="${eventTime.equals('18-30')}">
                 <option selected value="18-30">18-30</option>
             </c:if>
             <c:if test="${!eventTime.equals('18-30')}">
                 <option value="18-30">18-30</option>
             </c:if>
-            <option value="19-00">19-00</option>
             <c:if test="${eventTime.equals('19-00')}">
                 <option selected value="19-00">19-00</option>
             </c:if>
@@ -260,8 +316,7 @@
     <label class="my-control-label" for="description"> Наименование </label>
 
     <div class="my-controls">
-        <textarea rows="5" id="description" maxlength="50" name="description" required pattern="^[a-z][A-Z]*$"
-                  title="Наименование не должно быть пустым - до 50 знаков!">${eventDescriptions.trim().replaceAll("\\u00A0", "")}</textarea>
+        <input type="text" id="description" maxlength="50" name="description" value="${eventDescriptions}"/>
     </div>
 </div>
 
@@ -269,11 +324,28 @@
     <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони </label>
 
     <div class="my-controls">
-        <input type="text" id="timeRemoveBooking" maxlength="50" name="timeRemoveBooking" value="${eventBookingTimeOut}"
+        <input type="text" id="timeRemoveBooking" maxlength="10" name="timeRemoveBooking" value="${eventBookingTimeOut}"
                required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+        <%--  <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+               alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
+               title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
+          <a class="thumbnail" href="#"><img src="${pageContext.request.contextPath}/resources/img/Question.png" width="100px" height="66px" border="0" />
+              <span>Поле позволяет установить время, по истечении которого бронь полностью снимается</span></a>  --%>
+
+        <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
+
+        <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">Поле
+            позволяет установить время, по истечении которого бронь полностью снимается</p>
+
+            <p id="helpText" class="helpText">Help text</p></div>
+
+        <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
+
         <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-             alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
-             title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
+             onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
+             onMouseOut="helpBox()">
+
+
     </div>
 </div>
 
@@ -284,28 +356,61 @@
             <tr>
                 <th>Сектор</th>
                 <th>Цена</th>
+                <th>Удалить</th>
             </tr>
             </thead>
             `
             <tbody>
 
-            <c:forEach items="${sectors}" var="sector" varStatus="theCount">
+            <%--
+             <c:forEach items="sectors" var="sector" varStatus="theCount">  <%--{sectors} --%
+
+                     <tr>
+                         <td>
+                             <input type="text" readonly name="name${sector.name}" required placeholder="Сектор"
+                                    value="${sector.name}">
+                         </td>
+                         <td>
+
+                             <div>
+                                 <input type="text" maxlength="25" required pattern="^\d+\.{0,1}\d{0,2}$"
+                                        title="только числа до двух знаков после запятой"
+                                        name="id${sector.id}" placeholder="Цена" value="${sector.price}">
+                             </div>
+                         </td>
+                         <td>
+                             <input type="hidden" name="sectorId" value="${sector.id}">
+                             <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
+                                 <span class="glyphicon glyphicon-trash"></span></button>
+                         </td>
+                      </tr>
+                 </c:forEach>
+                 --%>
+
+            <c:forEach items="${allSectors}" var="sector" varStatus="theCount">  <%--{sectors} --%>
 
                 <tr>
                     <td>
-                        <input type="text" readonly name="name${sector.name}" required placeholder="Сектор"
-                               value="${sector.name}">
+                        <input type="text" readonly name="${sector.value.name}" required placeholder="Сектор"
+                               value="${sector.value.name}">
                     </td>
                     <td>
 
                         <div>
-                            <input type="text" maxlength="50" required pattern="^\d+\.{0,1}\d{0,2}$"
+                            <input type="text" maxlength="25" required pattern="^\d+\.{0,1}\d{0,2}$"
                                    title="только числа до двух знаков после запятой"
-                                   name="id${sector.id}" placeholder="Цена" value="${sector.price}">
+                                   name="${sector.value.price}" placeholder="Цена" value="${sector.value.price}">
                         </div>
+                    </td>
+                    <td>
+                        <input type="hidden" name="sectorId" value="${sector.key}">
+                        <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </c:forEach>
+
+
             </tbody>
         </table>
 
