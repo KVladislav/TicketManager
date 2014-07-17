@@ -24,7 +24,7 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="${pageContext.request.contextPath}">TicketManager</a>
+                <a class="navbar-brand" href="/Index.do">TicketManager</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
