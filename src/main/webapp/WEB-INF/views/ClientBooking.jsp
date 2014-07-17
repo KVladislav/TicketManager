@@ -71,7 +71,7 @@
 
                             <div class="controls">
 
-                                <textarea rows="3" class="form-control" id="clientDescription" name="clientDescription"
+                                <textarea style="resize:none" rows="3" class="form-control" id="clientDescription" name="clientDescription"
                                           placeholder="Описание">${bookingClient.description}</textarea> <br>
                                 <button class="btn btn-primary btn-sm" type="submit">Сохранить</button>
                             </div>
