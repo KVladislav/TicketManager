@@ -156,8 +156,7 @@
                             <td colspan="3">
                                 <strong>Стоимость заказа ${bookingPrice}</strong>
                             </td>
-                            <td colspan="7">
-
+                            <td colspan="8">
                             </td>
                         </tr>
                         </tbody>
@@ -182,18 +181,19 @@
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-md-3 column">
+                        <div class="col-md-2 column">
                             <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do" method="post">
                                 <input type="submit" name="Order" class="btn btn-danger btn-sm"
                                        value="Отмена брони">
                             </form>
                         </div>
-                        <div class="col-md-3 column">
+                        <div class="col-md-2 column">
                             <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
                                 <input type="submit" name="Order" class="btn btn-primary btn-sm"
                                        value="Добавить билет">
                             </form>
                         </div>
+                        <div class="col-md-2 column"></div>
                         <div class="col-md-3 column">
                             <c:if test="${bookingTimeOut!=null}">
                                 <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"

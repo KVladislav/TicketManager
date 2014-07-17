@@ -119,6 +119,11 @@ public class BookingController {
         client.setName(clientName);
         client.setDescription(clientDescription);
         clientService.saveOrUpdateClient(client);
+
+        Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
+        if (bookingTimeOut != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
+        }
         return "ClientBooking";
     }
 
@@ -147,7 +152,7 @@ public class BookingController {
         Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
 
         if (bookingTimeOut != null && (new Date().getTime() - bookingTimeOut.getTime()) > 1000 * 60 * 5) {
-            return "redirect:Booking/CancelOrder.do";
+            return "redirect:Booking/UndoOrder.do";
         }
         List<Ticket> tickets = (List) model.asMap().get("bookingTickets");
         if (tickets != null) {
@@ -168,7 +173,7 @@ public class BookingController {
         Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
 
         if (bookingTimeOut != null && (new Date().getTime() - bookingTimeOut.getTime()) > 1000 * 60 * 5) {
-            return "redirect:Booking/CancelOrder.do";
+            return "redirect:Booking/UndoOrder.do";
         }
         List<Ticket> tickets = (List) model.asMap().get("bookingTickets");
         if (tickets != null) {
@@ -318,7 +323,7 @@ public class BookingController {
         }
 
         if ((new Date().getTime() - bookingTimeOut.getTime()) > 1000 * 60 * 5) {
-            return "redirect:Booking/CancelOrder.do";
+            return "redirect:Booking/UndoOrder.do";
         }
 
         Double bookingPrice = (Double) model.asMap().get("bookingPrice");
@@ -363,7 +368,12 @@ public class BookingController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Booking/Cancel.do")
-    public String bookingCancel() {
+    public String bookingCancel(Model model) {
+        Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
+        if (bookingTimeOut != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
+        }
+
         return "ClientBooking";
     }
 
