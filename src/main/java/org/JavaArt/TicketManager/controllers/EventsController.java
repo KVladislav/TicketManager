@@ -22,7 +22,8 @@ import java.util.*;
 
 
 @Controller
-@SessionAttributes({"pageName", "eventErrorMessage", "errorMessageEdit", "events", "event", "sector", "sectors"})
+@SessionAttributes({"pageName", "eventErrorMessage", "errorMessageEdit", "events", "event",
+        "sector", "sectors", "allSectors", "inputTime", "description", "timeRemoveBooking", "dateEvent"})
 
 public class EventsController {
     public Event editEvent;
@@ -46,11 +47,13 @@ public class EventsController {
 
     @RequestMapping(value = "AddEditEvent/NewEvent.do", method = RequestMethod.GET)
     public String newEventGet(Model model) {
-        model.addAttribute("pageName", 7);
+        model.addAttribute("pageName", 4);
         List<SectorDefaults> sectorsDefaults = sectorDefaultsService.getAllSectorDefaults();
         Collections.sort(sectorsDefaults);
+        Map<Integer, Sector> allSectors = new HashMap<>();
         if (sectorsDefaults.size() != 0) {
             sectorsAdded.clear();
+            allSectors.clear();
             List copy = new ArrayList(sectorsDefaults);
             for (Iterator<SectorDefaults> it = copy.iterator(); it.hasNext(); ) {
                 SectorDefaults sectorDefaults = it.next();
@@ -59,16 +62,20 @@ public class EventsController {
                 sector.setMaxRows(sectorDefaults.getMaxRows());
                 sector.setMaxSeats(sectorDefaults.getMaxSeats());
                 sector.setPrice(sectorDefaults.getDefaultPrice());
+                allSectors.put(sector.getId(), sector);
                 sectorsAdded.add(sector);
                 sectorService.addSector(sector);
+
                 model.addAttribute("id" + sector.getId(), sector.getId());
-                model.addAttribute("name" + sector.getName(), sector.getName());
+                //      model.addAttribute("name" + sector.getName(), sector.getName());
             }
         }
         if (sectorsAdded != null && sectorsAdded.size() > 0) {
             model.addAttribute("sectors", sectorsAdded);
             model.addAttribute("sector", sectorsAdded.get(0));
             model.addAttribute("dateEvent", new Date());
+            model.addAttribute("allSectors", allSectors);
+
         }
         return "AddEditEvent";
     }
@@ -102,9 +109,12 @@ public class EventsController {
 
     @RequestMapping(value = "AddEditEvent/addEvent.do", method = RequestMethod.POST)
     public String addEvent(Model model, @RequestParam(value = "dateEvent", required = true) String dateEvent,
-                           String inputTime,
-                           String description,
-                           String timeRemoveBooking,
+                           //     String action,  ///@RequestParam(value = "action")
+                           //     String sectorId,  ///@RequestParam(value = "sectorId")
+                           @RequestParam(value = "inputTime") String inputTime,
+                           @RequestParam(value = "description") String description,
+                           @RequestParam(value = "timeRemoveBooking") String timeRemoveBooking,
+                           //     @RequestParam(value = "action", required = true) String action,
                            SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
         List<Event> events = eventService.getAllEvents();
         String eventErrorMessage = (String) model.asMap().get("errorMessage");
@@ -152,12 +162,32 @@ public class EventsController {
                 Sector sector = it.next();
                 String stringPrice = request.getParameter("id" + sector.getId());
                 String stringName = request.getParameter("name" + sector.getName());
-                double priceTrue = Double.parseDouble(stringPrice);
-                sector.setPrice(priceTrue);
+                String stringDelete = request.getParameter("delete" + sector.getId());
+                if (stringPrice != null) {
+                    double priceTrue = Double.parseDouble(stringPrice);
+                    sector.setPrice(priceTrue);
+                }
                 sector.setEvent(event);
-                sector.setName(stringName);
+                if (stringName != null) {
+                    sector.setName(stringName);
+                }
+                //    if (sector.getId() == Integer.parseInt(sectorId)) {
+                // if (action.equals("delete")) {
+                if (stringDelete != null) {
+                    if (!stringDelete.equals("") && (!stringDelete.isEmpty())) {
+
+                        sectorService.deleteSector(sector);
+                        sectorsAdded.remove(sector);
+
+                        return "redirect:/AddEditEvent/NewEvent.do";
+
+                    }
+                }
+                //  }
+                //    }
                 sectorsAdded.add(sector);
                 sectorService.addSector(sector);
+
             }
         } else {
             if (eventErrorMessage == null) {
@@ -179,6 +209,8 @@ public class EventsController {
                 eventErrorMessage += " Заполните время удаления брони мероприятия!" + "<br>";
             }
         }
+
+
         if (eventErrorMessage != null && !eventErrorMessage.equals("")) {
             model.addAttribute("eventErrorMessage", eventErrorMessage);
             return "redirect:/AddEditEvent/NewEvent.do";
@@ -195,8 +227,9 @@ public class EventsController {
     }
 
     @RequestMapping(value = "AddEditEvent/EditEvent.do", method = RequestMethod.GET)
-    public String editEventGet(Model model) throws SQLException, ParseException {  // , @RequestParam("eventEdit") Event eventEdit
-        model.addAttribute("pageName", 7);
+    public String editEventGet(Model model)
+            throws SQLException, ParseException {  // , @RequestParam("eventEdit") Event eventEdit
+        model.addAttribute("pageName", 4);
         model.addAttribute("eventEdit", editEvent);
         model.addAttribute("eventDescriptions", (editEvent.getDescription()).trim().replaceAll("\\u00A0", ""));
         Date fullEventBookingTimeOut = editEvent.getBookingTimeOut();
@@ -233,7 +266,13 @@ public class EventsController {
 
 
     @RequestMapping(value = "AddEditEvent/editEventNow.do", method = RequestMethod.POST)
-    public String editEvent(Model model, @RequestParam(value = "dateEvent", required = true) String dateEvent, String inputTime, int eventEditHidden, String description, String timeRemoveBooking, SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
+    public String editEvent(Model model,
+                            @RequestParam(value = "dateEvent", required = true) String dateEvent,
+                            @RequestParam(value = "action") String action,
+                            @RequestParam(value = "sectorId") Integer sectorId,
+                            String inputTime, int eventEditHidden, String description,
+                            String timeRemoveBooking, SessionStatus status, HttpServletRequest request)
+            throws SQLException, ParseException {
         String errorMessageEdit = "";
         if (!description.equals("") && !dateEvent.equals("") && (dateValid(dateEvent) != false) && !inputTime.equals("") && !timeRemoveBooking.equals("")) {
             Event event = eventService.getEventById(eventEditHidden);
@@ -279,6 +318,14 @@ public class EventsController {
                 String stringPrice = request.getParameter("id" + sector.getId());
                 double priceTrue = Double.parseDouble(stringPrice);
                 sector.setPrice(priceTrue);
+                if (sector.getId() == sectorId) {
+                    if (action.equals("delete")) {
+                        sectorService.deleteSector(sector);
+                        sectorsAdded.remove(sector);
+                        continue;
+
+                    }
+                }
                 sector.setEvent(event);
                 sectorService.updateSector(sector);
             }
@@ -306,6 +353,28 @@ public class EventsController {
             model.addAttribute("errorMessageEdit", errorMessageEdit);
             return "redirect:/AddEditEvent/EditEvent.do";
         }
+        status.setComplete();
+        return "redirect:/Events/Events.do";
+    }
+
+    @RequestMapping(value = "AddEditEvent/setDeleteSector.do", method = RequestMethod.POST)
+    public String setDeleteSector(@RequestParam(value = "evnt", required = true) int evnt,
+                                  Model model, SessionStatus status) {
+        Event event = eventService.getEventById(evnt);
+        event.setDeleted(true);
+        eventService.updateEvent(event);
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        if (sectors.size() != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                boolean isDeleted = true;
+                sector.setDeleted(isDeleted);
+                sectorService.updateSector(sector);
+                sectors.add(sector);
+            }
+        }
+
         status.setComplete();
         return "redirect:/Events/Events.do";
     }
