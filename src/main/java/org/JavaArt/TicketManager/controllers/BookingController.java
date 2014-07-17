@@ -25,7 +25,7 @@ import java.util.*;
  * Time: 18:06
  */
 @Controller
-@SessionAttributes({"pageName", "bookingErrorMessage", "bookingTickets",
+@SessionAttributes({"pageName", "bookingTickets",
         "bookingEvents", "bookingSectorsMap", "bookingRowsMap", "bookingSeatsMap",
         "bookingSector", "bookingEvent", "bookingPrice", "bookingRow", "bookingTimeOut", "bookingClient", "sectorsGroupedMap"})
 public class BookingController {
@@ -163,7 +163,8 @@ public class BookingController {
         }
         //TODO сдеать проверку на свободность, если занят, то предупреждение с рефрешем заказа
         sessionStatus.setComplete();
-        return "redirect:/Booking/GetClient.do";
+
+        return "Clients";
     }
 
     @SuppressWarnings("unchecked")
@@ -184,7 +185,7 @@ public class BookingController {
             ticketService.saveOrUpdateTickets(tickets);
         }
         sessionStatus.setComplete();
-        return "redirect:/Booking/GetClient.do";
+        return "Clients";
     }
 
 
@@ -334,34 +335,36 @@ public class BookingController {
         if (tickets == null) {
             tickets = new ArrayList<>();
         }
+        List<Ticket> bookingErrorTickets = new ArrayList<>();
 
 
-        String errorMessage = (String) model.asMap().get("bookingErrorMessage");
         if (seats != null) {
             for (int seat : seats) {
+                Ticket ticket = new Ticket();
+                ticket.setSector(sector);
+                ticket.setRow(row);
+                ticket.setSeat(seat);
+                ticket.setClient(client);
+
+
                 if (ticketService.isPlaceFree(sector, row, seat) == 0) {
-                    Ticket ticket = new Ticket();
-                    ticket.setSector(sector);
-                    ticket.setRow(row);
-                    ticket.setSeat(seat);
-                    ticket.setClient(client);
                     ticket.setReserved(true);
                     bookingPrice = bookingPrice + sector.getPrice();
                     ticketService.addTicket(ticket);
                     tickets.add(ticket);
                 } else {
-                    errorMessage += sector.getEvent().getDescription() + " Сектор:" + sector.getName() + " Ряд: " + row + " Место:" + seat + " уже продан" + "<br>";
+                    bookingErrorTickets.add(ticket);
                 }
             }
+        }
+        if (bookingErrorTickets.size()>0) {
+            model.addAttribute("bookingErrorTickets", bookingErrorTickets);
         }
         model.addAttribute("bookingTickets", tickets);
         model.addAttribute("bookingPrice", bookingPrice);
         model.addAttribute("bookingTimeOut", bookingTimeOut);
         model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
 
-        if (errorMessage != null) {
-            model.addAttribute("bookingErrorMessage", errorMessage);
-        }
 
         return "ClientBooking";
     }

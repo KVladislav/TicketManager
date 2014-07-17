@@ -42,7 +42,7 @@
         }
 
         countdown(function () {
-            alert('Заказ отменен');
+            alert('Изменения отменены');
             window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
         });
     }//]]>
@@ -133,7 +133,7 @@
                                     </option>
                                 </c:if>
                                 <c:if test="${seatEntry.value==2}">
-                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в резерве]
+                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [забронирован]
                                     </option>
                                 </c:if>
                                 <c:if test="${seatEntry.value==3}">
