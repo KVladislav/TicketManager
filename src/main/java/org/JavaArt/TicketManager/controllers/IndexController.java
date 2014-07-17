@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by GalAnt on 17.07.2014.
  */
 
-
 @Controller
 
 public class IndexController {

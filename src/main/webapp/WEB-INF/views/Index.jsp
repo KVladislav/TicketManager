@@ -10,5 +10,6 @@
 <div style="text-align: center">
     <img src="${pageContext.request.contextPath}/resources/img/scheme.png">
 </div>
+<%@include file="footer.jsp" %>
 </body>
 </html>
