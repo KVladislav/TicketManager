@@ -47,7 +47,7 @@ public class SectorService {
     public List<String> getLegenda(List<Sector> sector) {
         List<Double> sortByPrice = new ArrayList<>();
         List<String> legenda = new ArrayList<>();
-        StringBuilder buf = new StringBuilder(100);
+        StringBuilder buf = new StringBuilder(200);
         int index;
         sortByPrice.add(0, sector.get(0).getPrice());
         for (int i = 1; i < sector.size(); i++) {
@@ -65,7 +65,7 @@ public class SectorService {
                 }
             }
             legenda.add(j, buf.toString());
-            buf.delete(0, 99);
+            buf.delete(0, 199);
         }
         return legenda;
     }

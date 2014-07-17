@@ -20,6 +20,9 @@ public class OrderController {
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
+
+
+
     private ArrayList<Ticket> order = new ArrayList<>();
     private double orderPrice = 0;
     private Event currentEvent = null;
@@ -133,23 +136,26 @@ public class OrderController {
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
     public String orderAddTicket(@ModelAttribute(value = "row") int row,
                                  @ModelAttribute(value = "sector") Sector sector,
-                                 @RequestParam(value = "seat") int seat, Model model) {
-        Ticket ticket = new Ticket();
-        ticket.setSector(sector);
-        ticket.setRow(row);
-        ticket.setSeat(seat);
-        //ticket.setOperator(operator);
-        currentSeat = seat;
-        if (order.size() > 0) {
-            for (Ticket ord : order) {
-                if (ord.getSector().equals(sector) && ord.getSeat() == seat && ord.getRow() == row)
-                    return "redirect:/Order/Order.do";
+                                 @RequestParam(value = "seat") int seat[], Model model) {
+        for (int seat1:seat){
+            Ticket ticket = new Ticket();
+            ticket.setSector(sector);
+            ticket.setRow(row);
+            ticket.setSeat(seat1);
+            //ticket.setOperator(operator);
+            currentSeat = seat1;
+            if (order.size() > 0) {
+                for (Ticket ord : order) {
+                    if (ord.getSector().equals(sector) && ord.getSeat() == seat1 && ord.getRow() == row)
+                        return "redirect:/Order/Order.do";
+                }
             }
+            ticket.setId(currentOrderId++);
+            order.add(ticket);
+            orderPrice += sector.getPrice();
         }
-        ticket.setId(currentOrderId++);
-        order.add(ticket);
-        orderPrice += sector.getPrice();
-        model.addAttribute("message", "Билет добавлен в заказ");
+        if (seat.length==1) model.addAttribute("message", "Билет добавлен в заказ");
+        if (seat.length>1) model.addAttribute("message", "Билеты добавлены в заказ");
         return "redirect:/Order/Order.do";
     }
 
