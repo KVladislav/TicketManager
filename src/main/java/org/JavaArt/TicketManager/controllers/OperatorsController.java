@@ -4,11 +4,8 @@ import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.service.OperatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -61,7 +58,7 @@ public class OperatorsController {
                                    @RequestParam("description") String description, Model model) {
         Operator operator = operatorService.getOperatorById(id);
         if (!password.equals(operator.getPassword())) {
-            model.addAttribute("error", "Пароль введён неверно. Повторите попытку.");
+            model.addAttribute("error", "Пароль введён неверно.");
             return "EditOperator";
         }
         if (passwordNew.length()>0&&passwordNew.length()<6){

@@ -77,33 +77,6 @@ public class TicketService {
     public void deleteNonConfirmedTickets(int minutes) {
         ticketRepository.deleteNonConfirmedTickets(minutes);
     }
-
-    public Map<Byte, Byte> seatStatus(Sector sector, int row, List<Ticket> order) {
-        Map<Byte, Byte> seatsMap = new TreeMap<>();
-        List<Ticket> ticket = ticketRepository.getAllTicketsBySectorAndRow(sector, row);
-        for (byte i = 1; i <= sector.getMaxSeats(); i++) {
-            if (ticketRepository.isPlaceFree(sector, row, i)==0) {
-                if(order.size()>0&&order!=null){
-                    for (Ticket ord : order) {
-                        if (ord.getSector().equals(sector) && ord.getRow() == row && ord.getSeat() == i){
-                            seatsMap.put(i, (byte)4);  //не утвержден(находится в заказе)
-                            break;
-                        }
-                        else seatsMap.put(i, (byte)3); //в продаже
-                    }
-                }
-                else seatsMap.put(i, (byte)3); //в продаже
-            }
-            else{
-                for (Ticket tic : ticket) {
-                    if (tic.getSeat() == i) {
-                        if ((tic.isReserved() && tic.isConfirmed())) seatsMap.put(i,(byte)2); //забронирован
-                        if (!tic.isReserved() && tic.isConfirmed()) seatsMap.put(i, (byte)1); //продан
-                    }
-                }
-            }
-        }
-        return seatsMap;
-    }
 }
+
 
