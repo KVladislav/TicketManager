@@ -164,6 +164,8 @@
         </div>
         <div class="col-md-7 col-lg-offset-0 ">
             <h4 style="text-align:center; color:Blue">Выбранные билеты</h4>
+            <h5 style="text-align:center; color:Green">(Выбранный, но не купленный билет через
+                                                        5 мин. возвратится в продажу)</h5>
             <table class="table text-center table-bordered">
                 <thead>
                     <th>ID</th>
@@ -172,8 +174,9 @@
                     <th>Сектор</th>
                     <th>Ряд</th>
                     <th>Место</th>
+                    <th>Время</th>
                     <th>Цена</th>
-                    <th>Отмена</th>
+                    <th></th>
                 </thead>
                 <tbody>
                 <c:forEach items="${orderList}" var="ord">
@@ -182,10 +185,11 @@
                            method="post">
                      <td>${ord.id}</td>
                      <td>${ord.sector.event.description}</td>
-                     <td> <fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
+                     <td><fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
                      <td>${ord.sector.name}</td>
                      <td>${ord.row}</td>
                      <td>${ord.seat}</td>
+                     <td><fmt:formatDate value="${ord.timeStamp}" pattern="HH:mm"/></td>
                      <td>${ord.sector.price}</td>
                           <td>
                                <input type="hidden" name="orderId" value="${ord.id}">
@@ -206,6 +210,13 @@
                 <h4 style="text-align:center"><input type="submit" name="Order"
                            class="btn btn-primary btn-lg" value="Купить"></h4>
             </form>
+
+             <%--   <div class="col-md-4 column">
+                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
+                        <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Отмена"></form>
+                </div>
+--%>
+
         </div>
    </div>
 </div>

@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="row clearfix">
-    <div class="col-md-8 column col-md-offset-2">
+    <div class="col-md-7 column col-md-offset-2">
         <br>
         <c:if test="${bookingClients!=null}">
             <table class="table table-hover table-condensed">
@@ -68,7 +68,6 @@
         </c:if>
 
     </div>
-</div>
 </div>
 
 </body>

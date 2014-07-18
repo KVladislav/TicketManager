@@ -128,7 +128,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/DelBookedTicket.do")
-    public String bookingDelBookedTicket(Model model, @RequestParam(value = "ticketId", required = true) int ticketId, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
+    public String bookingDelBookedTicket(HttpSession session, ModelMap model, @RequestParam(value = "ticketId", required = true) int ticketId, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         if (ticket != null) {
             ticketService.deleteTicket(ticket);
@@ -138,9 +138,18 @@ public class BookingController {
                     break;
                 }
             }
-            double bookingPrice = (Double) model.asMap().get("bookingPrice");
+            double bookingPrice = (Double) model.get("bookingPrice");
             bookingPrice -= ticket.getSector().getPrice();
             model.addAttribute("bookingPrice", bookingPrice);
+            Date bookingTimeOut = (Date) model.get("bookingTimeOut");
+            if (bookingTimeOut != null) {
+                if (tickets.size() > 0) {
+                    model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
+                } else {
+                    model.remove("bookingTimeOut");
+                    session.removeAttribute("bookingTimeOut");
+                }
+            }
         }
         return "ClientBooking";
     }
@@ -208,7 +217,7 @@ public class BookingController {
         List<Ticket> tickets = (List) model.asMap().get("bookingTickets");
         if (tickets != null) {
             for (Ticket ticket : tickets) {
-                if(ticket!=null && !ticket.isConfirmed()) {
+                if (ticket != null && !ticket.isConfirmed()) {
                     ticketService.deleteTicket(ticket);
                 }
             }
@@ -254,7 +263,7 @@ public class BookingController {
         }
         if (sector == null) sector = sectors.get(0);
 
-        Map<Double,List<Sector>> sectorsGroupedMap = sectorService.getSectorsByEventSortedByPrice(event);
+        Map<Double, List<Sector>> sectorsGroupedMap = sectorService.getSectorsByEventSortedByPrice(event);
         for (Sector sector1 : sectors) {
             sectorsMap.put(sector1, ticketService.getFreeTicketsAmountBySector(sector1));
         }
@@ -357,7 +366,7 @@ public class BookingController {
                 }
             }
         }
-        if (bookingErrorTickets.size()>0) {
+        if (bookingErrorTickets.size() > 0) {
             model.addAttribute("bookingErrorTickets", bookingErrorTickets);
         }
         model.addAttribute("bookingTickets", tickets);

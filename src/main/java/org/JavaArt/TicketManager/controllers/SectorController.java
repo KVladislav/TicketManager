@@ -80,13 +80,13 @@ public class SectorController {
                     sectorDefaultsService.updateSectorDefaults(sectorDefaults);
                     break;
                 }
-                if (action.equals("clone") && sectorDefaultsService.getSectorDefaultsByName(sectorName + " копия")==null) {
+                if (action.equals("clone") && sectorDefaultsService.getSectorDefaultsByName("00 НОВЫЙ")==null) {
                     SectorDefaults sectorDefaultsClone = new SectorDefaults();
-                    sectorDefaultsClone.setSectorName(sectorDefaults.getSectorName() + " копия");
+                    sectorDefaultsClone.setSectorName("00 НОВЫЙ");
                     sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
                     sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
                     sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());
-                    sectorDefaultsList.add(sectorDefaultsClone);
+                    sectorDefaultsList.add(0, sectorDefaultsClone);
                     sectorDefaultsService.addSectorDefaults(sectorDefaultsClone);
                     break;
                 }
