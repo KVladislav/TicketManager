@@ -77,5 +77,9 @@ public class SectorService {
     public void updateSector(Sector sector) {
         sectorRepository.updateSector(sector);
     }
+
+    public void deleteSector(Sector sector) {
+        sectorRepository.deleteSector(sector);
+    }
 }
 
