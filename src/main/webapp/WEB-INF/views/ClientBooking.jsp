@@ -15,7 +15,7 @@
     <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".deleteTicket").click(function () {
                 var data_id = '';
                 if (typeof $(this).data('id') !== 'undefined') {
@@ -26,27 +26,27 @@
         });
     </script>
     <script type='text/javascript'>
-    window.onload = function () {
-        function countdown(callback) {
-            var bar = document.getElementById('progress'),
-                    time = 0, max = 5 * 60,
-                    int = setInterval(function () {
-                        if (${bookingTime!=null}) {
-                            bar.style.width = Math.floor((${bookingTime} +time++ ) * 100 / max) + '%';
-                            if (time - 1 + ${bookingTime} >= max) {
-                                clearInterval(int);
-                                // 600ms - width animation time
-                                callback && setTimeout(callback, 600);
+        window.onload = function () {
+            function countdown(callback) {
+                var bar = document.getElementById('progress'),
+                        time = 0, max = 5 * 60,
+                        int = setInterval(function () {
+                            if (${bookingTime!=null}) {
+                                bar.style.width = Math.floor((${bookingTime} +time++ ) * 100 / max) + '%';
+                                if (time - 1 + ${bookingTime} >= max) {
+                                    clearInterval(int);
+                                    // 600ms - width animation time
+                                    callback && setTimeout(callback, 600);
+                                }
                             }
-                        }
-                    }, 1000);
-        }
+                        }, 1000);
+            }
 
-        countdown(function () {
-            alert('Изменения отменены');
-            window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
-        });
-    }
+            countdown(function () {
+                alert('Изменения отменены');
+                window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
+            });
+        }
     </script>
 
 </head>
@@ -149,7 +149,8 @@
                 </td>
 
                 <td>
-                    <button type="button" class="btn btn-default btn-xs deleteTicket" data-id="${ticket.id}" data-toggle="modal" data-target="#ticketDeleteConfirmation">
+                    <button type="button" class="btn btn-default btn-xs deleteTicket" data-id="${ticket.id}"
+                            data-toggle="modal" data-target="#ticketDeleteConfirmation">
                         <span class="glyphicon glyphicon-trash"></span></button>
                 </td>
             </tr>
@@ -223,10 +224,9 @@
 
 <div class="row clearfix">
     <div class="col-md-2 column">
-        <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do" method="post">
-            <input type="submit" name="Order" class="btn btn-danger btn-sm"
-                   value="Отмена брони">
-        </form>
+        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#bookingCancelConfirmation">
+            Отмена брони
+        </button>
     </div>
     <div class="col-md-2 column">
         <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
@@ -237,11 +237,9 @@
     <div class="col-md-2 column"></div>
     <div class="col-md-3 column">
         <c:if test="${bookingTimeOut!=null}">
-            <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
-                  method="post">
-                <input type="submit" name="Order" class="btn btn-primary btn-lg"
-                       value="Забронировать">
-            </form>
+            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#BookingConfirmation">
+                Забронировать
+            </button>
         </c:if>
     </div>
     <div class="col-md-3 column">
@@ -253,17 +251,18 @@
     </div>
 </div>
 
-<!-- Modal CheckoutOrderConfirmation-->
-<div class="modal fade" id="CheckoutOrderConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!-- Modal BookingConfirmation-->
+<div class="modal fade" id="BookingConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Внимание! Подтвердите выкуп брони</h4>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
+                <h4>Подтвердите бронирование билетов</h4>
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
@@ -322,7 +321,94 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Отмена</button>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
+                              method="post">
+                            <input type="submit" name="Order" class="btn btn-success btn-lg"
+                                   value="Забронировать">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Modal CheckoutOrderConfirmation-->
+<div class="modal fade" id="CheckoutOrderConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Подтвердите выкуп брони</h4>
+                <table class="table table-hover table-condensed">
+                    <caption>
+                        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                           pattern="dd.MM.yy H:mm"/></code></h3>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th colspan="2">Мероприятие</th>
+                        <th colspan="1">Дата</th>
+                        <th colspan="1">Сектор</th>
+                        <th colspan="1">Ряд</th>
+                        <th colspan="1">Место</th>
+                        <th colspan="1">Цена</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <c:set var="number" value="1"/>
+                    <c:forEach items="${bookingTickets}" var="ticket">
+                        <tr>
+                            <td>${number}</td>
+                            <c:set var="number" value="${number+1}"/>
+                            <td colspan="2">
+                                <small>${ticket.sector.event.description}</small>
+                            </td>
+                            <td colspan="1">
+                                <small><fmt:formatDate value="${ticket.sector.event.date}"
+                                                       pattern="dd.MM.yy H:mm"/></small>
+                            </td>
+                            <td>
+                                <small>${ticket.sector.name}</small>
+                            </td>
+                            <td>
+                                <small>${ticket.row}</small>
+                            </td>
+                            <td>
+                                <small>${ticket.seat}</small>
+                            </td>
+                            <td>
+                                <small>${ticket.sector.price}</small>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td colspan="3">
+                            <strong>Стоимость заказа ${bookingPrice}</strong>
+                        </td>
+                        <td colspan="8">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/BookingPayment.do"
@@ -340,27 +426,31 @@
 </div>
 
 <!-- Modal ticketDeleteConfirmation-->
-<div class="modal" id="ticketDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="ticketDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Внимание! Подтвердите удаление билета</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
+                <h4>Подтвердите удаление билета</h4>
             </div>
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Отмена</button>
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
 
                         <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
                               method="post" id="submitDelete">
-                        <button type="submit" name="ticketId" id="ticketId"
-                                class="btn btn-danger btn-lg" value="">Удалить</button>
-                            </form>
+                            <button type="submit" name="ticketId" id="ticketId"
+                                    class="btn btn-danger btn-lg" value="">Удалить
+                            </button>
+                        </form>
 
 
                     </div>
@@ -369,6 +459,39 @@
         </div>
     </div>
 </div>
+
+<!-- Modal bookingCancelConfirmation-->
+<div class="modal" id="bookingCancelConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Подтвердите удаление бронирования</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
+                              method="post">
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg" value="">удалить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </div>
 </div>
