@@ -51,19 +51,19 @@
                                            title="Не пустое, не начинатся с пробела, до 10 знаков">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16"  name="maxRows" required
+                                    <input class="span1" size="16" maxlength="2" name="maxRows" required
                                            placeholder="Рядов" value="${sector.maxRows}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" name="maxSeats" required
+                                    <input class="span1" size="16" maxlength="2" name="maxSeats" required
                                            placeholder="Мест" value="${sector.maxSeats}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
                                     <input class="span2" size="16" type="text" maxlength="8" name="defaultPrice"
                                            placeholder="Цена" value="${sector.defaultPrice}"
-                                           required pattern="[1-9][0-9]{0,4}\.{0,1}[0-9]{0,2}"
+                                           required pattern="[1-9]\d{0,4}(\.\d{0,2}){0,1}"
                                            title="В интервале [1-99999] до двух знаков после запятой">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
