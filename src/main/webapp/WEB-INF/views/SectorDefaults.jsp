@@ -76,5 +76,6 @@
     </div>
     <div class="col-md-3 column"></div>
 </div>
+<%@include file="footer.jsp" %>
 </body>
 </html>

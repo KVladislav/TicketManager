@@ -14,17 +14,19 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link href="${pageContext.request.contextPath}/resources/ico/tickets.ico" rel="shortcut icon" type="image/x-icon"/>
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
-
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
 </head>
 <body>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="${pageContext.request.contextPath}">TicketManager</a>
+                <a class="navbar-brand" href="/">TicketManager</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -87,7 +89,5 @@
             </div>
         </div>
     </nav>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

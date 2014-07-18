@@ -4,7 +4,7 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <display-name>TicketManager</display-name>
     <welcome-file-list>
-        <welcome-file>WEB-INF/views/header.jsp</welcome-file>
+        <welcome-file>action</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>action</servlet-name>
@@ -13,7 +13,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <context-param>
         <param-name>contextConfigLocation</param-name>
