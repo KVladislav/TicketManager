@@ -25,8 +25,8 @@ public class OrderController {
     private double orderPrice = 0;
     private Event currentEvent = null;
     private Sector currentSector = null;
-    private int currentRow = 1;
-    private int currentSeat = 1;
+    private Integer currentRow = 1;
+    private Integer currentSeat = 1;
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) {
@@ -146,10 +146,14 @@ public class OrderController {
     }
 
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
-    public String orderAddTicket(@ModelAttribute(value = "row") int row,
+    public String orderAddTicket(@ModelAttribute(value = "row") Integer row,
                                  @ModelAttribute(value = "sector") Sector sector,
                                  @RequestParam(value = "seat") int[] seat, Model model) {
-        model.addAttribute("error","");
+        StringBuilder error = new StringBuilder(300);
+        error.append("");
+        model.addAttribute("error", "");
+        if (row==null) row=currentRow;
+        if (sector==null) sector=currentSector;
         if (order.size()>0){
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
             for (Ticket ord : order) {
@@ -157,7 +161,7 @@ public class OrderController {
             }
             if (deletingTicket.size()==1){
                  model.addAttribute("error", "Билет ID = " + deletingTicket.get(0).getId() +
-                         " удален из заказа, так как не был утверждён в течении 5 минут");
+                         " автоматически удален из заказа, так как не был куплен в течении 5 минут");
                  order.remove(deletingTicket.get(0));
                  orderPrice -= deletingTicket.get(0).getSector().getPrice();
              }
@@ -169,7 +173,7 @@ public class OrderController {
                      orderPrice -= tic.getSector().getPrice();
                 }
                 model.addAttribute("error", "Билеты ID = "+ builder +
-                        "удалены из заказа, так как не были утверждёны в течении 5 минут");
+                        " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
         for (int seat1:seat){
@@ -184,13 +188,19 @@ public class OrderController {
                         return "redirect:/Order/Order.do";
                 }
             }
-            ticketService.addTicket(ticket);
-            order.add(ticket);
-            orderPrice += sector.getPrice();
+            if (ticketService.isPlaceFree(sector, row, seat1)==0){
+                ticketService.addTicket(ticket);
+                order.add(ticket);
+                orderPrice += sector.getPrice();
+            }
+            else error.append( "Билет ").append(sector.getEvent().getDescription()).append(" Сектор: ").
+                 append(sector.getName()).append(" Ряд: ").append(row).append(" Место: ").append(seat1).
+                 append(" заблокирован<br>");
         }
+        model.addAttribute("message", error);
         model.addAttribute("seat", currentSeat);
-        if (seat.length==1) model.addAttribute("message", "Билет добавлен в заказ");
-        if (seat.length>1) model.addAttribute("message", "Билеты добавлены в заказ");
+       //if (seat.length==1) model.addAttribute("message", "Билет добавлен в заказ");
+       // if (seat.length>1) model.addAttribute("message", "Билеты добавлены в заказ");
         return "redirect:/Order/Order.do";
     }
 
@@ -205,7 +215,7 @@ public class OrderController {
             }
             if (deletingTicket.size()==1){
                 model.addAttribute("error", "Билет ID = " + deletingTicket.get(0).getId() +
-                        " удален из заказа, так как не был утверждён в течении 5 минут");
+                        " автоматически удален из заказа, так как не был куплен в течении 5 минут");
                 order.remove(deletingTicket.get(0));
                 orderPrice -= deletingTicket.get(0).getSector().getPrice();
             }
@@ -217,7 +227,7 @@ public class OrderController {
                     orderPrice -= tic.getSector().getPrice();
                 }
                 model.addAttribute("error", "Билеты ID = "+ builder +
-                        "удалены из заказа, так как не были утверждёны в течении 5 минут");
+                        " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
         for (Ticket ord : order) {
@@ -234,13 +244,10 @@ public class OrderController {
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
     public String orderBuy(Model model) {
-        if (order.size()==0)  {
-            model.addAttribute("message", "");
-            model.addAttribute("error","");
-            return "redirect:/Order/Order.do";
-        }
+        StringBuilder idBuy = new StringBuilder(200);
         model.addAttribute("error","");
         model.addAttribute("message", "");
+        if (order.size()==0)  return "redirect:/Order/Order.do";
         if (order.size()>0){
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
             for (Ticket ord : order) {
@@ -248,7 +255,7 @@ public class OrderController {
             }
             if (deletingTicket.size()==1){
                 model.addAttribute("error", "Билет ID = " + deletingTicket.get(0).getId() +
-                        " удален из заказа, так как не был утверждён в течении 5 минут");
+                        " автоматически удален из заказа, так как не был куплен в течении 5 минут");
                 order.remove(deletingTicket.get(0));
                 orderPrice -= deletingTicket.get(0).getSector().getPrice();
             }
@@ -260,13 +267,14 @@ public class OrderController {
                     orderPrice -= tic.getSector().getPrice();
                 }
                 model.addAttribute("error", "Билеты ID = "+ builder +
-                        "удалены из заказа, так как не были утверждёны в течении 5 минут");
+                        " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
-        StringBuilder idBuy = new StringBuilder(200);
         for (Ticket ticket : order) {
             if (ticketService.getTicketById(ticket.getId()).isConfirmed()) {
-                model.addAttribute("error", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
+                if (ticketService.getTicketById(ticket.getId()).isReserved())
+                    model.addAttribute("error", "ОШИБКА! Билет ID = " + ticket.getId() + " уже забронирован");
+                else model.addAttribute("error", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
                 order.remove(ticket);
                 orderPrice -= ticket.getSector().getPrice();
                 return "redirect:/Order/Order.do";
