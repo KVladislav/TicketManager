@@ -424,7 +424,13 @@
         <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
         &MediumSpace;
         &MediumSpace;
-        <%--
+</form>
+<div class="col-md-4 column">
+    <form action="${pageContext.request.contextPath}/AddEditEvent/Cancel.do" method="post">
+        <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+</div>
+
+<%--
         <c:if test="${empty name}">
             <div class="alert  alert-error">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -432,9 +438,6 @@
             </div>
         </c:if>
         --%>
-
-
-</form>
 
 
 </center>

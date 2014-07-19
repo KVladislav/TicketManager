@@ -122,7 +122,62 @@ public class EventsController {
         List<Event> events = eventService.getAllEvents();
         String eventErrorMessage = (String) model.asMap().get("errorMessage");
         Map allSectors = (TreeMap) model.asMap().get("allSectors");
+        String action = request.getParameter("delete");
+        Iterator<Sector> sectorList = allSectors.values().iterator();
+        int idSectorDel = 0;
+        if (action != null) {
+            idSectorDel = Integer.parseInt(action);
+            Sector sector = sectorService.getSectorById(idSectorDel);
+            sectorService.deleteSector(sector);
+            sectorsAdded.remove(sector);
+            allSectors.values().remove(sector);
+            model.addAttribute("allSectors", allSectors);
+            model.addAttribute("eventDescriptions", description);
+            model.addAttribute("eventBookingTimeOut", timeRemoveBooking);
 
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            Date trueDate = format.parse(dateEvent);
+            int intHour = 0;
+            int intMin = 0;
+            if ((inputTime != null) && (inputTime != "")) {
+                String[] str = inputTime.split("-");
+                intHour = Integer.parseInt(str[0]);
+                intMin = Integer.parseInt(str[1]);
+            }
+            Calendar rightAgain = Calendar.getInstance();
+            rightAgain.setTime(trueDate);
+            rightAgain.add(Calendar.HOUR, intHour);
+            rightAgain.add(Calendar.MINUTE, intMin);
+            trueDate = rightAgain.getTime();
+            Date date = trueDate;
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(date);
+
+            int year = gc.get(GregorianCalendar.YEAR);
+            int mon = gc.get(GregorianCalendar.MONTH);
+            int day = gc.get(GregorianCalendar.DATE);
+            int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
+            int min = gc.get(GregorianCalendar.MINUTE);
+            GregorianCalendar calendarN = new GregorianCalendar();
+            calendarN.set(year, mon, day, 0, 0, 0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String localisedDate = dateFormat.format(calendarN.getTime());
+            Date simpleDate = dateFormat.parse(localisedDate);
+
+            model.addAttribute("dateEvent", simpleDate);
+            String timeEvent = "";
+            if (min == 0) {
+                timeEvent = "" + hour + "-" + "00";
+            } else {
+                timeEvent = "" + hour + "-" + min;
+            }
+
+            model.addAttribute("eventTime", timeEvent);
+
+            return "AddEditEvent";
+        }
+        String action1 = request.getParameter("action");
+        if (action1.equals("save")) {
         if (!description.equals("".trim()) && !dateEvent.equals("") && (dateValid(dateEvent) != false) && !inputTime.equals("")
                 && !timeRemoveBooking.equals("")) {
             Event event = new Event();
@@ -140,14 +195,14 @@ public class EventsController {
             rightAgain.add(Calendar.HOUR, intHour);
             rightAgain.add(Calendar.MINUTE, intMin);
             trueDate = rightAgain.getTime();
-    /*        if (eventService.getEventByDate(trueDate) == null) {
+            if (eventService.getEventByDate(trueDate).size() == 0) {
                 event.setDate(trueDate);
             } else {
-                eventErrorMessage += " Мероприятие на эту дату уже существует!" + "<br>";
+                eventErrorMessage = " Мероприятие на эту дату уже существует!" + "<br>";
                 model.addAttribute("eventErrorMessage", eventErrorMessage);
                 return "redirect:/AddEditEvent/NewEvent.do";
             }
-           */
+
             event.setDate(trueDate);
             boolean isDeleted = false;
             event.setDeleted(isDeleted);
@@ -163,48 +218,6 @@ public class EventsController {
             events.add(event);
 
 
-            String reqId = request.getParameter("sectorId");
-            String action = request.getParameter("delete");
-            Iterator<Sector> sectorList = allSectors.values().iterator();
-            int idsectorDel = 0;
-            if (action != null) {
-                idsectorDel = Integer.parseInt(action);
-
-                Sector sector = sectorService.getSectorById(idsectorDel);
-                sectorService.deleteSector(sector);
-                sectorsAdded.remove(sector);
-                allSectors.values().remove(sector);
-                model.addAttribute("allSectors", allSectors);
-                model.addAttribute("eventDescriptions", description);
-                model.addAttribute("eventBookingTimeOut", timeRemoveBooking);
-
-                Date date = trueDate;
-                GregorianCalendar gc = new GregorianCalendar();
-                gc.setTime(date);
-
-                int year = gc.get(GregorianCalendar.YEAR);
-                int mon = gc.get(GregorianCalendar.MONTH);
-                int day = gc.get(GregorianCalendar.DATE);
-                int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
-                int min = gc.get(GregorianCalendar.MINUTE);
-                GregorianCalendar calendarN = new GregorianCalendar();
-                calendarN.set(year, mon, day, 0, 0, 0);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String localisedDate = dateFormat.format(calendarN.getTime());
-                Date simpleDate = dateFormat.parse(localisedDate);
-                model.addAttribute("dateEvent", simpleDate);
-                String timeEvent = "";
-                if (min == 0) {
-                    timeEvent = "" + hour + "-" + "00";
-                } else {
-                    timeEvent = "" + hour + "-" + min;
-                }
-                model.addAttribute("eventTime", timeEvent);
-
-                return "AddEditEvent";
-            }
-            String action1 = request.getParameter("action");
-            if (action1.equals("save")) {
                 //     Iterator<Sector> sectorList  = allSectors.values().iterator();
                 //     while (sectorList.hasNext()) {
                 Sector sectorNew = sectorList.next();
@@ -306,9 +319,11 @@ public class EventsController {
             List copy = new ArrayList(sectors);
             for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
                 Sector sector = it.next();
+                model.addAttribute("id" + sector.getId(), sector.getId());
                 allSectors.put(sector.getName(), sector);
             }
         }
+
         model.addAttribute("allSectors", allSectors);
         model.addAttribute("eventDescriptions", (editEvent.getDescription()).trim().replaceAll("\\u00A0", ""));
         Date fullEventBookingTimeOut = editEvent.getBookingTimeOut();
@@ -346,19 +361,30 @@ public class EventsController {
     @RequestMapping(value = "AddEditEvent/editEventNow.do", method = RequestMethod.POST)
     public String editEvent(Model model,
                             @RequestParam(value = "dateEvent", required = true) String dateEvent,
-                            @RequestParam(value = "action") String action,
+                            //  @RequestParam(value = "action") String action,
                             @RequestParam(value = "sectorId") Integer sectorId,
                             String inputTime, int eventEditHidden, String description,
                             String timeRemoveBooking, SessionStatus status, HttpServletRequest request)
             throws SQLException, ParseException {
         String errorMessageEdit = "";
-        if (!description.equals("") && !dateEvent.equals("") && (dateValid(dateEvent) != false) && !inputTime.equals("") && !timeRemoveBooking.equals("")) {
-            Event event = eventService.getEventById(eventEditHidden);
+        Map allSectors = (TreeMap) model.asMap().get("allSectors");
+        String action = request.getParameter("delete");
+        Iterator<Sector> sectorList = allSectors.values().iterator();
+        int idSectorDel = 0;
+        if (action != null) {
+            idSectorDel = Integer.parseInt(action);
+            Sector sector = sectorService.getSectorById(idSectorDel);
+            sectorService.deleteSector(sector);
+            sectorsAdded.remove(sector);
+            allSectors.values().remove(sector);
+            model.addAttribute("allSectors", allSectors);
+            model.addAttribute("eventDescriptions", description);
+            model.addAttribute("eventBookingTimeOut", timeRemoveBooking);
+
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date trueDate = format.parse(dateEvent);
             int intHour = 0;
             int intMin = 0;
-
             if ((inputTime != null) && (inputTime != "")) {
                 String[] str = inputTime.split("-");
                 intHour = Integer.parseInt(str[0]);
@@ -369,62 +395,109 @@ public class EventsController {
             rightAgain.add(Calendar.HOUR, intHour);
             rightAgain.add(Calendar.MINUTE, intMin);
             trueDate = rightAgain.getTime();
-        /*    if (eventService.getEventByDate(trueDate) == null) {
-                event.setDate(trueDate);
+            Date date = trueDate;
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(date);
+
+            int year = gc.get(GregorianCalendar.YEAR);
+            int mon = gc.get(GregorianCalendar.MONTH);
+            int day = gc.get(GregorianCalendar.DATE);
+            int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
+            int min = gc.get(GregorianCalendar.MINUTE);
+            GregorianCalendar calendarN = new GregorianCalendar();
+            calendarN.set(year, mon, day, 0, 0, 0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String localisedDate = dateFormat.format(calendarN.getTime());
+            Date simpleDate = dateFormat.parse(localisedDate);
+
+            model.addAttribute("dateEvent", simpleDate);
+            String timeEvent = "";
+            if (min == 0) {
+                timeEvent = "" + hour + "-" + "00";
             } else {
-                errorMessageEdit += " Мероприятие на эту дату уже существует!" + "<br>";
-                model.addAttribute("errorMessageEdit", errorMessageEdit);
-                return "redirect:/AddEditEvent/EditEvent.do";
+                timeEvent = "" + hour + "-" + min;
             }
-            */
-            event.setDate(trueDate);
-            boolean isDeleted = false;
-            event.setDeleted(isDeleted);
-            event.setDescription("" + description.trim().replaceAll("\\u00A0", ""));
-            //    event.setOperator(operator);
-            Date nowDate = new Date();
-            event.setTimeStamp(nowDate);
-            int time = Integer.parseInt(timeRemoveBooking);
-            event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 60000));
-            //     event.setBookingTimeOut(time);
-            eventService.updateEvent(event);
-            List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
 
-            List copy = new ArrayList(sectors);
-            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
-                Sector sector = it.next();
-                String stringPrice = request.getParameter("id" + sector.getId());
-                double priceTrue = Double.parseDouble(stringPrice);
-                sector.setPrice(priceTrue);
-                if (sector.getId() == sectorId) {
-                    if (action.equals("delete")) {
-                        sectorService.deleteSector(sector);
-                        sectorsAdded.remove(sector);
-                        continue;
+            model.addAttribute("eventTime", timeEvent);
 
-                    }
+            return "AddEditEvent";
+        }
+        String action1 = request.getParameter("action");
+        if (action1.equals("save")) {
+            if (!description.equals("") && !dateEvent.equals("") && (dateValid(dateEvent) != false) && !inputTime.equals("") && !timeRemoveBooking.equals("")) {
+                Event event = eventService.getEventById(eventEditHidden);
+                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                Date trueDate = format.parse(dateEvent);
+                int intHour = 0;
+                int intMin = 0;
+
+                if ((inputTime != null) && (inputTime != "")) {
+                    String[] str = inputTime.split("-");
+                    intHour = Integer.parseInt(str[0]);
+                    intMin = Integer.parseInt(str[1]);
                 }
-                sector.setEvent(event);
-                sectorService.updateSector(sector);
-            }
-        } else {
-            if (errorMessageEdit == null) {
-                errorMessageEdit = "" + "<br>";
-            }
-            if (description.equals("")) {
-                errorMessageEdit += " Заполните наименование мероприятия!" + "<br>";
-            }
-            if (dateValid(dateEvent) == false) {
-                errorMessageEdit += " Некорректно заполненная дата - дата может быть только в формате 'дд.мм.гггг' и больше текущей!" + "<br>";
-            }
-            if (dateEvent.equals("")) {
-                errorMessageEdit += " Заполните день мероприятия!" + "<br>";
-            }
-            if (inputTime.equals("")) {
-                errorMessageEdit += " Заполните время мероприятия!" + "<br>";
-            }
-            if (timeRemoveBooking.equals("")) {
-                errorMessageEdit += " Заполните время удаления брони мероприятия!" + "<br>";
+                Calendar rightAgain = Calendar.getInstance();
+                rightAgain.setTime(trueDate);
+                rightAgain.add(Calendar.HOUR, intHour);
+                rightAgain.add(Calendar.MINUTE, intMin);
+                trueDate = rightAgain.getTime();
+                if (eventService.getEventByDate(trueDate).size() == 0) {
+                    event.setDate(trueDate);
+                } else {
+                    errorMessageEdit = " Мероприятие на эту дату уже существует!" + "<br>";
+                    model.addAttribute("errorMessageEdit", errorMessageEdit);
+                    return "redirect:/AddEditEvent/EditEvent.do";
+                }
+
+                event.setDate(trueDate);
+                boolean isDeleted = false;
+                event.setDeleted(isDeleted);
+                event.setDescription("" + description.trim().replaceAll("\\u00A0", ""));
+                //    event.setOperator(operator);
+                Date nowDate = new Date();
+                event.setTimeStamp(nowDate);
+                int time = Integer.parseInt(timeRemoveBooking);
+                event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 60000));
+                //     event.setBookingTimeOut(time);
+                eventService.updateEvent(event);
+                List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
+
+                List copy = new ArrayList(sectors);
+                for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                    Sector sector = it.next();
+                    String stringPrice = request.getParameter("id" + sector.getId());
+                    double priceTrue = Double.parseDouble(stringPrice);
+                    sector.setPrice(priceTrue);
+                    if (sector.getId() == sectorId) {
+                        if (action.equals("delete")) {
+                            sectorService.deleteSector(sector);
+                            sectorsAdded.remove(sector);
+                            continue;
+
+                        }
+                    }
+                    sector.setEvent(event);
+                    sectorService.updateSector(sector);
+                }
+            } else {
+                if (errorMessageEdit == null) {
+                    errorMessageEdit = "" + "<br>";
+                }
+                if (description.equals("")) {
+                    errorMessageEdit += " Заполните наименование мероприятия!" + "<br>";
+                }
+                if (dateValid(dateEvent) == false) {
+                    errorMessageEdit += " Некорректно заполненная дата - дата может быть только в формате 'дд.мм.гггг' и больше текущей!" + "<br>";
+                }
+                if (dateEvent.equals("")) {
+                    errorMessageEdit += " Заполните день мероприятия!" + "<br>";
+                }
+                if (inputTime.equals("")) {
+                    errorMessageEdit += " Заполните время мероприятия!" + "<br>";
+                }
+                if (timeRemoveBooking.equals("")) {
+                    errorMessageEdit += " Заполните время удаления брони мероприятия!" + "<br>";
+                }
             }
         }
         if (errorMessageEdit != null && !errorMessageEdit.equals("")) {
@@ -457,6 +530,11 @@ public class EventsController {
         return "redirect:/Events/Events.do";
     }
 
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "AddEditEvent/Cancel.do")
+    public String cancel(Model model) {
+        return "Events";
+    }
 
     public boolean dateValid(String inputDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
