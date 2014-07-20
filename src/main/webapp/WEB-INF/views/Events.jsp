@@ -67,7 +67,7 @@
                 <tr>
                     <td>${theCount.count}</td>
                     <td>${evnt.description}</td>
-                    <td><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm:ss"/></td>
+                    <td><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
                                 <%--          <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}"> --%>

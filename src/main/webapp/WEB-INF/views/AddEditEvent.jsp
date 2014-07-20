@@ -402,7 +402,7 @@
                     <td>
 
                         <div>
-                            <input type="text" maxlength="25" required pattern="^\d+\.{0,1}\d{0,2}$"
+                            <input type="text" maxlength="10" required pattern="^\d+\.{0,1}\d{0,2}$"
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
