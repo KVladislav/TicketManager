@@ -53,9 +53,10 @@ public class SectorController {
 
 
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
-
+        String errorMessage=null;
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
             if (sectorDefaults.getId() == sectorDefaultsId) {
+
                 if (action.equals("delete") && sectorDefaultsList.size()>1) {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);
                     sectorDefaultsList.remove(sectorDefaults);
@@ -63,10 +64,12 @@ public class SectorController {
                 }
 
                 if (action.equals("save")) {
-
                     SectorDefaults sectorDefaultsTest = sectorDefaultsService.getSectorDefaultsByName(sectorName);
-                    if (sectorDefaultsTest==null || sectorDefaults.getSectorName().equals(sectorDefaultsTest.getSectorName())) {
+                    if (sectorDefaultsTest==null || sectorDefaults.getSectorName().equals(sectorName)) {
                         sectorDefaults.setSectorName(sectorName);
+                    } else {
+                        errorMessage="Ошибка! Сектор с именем " + sectorName + " уже существует";
+
                     }
                     try {
                         Double defaultPrice = Double.parseDouble(defaultPriceString);
@@ -80,19 +83,25 @@ public class SectorController {
                     sectorDefaultsService.updateSectorDefaults(sectorDefaults);
                     break;
                 }
-                if (action.equals("clone") && sectorDefaultsService.getSectorDefaultsByName("00 НОВЫЙ")==null) {
-                    SectorDefaults sectorDefaultsClone = new SectorDefaults();
-                    sectorDefaultsClone.setSectorName("00 НОВЫЙ");
-                    sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
-                    sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
-                    sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());
-                    sectorDefaultsList.add(0, sectorDefaultsClone);
-                    sectorDefaultsService.addSectorDefaults(sectorDefaultsClone);
-                    break;
+
+                if (action.equals("clone")) {
+                    if (sectorDefaultsService.getSectorDefaultsByName("00 НОВЫЙ") == null) {
+                        SectorDefaults sectorDefaultsClone = new SectorDefaults();
+                        sectorDefaultsClone.setSectorName("00 НОВЫЙ");
+                        sectorDefaultsClone.setMaxRows(sectorDefaults.getMaxRows());
+                        sectorDefaultsClone.setMaxSeats(sectorDefaults.getMaxSeats());
+                        sectorDefaultsClone.setDefaultPrice(sectorDefaults.getDefaultPrice());
+                        sectorDefaultsList.add(0, sectorDefaultsClone);
+                        sectorDefaultsService.addSectorDefaults(sectorDefaultsClone);
+                        break;
+                    } else {
+                        errorMessage="Ошибка! Новый сектор уже создан, пожалуйста, заполните данные";
+                    }
                 }
             }
 
         }
+        model.addAttribute("errorMessage", errorMessage);
         return "SectorDefaults";
     }
 }
