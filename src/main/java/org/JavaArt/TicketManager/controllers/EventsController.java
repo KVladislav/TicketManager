@@ -363,9 +363,11 @@ public class EventsController {
     public String editEvent(Model model,
                             @RequestParam(value = "dateEvent", required = true) String dateEvent,
                             //  @RequestParam(value = "action") String action,
-                            @RequestParam(value = "sectorId") Integer sectorId,
-                            String inputTime, int eventEditHidden, String description,
-                            String timeRemoveBooking, SessionStatus status, HttpServletRequest request)
+                            @RequestParam(value = "inputTime") String inputTime,
+                            @RequestParam(value = "description") String description,
+                            @RequestParam(value = "timeRemoveBooking") String timeRemoveBooking,
+                            int eventEditHidden,
+                            SessionStatus status, HttpServletRequest request)
             throws SQLException, ParseException {
         String errorMessageEdit = "";
         Map allSectors = (TreeMap) model.asMap().get("allSectors");
@@ -442,7 +444,10 @@ public class EventsController {
                 rightAgain.add(Calendar.HOUR, intHour);
                 rightAgain.add(Calendar.MINUTE, intMin);
                 trueDate = rightAgain.getTime();
-                if (eventService.getEventByDate(trueDate).size() == 0) {
+                List<Event> list = eventService.getEventByDate(trueDate);
+                if (list.contains(event) == false) {
+                    event.setDate(trueDate);
+                } else if (list.size() == 0) {
                     event.setDate(trueDate);
                 } else {
                     errorMessageEdit = " Мероприятие на эту дату уже существует!" + "<br>";
@@ -462,23 +467,19 @@ public class EventsController {
                 //     event.setBookingTimeOut(time);
                 eventService.updateEvent(event);
                 List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
+                Iterator<Sector> sectorNewList = allSectors.values().iterator();
+                while (sectorNewList.hasNext()) {
+                    Sector sectorNew = sectorNewList.next();
+                    String price = request.getParameter("price" + sectorNew.getId());
+                    try {
+                        Double priceNew = Double.parseDouble(price);
+                        sectorNew.setPrice(priceNew);
+                        sectorNew.setEvent(event);
+                    } catch (Exception e) {
 
-                List copy = new ArrayList(sectors);
-                for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
-                    Sector sector = it.next();
-                    String stringPrice = request.getParameter("id" + sector.getId());
-                    double priceTrue = Double.parseDouble(stringPrice);
-                    sector.setPrice(priceTrue);
-                    if (sector.getId() == sectorId) {
-                        if (action.equals("delete")) {
-                            sectorService.deleteSector(sector);
-                            sectorsAdded.remove(sector);
-                            continue;
-
-                        }
                     }
-                    sector.setEvent(event);
-                    sectorService.updateSector(sector);
+                    //      sectorsAdded.add(sectorNew);
+                    sectorService.updateSector(sectorNew);
                 }
             } else {
                 if (errorMessageEdit == null) {
@@ -501,6 +502,7 @@ public class EventsController {
                 }
             }
         }
+        model.addAttribute("allSectors", allSectors);
         if (errorMessageEdit != null && !errorMessageEdit.equals("")) {
             model.addAttribute("errorMessageEdit", errorMessageEdit);
             return "redirect:/AddEditEvent/EditEvent.do";

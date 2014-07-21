@@ -104,6 +104,12 @@
         }
     </script>
 
+    <style type="text/CSS">
+        .colortext {
+            color: red; /* Красный цвет выделения */
+        }
+    </style>
+
     <title>
         <c:if test="${empty eventEdit.id}"> Создание нового мероприятия </c:if>
         <c:if test="${not empty eventEdit.id}"> Редактирование мероприятия </c:if>
@@ -118,7 +124,7 @@
 <h1>
     <div class="panel-heading" style="text-align:center;"><b> Создание нового мероприятия </b></div>
 </h1>&MediumSpace;&MediumSpace;
-<p class="alert-error">${eventErrorMessage}</p>
+<div class="alert  alert-error">${eventErrorMessage}</div>
 
 <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
       onsubmit="return ValidFormFields(this)"></c:if>
@@ -126,12 +132,12 @@
 <h1>
     <div class="panel-heading" style="text-align:center;"><b> Редактирование мероприятия </b></div>
 </h1>&MediumSpace;&MediumSpace;
-<p class="alert-error">${errorMessageEdit}</p>
+<p class="alert-error"><span class="colortext">${errorMessageEdit}</span></p>
 
 <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
-      onsubmit="return ValidFormFields(this)"></c:if>
+      onsubmit="return ValidFormFields(this)">
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
-
+</c:if>
 <center>
 <label class="my-control-label" required warning for="dateEvent"> Дата мероприятия </label>
 
@@ -320,12 +326,8 @@
     <label class="my-control-label" for="description"> Наименование </label>
 
     <div class="my-controls">
-        <style>
-            input {
-                resize: none; /* Запрещаем изменять размер */
-            }
-        </style>
-        <input type="text" id="description" maxlength="50" data-min-length=1 name="description" required pattern="^\S+$"
+        <input style="resize: none" type="text" id="description" maxlength="50" data-min-length=1 name="description"
+               required pattern="^\S+$"
                title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
                value="${eventDescriptions}"/>
     </div>
@@ -403,7 +405,7 @@
 
                 <tr>
                     <td>
-                        <input type="text" readonly name="name" required placeholder="Сектор"
+                        <input type="text" style="resize: none" readonly name="name" required placeholder="Сектор"
                                value="${sector.value.name}">
                     </td>
                     <td>
@@ -417,7 +419,7 @@
                     <td>
                         <input type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
                         <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-trash"></span></button>
+                            <span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </c:forEach>
@@ -432,11 +434,12 @@
         &MediumSpace;
         &MediumSpace;
 </form>
-<div class="col-md-4 column">
-    <form action="${pageContext.request.contextPath}/AddEditEvent/Cancel.do" method="post">
-        <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+<div class="control-group">
+    <div class="col-md-4 column">
+        <form action="${pageContext.request.contextPath}/AddEditEvent/Cancel.do" method="post">
+            <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+    </div>
 </div>
-
 <%--
         <c:if test="${empty name}">
             <div class="alert  alert-error">
