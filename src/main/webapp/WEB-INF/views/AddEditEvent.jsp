@@ -98,7 +98,11 @@
             }
         }
     </script>
-
+    <script language="JavaScript">
+        function confirmAction() {
+            return confirm("Do you really want this subscription?")
+        }
+    </script>
 
     <title>
         <c:if test="${empty eventEdit.id}"> Создание нового мероприятия </c:if>
@@ -316,7 +320,8 @@
     <label class="my-control-label" for="description"> Наименование </label>
 
     <div class="my-controls">
-        <input type="text" id="description" maxlength="50" name="description" value="${eventDescriptions}"/>
+        <input type="text" id="description" maxlength="50" data-min-length=1 name="description" required pattern="^\S+$"
+               title="Только полненное значение  до 50 символов!" value="${eventDescriptions}"/>
     </div>
 </div>
 
@@ -391,7 +396,7 @@
 
                 <tr>
                     <td>
-                        <input type="text" readonly name="${sector.value.name}" required placeholder="Сектор"
+                        <input type="text" readonly name="name" required placeholder="Сектор"
                                value="${sector.value.name}">
                     </td>
                     <td>
@@ -399,17 +404,16 @@
                         <div>
                             <input type="text" maxlength="25" required pattern="^\d+\.{0,1}\d{0,2}$"
                                    title="только числа до двух знаков после запятой"
-                                   name="${sector.value.price}" placeholder="Цена" value="${sector.value.price}">
+                                   name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
                     </td>
                     <td>
-                        <input type="hidden" name="sectorId" value="${sector.key}">
-                        <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-trash"></span></button>
+                        <input type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
+                        <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </c:forEach>
-
 
             </tbody>
         </table>
@@ -417,10 +421,16 @@
 
         &MediumSpace;
         &MediumSpace;
-        <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
+        <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
         &MediumSpace;
         &MediumSpace;
-        <%--
+</form>
+<div class="col-md-4 column">
+    <form action="${pageContext.request.contextPath}/AddEditEvent/Cancel.do" method="post">
+        <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+</div>
+
+<%--
         <c:if test="${empty name}">
             <div class="alert  alert-error">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -428,9 +438,6 @@
             </div>
         </c:if>
         --%>
-
-
-</form>
 
 
 </center>

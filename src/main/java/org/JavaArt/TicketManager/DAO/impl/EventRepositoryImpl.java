@@ -115,13 +115,14 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public Event getEventByDate(Date date) {
+    public List<Event> getEventByDate(Date inputDate) {
         Session session = null;
-        Event event = null;
+        List<Event> events = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            event = (Event) session.createCriteria(Event.class)
-                    .add(Restrictions.eq("date", date));
+            events = session.createCriteria(Event.class)
+                    .add(Restrictions.eq("date", inputDate)).list();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -129,7 +130,7 @@ public class EventRepositoryImpl implements EventRepository {
                 session.close();
             }
         }
-        return event;
+        return events;
     }
 
 
