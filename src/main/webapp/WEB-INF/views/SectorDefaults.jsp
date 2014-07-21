@@ -24,8 +24,12 @@
 <body>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-3 column"></div>
+        <div class="col-md-3 column">
+        </div>
         <div class="col-md-6 column">
+            <c:if test="${errorMessage!=null}">
+                <div class="alert alert-danger" role="alert">${errorMessage}</div>
+            </c:if>
             <table class="table table-hover table-condensed">
                 <caption>
                     <h1><code>Настройка секторов стадиона</code>
