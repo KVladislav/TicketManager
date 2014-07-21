@@ -28,12 +28,11 @@
             $('#my-select').multiSelect()
         });
     </script>
-    <SCRIPT LANGUAGE="JavaScript">
-        function confirmAction() {
-            return confirm("Do you really want this subscription?")
+    <script type="text/javascript">
+        function confirmAction(event) {
+            return confirm("Вы действительно хотите удалить событие " + event + " ?")
         }
-
-    </SCRIPT>
+    </script>
 </head>
 
 </head>
@@ -76,7 +75,7 @@
                     </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post"
-                              onSubmit="return confirmAction()">
+                              onSubmit="return confirmAction('${evnt.description}')">
                         <button type="submit" name="evnt" value="${evnt.id}" class="btn">Удалить</button>
                         </form>
                     </td>
@@ -90,3 +89,4 @@
     &MediumSpace;
 
 </div>
+</html>

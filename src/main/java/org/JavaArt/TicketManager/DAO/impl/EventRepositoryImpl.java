@@ -121,6 +121,7 @@ public class EventRepositoryImpl implements EventRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             events = session.createCriteria(Event.class)
+                    .add(Restrictions.eq("isDeleted", new Boolean("false")))
                     .add(Restrictions.eq("date", inputDate)).list();
 
         } catch (Exception e) {

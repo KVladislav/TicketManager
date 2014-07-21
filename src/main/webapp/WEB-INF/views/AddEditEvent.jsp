@@ -320,13 +320,19 @@
     <label class="my-control-label" for="description"> Наименование </label>
 
     <div class="my-controls">
+        <style>
+            input {
+                resize: none; /* Запрещаем изменять размер */
+            }
+        </style>
         <input type="text" id="description" maxlength="50" data-min-length=1 name="description" required pattern="^\S+$"
-               title="Только полненное значение  до 50 символов!" value="${eventDescriptions}"/>
+               title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
+               value="${eventDescriptions}"/>
     </div>
 </div>
 
 <div class="control-group">
-    <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони </label>
+    <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони в минутах </label>
 
     <div class="my-controls">
         <input type="text" id="timeRemoveBooking" maxlength="10" name="timeRemoveBooking" value="${eventBookingTimeOut}"
@@ -340,7 +346,8 @@
         <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
 
         <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">Поле
-            позволяет установить время, по истечении которого бронь полностью снимается</p>
+            позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум три
+            цифры)</p>
 
             <p id="helpText" class="helpText">Help text</p></div>
 
