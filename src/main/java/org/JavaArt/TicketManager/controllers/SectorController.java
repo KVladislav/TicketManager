@@ -41,6 +41,11 @@ public class SectorController {
         return "SectorDefaults";
     }
 
+    @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.GET)
+    public String doNothing(){
+        return "SectorDefaults";
+    }
+
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.POST)
     public String sectorsModify(@RequestParam(value = "action") String action,
