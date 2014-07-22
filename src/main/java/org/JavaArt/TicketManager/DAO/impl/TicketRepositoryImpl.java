@@ -55,7 +55,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public void saveOrUpdateTickets(List<Ticket> tickets) {
-        if (tickets==null) {
+        if (tickets == null) {
             return;
         }
         for (Ticket ticket : tickets) {
@@ -70,7 +70,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             ticket = (Ticket) session.get(Ticket.class, id);
-            if ((ticket!=null)&&ticket.isDeleted()==true) ticket=null;
+            if ((ticket != null) && ticket.isDeleted() == true) ticket = null;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -115,17 +115,14 @@ public class TicketRepositoryImpl implements TicketRepository {
             System.out.println("delete " + query.executeUpdate() + " non confirmed ticket(s)");
             tx.commit();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "[TicketThread] " + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session!=null && session.isOpen()) {
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
     }
-
 
 
     @Override
@@ -269,17 +266,17 @@ public class TicketRepositoryImpl implements TicketRepository {
     public int isPlaceFree(Sector sector, int row, int seat) {
         Session session = null;
         Ticket ticket;
-            try {
-                session = HibernateUtil.getSessionFactory().openSession();
-                ticket = (Ticket)session.createCriteria(Ticket.class)
-                        .add(Restrictions.eq("sector", sector))
-                        .add(Restrictions.eq("isDeleted", false))
-                        .add(Restrictions.eq("row", row))
-                        .add(Restrictions.eq("seat", seat))
-                .uniqueResult();
-                if (ticket == null) return 0; //свободен
-                if (!ticket.isConfirmed()) return 1; //в обработке
-                if (ticket.isReserved()) return 2; //в резерве
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            ticket = (Ticket) session.createCriteria(Ticket.class)
+                    .add(Restrictions.eq("sector", sector))
+                    .add(Restrictions.eq("isDeleted", false))
+                    .add(Restrictions.eq("row", row))
+                    .add(Restrictions.eq("seat", seat))
+                    .uniqueResult();
+            if (ticket == null) return 0; //свободен
+            if (!ticket.isConfirmed()) return 1; //в обработке
+            if (ticket.isReserved()) return 2; //в резерве
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -300,8 +297,9 @@ public class TicketRepositoryImpl implements TicketRepository {
         }
 
     }
+
     @Override
-    public void deleteExpiredBookedTickets(){
+    public void deleteExpiredBookedTickets() {
         Session session = null;
         Date dateNow = new Date();
 
@@ -324,4 +322,23 @@ public class TicketRepositoryImpl implements TicketRepository {
             }
         }
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Ticket> getAllTicketsBySector(Sector sector) {
+        Session session = null;
+        List<Ticket> tickets = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets = session.createQuery(String.format("from Ticket where isDeleted = false and sector =%d", sector.getId())).list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return tickets;
+    }
+
 }

@@ -11,8 +11,19 @@ import java.util.List;
 
 @Service
 public class EventService {
+    private static EventService eventService;
     private EventRepository eventRepository = new EventRepositoryImpl();
 
+    // private EventService() {
+
+    // }
+
+    public static EventService getInstance() {
+        if (eventService == null) {
+            eventService = new EventService();
+        }
+        return eventService;
+    }
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.getAllEvents();
         return events;
@@ -36,11 +47,16 @@ public class EventService {
         eventRepository.updateEvent(event);
     }
 
-    public List<Event> getEventByDate(Date date) {
+    public List<Event> getEventsByDate(Date date) {
         List<Event> events = (List<Event>) eventRepository.getEventByDate(date);
         return events;
     }
     public List<Event> getFutureBookableEvents() {
         return eventRepository.getFutureBookableEvents();
+    }
+
+    public List<Event> getEventsByDateFromEvent(Date date, Event event) {
+        List<Event> events = (List<Event>) eventRepository.getEventByDateFromEvent(date, event);
+        return events;
     }
 }

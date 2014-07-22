@@ -104,12 +104,6 @@
         }
     </script>
 
-    <style type="text/CSS">
-        .colortext {
-            color: red; /* Красный цвет выделения */
-        }
-    </style>
-
     <title>
         <c:if test="${empty eventEdit.id}"> Создание нового мероприятия </c:if>
         <c:if test="${not empty eventEdit.id}"> Редактирование мероприятия </c:if>
@@ -124,22 +118,34 @@
 <h1>
     <div class="panel-heading" style="text-align:center;"><b> Создание нового мероприятия </b></div>
 </h1>&MediumSpace;&MediumSpace;
-<div class="alert  alert-error">${eventErrorMessage}</div>
-
+<c:if test="${eventErrorMessage!=null}">
+    <div class="alert  alert-error" style="color: red">
+        <h4 style="color: red">Error! ${eventErrorMessage}</h4>
+    </div>
+</c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
       onsubmit="return ValidFormFields(this)"></c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
     <div class="panel-heading" style="text-align:center;"><b> Редактирование мероприятия </b></div>
 </h1>&MediumSpace;&MediumSpace;
-<p class="alert-error"><span class="colortext">${errorMessageEdit}</span></p>
 
+<c:if test="${errorMessageEdit!=null}">
+<div class="alert  alert-error" style="color: red">
+    <h4 style="color: red">Error! ${errorMessageEdit}</h4>
+</div>
+</c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
       onsubmit="return ValidFormFields(this)">
+
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
+
 </c:if>
 <center>
-<label class="my-control-label" required warning for="dateEvent"> Дата мероприятия </label>
+    <table>
+        <td>
+            <tr>
+                <label class="my-control-label" required warning for="dateEvent"> Дата мероприятия </label>
 
 <center>
 
@@ -151,8 +157,9 @@
             <script type="text/javascript"> calendar.set("dateEvent");</script>
         </p>
     </div>
-
-    <label class="my-control-label" for="inputTime"> Время мероприятия </label>
+            </tr>
+            <tr>
+            <label class="my-control-label" for="inputTime"> Время мероприятия </label>
 
     <div class="control-group">
         <select name="inputTime" id="inputTime">
@@ -321,8 +328,9 @@
         </select>
     </div>
 </center>
-
-<div class="control-group">
+</tr>
+<tr>
+    <div class="control-group">
     <label class="my-control-label" for="description"> Наименование </label>
 
     <div class="my-controls">
@@ -332,18 +340,14 @@
                value="${eventDescriptions}"/>
     </div>
 </div>
-
+</tr>
+</tr>
 <div class="control-group">
     <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони в минутах </label>
 
     <div class="my-controls">
         <input type="text" id="timeRemoveBooking" maxlength="10" name="timeRemoveBooking" value="${eventBookingTimeOut}"
                required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
-        <%--  <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-               alt="Поле позволяет установить время, по истечении которого бронь полностью снимается"
-               title="Поле позволяет установить время, по истечении которого бронь полностью снимается"/>
-          <a class="thumbnail" href="#"><img src="${pageContext.request.contextPath}/resources/img/Question.png" width="100px" height="66px" border="0" />
-              <span>Поле позволяет установить время, по истечении которого бронь полностью снимается</span></a>  --%>
 
         <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
 
@@ -359,9 +363,12 @@
              onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
              onMouseOut="helpBox()">
 
-
+        </tr>
     </div>
 </div>
+</td>
+</table>
+
 
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
@@ -376,31 +383,6 @@
             `
             <tbody>
 
-            <%--
-             <c:forEach items="sectors" var="sector" varStatus="theCount">  <%--{sectors} --%
-
-                     <tr>
-                         <td>
-                             <input type="text" readonly name="name${sector.name}" required placeholder="Сектор"
-                                    value="${sector.name}">
-                         </td>
-                         <td>
-
-                             <div>
-                                 <input type="text" maxlength="25" required pattern="^\d+\.{0,1}\d{0,2}$"
-                                        title="только числа до двух знаков после запятой"
-                                        name="id${sector.id}" placeholder="Цена" value="${sector.price}">
-                             </div>
-                         </td>
-                         <td>
-                             <input type="hidden" name="sectorId" value="${sector.id}">
-                             <button type="submit" name="action" value="delete" class="btn btn-default btn-xs">
-                                 <span class="glyphicon glyphicon-trash"></span></button>
-                         </td>
-                      </tr>
-                 </c:forEach>
-                 --%>
-
             <c:forEach items="${allSectors}" var="sector" varStatus="theCount">  <%--{sectors} --%>
 
                 <tr>
@@ -411,7 +393,7 @@
                     <td>
 
                         <div>
-                            <input type="text" maxlength="10" required pattern="^\d+\.{0,1}\d{0,2}$"
+                            <input type="text" maxlength="5" required pattern="^\d+\.{0,1}\d{0,2}$"
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
@@ -430,26 +412,25 @@
 
         &MediumSpace;
         &MediumSpace;
-        <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+        <table>
+            <tr>
+                <td>
+                <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
         &MediumSpace;
         &MediumSpace;
+                </td>
 </form>
-<div class="control-group">
+<td>
+    <div class="control-group">
     <div class="col-md-4 column">
-        <form action="${pageContext.request.contextPath}/AddEditEvent/Cancel.do" method="post">
-            <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+        <form action="${pageContext.request.contextPath}/Events/Cancel.do" method="get">
+        <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
     </div>
 </div>
-<%--
-        <c:if test="${empty name}">
-            <div class="alert  alert-error">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <h4>Error!</h4>Поле "Наименование" должно быть заполнено. Проверьте его.
-            </div>
-        </c:if>
-        --%>
-
-
+</td>
+</table>
 </center>
 
-
+<%@include file="footer.jsp" %>
+</body>
+</html>

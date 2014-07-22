@@ -8,14 +8,12 @@ import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 @Service
 public class TicketService {
-    private TicketRepository ticketRepository = new TicketRepositoryImpl();
     private static TicketService ticketService;
+    private TicketRepository ticketRepository = new TicketRepositoryImpl();
 
     private TicketService() {
     }
@@ -38,8 +36,6 @@ public class TicketService {
 
     public List<Ticket> getTicketsByClient(Client client) {
         return ticketRepository.getTicketsByClient(client);
-
-
     }
 
     public int getFreeTicketsAmountBySector(Sector sector) {
@@ -76,6 +72,10 @@ public class TicketService {
 
     public void deleteNonConfirmedTickets(int minutes) {
         ticketRepository.deleteNonConfirmedTickets(minutes);
+    }
+
+    public List<Ticket> getAllTicketsBySector(Sector sector) {
+        return ticketRepository.getAllTicketsBySector(sector);
     }
 }
 

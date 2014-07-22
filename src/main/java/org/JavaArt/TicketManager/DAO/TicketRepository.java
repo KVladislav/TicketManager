@@ -20,17 +20,31 @@ public interface TicketRepository {
     public void saveOrUpdateTicket(Ticket ticket);
 
     public List<Ticket> getTicketsByClient(Client client);
+
     public int getTicketsAmountByClient(Client client);
+
     public void saveOrUpdateTickets(List<Ticket> tickets);
+
     public Ticket getTicketById(int id);
+
     public List<Ticket> getAllTickets();
+
     public void deleteTicket(Ticket ticket);
+
     public void deleteTickets(List<Ticket> tickets);
+
     public int getFreeTicketsAmountBySector(Sector sector);
+
     public int getFreeTicketsAmountBySectorRow(Sector sector, int row);
+
     public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row);
+
     public int isPlaceFree(Sector sector, int row, int seat);
+
     public void deleteNonConfirmedTickets(int minutes);
+
     public void deleteExpiredBookedTickets();
+
+    public List<Ticket> getAllTicketsBySector(Sector sector);
 
 }

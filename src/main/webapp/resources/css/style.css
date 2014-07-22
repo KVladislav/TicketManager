@@ -158,3 +158,8 @@
 .helpText {
     padding: 5px;
 }
+
+.colortext {
+    background: #ff9900;
+    color: red; /* Красный цвет выделения */
+}
