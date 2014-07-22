@@ -33,22 +33,22 @@
 
         <!-- Text input-->
         <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-3 col-md-offset-4">
                 <input name="username" type="text" placeholder="Ваше имя пользователя" class="form-control input-md">
             </div>
         </div>
 
         <!-- Password input-->
         <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-3 col-md-offset-4">
                 <input name="password" type="password" placeholder="Ваш пароль" class="form-control input-md">
             </div>
         </div>
-        <input type="hidden" name="${_csrf.parameterName}"
-               value="${_csrf.token}" />
+        <%--<input type="hidden" name="${_csrf.parameterName}"--%>
+               <%--value="${_csrf.token}" />--%>
         <!-- Button -->
         <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-3 col-md-offset-4">
                 <c:if test="${not empty error}">
                     <div class="alert alert-danger" role="alert">${error}</div>
                 </c:if>

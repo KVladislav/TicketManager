@@ -6,7 +6,9 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-<http pattern="/css/**" security="none" />
+<http pattern="/resources/css/*" security="none" />
+    <http pattern="/resources/js/*" security="none" />
+
     <http auto-config="true">
         <intercept-url pattern="/login.do" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/**/**" access="ROLE_USER"/>

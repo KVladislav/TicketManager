@@ -3,6 +3,7 @@ package org.JavaArt.TicketManager.DAO.impl;
 import org.JavaArt.TicketManager.DAO.OperatorRepository;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -116,9 +117,32 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 //
 //    }
 
+    private long countOperators() {
+        Session session = null;
+        int counter = 0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery(String.format("select count (*) from Operator where isDeleted = false"));
+            counter = ((Long) query.uniqueResult()).intValue();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return counter;
+    }
 
     @Override
     public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException {
+        if (countOperators()==0 && userName.equals("root")) {
+            Operator operator = new Operator();
+            operator.setLogin("root");
+            operator.setPassword("root");
+            return operator;
+
+        }
         Session session = null;
         Operator operator = null;
         try {
