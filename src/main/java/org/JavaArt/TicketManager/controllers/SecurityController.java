@@ -21,7 +21,7 @@ public class SecurityController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addObject("error", "Пользователь/пароль не найден!");
         }
 
         model.setViewName("login");
