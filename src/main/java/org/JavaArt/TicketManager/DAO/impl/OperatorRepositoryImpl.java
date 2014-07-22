@@ -6,10 +6,16 @@ import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -113,4 +119,52 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 //        }
 //
 //    }
+
+
+    @Override
+    public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException {
+        Session session = null;
+        Operator operator = null;
+        UserDetails user;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            operator = (Operator) session.createCriteria(Operator.class)
+                    .add(Restrictions.eq("login", userName))
+                    .add(Restrictions.eq("isDeleted", false))
+                    .uniqueResult();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+        if (operator == null) {
+            System.out.println("Пользователь " + userName + " не найден!");
+            throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
+        }
+
+        String username = operator.getLogin();
+        String password = operator.getPassword();
+        boolean notLocked = true;
+        boolean notExpired = true;
+        boolean enabled = !operator.getDeleted();
+        GrantedAuthority auth = new GrantedAuthority() {
+            private static final long serialVersionUID = 1L;
+
+            public String getAuthority() {
+                return "ROLE_USER";
+            }
+        };
+        Set<GrantedAuthority> set = new HashSet<>();
+        set.add(auth);
+
+        user = new User(username, password, set);
+
+        return user;
+    }
 }
+
+
+

@@ -8,7 +8,8 @@
 
 <http pattern="/css/**" security="none" />
     <http auto-config="true">
-        <intercept-url pattern="/secure/**" />
+        <intercept-url pattern="/login.do" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/**/**" access="ROLE_USER"/>
         <access-denied-handler error-page="/login.do" />
         <form-login
                 login-page="/login.do"
@@ -22,11 +23,7 @@
     </http>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
-            </user-service>
+        <authentication-provider user-service-ref="operatorService">
         </authentication-provider>
     </authentication-manager>
-
 </beans:beans>

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class ClientService {
+public class ClientService{
     private static ClientService clientService;
     private ClientRepository clientRepository = new ClientRepositoryImpl();
 

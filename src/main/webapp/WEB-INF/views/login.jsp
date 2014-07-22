@@ -20,7 +20,6 @@
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 
 </head>
 <body onload='document.loginForm.username.focus();'>
