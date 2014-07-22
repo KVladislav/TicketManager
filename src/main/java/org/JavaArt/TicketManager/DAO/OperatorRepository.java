@@ -1,6 +1,8 @@
 package org.JavaArt.TicketManager.DAO;
 
 import org.JavaArt.TicketManager.entities.Operator;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +25,5 @@ public interface OperatorRepository {
 
     public List<Operator> getAllOperators();
 //    public void deleteOperator(Operator operator);
+    public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException;
 }

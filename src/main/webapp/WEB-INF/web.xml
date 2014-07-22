@@ -16,10 +16,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <context-param>
-        <param-name>contextConfigLocation</param-name>
+        <param-name>contextConfigLocation
+        </param-name>
         <param-value>
             /WEB-INF/action-servlet.xml
             /WEB-INF/spring-security.xml
+            /WEB-INF/root-context.xml
         </param-value>
     </context-param>
     <listener>
@@ -35,7 +37,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
         </filter-class>
     </filter>
 

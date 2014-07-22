@@ -17,11 +17,12 @@
 <body onload='document.searchForm.clientName.focus();'>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-10 column col-md-offset-1">
+        <div class="col-md-8 column col-md-offset-2">
             <form class="form-inline" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do"
                   method="post" name="searchForm">
                 <div class="form-group">
-                    <input class="form-control " maxlength="50" id="appendedInputButtons" size="111" type="text" name="clientName"
+                    <input class="form-control " maxlength="50" id="appendedInputButtons" size="80" type="text"
+                           name="clientName"
                            required placeholder="Введите ФИО клиента" value="${client.name}">
                 </div>
                 <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
@@ -29,44 +30,45 @@
             </form>
         </div>
     </div>
-</div>
-<div class="row clearfix">
-    <div class="col-md-7 column col-md-offset-2">
-        <br>
-        <c:if test="${bookingClients!=null}">
-            <table class="table table-hover table-condensed">
-                <thead>
-                <tr>
-                    <th>Клиент</th>
-                    <th>Дата заказа</th>
-                    <th>Билеты</th>
-                    <th>Цена</th>
-                </tr>
-                </thead>
+    <div class="row clearfix">
+        <div class="col-md-8 column col-md-offset-2">
+            <br>
+            <c:if test="${bookingClients!=null}">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Клиент</th>
+                        <th>Дата заказа</th>
+                        <th>Билеты</th>
+                        <th>Цена</th>
+                        <th></th>
+                    </tr>
+                    </thead>
 
-                <tbody>
+                    <tbody>
 
-                <form name="selectClient" action="${pageContext.request.contextPath}/Booking/ViewClient.do"
-                      method="post">
-                    <c:forEach items="${bookingClients}" var="clientEntry">
-                        <tr>
-                            <td>${clientEntry.key.name}</td>
-                            <td><fmt:formatDate value="${clientEntry.key.timeStamp}" pattern="d.MM.yyyy H:mm"/></td>
-                            <td>${clientEntry.value[0]}</td>
-                            <td>${clientEntry.value[1]}</td>
-                            <td>
-                                <button class="btn" name="clientId" value="${clientEntry.key.id}" type="submit">
-                                    Выбрать
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </form>
+                    <form name="selectClient" action="${pageContext.request.contextPath}/Booking/ViewClient.do"
+                          method="post">
+                        <c:forEach items="${bookingClients}" var="clientEntry">
+                            <tr>
+                                <td>${clientEntry.key.name}</td>
+                                <td><fmt:formatDate value="${clientEntry.key.timeStamp}" pattern="d.MM.yyyy H:mm"/></td>
+                                <td>${clientEntry.value[0]}</td>
+                                <td>${clientEntry.value[1]}</td>
+                                <td>
+                                    <button class="btn" name="clientId" value="${clientEntry.key.id}" type="submit">
+                                        Выбрать
+                                    </button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </form>
 
-                </tbody>
-            </table>
-        </c:if>
+                    </tbody>
+                </table>
+            </c:if>
 
+        </div>
     </div>
 </div>
 

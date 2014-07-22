@@ -20,45 +20,46 @@
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 
 </head>
 <body onload='document.loginForm.username.focus();'>
+<div class="container">
+    <br>
 
-   <br>
-<form class="form-horizontal" name="loginForm" action="<c:url value='j_spring_security_check' />" method='POST'>
-    <fieldset>
+    <form class="form-horizontal" name="loginForm" action="<c:url value='j_spring_security_check' />" method='POST'>
+        <fieldset>
 
-        <!-- Form Name -->
-        <legend>Пожалуйста авторизируйтесь</legend>
+            <!-- Form Name -->
+            <legend>Пожалуйста авторизируйтесь</legend>
 
-        <!-- Text input-->
-        <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
-                <input name="username" type="text" placeholder="Ваше имя пользователя" class="form-control input-md">
+            <!-- Text input-->
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                    <input name="username" type="text" placeholder="Ваше имя пользователя"
+                           class="form-control input-md">
+                </div>
             </div>
-        </div>
 
-        <!-- Password input-->
-        <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
-                <input name="password" type="password" placeholder="Ваш пароль" class="form-control input-md">
+            <!-- Password input-->
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                    <input name="password" type="password" placeholder="Ваш пароль" class="form-control input-md">
+                </div>
             </div>
-        </div>
-        <input type="hidden" name="${_csrf.parameterName}"
-               value="${_csrf.token}" />
-        <!-- Button -->
-        <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
-                <c:if test="${not empty error}">
-                    <div class="alert alert-danger" role="alert">${error}</div>
-                </c:if>
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">Войти</button>
+            <%--<input type="hidden" name="${_csrf.parameterName}"--%>
+            <%--value="${_csrf.token}" />--%>
+            <!-- Button -->
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger" role="alert">${error}</div>
+                    </c:if>
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Войти</button>
+                </div>
             </div>
-        </div>
 
-    </fieldset>
-</form>
-
+        </fieldset>
+    </form>
+</div>
 </body>
 </html>

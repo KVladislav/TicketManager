@@ -3,27 +3,31 @@ package org.JavaArt.TicketManager.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "operator")
-public class Operator {
+public class Operator implements UserDetails {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty
+
+
+
     @Column(name="name", nullable = false, length = 15)
     private String name;
 
-    @NotEmpty
     @Column(name="surname", nullable = false, length = 20)
     private String surname;
 
@@ -36,12 +40,10 @@ public class Operator {
     @Column(name="description", length = 500)
     private String description;
 
-    @NotEmpty
     @Column(name="login")
     private String login;
 
-    @NotEmpty
-    @Column(name="password", nullable = false)
+    @Column(name="password")
     private String password;
 
     public Operator(){}
@@ -62,7 +64,7 @@ public class Operator {
         this.name = name;
     }
 
-    public boolean getDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
@@ -108,5 +110,45 @@ public class Operator {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return !isDeleted;
+    }
+
+    public String getUsername() {
+        return login;
+    }
+    public void setUsername(String username) {
+        login = username;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        GrantedAuthority auth = new GrantedAuthority() {
+            private static final long serialVersionUID = 1L;
+
+            public String getAuthority() {
+                return "ROLE_USER";
+            }
+        };
+        Set<GrantedAuthority> set = new HashSet<>();
+        set.add(auth);
+
+        return set;
+    }
+
+    public void setRoles(String roles) {
     }
 }

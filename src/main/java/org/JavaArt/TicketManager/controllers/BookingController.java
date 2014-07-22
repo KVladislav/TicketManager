@@ -371,9 +371,11 @@ public class BookingController {
         }
         model.addAttribute("bookingTickets", tickets);
         model.addAttribute("bookingPrice", bookingPrice);
-        model.addAttribute("bookingTimeOut", bookingTimeOut);
-        model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
 
+        if (tickets.size()>0) {
+            model.addAttribute("bookingTimeOut", bookingTimeOut);
+            model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
+        }
 
         return "ClientBooking";
     }

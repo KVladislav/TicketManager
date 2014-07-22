@@ -243,7 +243,7 @@
         </c:if>
     </div>
     <div class="col-md-3 column">
-        <c:if test="${bookingTickets!=null}">
+        <c:if test="${bookingTimeOut!=null}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CheckoutOrderConfirmation">
                 Выкуп брони
             </button>

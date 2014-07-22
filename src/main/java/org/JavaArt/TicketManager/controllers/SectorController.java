@@ -24,7 +24,7 @@ public class SectorController {
     private SectorDefaultsService sectorDefaultsService = new SectorDefaultsService();
 
 
-    @RequestMapping(value = "Sectors/ViewSectors.do", method = RequestMethod.GET)
+    @RequestMapping(value = "Sectors/*.do", method = RequestMethod.GET)
     public String sectorsInit(Model model) {
 //        sessionStatus.setComplete();
         model.addAttribute("pageName", 7);//set menu page number
@@ -40,6 +40,11 @@ public class SectorController {
         model.addAttribute("sectorDefaultsList", sectorDefaultsList);
         return "SectorDefaults";
     }
+
+//    @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.GET)
+//    public String doNothing(){
+//        return "SectorDefaults";
+//    }
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.POST)
