@@ -42,8 +42,9 @@
         }
 
         countdown(function () {
-            alert('Изменения отменены');
-            window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");
+            <%--alert('Изменения отменены');--%>
+            <%--window.location.replace("${pageContext.request.contextPath}/Booking/UndoOrder.do");--%>
+            document.getElementById('bookingCancelNotificationButton').click();
         });
     }//]]>
 
@@ -203,6 +204,37 @@
                 </tbody>
 
             </table>
+        </div>
+    </div>
+</div>
+<button style="display: none;" class="btn btn-danger btn-sm" id="bookingCancelNotificationButton" data-toggle="modal" data-target="#bookingCancelNotification">
+    Отмена брони
+</button>
+<!-- Modal bookingCancelNotification-->
+<div class="modal" id="bookingCancelNotification" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Заказ отменен из-за окончания времени бронирования</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-lg-1 column col-lg-offset-9">
+                        <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
+                              method="post">
+                                <button type="submit"
+                                        class="btn btn-danger btn-lg" value="">Закрыть
+                                </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
