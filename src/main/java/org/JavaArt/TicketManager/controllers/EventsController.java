@@ -53,6 +53,8 @@ public class EventsController {
     public String newEventGet(ModelMap model) {
         model.addAttribute("pageName", 4);
         model.remove("eventErrorMessage");
+        String eventErrorMessage = "";
+        model.addAttribute("eventErrorMessage", eventErrorMessage);
         List<SectorDefaults> sectorsDefaults = sectorDefaultsService.getAllSectorDefaults();
         Collections.sort(sectorsDefaults);
         Map<String, Sector> allSectors = new TreeMap<>();
@@ -130,6 +132,7 @@ public class EventsController {
                            SessionStatus status, HttpServletRequest request) throws SQLException, ParseException {
         List<Event> events = eventService.getAllEvents();
         String eventErrorMessage = "";
+
         Map allSectors = (TreeMap) model.asMap().get("allSectors");
         String action = request.getParameter("delete");
         int idSectorDel = 0;
@@ -148,7 +151,7 @@ public class EventsController {
             int intHour = 0;
             int intMin = 0;
             if ((inputTime != null) && (inputTime != "")) {
-                String[] str = inputTime.split("-");
+                String[] str = inputTime.split(":");
                 intHour = Integer.parseInt(str[0]);
                 intMin = Integer.parseInt(str[1]);
             }
@@ -175,9 +178,9 @@ public class EventsController {
             model.addAttribute("dateEvent", simpleDate);
             String timeEvent = "";
             if (min == 0) {
-                timeEvent = "" + hour + "-" + "00";
+                timeEvent = "" + hour + ":" + "00";
             } else {
-                timeEvent = "" + hour + "-" + min;
+                timeEvent = "" + hour + ":" + min;
             }
             model.addAttribute("eventTime", timeEvent);
             return "AddEditEvent";
@@ -192,7 +195,7 @@ public class EventsController {
                 int intHour = 0;
                 int intMin = 0;
                 if ((inputTime != null) && (inputTime != "")) {
-                    String[] str = inputTime.split("-");
+                    String[] str = inputTime.split(":");
                     intHour = Integer.parseInt(str[0]);
                     intMin = Integer.parseInt(str[1]);
                 }
@@ -267,7 +270,7 @@ public class EventsController {
             int intHour = 0;
             int intMin = 0;
             if ((inputTime != null) && (inputTime != "")) {
-                String[] str = inputTime.split("-");
+                String[] str = inputTime.split(":");
                 intHour = Integer.parseInt(str[0]);
                 intMin = Integer.parseInt(str[1]);
             }
@@ -294,9 +297,9 @@ public class EventsController {
             model.addAttribute("dateEvent", simpleDate);
             String timeEvent = "";
             if (min == 0) {
-                timeEvent = "" + hour + "-" + "00";
+                timeEvent = "" + hour + ":" + "00";
             } else {
-                timeEvent = "" + hour + "-" + min;
+                timeEvent = "" + hour + ":" + min;
             }
 
             model.addAttribute("eventTime", timeEvent);
@@ -319,6 +322,8 @@ public class EventsController {
         model.addAttribute("pageName", 4);
         model.addAttribute("eventEdit", editEvent);
         model.remove("eventErrorMessage");
+        String errorMessageEdit = "";
+        model.addAttribute("errorMessageEdit", errorMessageEdit);
         Map<String, Sector> allSectors = new TreeMap<>();
         List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
         if (sectors.size() != 0) {
@@ -353,9 +358,9 @@ public class EventsController {
         model.addAttribute("dateEvent", trueDate);
         String timeEvent = "";
         if (min == 0) {
-            timeEvent = "" + hour + "-" + "00";
+            timeEvent = "" + hour + ":" + "00";
         } else {
-            timeEvent = "" + hour + "-" + min;
+            timeEvent = "" + hour + ":" + min;
         }
         model.addAttribute("eventTime", timeEvent);
         //  List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
@@ -394,7 +399,7 @@ public class EventsController {
             int intHour = 0;
             int intMin = 0;
             if ((inputTime != null) && (inputTime != "")) {
-                String[] str = inputTime.split("-");
+                String[] str = inputTime.split(":");
                 intHour = Integer.parseInt(str[0]);
                 intMin = Integer.parseInt(str[1]);
             }
@@ -421,9 +426,9 @@ public class EventsController {
             model.addAttribute("dateEvent", simpleDate);
             String timeEvent = "";
             if (min == 0) {
-                timeEvent = "" + hour + "-" + "00";
+                timeEvent = "" + hour + ":" + "00";
             } else {
-                timeEvent = "" + hour + "-" + min;
+                timeEvent = "" + hour + ":" + min;
             }
 
             model.addAttribute("eventTime", timeEvent);
@@ -440,7 +445,7 @@ public class EventsController {
                 int intMin = 0;
 
                 if ((inputTime != null) && (inputTime != "")) {
-                    String[] str = inputTime.split("-");
+                    String[] str = inputTime.split(":");
                     intHour = Integer.parseInt(str[0]);
                     intMin = Integer.parseInt(str[1]);
                 }
@@ -515,7 +520,7 @@ public class EventsController {
             int intHour = 0;
             int intMin = 0;
             if ((inputTime != null) && (inputTime != "")) {
-                String[] str = inputTime.split("-");
+                String[] str = inputTime.split(":");
                 intHour = Integer.parseInt(str[0]);
                 intMin = Integer.parseInt(str[1]);
             }
@@ -542,9 +547,9 @@ public class EventsController {
             model.addAttribute("dateEvent", simpleDate);
             String timeEvent = "";
             if (min == 0) {
-                timeEvent = "" + hour + "-" + "00";
+                timeEvent = "" + hour + ":" + "00";
             } else {
-                timeEvent = "" + hour + "-" + min;
+                timeEvent = "" + hour + ":" + min;
             }
 
             model.addAttribute("eventTime", timeEvent);
