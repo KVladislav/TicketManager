@@ -126,19 +126,13 @@
                                     class="btn btn-danger btn-lg">Удалить
                             </button>
                         </form>
-                        <div class="navbar-fixed-bottom">
-                            <%@include file="footer.jsp" %>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 <%@include file="footer.jsp" %>
 </body>
-
 </html>
-<%@include file="footer.jsp" %>
+

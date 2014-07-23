@@ -7,8 +7,8 @@
     left: 0;
     bottom: 0;
     padding: 10px;
-    background: darkgrey;
-    color: #fff;
+    background: #e7e7e7;
+    color: #000000;
     width: 100%;
    	">
     (C) Copyright 2014 by JavaArt Team
