@@ -237,14 +237,14 @@
     </div>
     <div class="col-md-2 column"></div>
     <div class="col-md-3 column">
-        <c:if test="${bookingTimeOut!=null}">
+        <c:if test="${!empty bookingTickets}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#BookingConfirmation">
                 Забронировать
             </button>
         </c:if>
     </div>
     <div class="col-md-3 column">
-        <c:if test="${bookingTimeOut!=null}">
+        <c:if test="${!empty bookingTickets}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CheckoutOrderConfirmation">
                 Выкуп брони
             </button>
