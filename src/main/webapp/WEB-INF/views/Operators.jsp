@@ -12,6 +12,12 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function confirmDelete(operator) {
+            return confirm("Вы действительно хотите удалить оператора " + operator + "?")
+        }
+    </script>
 </head>
 
 <br><br>
@@ -43,14 +49,14 @@
                     <td>${operator.login}</td>
                     <td>
                         <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditGet.do" method="get">
-                            <input type="hidden" name="operatorId" value="${operator.id}">
-                            <button type="submit" name="action" value="edit" class="btn">Редактировать</button>
+                            <button type="submit" name="operatorId" value="${operator.id}"
+                                    class="btn">Редактировать</button>
                         </form>
                     </td>
                     <td>
-                        <form action="${pageContext.request.contextPath}/Operators/OperatorsDelete.do" method="post">
-                            <input type="hidden" name="operatorId" value="${operator.id}">
-                            <button type="submit" name="action" value="delete" class="btn">Удалить</button>
+                        <form action="${pageContext.request.contextPath}/Operators/OperatorsDelete.do" method="post"
+                              onSubmit="return confirmDelete('${operator.name} ${operator.surname}')">
+                            <button type="submit" name="operatorId" value="${operator.id}" class="btn">Удалить</button>
                         </form>
                     </td>
                 </tr>
