@@ -18,13 +18,13 @@
          <label>Имя*</label>
          <div>
 
-              <input  type="text" name="name" size=20 maxlength=12 required pattern="^[a-zA-Zа-яА-Я]+$"
+              <input  type="text" name="name" size=20 maxlength=12 pattern="^[a-zA-Zа-яА-Я]+$"
                        title="Буквы без пробелов." style="text-align:center" required placeholder="Обязательное поле" >
          </div>
          <br>
          <label>Фамилия*</label>
          <div>
-              <input type="text" name="surname" size=20 maxlength=15 required pattern="^[a-zA-Zа-яА-Я]+$"
+              <input type="text" name="surname" size=20 maxlength=15 pattern="^[a-zA-Zа-яА-Я]+$"
                     title="Буквы без пробелов" style="text-align:center" required placeholder="Обязательное поле" >
          </div>
          <br>
