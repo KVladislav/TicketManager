@@ -16,7 +16,7 @@ public class Client {
     private Integer id;
 
     @NotEmpty
-    @Column(name = "name", nullable = false, length = 30)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
 
