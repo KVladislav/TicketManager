@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div>
+
     <div style="
     text-align: center;
     position: fixed;
@@ -12,4 +13,5 @@
    	">
     (C) Copyright 2014 by JavaArt Team
     </div>
+
 </div>

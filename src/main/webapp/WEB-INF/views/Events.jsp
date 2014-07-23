@@ -84,13 +84,9 @@
             </tbody>
         </table>
     </div>
-
     &MediumSpace;
     &MediumSpace;
-
 </div>
-
-
 </body>
 <%@include file="footer.jsp" %>
 </html>
