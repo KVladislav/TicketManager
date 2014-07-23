@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<div style="align-content: center; height: 800px; width: 1120px">
+<div style="align-content: center; height: 800px; width: 1120px; margin-left: auto; margin-right: auto;">
     <div style="float: right; width: 550px; text-align: center;">
         <div class="imgCaption" >Билетная схема стадиона для концертов</div>
         <img src="${pageContext.request.contextPath}/resources/img/concerts.jpg">
