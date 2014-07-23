@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
 import java.util.List;
 
 /**
@@ -36,7 +35,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.getTransaction().commit();
             session.flush();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -57,7 +56,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             session.getTransaction().commit();
             session.flush();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -74,7 +73,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             sector = (Sector) session.get(Sector.class, id);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -101,7 +100,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY id");
             sectors = query.list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -121,7 +120,7 @@ public class SectorRepositoryImpl implements SectorRepository {
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY price");
             sectors = query.list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

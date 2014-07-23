@@ -14,7 +14,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +51,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session.flush();
             session.clear();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -79,7 +78,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             ticket = (Ticket) session.get(Ticket.class, id);
             if ((ticket != null) && ticket.isDeleted() == true) ticket = null;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -97,7 +96,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             tickets = session.createCriteria(Ticket.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -123,7 +122,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             tx.commit();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "[TicketThread] " + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, "[TicketThread] " + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -156,7 +155,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -188,7 +187,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 //                }
 //            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -208,7 +207,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             Query query = session.createQuery(String.format("select count (*) from Ticket where isReserved = true and isDeleted = false and isConfirmed = true and client =%d", client.getId()));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -230,7 +229,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d", sector.getId()));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -248,7 +247,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             Query query = session.createQuery(String.format("select count (*) from Ticket where isDeleted = false and sector =%d and row=%d", sector.getId(), row));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -267,7 +266,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             tickets = session.createQuery(String.format("from Ticket where isDeleted = false and sector =%d and row=%d", sector.getId(), row)).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -294,7 +293,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             if (ticket.isReserved()) return 2; //в резерве
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -330,7 +329,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             tx.commit();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -348,7 +347,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             tickets = session.createQuery(String.format("from Ticket where isDeleted = false and sector =%d", sector.getId())).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
