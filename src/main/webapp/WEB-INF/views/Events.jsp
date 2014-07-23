@@ -49,7 +49,7 @@
 <h1>
     <div class="panel-heading" style="text-align:center;"><b>Список мероприятий</b></div>
 </h1>
-<div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
+<div class="panel-body" style="padding:15px; width:50%; margin-left: 25%; margin-bottom: 50px;">
     <div class="table responsive">
         <table class="table table-bordered">
             <thead>

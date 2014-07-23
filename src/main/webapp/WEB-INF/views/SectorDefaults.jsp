@@ -22,7 +22,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin-bottom: 50px">
     <div class="row clearfix">
         <div class="col-md-3 column">
         </div>
@@ -126,17 +126,22 @@
                                     class="btn btn-danger btn-lg">Удалить
                             </button>
                         </form>
-
+                        <div class="navbar-fixed-bottom">
+                            <%@include file="footer.jsp" %>
+                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 
 </body>
-<%@include file="footer.jsp" %>
+
 
 </html>
+
+<%@include file="footer.jsp" %>

@@ -30,13 +30,13 @@
              <td><br>
              <div>
                   <input type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
-                         title="Целые числа без пробелов"  style="text-align:center"
+                         title="Целые числа без пробелов"  style="text-align:center "
                          required placeholder="Введите ID билета" />
                   <button type="submit" name="action" class="btn btn-primary" >Поиск</button>
                   <h4 style="text-align:center; color:Red">${errorRefund}</h4>
              </div>
              <br><br>
-             <div class="panel-body"  style=" width:60%">
+             <div class="panel-body"  style=" width:60%;">
                   <div class="table responsive">
                        <table class="table table-bordered table-bordered">
                        <thead>
