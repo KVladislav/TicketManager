@@ -2,14 +2,16 @@ package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.ClientRepository;
 import org.JavaArt.TicketManager.entities.Client;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,9 @@ import java.util.List;
 public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public void saveOrUpdateClient(Client client) {
+        if (client==null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        client.setOperator(operator);
 
         Session session = null;
         try {
@@ -32,7 +37,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             session.getTransaction().commit();
             session.flush();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -41,15 +46,17 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Client> getClientsByName(String clientName) {
+        if (clientName==null) return new ArrayList<>();
         Session session = null;
         List<Client> clients = null;//new ArrayList<Client>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             clients = session.createCriteria(Client.class).add(Restrictions.eq("isDeleted", new Boolean("false"))).add(Restrictions.ilike("name", "%" + clientName + "%")).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -66,7 +73,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             client = (Client) session.get(Client.class, id);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -84,7 +91,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             clients = session.createCriteria(Client.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -111,7 +118,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             tx.commit();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, "ClientThread" + e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -121,7 +128,11 @@ public class ClientRepositoryImpl implements ClientRepository {
 
         @Override
     public void deleteClient(Client client)  {
+            if (client==null) return;
+            Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            client.setOperator(operator);
         client.setDeleted(true);
+            saveOrUpdateClient(client);
 
     }
 }

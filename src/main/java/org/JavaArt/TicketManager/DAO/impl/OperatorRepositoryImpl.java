@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
 import java.util.List;
 
 /**
@@ -27,6 +26,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public void addOperator(Operator operator) {
+        if (operator==null) return;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -35,7 +35,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             session.getTransaction().commit();
             session.flush();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -45,6 +45,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public void updateOperator(Operator operator) {
+        if (operator==null) return;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -53,7 +54,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             session.getTransaction().commit();
             session.flush();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -70,7 +71,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             operator = (Operator) session.get(Operator.class, id);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -79,6 +80,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         return operator;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Operator> getAllOperators() {
         Session session = null;
@@ -89,7 +91,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
                     .addOrder(Order.asc("id")).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -125,7 +127,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
             Query query = session.createQuery(String.format("select count (*) from Operator where isDeleted = false"));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -136,6 +138,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException {
+        if (userName==null) throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
         if (countOperators()==0 && userName.equals("root")) {
             Operator operator = new Operator();
             operator.setLogin("root");
@@ -152,7 +155,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
                     .add(Restrictions.eq("isDeleted", false))
                     .uniqueResult();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -160,7 +163,6 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         }
 
         if (operator == null) {
-            System.out.println("Пользователь " + userName + " не найден!");
             throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
         }
 
