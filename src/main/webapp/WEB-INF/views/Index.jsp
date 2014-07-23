@@ -14,12 +14,12 @@
     </style>
 </head>
 <body>
-<div style="align-content: center; height: 800px; width: 1120px; margin-left: auto; margin-right: auto;">
+<div style="align-content: center; height: 620px; width: 1220px; margin-left: auto; margin-right: auto;">
     <div style="float: right; width: 550px; text-align: center;">
         <div class="imgCaption" >Билетная схема стадиона для концертов</div>
         <img src="${pageContext.request.contextPath}/resources/img/concerts.jpg">
     </div>
-    <div style="float: right; width: 550px; text-align: center; margin-right: 20px; ">
+    <div style="float: right; width: 550px; text-align: center; margin-right: 120px; ">
         <div class="imgCaption">Билетная схема стадиона для матчей</div>
         <img src="${pageContext.request.contextPath}/resources/img/matches.jpg">
     </div>
