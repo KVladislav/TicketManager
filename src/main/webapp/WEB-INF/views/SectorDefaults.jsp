@@ -32,7 +32,7 @@
             </c:if>
             <table class="table table-hover table-condensed">
                 <caption>
-                    <h1><code>Настройка секторов стадиона</code>
+                    <h1 class="panel-heading" style=" color:Blue">Настройка секторов стадиона
                     </h1></caption>
                     <thead>
                     <tr>

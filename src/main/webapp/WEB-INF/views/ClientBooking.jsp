@@ -92,8 +92,8 @@
 <div class="col-md-12 column">
 <table class="table table-hover table-condensed">
     <caption>
-        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                           pattern="dd.MM.yy H:mm"/></code></h3>
+        <h3 class="panel-heading" style=" color:Blue">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                           pattern="dd.MM.yy H:mm"/></h3>
     </caption>
     <thead>
     <tr>
