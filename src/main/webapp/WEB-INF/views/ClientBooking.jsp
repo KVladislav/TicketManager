@@ -237,7 +237,7 @@
     </div>
     <div class="col-md-2 column"></div>
     <div class="col-md-3 column">
-        <c:if test="${!empty bookingTickets}">
+        <c:if test="${!empty bookingTickets && bookingTimeOut!=null}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#BookingConfirmation">
                 Забронировать
             </button>
