@@ -482,7 +482,7 @@
             </div>
             <div class="modal-footer">
                 <div class="row clearfix">
-                    <div class="col-md-8 column">
+                    <div class="col-md-9 column">
                         <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">

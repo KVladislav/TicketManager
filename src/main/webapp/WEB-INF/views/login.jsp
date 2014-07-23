@@ -35,15 +35,16 @@
             <!-- Text input-->
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
-                    <input name="username" type="text" placeholder="Ваше имя пользователя"
-                           class="form-control input-md">
+                    <input name="username" type="text" placeholder="Ваше имя пользователя" title="Только буквы до 12 символов"
+                           pattern="^[a-zA-Zа-яА-Я]+$" maxlength=12 class="form-control input-md">
                 </div>
             </div>
 
             <!-- Password input-->
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
-                    <input name="password" type="password" placeholder="Ваш пароль" class="form-control input-md">
+                    <input name="password" type="password" placeholder="Ваш пароль" title="Только буквы до 15 символов"
+                           pattern="^[a-zA-Zа-яА-Я]+$" maxlength=15 class="form-control input-md">
                 </div>
             </div>
             <%--<input type="hidden" name="${_csrf.parameterName}"--%>
