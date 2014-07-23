@@ -168,161 +168,161 @@
                 <option selected value="${eventTime}">${eventTime}</option>
             </c:if>
 
-            <c:if test="${eventTime.equals('10-00')}">
-                <option selected value="10-00">10-00</option>
+            <c:if test="${eventTime.equals('10:00')}">
+                <option selected value="10:00">10:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('10-00')}">
-                <option value="10-00">10-00</option>
+            <c:if test="${!eventTime.equals('10:00')}">
+                <option value="10:00">10:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('10-30')}">
-                <option selected value="10-30">10-30</option>
+            <c:if test="${eventTime.equals('10:30')}">
+                <option selected value="10:30">10:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('10-30')}">
-                <option value="10-30">10-30</option>
+            <c:if test="${!eventTime.equals('10:30')}">
+                <option value="10:30">10:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('11-00')}">
-                <option selected value="11-00">11-00</option>
+            <c:if test="${eventTime.equals('11:00')}">
+                <option selected value="11:00">11:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('11-00')}">
-                <option value="11-00">11-00</option>
+            <c:if test="${!eventTime.equals('11:00')}">
+                <option value="11:00">11:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('11-30')}">
-                <option selected value="11-30">11-30</option>
+            <c:if test="${eventTime.equals('11:30')}">
+                <option selected value="11:30">11:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('11-30')}">
-                <option value="11-30">11-30</option>
+            <c:if test="${!eventTime.equals('11:30')}">
+                <option value="11:30">11:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('12-00')}">
-                <option selected value="12-00">12-00</option>
+            <c:if test="${eventTime.equals('12:00')}">
+                <option selected value="12:00">12:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('12-00')}">
-                <option value="12-00">12-00</option>
+            <c:if test="${!eventTime.equals('12:00')}">
+                <option value="12:00">12:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('12-30')}">
-                <option selected value="12-30">12-30</option>
+            <c:if test="${eventTime.equals('12:30')}">
+                <option selected value="12:30">12:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('12-30')}">
-                <option value="12-30">12-30</option>
+            <c:if test="${!eventTime.equals('12:30')}">
+                <option value="12:30">12:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('13-00')}">
-                <option selected value="13-00">13-00</option>
+            <c:if test="${eventTime.equals('13:00')}">
+                <option selected value="13:00">13:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('13-00')}">
-                <option value="13-00">13-00</option>
+            <c:if test="${!eventTime.equals('13:00')}">
+                <option value="13:00">13:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('13-30')}">
-                <option selected value="13-30">13-30</option>
+            <c:if test="${eventTime.equals('13:30')}">
+                <option selected value="13:30">13:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('13-30')}">
-                <option value="13-30">13-30</option>
+            <c:if test="${!eventTime.equals('13:30')}">
+                <option value="13:30">13:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('14-00')}">
-                <option selected value="14-00">14-00</option>
+            <c:if test="${eventTime.equals('14:00')}">
+                <option selected value="14:00">14:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('14-00')}">
+            <c:if test="${!eventTime.equals('14:00')}">
                 <option value="14-00">14-00</option>
             </c:if>
-            <c:if test="${eventTime.equals('14-30')}">
-                <option selected value="14-30">14-30</option>
+            <c:if test="${eventTime.equals('14:30')}">
+                <option selected value="14:30">14:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('14-30')}">
-                <option value="14-30">14-30</option>
+            <c:if test="${!eventTime.equals('14:30')}">
+                <option value="14:30">14:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('15-00')}">
-                <option selected value="15-00">15-00</option>
+            <c:if test="${eventTime.equals('15:00')}">
+                <option selected value="15:00">15:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('15-00')}">
-                <option value="15-00">15-00</option>
+            <c:if test="${!eventTime.equals('15:00')}">
+                <option value="15:00">15:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('15-30')}">
-                <option selected value="15-30">15-30</option>
+            <c:if test="${eventTime.equals('15:30')}">
+                <option selected value="15:30">15:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('15-30')}">
-                <option value="15-30">15-30</option>
+            <c:if test="${!eventTime.equals('15:30')}">
+                <option value="15:30">15:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('16-00')}">
-                <option selected value="16-00">16-00</option>
+            <c:if test="${eventTime.equals('16:00')}">
+                <option selected value="16:00">16:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('16-00')}">
-                <option value="16-00">16-00</option>
+            <c:if test="${!eventTime.equals('16:00')}">
+                <option value="16:00">16:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('16-30')}">
-                <option selected value="16-30">16-30</option>
+            <c:if test="${eventTime.equals('16:30')}">
+                <option selected value="16:30">16:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('16-30')}">
-                <option value="16-30">16-30</option>
+            <c:if test="${!eventTime.equals('16:30')}">
+                <option value="16:30">16:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('17-00')}">
-                <option selected value="17-00">17-00</option>
+            <c:if test="${eventTime.equals('17:00')}">
+                <option selected value="17:00">17:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('17-00')}">
-                <option value="17-00">17-00</option>
+            <c:if test="${!eventTime.equals('17:00')}">
+                <option value="17:00">17:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('17-30')}">
-                <option selected value="17-30">17-30</option>
+            <c:if test="${eventTime.equals('17:30')}">
+                <option selected value="17:30">17:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('17-30')}">
-                <option value="17-30">17-30</option>
+            <c:if test="${!eventTime.equals('17:30')}">
+                <option value="17:30">17:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('18-00')}">
-                <option selected value="18-00">18-00</option>
+            <c:if test="${eventTime.equals('18:00')}">
+                <option selected value="18:00">18:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('18-00')}">
-                <option value="18-00">18-00</option>
+            <c:if test="${!eventTime.equals('18:00')}">
+                <option value="18:00">18:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('18-30')}">
-                <option selected value="18-30">18-30</option>
+            <c:if test="${eventTime.equals('18:30')}">
+                <option selected value="18:30">18:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('18-30')}">
-                <option value="18-30">18-30</option>
+            <c:if test="${!eventTime.equals('18:30')}">
+                <option value="18:30">18:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('19-00')}">
-                <option selected value="19-00">19-00</option>
+            <c:if test="${eventTime.equals('19:00')}">
+                <option selected value="19:00">19:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('19-00')}">
-                <option value="19-00">19-00</option>
+            <c:if test="${!eventTime.equals('19:00')}">
+                <option value="19:00">19:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('19-30')}">
-                <option selected value="19-30">19-30</option>
+            <c:if test="${eventTime.equals('19:30')}">
+                <option selected value="19:30">19:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('19-30')}">
-                <option value="19-30">19-30</option>
+            <c:if test="${!eventTime.equals('19:30')}">
+                <option value="19:30">19:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('20-00')}">
-                <option selected value="20-00">20-00</option>
+            <c:if test="${eventTime.equals('20:00')}">
+                <option selected value="20:00">20:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('20-00')}">
-                <option value="20-00">20-00</option>
+            <c:if test="${!eventTime.equals('20:00')}">
+                <option value="20:00">20:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('20-30')}">
-                <option selected value="20-30">20-30</option>
+            <c:if test="${eventTime.equals('20:30')}">
+                <option selected value="20:30">20:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('20-30')}">
-                <option value="20-30">20-30</option>
+            <c:if test="${!eventTime.equals('20:30')}">
+                <option value="20:30">20:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('21-00')}">
-                <option selected value="21-00">21-00</option>
+            <c:if test="${eventTime.equals('21:00')}">
+                <option selected value="21:00">21:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('21-00')}">
-                <option value="21-00">21-00</option>
+            <c:if test="${!eventTime.equals('21:00')}">
+                <option value="21:00">21:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('21-30')}">
-                <option selected value="21-30">21-30</option>
+            <c:if test="${eventTime.equals('21:30')}">
+                <option selected value="21:30">21:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('21-30')}">
-                <option value="21-30">21-30</option>
+            <c:if test="${!eventTime.equals('21:30')}">
+                <option value="21:30">21:30</option>
             </c:if>
-            <c:if test="${eventTime.equals('22-00')}">
-                <option selected value="22-00">22-00</option>
+            <c:if test="${eventTime.equals('22:00')}">
+                <option selected value="22:00">22:00</option>
             </c:if>
-            <c:if test="${!eventTime.equals('22-00')}">
-                <option value="22-00">22-00</option>
+            <c:if test="${!eventTime.equals('22:00')}">
+                <option value="22:00">22:00</option>
             </c:if>
-            <c:if test="${eventTime.equals('22-30')}">
-                <option selected value="22-30">22-30</option>
+            <c:if test="${eventTime.equals('22:30')}">
+                <option selected value="22:30">22:30</option>
             </c:if>
-            <c:if test="${!eventTime.equals('22-30')}">
-                <option value="22-30">22-30</option>
+            <c:if test="${!eventTime.equals('22:30')}">
+                <option value="22:30">22:30</option>
             </c:if>
 
         </select>
@@ -335,7 +335,7 @@
 
     <div class="my-controls">
         <input style="resize: none" type="text" id="description" maxlength="50" data-min-length=1 name="description"
-               required pattern="^\S+$"
+               required pattern="^\S+*$"
                title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
                value="${eventDescriptions}"/>
     </div>
@@ -393,7 +393,7 @@
                     <td>
 
                         <div>
-                            <input type="text" maxlength="5" required pattern="^\d+\.{0,1}\d{0,2}$"
+                            <input type="text" maxlength="5" required pattern="^\d{0,5}(\.\d{0,2}){0,1}$ "
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
@@ -431,6 +431,7 @@
 </table>
 </center>
 
-<%@include file="footer.jsp" %>
+
 </body>
+<%@include file="footer.jsp" %>
 </html>
