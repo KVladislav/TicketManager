@@ -2,10 +2,12 @@ package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.SectorRepository;
 import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
@@ -23,6 +25,9 @@ import java.util.List;
 public class SectorRepositoryImpl implements SectorRepository {
     @Override
     public void addSector(Sector sector) {
+        if (sector == null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        sector.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -41,6 +46,9 @@ public class SectorRepositoryImpl implements SectorRepository {
 
     @Override
     public void updateSector(Sector sector) {
+        if (sector == null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        sector.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -71,18 +79,19 @@ public class SectorRepositoryImpl implements SectorRepository {
             if (session != null && session.isOpen()) {
                 session.close();
             }
-            return sector;
         }
-
+        return sector;
     }
 
     @Override
     public void deleteSector(Sector sector) {
+        if (sector == null) return;
         sector.setDeleted(true);
         updateSector(sector);
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Sector> getSectorsByEvent(Event event) {
         Session session = null;
@@ -101,8 +110,10 @@ public class SectorRepositoryImpl implements SectorRepository {
         return sectors;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Sector> getSectorsByEventOrderPrice(Event event) {
+        if (event == null) return null;
         Session session = null;
         List<Sector> sectors = null;
         try {

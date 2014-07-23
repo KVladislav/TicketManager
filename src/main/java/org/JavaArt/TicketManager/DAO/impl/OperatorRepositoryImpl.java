@@ -27,6 +27,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public void addOperator(Operator operator) {
+        if (operator==null) return;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -45,6 +46,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public void updateOperator(Operator operator) {
+        if (operator==null) return;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -79,6 +81,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         return operator;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Operator> getAllOperators() {
         Session session = null;
@@ -136,6 +139,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException {
+        if (userName==null) throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
         if (countOperators()==0 && userName.equals("root")) {
             Operator operator = new Operator();
             operator.setLogin("root");
@@ -160,7 +164,6 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         }
 
         if (operator == null) {
-            System.out.println("Пользователь " + userName + " не найден!");
             throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
         }
 

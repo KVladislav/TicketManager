@@ -2,11 +2,13 @@ package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.EventRepository;
 import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
@@ -19,6 +21,9 @@ import java.util.List;
 public class EventRepositoryImpl implements EventRepository {
     @Override
     public void addEvent(Event event) {
+        if (event==null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        event.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -37,6 +42,9 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public void updateEvent(Event event) {
+        if (event==null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        event.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -74,6 +82,7 @@ public class EventRepositoryImpl implements EventRepository {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Event> getAllEvents() {
         Session session = null;
@@ -114,8 +123,10 @@ public class EventRepositoryImpl implements EventRepository {
         return events;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Event> getEventByDate(Date inputDate) {
+        if (inputDate==null) return new ArrayList<>();
         Session session = null;
         List<Event> events = null;
         try {
@@ -134,8 +145,10 @@ public class EventRepositoryImpl implements EventRepository {
         return events;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Event> getEventByDateFromEvent(Date inputDate, Event event) {
+        if (inputDate==null || event==null) return new ArrayList<>();
         Session session = null;
         List<Event> events = null;
         try {
@@ -155,6 +168,7 @@ public class EventRepositoryImpl implements EventRepository {
         return events;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Event> getFutureBookableEvents() {
         Session session = null;

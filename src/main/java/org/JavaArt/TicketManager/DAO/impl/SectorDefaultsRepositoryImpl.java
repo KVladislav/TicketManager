@@ -1,11 +1,13 @@
 package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.SectorDefaultsRepository;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
@@ -23,6 +25,9 @@ import java.util.List;
 public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     @Override
     public void addSectorDefaults(SectorDefaults sectorDefaults) {
+        if (sectorDefaults == null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        sectorDefaults.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -40,6 +45,9 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
 
     @Override
     public void updateSectorDefaults(SectorDefaults sectorDefaults) {
+        if (sectorDefaults == null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        sectorDefaults.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -96,6 +104,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
 
     @Override
     public void deleteSectorDefaults(SectorDefaults sectorDefaults) {
+        if(sectorDefaults== null) return;
         sectorDefaults.setDeleted(true);
         updateSectorDefaults(sectorDefaults);
     }

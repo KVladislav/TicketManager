@@ -2,6 +2,7 @@ package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.TicketRepository;
 import org.JavaArt.TicketManager.entities.Client;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
@@ -10,9 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +26,11 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public void saveOrUpdateTicket(Ticket ticket) {
+        if (ticket==null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ticket.setOperator(operator);
         Session session = null;
+        ticket.setOperator(operator);
         try {
             if (ticket.getId() == null) {
                 session = HibernateUtil.getSessionFactory().openSession();
@@ -127,6 +134,9 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public void deleteTicket(Ticket ticket) {
+        if (ticket==null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ticket.setOperator(operator);
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -157,6 +167,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getTicketsByClient(Client client) {
+        if (client==null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
 //        List<Ticket> result = null;
@@ -188,6 +199,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public int getTicketsAmountByClient(Client client) {
+        if  (client==null) return 0;
         Session session = null;
         int counter = 0;
         try {
@@ -208,6 +220,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public int getFreeTicketsAmountBySector(Sector sector) {
+        if (sector==null) return 0;
         Session session = null;
         int counter = 0;
         try {
@@ -247,6 +260,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row) {
+        if (sector==null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
         try {
@@ -264,6 +278,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public int isPlaceFree(Sector sector, int row, int seat) {
+        if (sector==null) return 3;
         Session session = null;
         Ticket ticket;
         try {
@@ -326,6 +341,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getAllTicketsBySector(Sector sector) {
+        if (sector==null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
         try {

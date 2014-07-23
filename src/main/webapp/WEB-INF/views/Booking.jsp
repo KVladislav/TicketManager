@@ -64,7 +64,6 @@
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <strong>Мероприятие</strong>
-
                     <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
                         <p><select size="10" name="eventId" data-size="3" class="form-control">
                             <c:forEach items="${bookingEvents}" var="evnt">
