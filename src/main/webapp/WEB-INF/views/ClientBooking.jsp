@@ -61,7 +61,7 @@
             <form class="form" action="${pageContext.request.contextPath}/Booking/ClientSave.do"
                   method="post" name="NewClient">
                 <div class="control-group">
-                    <label class="control-label" for="clientName">ФИО</label>
+                    <label class="control-label" for="clientName" style="text-align:center; color:Blue">ФИО</label>
 
                     <div class="controls">
                         <input class="form-control" maxlength="50" id="clientName" type="text" name="clientName"
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="clientDescription">Описание</label>
+                    <label class="control-label" for="clientDescription" style="text-align:center; color:Blue">Описание</label>
 
                     <div class="controls">
 
