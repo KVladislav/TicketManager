@@ -2,13 +2,13 @@
 <div>
     <div style="
     text-align: center;
-    position: fixed; /* Фиксированное положение */
+    position: fixed;
     left: 0;
-    bottom: 0; /* Левый нижний угол */
-    padding: 10px; /* Поля вокруг текста */
-    background: dimgrey; /* Цвет фона */
-    color: #fff; /* Цвет текста */
-    width: 100%; /* Ширина слоя */
+    bottom: 0;
+    padding: 10px;
+    background: darkgrey;
+    color: #fff;
+    width: 100%;
    	">
     (C) Copyright 2014 by JavaArt Team
     </div>
