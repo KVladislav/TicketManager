@@ -104,11 +104,11 @@
                 </div>
             </div>
             <div class="row clearfix">
-                <div class="col-md-4 column">
+                <div class="col-md-5 column">
                     <strong>Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
-                        <p><select size="10" name="row" class="form-control">
+                        <p><select style="width:250px" size="11" name="row" class="form-control">
                             <c:forEach items="${bookingRowsMap}" var="rowEntry">
                                 <c:if test="${rowEntry.key==bookingRow}">
                                     <option value="${rowEntry.key}" onclick="this.form.submit()"
@@ -123,7 +123,7 @@
                         </select></p>
                     </form>
                 </div>
-                <div class="col-md-6 column">
+                <div class="col-md-4 column">
                     <strong>Место</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
