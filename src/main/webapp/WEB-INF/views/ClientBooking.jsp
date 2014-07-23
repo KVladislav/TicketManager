@@ -92,8 +92,8 @@
 <div class="col-md-12 column">
 <table class="table table-hover table-condensed">
     <caption>
-        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                           pattern="dd.MM.yy H:mm"/></code></h3>
+        <h3 class="panel-heading" style=" color:Blue">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                           pattern="dd.MM.yy H:mm"/></h3>
     </caption>
     <thead>
     <tr>
@@ -237,14 +237,14 @@
     </div>
     <div class="col-md-2 column"></div>
     <div class="col-md-3 column">
-        <c:if test="${bookingTimeOut!=null}">
+        <c:if test="${!empty bookingTickets}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#BookingConfirmation">
                 Забронировать
             </button>
         </c:if>
     </div>
     <div class="col-md-3 column">
-        <c:if test="${bookingTimeOut!=null}">
+        <c:if test="${!empty bookingTickets}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CheckoutOrderConfirmation">
                 Выкуп брони
             </button>
