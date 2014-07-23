@@ -11,23 +11,23 @@
 <body>
     <div class="Refund">
     <center>
-         <h3 class="panel-heading" style=" color:Blue" >Возврат билета</h3>
-         <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
+        <h3 class="panel-heading" style=" color:Blue" >Возврат билета</h3>
+        <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
              <br><h4> Поиск по номеру билета</h4>
              <td><br>
              <div>
                   <input type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
                          title="Целые числа без пробелов"  style="text-align:center"
                          required placeholder="Введите ID билета" />
-                  <button type="submit" name="action" class="btn btn-primary" >Поиск билета</button>
-                  <h3 style="text-align:center; color:Red">${error}</h3>
+                  <button type="submit" name="action" class="btn btn-primary" >Поиск</button>
+                  <h4 style="text-align:center; color:Red">${errorRefund}</h4>
              </div>
              <br><br>
              <div class="panel-body"  style=" width:60%">
                   <div class="table responsive">
                        <table class="table table-bordered table-bordered">
                        <thead>
-                             <th>Номер билета</th>
+                             <th>ID билета</th>
                              <th>Мероприятие</th>
                              <th>Дата</th>
                              <th>Сектор</th>
@@ -47,17 +47,34 @@
                        </table>
                   </div>
              </div>
-         </form>
+        </form>
+        <table>
+        <tr>
+            <td>
+                <form name = "delTicket" action="${pageContext.request.contextPath}/Refund/Delete.do" method="post">
+                    <h3 style="text-align:center">
+                        <button  type="submit" name="delete" class="btn btn-primary" >Возврат</button>
+                    </h3>
+                </form>
+            </td>
+            <td>
+                <div class="control-group">
+                    <div class="col-md-1 column">
+                        <form name = "cancelTicket" action="${pageContext.request.contextPath}/Refund/Cancel.do"
+                              method="get">
+                            <h3 style="text-align:center">
+                                <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена">
+                            </h3>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </table>
+    <h4 style="text-align:center; color:Green">${messageRefund}</h4>
     </center>
     </div>
-    <div>
-        <form name = "delTicket" action="${pageContext.request.contextPath}/Refund/Delete.do" method="post">
-            <h4 style="text-align:center">
-                <button  type="submit" name="delete" class="btn btn-primary" >Подтвердите возврат билета</button>
-                <h5 style="text-align:center; color:Green">${message}</h5>
-            </h4>
-        </form>
-    </div>
-</body>
+ </body>
 </html>
+
+
 

@@ -58,7 +58,7 @@
             <input type="text" name="description" size=50 maxlength=50
                    style="text-align:center" value="${operator.description}">
         </div>
-        <h4 style="text-align:center; color:Red">${error}</h4>
+        <h4 style="text-align:center; color:Red">${errorOperator}</h4>
         <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
      </form>
 </center>

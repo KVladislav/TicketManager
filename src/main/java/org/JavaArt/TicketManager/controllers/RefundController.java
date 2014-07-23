@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes({"pageName", "error", "message"})
+@SessionAttributes({"pageName", "errorRefund", "messageRefund"})
 
 public class RefundController {
     private TicketService ticketService = TicketService.getInstance();
@@ -20,8 +20,8 @@ public class RefundController {
     public String refundRefund(Model model) {
         ticket=null;
         model.addAttribute("pageName", 3);
-        model.addAttribute("error", "");
-        model.addAttribute("message", "");
+        model.addAttribute("errorRefund", "");
+        model.addAttribute("messageRefund", "");
         return "Refund";
     }
 
@@ -33,19 +33,19 @@ public class RefundController {
             ticket = ticketService.getTicketById(id);
             if (ticket!=null && ticket.isConfirmed()==true && ticket.isReserved()==false){
                 model.addAttribute(ticket);
-                model.addAttribute("error", "");
+                model.addAttribute("errorRefund", "");
             }
             else{
                 ticket=null;
-                model.addAttribute("error", "Такой билет не продан");
+                model.addAttribute("errorRefund", "Такой билет не продан");
             }
         }
         catch (Exception e){
             ticket=null;
-            model.addAttribute("error", "Повторите ввод ID");
+            model.addAttribute("errorRefund", "Повторите ввод ID");
         }
         finally {
-            model.addAttribute("message", "");
+            model.addAttribute("messageRefund", "");
             return "Refund";
         }
     }
@@ -55,7 +55,16 @@ public class RefundController {
         if (ticket==null) return "redirect:/Refund/Refund.do";
         ticketService.deleteTicket(ticket);
         ticket=null;
-        model.addAttribute("message", "Билет возвращен в продажу");
+        model.addAttribute("messageRefund", "Билет возвращен в продажу");
+        return "Refund";
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "Refund/Cancel.do")
+    public String  refundCancel(Model model) {
+        ticket=null;
+        model.addAttribute("errorRefund", "");
+        model.addAttribute("messageRefund", "");
         return "Refund";
     }
 }
