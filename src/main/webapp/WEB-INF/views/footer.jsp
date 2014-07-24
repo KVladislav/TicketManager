@@ -10,8 +10,8 @@
     background: #e7e7e7;
     color: #000000;
     width: 100%;
-   	">
-    (C) Copyright 2014 by JavaArt Team
+   	">(C) Copyright 2014 by  <a href="/about">JavaArt Team</a>
+
     </div>
 
 </div>
