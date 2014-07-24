@@ -1,5 +1,5 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:mvc="http://www.springframework.org/schema/mvc"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <display-name>TicketManager</display-name>
@@ -16,7 +16,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <context-param>
-        <param-name>contextConfigLocation
+        <param-name>
+            contextConfigLocation
         </param-name>
         <param-value>
             /WEB-INF/action-servlet.xml
@@ -36,7 +37,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </listener>
 
     <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-name>
+            springSecurityFilterChain
+        </filter-name>
         <filter-class>
             org.springframework.web.filter.DelegatingFilterProxy
         </filter-class>

@@ -393,7 +393,7 @@
                     <td>
 
                         <div>
-                            <input type="text" maxlength="5" required pattern="^\d{0,5}(\.\d{0,2}){0,1}$ "
+                            <input type="text" maxlength="5" required pattern="^\d{0,5}(\.\d{0,2}){0,1}$"
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>

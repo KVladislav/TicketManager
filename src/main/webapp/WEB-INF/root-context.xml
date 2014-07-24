@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <annotation-driven />
-
+    <resources mapping="/favicon.ico" location="/resources/ico/favicon.ico" />
     <resources mapping="/resources/**" location="/resources/" />
 
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
