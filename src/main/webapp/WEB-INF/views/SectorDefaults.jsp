@@ -68,7 +68,7 @@
                                     <input class="span2" size="16" type="text" maxlength="8" name="defaultPrice"
                                            placeholder="Цена" value="${sector.defaultPrice}"
                                            required pattern="\d{0,5}(\.\d{0,2}){0,1}"
-                                           title="В интервале [1-99999] до двух знаков после запятой">
+                                           title="В интервале [0-99999] до двух знаков после запятой">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
                                     <button type="submit" name="action" value="save" class="btn btn-default btn-xs">
