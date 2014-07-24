@@ -23,9 +23,9 @@
 
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
+<nav class="navbar navbar-default" role="navigation" >
+    <div class="container-fluid" >
+        <div class="navbar-header" >
             <a class="navbar-brand" href="/">TicketManager</a>
         </div>
         <div class="collapse navbar-collapse">
@@ -95,5 +95,6 @@
         </div>
     </div>
 </nav>
+
 </body>
 </html>

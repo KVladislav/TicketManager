@@ -21,13 +21,13 @@
 </head>
 
 <br><br>
-<div class="panel-heading" style="text-align:center;"><b>
+<div class="panel-heading" style="text-align:center; "><b>
     <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Добавить нового оператора</a>
 </b></div>
 
 <br>
-<h4><div class="panel-heading" style="text-align:center;"><b>Список операторов</b></div></h4>
-<div class="panel-body" style="padding:15px; width:50%; margin-left: 25%">
+<h4><div class="panel-heading" style="text-align:center; "><b>Список операторов</b></div></h4>
+<div class="panel-body" style="padding:15px; width:50%; margin-left: 25%;margin-bottom: 50px  ">
     <div class="table responsive">
         <table class="table table-bordered">
             <thead>
@@ -65,4 +65,5 @@
         </table>
     </div>
 </div>
+
 <%@include file="footer.jsp" %>

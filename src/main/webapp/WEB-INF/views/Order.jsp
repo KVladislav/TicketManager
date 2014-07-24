@@ -20,7 +20,6 @@
     </style>
 </head>
 <body>
-
 <div class="order">
 <div class="panel-body" style="padding:0px; width:92%; margin-left: 4%">
    <div class="row">

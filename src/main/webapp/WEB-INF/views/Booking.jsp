@@ -178,16 +178,16 @@
             </div>
         </div>
         <div class="col-md-3 column col-md-offset-2">
-            <table class="table table-hover table-condensed">
+            <table class="table table-hover table-condensed"  style=" margin-bottom: 50px;">
                 <caption>
-                    <strong style="text-align:center; color:Blue">Сектора по ценам</strong>
+                    <strong style="text-align:center; color:Blue;">Сектора по ценам</strong>
                 </caption>
                 <thead>
                 </thead>
 
                 <tbody>
                 <c:forEach items="${sectorsGroupedMap}" var="mapEntry">
-                    <tr style="background-color: #D1D1D1;">
+                    <tr style="background-color: #D1D1D1; ">
                         <td>
                             <strong>${mapEntry.key} грн:</strong>
                         </td>
@@ -237,7 +237,6 @@
         </div>
     </div>
 </div>
-
 </body>
 <%@include file="footer.jsp" %>
 </html>
