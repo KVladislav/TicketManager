@@ -100,7 +100,7 @@
     </script>
     <script language="JavaScript">
         function confirmAction() {
-            return confirm("Do you really want this subscription?")
+            return confirm("Вы действительно хотите удалить мероприятие?")
         }
     </script>
 
@@ -120,7 +120,7 @@
 </h1>&MediumSpace;&MediumSpace;
 <c:if test="${eventErrorMessage!=null}">
     <div class="alert  alert-error" style="color: red">
-        <h4 style="color: red">Error! ${eventErrorMessage}</h4>
+        <h4 style="color: red"> ${eventErrorMessage} </h4>
     </div>
 </c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
@@ -132,7 +132,7 @@
 
 <c:if test="${errorMessageEdit!=null}">
 <div class="alert  alert-error" style="color: red">
-    <h4 style="color: red">Error! ${errorMessageEdit}</h4>
+    <h4 style="color: red"> ${errorMessageEdit} </h4>
 </div>
 </c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
@@ -335,7 +335,7 @@
 
     <div class="my-controls">
         <input style="resize: none" type="text" id="description" maxlength="50" data-min-length=1 name="description"
-               required pattern="^\S+*$"
+               required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
                value="${eventDescriptions}"/>
     </div>
@@ -393,7 +393,7 @@
                     <td>
 
                         <div>
-                            <input type="text" maxlength="5" required pattern="^\d{0,5}(\.\d{0,2}){0,1}$ "
+                            <input type="text" maxlength="5" required pattern="\d{0,5}(\.\d{0,2}){0,1}"
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
