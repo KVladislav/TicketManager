@@ -37,7 +37,7 @@
                     <th width="30%">Логин</th>
                     <th></th>
                     <th>
-                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="right"
                            title="Создать нового оператора">
                             <button type="button" href="/NewOperator/NewOperator.do" class="btn btn-md">
                                 +<span class="glyphicon glyphicon-user"></span></button>
