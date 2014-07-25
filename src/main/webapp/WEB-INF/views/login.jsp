@@ -29,7 +29,7 @@
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
                     <input name="username" type="text" placeholder="Ваше имя пользователя" title="Только буквы и цифры"
-                           pattern="^[a-zA-Z0-9]{3,}$" maxlength=10 class="form-control input-md">
+                           pattern="^[А-Яа-яa-zA-Z0-9]{3,}$" maxlength=10 class="form-control input-md">
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
                     <input name="password" type="password" placeholder="Ваш пароль" title="Только буквы и цифры"
-                           pattern="^[a-zA-Z0-9]{0,15}$" maxlength=15 class="form-control input-md">
+                           pattern="^[А-Яа-яa-zA-Z0-9]{0,15}$" maxlength=15 class="form-control input-md">
                 </div>
             </div>
             <%--<input type="hidden" name="${_csrf.parameterName}"--%>
