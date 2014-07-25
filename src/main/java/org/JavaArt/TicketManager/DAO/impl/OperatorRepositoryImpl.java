@@ -182,6 +182,28 @@ public class OperatorRepositoryImpl implements OperatorRepository {
 
         return operator;
     }
+
+    @Override
+    public Operator getOperatorBylogin(String login) {
+        Session session = null;
+        Operator operator = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            operator = (Operator) session.createCriteria(Operator.class)
+                    .add(Restrictions.eq("login", login))
+                    .add(Restrictions.eq("isDeleted", false))
+                    .uniqueResult();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+        return operator;
+    }
+
 }
 
 

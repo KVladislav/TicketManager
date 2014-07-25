@@ -24,9 +24,9 @@
 <body>
 <div class="container" style="margin-bottom: 50px">
     <div class="row clearfix">
-        <div class="col-md-3 column">
+        <div class="col-md-2 column">
         </div>
-        <div class="col-md-6 column">
+        <div class="col-md-8 column">
             <c:if test="${errorMessage!=null}">
                 <div class="alert alert-danger" role="alert">${errorMessage}</div>
             </c:if>
@@ -117,7 +117,7 @@
             </table>
         </div>
     </div>
-    <div class="col-md-3 column"></div>
+    <div class="col-md-2 column"></div>
 </div>
 
 <!-- Modal sectorDeleteConfirmations-->

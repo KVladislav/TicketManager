@@ -6,11 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Controller
-@SessionAttributes({"pageName", "operators", "operator", "errorOperator"})
+@SessionAttributes({"pageName", "operator"})
 public class OperatorsController {
 
     OperatorService operatorService = new OperatorService();
@@ -21,15 +22,13 @@ public class OperatorsController {
         model.addAttribute("pageName", 5);//set menu page number
         List<Operator> operators = operatorService.getAllOperators();
         model.addAttribute("operators", operators);
-        model.addAttribute("errorOperator", "");
         return "Operators";
     }
 
-    @RequestMapping(value = "NewOperator/NewOperator.do", method = RequestMethod.GET)
-    public String newOperatortGet(Model model) {
-        model.addAttribute("pageName", 8);//set menu page number
-        model.addAttribute("errorOperator", "");
-        return "NewOperator";
+    @RequestMapping(value = "Operators/NewOperator.do", method = RequestMethod.GET)
+    public String newOperatorGet(Model model) {
+        model.addAttribute("operator", new Operator());
+        return "EditOperator";
     }
 
     @RequestMapping(value = "Operators/OperatorsDelete.do", method = RequestMethod.POST)
@@ -38,82 +37,100 @@ public class OperatorsController {
         return "redirect:/Operators/Operators.do";
     }
 
-    @RequestMapping(value = "EditOperator/OperatorsEditGet.do", method = RequestMethod.GET)
-    public String editOperatorGet(@RequestParam(value = "operatorId", required = true) int operatorId, Model model) {
-        model.addAttribute("pageName", 9);//set menu page number
+    @RequestMapping(value = "Operators/OperatorEdit.do", method = RequestMethod.POST)
+    public String editOperator(@RequestParam(value = "operatorId", required = true) int operatorId, Model model) {
         Operator operator = operatorService.getOperatorById(operatorId);
         model.addAttribute("operator", operator);
-        model.addAttribute("errorOperator", "");
+//        model.addAttribute("errorOperator", "");
         return "EditOperator";
     }
 
-    @RequestMapping(value = "EditOperator/OperatorsEditSave.do", method = RequestMethod.POST)
-    public String editOperatorSave(@RequestParam("operatorId") int id,
-                                   @RequestParam("name") String name,
+    @RequestMapping(value = "Operators/OperatorEditSave.do", method = RequestMethod.POST)
+    public String editOperatorSave(@RequestParam("name") String name,
                                    @RequestParam("surname") String surname,
                                    @RequestParam("login") String login,
-                                   @RequestParam("password") String password,
+                                   @RequestParam(value = "password", required = false) String password,
                                    @RequestParam("passwordNew") String passwordNew,
                                    @RequestParam("passwordNewRepeat") String passwordNewRepeat,
                                    @RequestParam("description") String description, Model model) {
-        Operator operator = operatorService.getOperatorById(id);
-        if (!password.equals(operator.getPassword())) {
-            model.addAttribute("errorOperator", "Пароль введён неверно.");
-            return "EditOperator";
+
+        Operator operator = (Operator) model.asMap().get("operator");
+        if (operator == null) {
+            return "redirect:/Operators/Operators.do";
         }
-        if (passwordNew.length()>0&&passwordNew.length()<6){
-            model.addAttribute("errorOperator", "Измените новый пароль: минимум 6 символов. ");
+
+        operator.setName(name);
+        operator.setSurname(surname);
+        operator.setDescription(description);
+
+        List<String> errorMessage = new ArrayList<>();
+        if (operator.getId()!=null && !password.equals(operator.getPassword())) {
+            errorMessage.add("Пароль введён неверно.");
+        }
+
+        if (passwordNew.length() > 0 && passwordNew.length() < 6) {
+            errorMessage.add("Измените новый пароль: минимум 6 символов.");
+        }
+
+        if (passwordNew.length() > 0 && !passwordNew.equals(passwordNewRepeat)) {
+            errorMessage.add("Пароли не совпадают");
+        }
+
+        if (operator.getId()==null && passwordNew.length()<6){
+            errorMessage.add("Измените новый пароль: минимум 6 символов.");
+        }
+
+
+        if (!login.equals(operator.getLogin()) && operatorService.getOperatorByLogin(login) != null) {
+            errorMessage.add("Такой логин занят. Введите другой логин.");
+        }
+
+        if (errorMessage.size() > 0) {
+            model.addAttribute("errorMessages", errorMessage);
             return "EditOperator";
         }
 
-        if (passwordNew.length()>0&&!passwordNew.equals(passwordNewRepeat)) {
-            model.addAttribute("errorOperator", "Повторите ввод нового пароля.");
-            return "EditOperator";
-        }
-        if (passwordNew.length()>0) operator.setPassword(passwordNew);
-        else operator.setPassword(password);
-        operator.setName(name);
-        operator.setSurname(surname);
+        if (passwordNew.length() > 0)
+            operator.setPassword(passwordNew);
+
         operator.setLogin(login);
-        operator.setDescription(description);
-        List<Operator> operators = operatorService.getAllOperators();
-        for (Operator oper: operators){
-            if (oper.getLogin().equals(operator.getLogin())&&!oper.getId().equals(operator.getId())){
-                model.addAttribute("errorOperator", "Такой логин занят. Введите другой логин.");
-                return "EditOperator";
-            }
+
+        if (operator.getId() != null) {
+            operatorService.updateOperator(operator);
+        } else {
+            operatorService.addOperator(operator);
         }
-        operatorService.editOperator(operator);
+
         return "redirect:/Operators/Operators.do";
     }
 
 
-    @RequestMapping(value = "NewOperator/OperatorsAdd.do", method = RequestMethod.POST)
-    public String operatorAdd(@RequestParam("name") String name,
-                              @RequestParam("surname") String surname,
-                              @RequestParam("login") String login,
-                              @RequestParam("password") String password,
-                              @RequestParam("passwordRepeat") String passwordRepeat,
-                              @RequestParam("description") String description,
-                              Model model) {
-        if (!password.equals(passwordRepeat)) {
-            model.addAttribute("errorOperator", "Повторите ввод пароля.");
-            return "NewOperator";
-        }
-        Operator operator = new Operator();
-        operator.setName(name);
-        operator.setSurname(surname);
-        operator.setLogin(login);
-        operator.setPassword(password);
-        operator.setDescription(description);
-        List<Operator> operators = operatorService.getAllOperators();
-        for (Operator oper: operators){
-            if (oper.getLogin().equals(operator.getLogin())){
-                model.addAttribute("errorOperator", "Такой логин занят. Введите другой логин.");
-                return "NewOperator";
-            }
-        }
-        operatorService.addOperator(operator);
-        return "redirect:/Operators/Operators.do";
-    }
+//    @RequestMapping(value = "NewOperator/OperatorsAdd.do", method = RequestMethod.POST)
+//    public String operatorAdd(@RequestParam("name") String name,
+//                              @RequestParam("surname") String surname,
+//                              @RequestParam("login") String login,
+//                              @RequestParam("password") String password,
+//                              @RequestParam("passwordRepeat") String passwordRepeat,
+//                              @RequestParam("description") String description,
+//                              Model model) {
+//        if (!password.equals(passwordRepeat)) {
+//            model.addAttribute("errorOperator", "Повторите ввод пароля.");
+//            return "NewOperator";
+//        }
+//        Operator operator = new Operator();
+//        operator.setName(name);
+//        operator.setSurname(surname);
+//        operator.setLogin(login);
+//        operator.setPassword(password);
+//        operator.setDescription(description);
+//        List<Operator> operators = operatorService.getAllOperators();
+//        for (Operator oper : operators) {
+//            if (oper.getLogin().equals(operator.getLogin())) {
+//                model.addAttribute("errorOperator", "Такой логин занят. Введите другой логин.");
+//                return "NewOperator";
+//            }
+//        }
+//        operatorService.addOperator(operator);
+//        return "redirect:/Operators/Operators.do";
+//    }
 }

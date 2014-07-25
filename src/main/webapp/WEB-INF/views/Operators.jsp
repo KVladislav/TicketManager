@@ -21,7 +21,7 @@
 
 </head>
 
-
+<body>
 <div class="container" style="margin-bottom: 50px">
     <div class="row clearfix">
         <div class="col-md-3 column">
@@ -39,9 +39,11 @@
                     <th>
                         <a data-toggle="tooltip" class="my-tool-tip" data-placement="right"
                            title="Создать нового оператора">
-                            <button type="button" href="/NewOperator/NewOperator.do" class="btn btn-md">
-                                +<span class="glyphicon glyphicon-user"></span></button>
-                        </a></th>
+                            <a type="button" href="${pageContext.request.contextPath}/Operators/NewOperator.do"
+                                    class="btn btn-md">
+                                +<span class="glyphicon glyphicon-user"></span></a>
+                        </a>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,8 +53,8 @@
                         <td width="30%">${operator.surname}</td>
                         <td width="30%">${operator.login}</td>
                         <td>
-                            <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditGet.do"
-                                  method="get">
+                            <form action="${pageContext.request.contextPath}/Operators/OperatorEdit.do"
+                                  method="POST">
                                 <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
                                    title="Изменить">
                                     <button type="submit" name="operatorId" value="${operator.id}"
@@ -112,4 +114,5 @@
         </div>
     </div>
 </div>
+</body>
 <%@include file="footer.jsp" %>
