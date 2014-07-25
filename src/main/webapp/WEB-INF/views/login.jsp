@@ -23,21 +23,21 @@
         <fieldset>
 
             <!-- Form Name -->
-            <legend>Пожалуйста авторизируйтесь</legend>
+            <legend>Пожалуйста, авторизируйтесь</legend>
 
             <!-- Text input-->
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
-                    <input name="username" type="text" placeholder="Ваше имя пользователя" title="Только буквы и цифры"
-                           pattern="^[a-zA-Z0-9]{3,}$" maxlength=10 class="form-control input-md">
+                    <input name="username" type="text" placeholder="Имя пользователя" title="Только буквы и цифры"
+                           pattern="^[А-Яа-яa-zA-Z0-9]{3,}$" maxlength=10 class="form-control input-md">
                 </div>
             </div>
 
             <!-- Password input-->
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
-                    <input name="password" type="password" placeholder="Ваш пароль" title="Только буквы и цифры"
-                           pattern="^[a-zA-Z0-9]{0,15}$" maxlength=15 class="form-control input-md">
+                    <input name="password" type="password" placeholder="Пароль" title="Только буквы и цифры"
+                           pattern="^[А-Яа-яa-zA-Z0-9]{0,15}$" maxlength=15 class="form-control input-md">
                 </div>
             </div>
             <%--<input type="hidden" name="${_csrf.parameterName}"--%>

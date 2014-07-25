@@ -30,16 +30,20 @@
             <c:if test="${errorMessage!=null}">
                 <div class="alert alert-danger" role="alert">${errorMessage}</div>
             </c:if>
-            <table class="table table-hover table-condensed">
+            <table class="table table-hover">
                 <caption>
-                    <h1 class="panel-heading" style=" color:Blue">Настройка секторов стадиона
+                    <h1 class="panel-heading text-info">Настройка секторов стадиона
                     </h1></caption>
                     <thead>
                     <tr>
-                        <th colspan="2">Название</th>
-                        <th>Кол-во рядов</th>
-                        <th>Мест в ряду</th>
-                        <th>Цена</th>
+                        <th width="30%">Название</th>
+                        <th width="15%">Рядов</th>
+                        <th width="15%">Мест</th>
+                        <th width="20%">Цена</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
 
@@ -48,42 +52,63 @@
                         <form name="sectorDefaults" action="${pageContext.request.contextPath}/Sectors/Modify.do"
                               method="post" role="form">
                             <tr>
-                                <td colspan="2">
-                                    <input class="span2" size="16" maxlength="10" type="text" name="sectorName" required
+                                <td>
+                                    <input tabindex="1" class="form-control" size="16" maxlength="10" type="text"
+                                           name="sectorName" required
                                            placeholder="Название сектора" value="${sector.sectorName}"
                                            pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                                            title="Не пустое, не начинатся с пробела, до 10 знаков">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" maxlength="2" name="maxRows" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows"
+                                           required
                                            placeholder="Рядов" value="${sector.maxRows}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input class="span1" size="16" maxlength="2" name="maxSeats" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxSeats"
+                                           required
                                            placeholder="Мест" value="${sector.maxSeats}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input class="span2" size="16" type="text" maxlength="8" name="defaultPrice"
+                                    <input tabindex="1" class="form-control" size="16" type="text" maxlength="8"
+                                           name="defaultPrice"
                                            placeholder="Цена" value="${sector.defaultPrice}"
                                            required pattern="\d{0,5}(\.\d{0,2}){0,1}"
                                            title="В интервале [0-99999] до двух знаков после запятой">
+                                </td>
+                                <td></td>
                                 <td>
-                                    <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
-                                    <button type="submit" name="action" value="save" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                       title="Сохранить">
+                                        <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
+                                        <button tabindex="0" type="submit" name="action" value="save"
+                                                class="btn btn-default btn-md">
+                                            <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <button type="submit" name="action" value="clone" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-export"></span></button>
+                                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                       title="Сделать копию">
+                                        <button tabindex="0" type="submit" name="action" value="clone"
+                                                class="btn btn-default btn-md">
+                                            <span class="glyphicon glyphicon-export"></span></button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-default btn-xs deleteSector" data-id="${sector.id}"
+                                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                       title="Удалить">
+                                        <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
+                                                data-id="${sector.id}"
                                             data-toggle="modal" data-target="#sectorDeleteConfirmation">
                                         <span class="glyphicon glyphicon-trash"></span></button>
                                     <%--<button type="submit" name="action" value="delete" class="btn btn-default btn-xs">--%>
                                         <%--<span class="glyphicon glyphicon-trash"></span></button>--%>
+                                    </a>
+                                    <script>
+                                        $("a.my-tool-tip").tooltip();
+                                    </script>
                                 </td>
                             </tr>
                         </form>
@@ -111,7 +136,7 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Отмена</button>
                     </div>
                     <div class="col-md-2 column">
 
@@ -123,7 +148,7 @@
                             <input type="hidden" name="defaultPrice" value="1">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit" name="sectorDefaultsId" value=""  id="sectorDefaultsId"
-                                    class="btn btn-danger btn-lg">Удалить
+                                    class="btn btn-danger btn-md">Удалить
                             </button>
                         </form>
                     </div>

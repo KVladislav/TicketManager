@@ -18,11 +18,7 @@
           type="text/css">
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#my-select').multiSelect()
-        });
-    </script>
+
 
     <script type='text/javascript'>//<![CDATA[
     window.onload = function () {
@@ -60,10 +56,11 @@
 <body>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-7 column">
+        <div class="col-md-8 column">
             <div class="row clearfix">
                 <div class="col-md-6 column">
-                    <strong style="text-align:center; color:Blue">Мероприятие</strong>
+                    <strong class="text-info">Мероприятие</strong>
+
                     <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
                         <p><select size="10" name="eventId" data-size="3" class="form-control">
                             <c:forEach items="${bookingEvents}" var="evnt">
@@ -82,7 +79,7 @@
                     </form>
                 </div>
                 <div class="col-md-6 column">
-                    <strong style="text-align:center; color:Blue">Сектор</strong>
+                    <strong class="text-info">Сектор</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post">
                         <p><select size="10" name="sectorId" class="form-control">
@@ -103,11 +100,11 @@
                 </div>
             </div>
             <div class="row clearfix">
-                <div class="col-md-5 column">
-                    <strong style="text-align:center; color:Blue">Ряд</strong>
+                <div class="col-md-6 column">
+                    <strong class="text-info">Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
-                        <p><select style="width:250px" size="11" name="row" class="form-control">
+                        <p><select size="11" name="row" class="form-control">
                             <c:forEach items="${bookingRowsMap}" var="rowEntry">
                                 <c:if test="${rowEntry.key==bookingRow}">
                                     <option value="${rowEntry.key}" onclick="this.form.submit()"
@@ -122,12 +119,12 @@
                         </select></p>
                     </form>
                 </div>
-                <div class="col-md-4 column">
-                    <strong style="text-align:center; color:Blue">Место</strong>
+                <div class="col-md-6 column">
+                    <%--<strong class="text-info">Место</strong>--%>
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
-                        <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
-                            <c:forEach items="${bookingSeatsMap}" var="seatEntry">
+                        <select multiple="multiple" id="my-select" name="seats" name="my-select[]">
+                        <c:forEach items="${bookingSeatsMap}" var="seatEntry">
                                 <c:if test="${seatEntry.value==1}">
                                     <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в заказе]
                                     </option>
@@ -148,6 +145,16 @@
                             <%--<option value="${seatEntry}">${seatEntry}</option>--%>
                             <%--</c:forEach>--%>
                         </select>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#my-select').multiSelect({
+                                    selectableHeader: "<div class='custom-header'><strong class=' text-info'>Все места</strong></div>",
+                                    selectionHeader: "<div class='custom-header'><strong class=' text-info'>Выбранные места</strong></div>"
+//                                        selectableFooter: "<div class='custom-header'>Selectable footer</div>",
+//                                        selectionFooter: "<div class='custom-header'>Selection footer</div>"
+                                });
+                            });
+                        </script>
                 </div>
             </div>
             <div class="row clearfix">
@@ -166,21 +173,19 @@
                     </c:if>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
-                    </form>
-                    <%--<form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">--%>
-                    <%--<input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>--%>
+                    <a class="btn btn-danger btn-md" href="${pageContext.request.contextPath}/Booking/Cancel.do"
+                       role="button">Отмена</a>
                 </div>
                 <div class="col-md-4 column">
-                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
-                        <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Отмена"></form>
+                    <input type="submit" name="Order" class="btn btn-primary btn-md" value="Добавить">
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 column col-md-offset-2">
-            <table class="table table-hover table-condensed"  style=" margin-bottom: 50px;">
+        <div class="col-md-4 column">
+            <table class="table table-hover table-condensed" style=" margin-bottom: 50px;">
                 <caption>
-                    <strong style="text-align:center; color:Blue;">Сектора по ценам</strong>
+                    <strong class="text-info">Сектора по ценам</strong>
                 </caption>
                 <thead>
                 </thead>
@@ -206,7 +211,8 @@
         </div>
     </div>
 </div>
-<button style="display: none;" class="btn btn-danger btn-sm" id="bookingCancelNotificationButton" data-toggle="modal" data-target="#bookingCancelNotification">
+<button style="display: none;" class="btn btn-danger btn-sm" id="bookingCancelNotificationButton" data-toggle="modal"
+        data-target="#bookingCancelNotification">
     Отмена брони
 </button>
 <!-- Modal bookingCancelNotification-->
@@ -227,9 +233,9 @@
                     <div class="col-lg-1 column col-lg-offset-9">
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
-                                <button type="submit"
-                                        class="btn btn-danger btn-lg" value="">Закрыть
-                                </button>
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg" value="">Закрыть
+                            </button>
                         </form>
                     </div>
                 </div>
