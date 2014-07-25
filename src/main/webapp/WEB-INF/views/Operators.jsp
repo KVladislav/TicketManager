@@ -29,7 +29,7 @@
         <div class="col-md-6 column">
 
             <table class="table table-hover">
-                <caption><h1 class="panel-heading" style=" color:Blue">Список операторов</h1></caption>
+                <caption><h1 class="panel-heading text-info">Список операторов</h1></caption>
                 <thead>
                 <tr>
                     <th width="30%">Имя</th>
@@ -83,13 +83,13 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Отмена</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Отмена</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Operators/OperatorsDelete.do"
                               method="post" id="submitDelete">
                             <button type="submit" name="operatorId" value="" id="operatorId"
-                                    class="btn btn-danger btn-lg">Удалить
+                                    class="btn btn-danger btn-md">Удалить
                             </button>
                         </form>
                     </div>

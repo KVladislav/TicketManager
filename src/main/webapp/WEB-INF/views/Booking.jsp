@@ -63,7 +63,7 @@
         <div class="col-md-7 column">
             <div class="row clearfix">
                 <div class="col-md-6 column">
-                    <strong style="text-align:center; color:Blue">Мероприятие</strong>
+                    <strong class="text-info">Мероприятие</strong>
                     <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
                         <p><select size="10" name="eventId" data-size="3" class="form-control">
                             <c:forEach items="${bookingEvents}" var="evnt">
@@ -82,7 +82,7 @@
                     </form>
                 </div>
                 <div class="col-md-6 column">
-                    <strong style="text-align:center; color:Blue">Сектор</strong>
+                    <strong class="text-info">Сектор</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post">
                         <p><select size="10" name="sectorId" class="form-control">
@@ -104,7 +104,7 @@
             </div>
             <div class="row clearfix">
                 <div class="col-md-5 column">
-                    <strong style="text-align:center; color:Blue">Ряд</strong>
+                    <strong class="text-info">Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
                         <p><select style="width:250px" size="11" name="row" class="form-control">
@@ -123,7 +123,7 @@
                     </form>
                 </div>
                 <div class="col-md-4 column">
-                    <strong style="text-align:center; color:Blue">Место</strong>
+                    <strong class="text-info">Место</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                         <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
@@ -180,7 +180,7 @@
         <div class="col-md-3 column col-md-offset-2">
             <table class="table table-hover table-condensed"  style=" margin-bottom: 50px;">
                 <caption>
-                    <strong style="text-align:center; color:Blue;">Сектора по ценам</strong>
+                    <strong class="text-info">Сектора по ценам</strong>
                 </caption>
                 <thead>
                 </thead>

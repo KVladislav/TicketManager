@@ -60,7 +60,7 @@
             <form class="form" action="${pageContext.request.contextPath}/Booking/ClientSave.do"
                   method="post" name="NewClient">
                 <div class="control-group">
-                    <label class="control-label" for="clientName" style="text-align:center; color:Blue">ФИО</label>
+                    <label class="control-label text-info" for="clientName">ФИО</label>
 
                     <div class="controls">
                         <input class="form-control" maxlength="50" id="clientName" type="text" name="clientName"
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="clientDescription" style="text-align:center; color:Blue">Описание</label>
+                    <label class="control-label text-info" for="clientDescription">Описание</label>
 
                     <div class="controls">
 
@@ -91,7 +91,7 @@
 <div class="col-md-12 column">
 <table class="table table-hover table-condensed">
     <caption>
-        <h3 class="panel-heading" style=" color:Blue">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
                                            pattern="dd.MM.yy H:mm"/></h3>
     </caption>
     <thead>
@@ -327,12 +327,12 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
                               method="post">
-                            <input type="submit" name="Order" class="btn btn-success btn-lg"
+                            <input type="submit" name="Order" class="btn btn-success btn-md"
                                    value="Забронировать">
                         </form>
                     </div>
@@ -414,12 +414,12 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/BookingPayment.do"
                               method="post">
-                            <input type="submit" name="Order" class="btn btn-success btn-lg"
+                            <input type="submit" name="Order" class="btn btn-success btn-md"
                                    value="Выкуп брони">
                         </form>
                     </div>
@@ -437,8 +437,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
@@ -447,14 +445,14 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
 
                         <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
                               method="post" id="submitDelete">
                             <button type="submit" name="ticketId" id="ticketId"
-                                    class="btn btn-danger btn-lg" value="">Удалить
+                                    class="btn btn-danger btn-md" value="">Удалить
                             </button>
                         </form>
 
@@ -472,8 +470,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
@@ -482,13 +478,13 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-9 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
                             <button type="submit"
-                                    class="btn btn-danger btn-lg" value="">удалить
+                                    class="btn btn-danger btn-md" value="">удалить
                             </button>
                         </form>
                     </div>
@@ -517,7 +513,7 @@
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
                                 <button type="submit"
-                                        class="btn btn-danger btn-lg" value="">Закрыть
+                                        class="btn btn-danger btn-md" value="">Закрыть
                                 </button>
                         </form>
                     </div>
