@@ -104,7 +104,7 @@
                     <strong class="text-info">Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
-                        <p><select  size="11" name="row" class="form-control">
+                        <p><select size="11" name="row" class="form-control">
                             <c:forEach items="${bookingRowsMap}" var="rowEntry">
                                 <c:if test="${rowEntry.key==bookingRow}">
                                     <option value="${rowEntry.key}" onclick="this.form.submit()"
@@ -124,37 +124,37 @@
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                         <select multiple="multiple" id="my-select" name="seats" name="my-select[]">
-                            <c:forEach items="${bookingSeatsMap}" var="seatEntry">
-                            <c:if test="${seatEntry.value==1}">
-                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в заказе]
-                            </option>
-                            </c:if>
-                            <c:if test="${seatEntry.value==2}">
-                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [забронирован]
-                            </option>
-                            </c:if>
-                            <c:if test="${seatEntry.value==3}">
-                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [продан]
-                            </option>
-                            </c:if>
-                            <c:if test="${seatEntry.value==0}">
-                            <option value="${seatEntry.key}">${seatEntry.key}</option>
-                            </c:if>
+                        <c:forEach items="${bookingSeatsMap}" var="seatEntry">
+                                <c:if test="${seatEntry.value==1}">
+                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в заказе]
+                                    </option>
+                                </c:if>
+                                <c:if test="${seatEntry.value==2}">
+                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [забронирован]
+                                    </option>
+                                </c:if>
+                                <c:if test="${seatEntry.value==3}">
+                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [продан]
+                                    </option>
+                                </c:if>
+                                <c:if test="${seatEntry.value==0}">
+                                    <option value="${seatEntry.key}">${seatEntry.key}</option>
+                                </c:if>
                             </c:forEach>
                             <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
                             <%--<option value="${seatEntry}">${seatEntry}</option>--%>
                             <%--</c:forEach>--%>
                         </select>
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('#my-select').multiSelect({
-                                        selectableHeader: "<div class='custom-header'><strong class=' text-info'>Все места</strong></div>",
-                                        selectionHeader: "<div class='custom-header'><strong class=' text-info'>Выбранные места</strong></div>"
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#my-select').multiSelect({
+                                    selectableHeader: "<div class='custom-header'><strong class=' text-info'>Все места</strong></div>",
+                                    selectionHeader: "<div class='custom-header'><strong class=' text-info'>Выбранные места</strong></div>"
 //                                        selectableFooter: "<div class='custom-header'>Selectable footer</div>",
 //                                        selectionFooter: "<div class='custom-header'>Selection footer</div>"
-                                    });
                                 });
-                            </script>
+                            });
+                        </script>
                 </div>
             </div>
             <div class="row clearfix">

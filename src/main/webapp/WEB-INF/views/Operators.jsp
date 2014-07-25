@@ -39,8 +39,9 @@
                     <th>
                         <a data-toggle="tooltip" class="my-tool-tip" data-placement="right"
                            title="Создать нового оператора">
-                        <button type="button" href="/NewOperator/NewOperator.do"class="btn btn-md">
-                            +<span class="glyphicon glyphicon-user"></span></button></a></th>
+                            <button type="button" href="/NewOperator/NewOperator.do" class="btn btn-md">
+                                +<span class="glyphicon glyphicon-user"></span></button>
+                        </a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,17 +55,20 @@
                                   method="get">
                                 <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
                                    title="Изменить">
-                                <button type="submit" name="operatorId" value="${operator.id}"
-                                        class="btn btn-default btn-md">
-                                    <span class="glyphicon glyphicon-edit"></span></button> </a>
+                                    <button type="submit" name="operatorId" value="${operator.id}"
+                                            class="btn btn-default btn-md">
+                                        <span class="glyphicon glyphicon-edit"></span></button>
+                                </a>
                             </form>
                         </td>
                         <td>
                             <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
                                title="Удалить">
-                            <button type="button" class="btn btn-default btn-md deleteOperator" data-id="${operator.id}"
-                                    data-toggle="modal" data-target="#operatorDeleteConfirmation">
-                                <span class="glyphicon glyphicon-trash"></span></button>  </a>
+                                <button type="button" class="btn btn-default btn-md deleteOperator"
+                                        data-id="${operator.id}"
+                                        data-toggle="modal" data-target="#operatorDeleteConfirmation">
+                                    <span class="glyphicon glyphicon-trash"></span></button>
+                            </a>
                             <script>
                                 $("a.my-tool-tip").tooltip();
                             </script>

@@ -3,6 +3,10 @@ package org.JavaArt.TicketManager.DAO.impl;
 import org.JavaArt.TicketManager.DAO.EventRepository;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Operator;
+import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.service.SectorService;
+import org.JavaArt.TicketManager.service.TicketService;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,14 +17,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
 
 public class EventRepositoryImpl implements EventRepository {
+    private TicketService ticketService = TicketService.getInstance();
+    private SectorService sectorService = new SectorService();
+
     @Override
     public void addEvent(Event event) {
-        if (event==null) return;
+        if (event == null) return;
         Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         event.setOperator(operator);
         Session session = null;
@@ -41,7 +49,7 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public void updateEvent(Event event) {
-        if (event==null) return;
+        if (event == null) return;
         Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         event.setOperator(operator);
         Session session = null;
@@ -108,16 +116,14 @@ public class EventRepositoryImpl implements EventRepository {
         List<Event> events = new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery ("FROM Event WHERE isDeleted = false and date > :currientDate order by date");
+            Query query = session.createQuery("FROM Event WHERE isDeleted = false and date > :currientDate order by date");
             query.setTimestamp("currientDate", new Date());
             events = (List<Event>) query.list();
 
-            }
-        catch (Exception e) {
+        } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session != null && session.isOpen())  session.close();
+        } finally {
+            if (session != null && session.isOpen()) session.close();
         }
         return events;
     }
@@ -125,7 +131,7 @@ public class EventRepositoryImpl implements EventRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Event> getEventByDate(Date inputDate) {
-        if (inputDate==null) return new ArrayList<>();
+        if (inputDate == null) return new ArrayList<>();
         Session session = null;
         List<Event> events = null;
         try {
@@ -147,7 +153,7 @@ public class EventRepositoryImpl implements EventRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Event> getEventByDateFromEvent(Date inputDate, Event event) {
-        if (inputDate==null || event==null) return new ArrayList<>();
+        if (inputDate == null || event == null) return new ArrayList<>();
         Session session = null;
         List<Event> events = null;
         try {
@@ -174,40 +180,41 @@ public class EventRepositoryImpl implements EventRepository {
         List<Event> events = new ArrayList<Event>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery ("FROM Event WHERE isDeleted = false and bookingTimeOut > :currientDate order by date");
+            Query query = session.createQuery("FROM Event WHERE isDeleted = false and bookingTimeOut > :currientDate order by date");
             query.setTimestamp("currientDate", new Date());
             events = (List<Event>) query.list();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        }
-        finally {
-            if (session != null && session.isOpen())  session.close();
+        } finally {
+            if (session != null && session.isOpen()) session.close();
         }
         return events;
     }
 
-//    @Override
-//    public void deleteEvent(Event event) {
-//        Session session = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            session.delete(event);
-//            session.getTransaction().commit();
-//            session.flush();
-//        }
-//        catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-//        }
-//        finally {
-//            if (session!=null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//    }
+    @Override
+    public void deleteEvent(Event event) {
+        if (event == null) return;
+        event.setDeleted(true);
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        if (sectors.size() != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                List<Ticket> tickets = ticketService.getAllTicketsBySector(sector);
+                if (tickets.size() != 0) {
+                    ticketService.deleteTickets(tickets);
+                }
+                boolean isDeleted = true;
+                sector.setDeleted(isDeleted);
+                sectorService.updateSector(sector);
+                sectors.add(sector);
+            }
+        }
+
+        updateEvent(event);
+
+    }
 
 
 }

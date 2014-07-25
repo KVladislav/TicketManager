@@ -58,6 +58,7 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <br>
+
             <form class="form" action="${pageContext.request.contextPath}/Booking/ClientSave.do"
                   method="post" name="NewClient">
                 <div class="control-group">
@@ -77,7 +78,8 @@
 
                     <div class="controls">
 
-                        <textarea style="resize:none" rows="3" maxlength="200" class="form-control" id="clientDescription"
+                        <textarea style="resize:none" rows="3" maxlength="200" class="form-control"
+                                  id="clientDescription"
                                   name="clientDescription"
                                   placeholder="Описание">${bookingClient.description}</textarea> <br>
                         <button class="btn btn-primary btn-md" type="submit">Сохранить</button>
@@ -93,7 +95,7 @@
 <table class="table table-hover table-condensed">
     <caption>
         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                           pattern="dd.MM.yy H:mm"/></h3>
+                                                                     pattern="dd.MM.yy H:mm"/></h3>
     </caption>
     <thead>
     <tr>
@@ -273,7 +275,7 @@
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                           pattern="dd.MM.yy H:mm"/></h3>
+                                                                                     pattern="dd.MM.yy H:mm"/></h3>
                     </caption>
                     <thead>
                     <tr>
@@ -360,7 +362,7 @@
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                           pattern="dd.MM.yy H:mm"/></h3>
+                                                                                     pattern="dd.MM.yy H:mm"/></h3>
                     </caption>
                     <thead>
                     <tr>
@@ -502,7 +504,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <%--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span--%>
-                        <%--class="sr-only">Close</span></button>--%>
+                <%--class="sr-only">Close</span></button>--%>
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
@@ -513,9 +515,9 @@
                     <div class="col-lg-1 column col-lg-offset-9">
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
-                                <button type="submit"
-                                        class="btn btn-danger btn-md" value="">Закрыть
-                                </button>
+                            <button type="submit"
+                                    class="btn btn-danger btn-md" value="">Закрыть
+                            </button>
                         </form>
                     </div>
                 </div>

@@ -59,4 +59,8 @@ public class EventService {
         List<Event> events = (List<Event>) eventRepository.getEventByDateFromEvent(date, event);
         return events;
     }
+
+    public void deleteEvent(Event event) {
+        eventRepository.deleteEvent(event);
+    }
 }

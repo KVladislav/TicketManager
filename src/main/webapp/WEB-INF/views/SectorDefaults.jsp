@@ -53,23 +53,27 @@
                               method="post" role="form">
                             <tr>
                                 <td>
-                                    <input tabindex="1" class="form-control" size="16" maxlength="10" type="text" name="sectorName" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="10" type="text"
+                                           name="sectorName" required
                                            placeholder="Название сектора" value="${sector.sectorName}"
                                            pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                                            title="Не пустое, не начинатся с пробела, до 10 знаков">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows"
+                                           required
                                            placeholder="Рядов" value="${sector.maxRows}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxSeats" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxSeats"
+                                           required
                                            placeholder="Мест" value="${sector.maxSeats}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="form-control" size="16" type="text" maxlength="8" name="defaultPrice"
+                                    <input tabindex="1" class="form-control" size="16" type="text" maxlength="8"
+                                           name="defaultPrice"
                                            placeholder="Цена" value="${sector.defaultPrice}"
                                            required pattern="\d{0,5}(\.\d{0,2}){0,1}"
                                            title="В интервале [0-99999] до двух знаков после запятой">
@@ -78,20 +82,25 @@
                                 <td>
                                     <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
                                        title="Сохранить">
-                                    <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
-                                    <button tabindex="0" type="submit" name="action" value="save" class="btn btn-default btn-md">
-                                        <span class="glyphicon glyphicon-floppy-disk"></span></button>  </a>
+                                        <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
+                                        <button tabindex="0" type="submit" name="action" value="save"
+                                                class="btn btn-default btn-md">
+                                            <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                    </a>
                                 </td>
                                 <td>
                                     <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
                                        title="Сделать копию">
-                                    <button tabindex="0" type="submit" name="action" value="clone" class="btn btn-default btn-md">
-                                        <span class="glyphicon glyphicon-export"></span></button>     </a>
+                                        <button tabindex="0" type="submit" name="action" value="clone"
+                                                class="btn btn-default btn-md">
+                                            <span class="glyphicon glyphicon-export"></span></button>
+                                    </a>
                                 </td>
                                 <td>
                                     <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
                                        title="Удалить">
-                                    <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector" data-id="${sector.id}"
+                                        <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
+                                                data-id="${sector.id}"
                                             data-toggle="modal" data-target="#sectorDeleteConfirmation">
                                         <span class="glyphicon glyphicon-trash"></span></button>
                                     <%--<button type="submit" name="action" value="delete" class="btn btn-default btn-xs">--%>
@@ -113,7 +122,7 @@
 
 <!-- Modal sectorDeleteConfirmations-->
 <div class="modal" id="sectorDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-           aria-hidden="true">
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
