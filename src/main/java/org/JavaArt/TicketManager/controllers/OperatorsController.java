@@ -83,6 +83,8 @@ public class OperatorsController {
 
         if (!login.equals(operator.getLogin()) && operatorService.getOperatorByLogin(login) != null) {
             errorMessage.add("Такой логин занят. Введите другой логин.");
+        } else {
+            operator.setLogin(login);
         }
 
         if (errorMessage.size() > 0) {
@@ -93,7 +95,7 @@ public class OperatorsController {
         if (passwordNew.length() > 0)
             operator.setPassword(passwordNew);
 
-        operator.setLogin(login);
+
 
         if (operator.getId() != null) {
             operatorService.updateOperator(operator);
