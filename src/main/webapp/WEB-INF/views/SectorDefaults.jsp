@@ -30,7 +30,7 @@
             <c:if test="${errorMessage!=null}">
                 <div class="alert alert-danger" role="alert">${errorMessage}</div>
             </c:if>
-            <table class="table table-hover table-condensed">
+            <table class="table table-hover">
                 <caption>
                     <h1 class="panel-heading text-info">Настройка секторов стадиона
                     </h1></caption>
@@ -40,6 +40,7 @@
                         <th width="15%">Рядов</th>
                         <th width="15%">Мест</th>
                         <th width="20%">Цена</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -72,6 +73,8 @@
                                            placeholder="Цена" value="${sector.defaultPrice}"
                                            required pattern="\d{0,5}(\.\d{0,2}){0,1}"
                                            title="В интервале [0-99999] до двух знаков после запятой">
+                                </td>
+                                <td></td>
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
                                     <button tabindex="0" type="submit" name="action" value="save" class="btn btn-default btn-md">
