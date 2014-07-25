@@ -1,10 +1,10 @@
-<%--suppress ALL --%>
+<%@include file="header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
+
 <html lang="ru">
 <head>
     <!-- Bootstrap -->
@@ -81,16 +81,21 @@
                     <td><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
-                                <%--          <input type="hidden" name="eventId+${theCount.count}+1" value="${event.id}"> --%>
-                            <button type="submit" name="evnt" value="${evnt.id}" class="btn">Редактировать</button>
+                            <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Редактировать">
+                                <button type="submit" name="evnt" value="${evnt.id}" class="btn">Редактировать</button>
+                                <span class="glyphicon glyphicon-edit"></span>
                         </form>
                     </td>
                     <td>
-                            <%--     <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post"
-                                       onSubmit="return confirmAction('${evnt.description}')">  --%>
-                        <button type="button" data-id="${evnt.id}" class="btn deleteEvent" data-target=="#Cancel"
-                                data-toggle="modal">Удалить<span class="glyphicon glyphicon-trash"></span>
-                                <%--       </form> name="evnt" value="${evnt.id}" --%>
+                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
+                            <button type="button" class="btn btn-default btn-md deleteEvent" data-id="${evnt.id}"
+                                    data-toggle="modal" data-target="#Cancel">Удалить
+                            </button>
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                        <script>
+                            $("a.my-tool-tip").tooltip();
+                        </script>
                     </td>
                 </tr>
             </c:forEach>
@@ -114,13 +119,14 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Отменить</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Отменить</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
                             <%--       onSubmit="return confirmAction('${evnt.description}')"   --%>
-                            <button type="submit" name="action" value="" class="btn btn-primary" id="eventId">Удалить
-                            </button>
+                                <button type="submit" name="eventId" value="eventId" class="btn btn-danger btn-md"
+                                        id="eventId">Удалить
+                                </button>
                         </form>
                     </div>
                 </div>

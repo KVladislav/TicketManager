@@ -79,9 +79,9 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "evnt", required = true) int evnt,
+    public String eventsSetDelete(@RequestParam(value = "eventId", required = true) int eventId,
                                   SessionStatus status) {
-        Event event = eventService.getEventById(evnt);
+        Event event = eventService.getEventById(eventId);
         eventService.deleteEvent(event);
         status.setComplete();
         return "redirect:/Events/Events.do";
@@ -419,20 +419,7 @@ public class EventsController {
     public String setDeleteSector(@RequestParam(value = "evnt", required = true) int evnt,
                                   SessionStatus status) {
         Event event = eventService.getEventById(evnt);
-        event.setDeleted(true);
-        eventService.updateEvent(event);
-        List<Sector> sectors = sectorService.getSectorsByEvent(event);
-        if (sectors.size() != 0) {
-            List copy = new ArrayList(sectors);
-            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
-                Sector sector = it.next();
-                boolean isDeleted = true;
-                sector.setDeleted(isDeleted);
-                sectorService.updateSector(sector);
-                sectors.add(sector);
-            }
-        }
-
+        eventService.deleteEvent(event);
         status.setComplete();
         return "redirect:/Events/Events.do";
     }
