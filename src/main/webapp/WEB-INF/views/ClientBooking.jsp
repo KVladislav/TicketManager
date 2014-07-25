@@ -99,7 +99,7 @@
     </caption>
     <thead>
     <tr>
-        <th>#</th>
+        <th>ID</th>
         <th colspan="2">Мероприятие</th>
         <th colspan="1">Статус</th>
         <th colspan="1">Дата</th>
@@ -114,11 +114,11 @@
 
     <tbody>
     <form name="delTicket" id="delTicket">
-        <c:set var="number" value="1"/>
+        <%--<c:set var="number" value="1"/>--%>
         <c:forEach items="${bookingTickets}" var="ticket">
             <tr>
-                <td>${number}</td>
-                <c:set var="number" value="${number+1}"/>
+                <td>${ticket.id}</td>
+                <%--<c:set var="number" value="${number+1}"/>--%>
                 <td colspan="2">
                     <small>${ticket.sector.event.description}</small>
                 </td>
@@ -279,7 +279,7 @@
                     </caption>
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th colspan="2">Мероприятие</th>
                         <th colspan="1">Дата</th>
                         <th colspan="1">Сектор</th>
@@ -290,11 +290,11 @@
                     </thead>
 
                     <tbody>
-                    <c:set var="number" value="1"/>
+                    <%--<c:set var="number" value="1"/>--%>
                     <c:forEach items="${bookingTickets}" var="ticket">
                         <tr>
-                            <td>${number}</td>
-                            <c:set var="number" value="${number+1}"/>
+                            <td>${ticket.id}</td>
+                            <%--<c:set var="number" value="${number+1}"/>--%>
                             <td colspan="2">
                                 <small>${ticket.sector.event.description}</small>
                             </td>
@@ -366,7 +366,7 @@
                     </caption>
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th colspan="2">Мероприятие</th>
                         <th colspan="1">Дата</th>
                         <th colspan="1">Сектор</th>
@@ -377,11 +377,11 @@
                     </thead>
 
                     <tbody>
-                    <c:set var="number" value="1"/>
+                    <%--<c:set var="number" value="1"/>--%>
                     <c:forEach items="${bookingTickets}" var="ticket">
                         <tr>
-                            <td>${number}</td>
-                            <c:set var="number" value="${number+1}"/>
+                            <td>${ticket.id}</td>
+                                <%--<c:set var="number" value="${number+1}"/>--%>
                             <td colspan="2">
                                 <small>${ticket.sector.event.description}</small>
                             </td>
