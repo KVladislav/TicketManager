@@ -18,11 +18,7 @@
           type="text/css">
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#my-select').multiSelect()
-        });
-    </script>
+
 
     <script type='text/javascript'>//<![CDATA[
     window.onload = function () {
@@ -60,7 +56,7 @@
 <body>
 <div class="container">
     <div class="row clearfix">
-        <div class="col-md-7 column">
+        <div class="col-md-8 column">
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <strong class="text-info">Мероприятие</strong>
@@ -103,7 +99,7 @@
                 </div>
             </div>
             <div class="row clearfix">
-                <div class="col-md-5 column">
+                <div class="col-md-6 column">
                     <strong class="text-info">Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
@@ -122,8 +118,8 @@
                         </select></p>
                     </form>
                 </div>
-                <div class="col-md-4 column">
-                    <strong class="text-info">Место</strong>
+                <div class="col-md-5 column">
+                    <%--<strong class="text-info">Место</strong>--%>
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                         <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
@@ -147,7 +143,17 @@
                             <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
                             <%--<option value="${seatEntry}">${seatEntry}</option>--%>
                             <%--</c:forEach>--%>
-                        </select>
+
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#my-select').multiSelect({
+                                        selectableHeader: "<div class='custom-header'><strong class=' text-info'>Все места</strong></div>",
+                                        selectionHeader: "<div class='custom-header'><strong class=' text-info'>Выбранные места</strong></div>"
+//                                        selectableFooter: "<div class='custom-header'>Selectable footer</div>",
+//                                        selectionFooter: "<div class='custom-header'>Selection footer</div>"
+                                    });
+                                });
+                            </script>
                 </div>
             </div>
             <div class="row clearfix">
@@ -166,12 +172,12 @@
                     </c:if>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="button" name="Order" onclick="document.cancelForm.submit()" class="btn btn-danger btn-sm" value="Отмена">
+                    <input type="button" name="Order" onclick="document.cancelForm.submit()" class="btn btn-danger btn-md" value="Отмена">
                     <%--<form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">--%>
                     <%--<input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>--%>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
+                    <input type="submit" name="Order" class="btn btn-primary btn-md" value="Добавить">
                     </form>
 
 
@@ -180,7 +186,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 column col-md-offset-2">
+        <div class="col-md-4 column">
             <table class="table table-hover table-condensed"  style=" margin-bottom: 50px;">
                 <caption>
                     <strong class="text-info">Сектора по ценам</strong>
