@@ -57,6 +57,7 @@
 <div class="col-md-4 column">
     <div class="row clearfix">
         <div class="col-md-12 column">
+            <br>
             <form class="form" action="${pageContext.request.contextPath}/Booking/ClientSave.do"
                   method="post" name="NewClient">
                 <div class="control-group">
@@ -79,7 +80,7 @@
                         <textarea style="resize:none" rows="3" class="form-control" id="clientDescription"
                                   name="clientDescription"
                                   placeholder="Описание">${bookingClient.description}</textarea> <br>
-                        <button class="btn btn-primary btn-sm" type="submit">Сохранить</button>
+                        <button class="btn btn-primary btn-md" type="submit">Сохранить</button>
                     </div>
                 </div>
             </form>
@@ -224,13 +225,13 @@
 
 <div class="row clearfix">
     <div class="col-md-2 column">
-        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#bookingCancelConfirmation">
+        <button class="btn btn-danger btn-md" data-toggle="modal" data-target="#bookingCancelConfirmation">
             Отмена брони
         </button>
     </div>
     <div class="col-md-2 column">
         <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
-            <input type="submit" name="Order" class="btn btn-primary btn-sm"
+            <input type="submit" name="Order" class="btn btn-primary btn-md"
                    value="Добавить билет">
         </form>
     </div>
