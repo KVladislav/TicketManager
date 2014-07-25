@@ -166,14 +166,17 @@
                     </c:if>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
-                    </form>
+                    <input type="button" name="Order" onclick="document.cancelForm.submit()" class="btn btn-danger btn-sm" value="Отмена">
                     <%--<form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">--%>
                     <%--<input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>--%>
                 </div>
                 <div class="col-md-4 column">
-                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
-                        <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Отмена"></form>
+                    <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Добавить">
+                    </form>
+
+
+                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post" name="cancelForm" id="cancelForm">
+</form>
                 </div>
             </div>
         </div>

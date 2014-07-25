@@ -271,8 +271,8 @@
                 <h4>Подтвердите бронирование билетов</h4>
                 <table class="table table-hover table-condensed">
                     <caption>
-                        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                           pattern="dd.MM.yy H:mm"/></code></h3>
+                        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                           pattern="dd.MM.yy H:mm"/></h3>
                     </caption>
                     <thead>
                     <tr>
@@ -358,8 +358,8 @@
                 <h4>Подтвердите выкуп брони</h4>
                 <table class="table table-hover table-condensed">
                     <caption>
-                        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                           pattern="dd.MM.yy H:mm"/></code></h3>
+                        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                           pattern="dd.MM.yy H:mm"/></h3>
                     </caption>
                     <thead>
                     <tr>
@@ -484,7 +484,7 @@
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
                             <button type="submit"
-                                    class="btn btn-danger btn-md" value="">удалить
+                                    class="btn btn-danger btn-md" value="">Удалить
                             </button>
                         </form>
                     </div>
