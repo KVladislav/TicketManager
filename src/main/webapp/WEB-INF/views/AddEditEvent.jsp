@@ -98,10 +98,16 @@
             }
         }
     </script>
-    <script language="JavaScript">
-        function confirmAction() {
-            return confirm("Вы действительно хотите удалить мероприятие?")
-        }
+    <script>
+        $(document).ready(function () {
+            $(".deleteSector").click(function () {
+                var data_id = '';
+                if (typeof $(this).data('id') !== 'undefined') {
+                    data_id = $(this).data('id');
+                }
+                $('#sectorId').val(data_id);
+            })
+        });
     </script>
 
     <title>
@@ -116,8 +122,8 @@
 
 <c:if test="${empty eventEdit.id}">
 <h1>
-    <div class="panel-heading" style="text-align:center;"><b> Создание нового мероприятия </b></div>
-</h1>&MediumSpace;&MediumSpace;
+    <caption><h1 class="panel-heading text-info"><b> Создание нового мероприятия </b></h1></caption>
+</h1>
 <c:if test="${eventErrorMessage!=null}">
     <div class="alert  alert-error" style="color: red">
         <h4 style="color: red"> ${eventErrorMessage} </h4>
@@ -128,8 +134,8 @@
 </c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
-    <div class="panel-heading" style="text-align:center;"><b> Редактирование мероприятия </b></div>
-</h1>&MediumSpace;&MediumSpace;
+    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></caption>
+</h1>
 
 <c:if test="${errorMessageEdit!=null}">
 <div class="alert  alert-error" style="color: red">
@@ -146,24 +152,23 @@
     <table>
         <td>
             <tr>
-                <label class="my-control-label" required warning for="dateEvent"> Дата мероприятия </label>
+                <label class="my-control-label  text-info" required warning for="dateEvent"> Дата мероприятия </label>
 
                 <center>
 
                     <div class="control-group">
                         <input type="text" name="dateEvent" readonly id="dateEvent"
                                value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
-
                         <p>
                             <script type="text/javascript"> calendar.set("dateEvent");</script>
                         </p>
                     </div>
             </tr>
             <tr>
-                <label class="my-control-label" for="inputTime"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="inputTime"> Время мероприятия </label>
 
-                <div class="control-group">
-                    <select name="inputTime" id="inputTime">
+                <div class="control-group text-info">
+                <select name="inputTime" id="inputTime">
 
                         <c:if test="${eventTime.equals(inputTime)}">
                             <option selected value="${eventTime}">${eventTime}</option>
@@ -332,22 +337,26 @@
 </tr>
 <tr>
     <div class="control-group">
-        <label class="my-control-label" for="description"> Наименование </label>
+        <label class="my-control-label text-info" for="description"> Наименование </label>
 
         <div class="my-controls">
-            <input style="resize: none" type="text" id="description" maxlength="50" data-min-length=1 name="description"
+            <input style="resize: none" type="text" size="20" id="description" maxlength="50" data-min-length=1
+                   name="description"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                    title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
                    value="${eventDescriptions}"/>
         </div>
     </div>
 </tr>
-</tr>
-<div class="control-group">
-    <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони в минутах </label>
+<tr>
+    <div class="control-group">
+        <label class="my-control-label text-info" for="timeRemoveBooking"> Установка времени удаления брони в
+            минутах </label>
 
-    <div class="my-controls">
-        <input type="text" id="timeRemoveBooking" maxlength="10" name="timeRemoveBooking" value="${eventBookingTimeOut}"
+        <div class="my-controls">
+
+            <input type="text" id="timeRemoveBooking" size="20" maxlength="10" name="timeRemoveBooking"
+                   value="${eventBookingTimeOut}"
                required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
 
         <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
@@ -364,8 +373,8 @@
              onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
              onMouseOut="helpBox()">
 
-        </tr>
-    </div>
+</tr>
+</div>
 </div>
 </td>
 </table>
@@ -388,21 +397,36 @@
 
                 <tr>
                     <td>
-                        <input type="text" style="resize: none" readonly name="name" required placeholder="Сектор"
+                        <input tabindex="0" type="text" class="form-control" size="15" style="resize: none" readonly
+                               name="name" required
+                               placeholder="Сектор"
                                value="${sector.value.name}">
                     </td>
                     <td>
 
                         <div>
-                            <input type="text" maxlength="5" required pattern="^\d{0,5}(\.\d{0,2}){0,1}$"
+                            <input tabindex="1" type="text" class="form-control" size="15" maxlength="5" required
+                                   pattern="^\d{0,5}(\.\d{0,2}){0,1}$"
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
                     </td>
                     <td>
-                        <input type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
-                        <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-trash"></span></button>
+                            <%--    <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
+                                <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-trash"></span></button>
+        --%>
+                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
+                            <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
+                                    data-id="${sector.value.id}"
+                                    data-toggle="modal" data-target="#sectorDeleteRequest">
+                                <span class="glyphicon glyphicon-trash"></span></button>
+                        </a>
+                        <script>
+                            $("a.my-tool-tip").tooltip();
+                        </script>
+
+
                     </td>
                 </tr>
             </c:forEach>
@@ -430,6 +454,45 @@
 </td>
 </table>
 </center>
+
+<div class="modal" id="sectorDeleteRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">Вопрос! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Вы действительно хотите удалить сектор?</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Отменить</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <c:if test="${empty eventEdit.id}">
+                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+                            <c:if test="${not empty eventEdit.id}">
+                            <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
+                                  method="post"></c:if>
+                                <input type="hidden" name="dateEvent"
+                                       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+                                <input type="hidden" name="inputTime" value="${eventTime}">
+                                <input type="hidden" name="description" value="${eventDescriptions}">
+                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+                                <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
+                                <button type="submit" name="delete" value="" id="sectorId"
+                                        class="btn btn-danger btn-md">Удалить
+                                </button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

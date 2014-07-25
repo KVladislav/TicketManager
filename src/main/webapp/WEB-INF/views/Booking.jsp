@@ -124,7 +124,7 @@
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
                         <select multiple="multiple" id="my-select" name="seats" name="my-select[]">
-                        <c:forEach items="${bookingSeatsMap}" var="seatEntry">
+                            <c:forEach items="${bookingSeatsMap}" var="seatEntry">
                                 <c:if test="${seatEntry.value==1}">
                                     <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в заказе]
                                     </option>

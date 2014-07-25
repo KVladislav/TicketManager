@@ -45,7 +45,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "AddEditEvent/NewEvent.do", method = RequestMethod.GET)
-    public String newEventGet(Model model) {
+    public String newEventGet(Model model) throws ParseException {
         model.addAttribute("pageName", 4);
         String eventErrorMessage = (String) model.asMap().get("eventErrorMessage");
         String errorMessageEdit = (String) model.asMap().get("errorMessageEdit");
@@ -72,16 +72,30 @@ public class EventsController {
             }
         }
         if (allSectors != null && allSectors.size() > 0) {
-            model.addAttribute("dateEvent", new Date());
+
+            Date today = new Date();
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(today);
+            int year = gc.get(GregorianCalendar.YEAR);
+            int mon = gc.get(GregorianCalendar.MONTH);
+            int day = gc.get(GregorianCalendar.DATE);
+            GregorianCalendar calendarN = new GregorianCalendar();
+            calendarN.set(year, mon, day, 0, 0, 0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String localisedDate = dateFormat.format(calendarN.getTime());
+            Date dateEvent = dateFormat.parse(localisedDate);
+            String inputTime = "12:00";
+            model.addAttribute("eventTime", inputTime);
+            model.addAttribute("dateEvent", dateEvent);
             model.addAttribute("allSectors", allSectors);
         }
         return "AddEditEvent";
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "evnt", required = true) int evnt,
+    public String eventsSetDelete(@RequestParam(value = "eventId", required = true) int eventId,
                                   SessionStatus status) {
-        Event event = eventService.getEventById(evnt);
+        Event event = eventService.getEventById(eventId);
         eventService.deleteEvent(event);
         status.setComplete();
         return "redirect:/Events/Events.do";
@@ -419,20 +433,7 @@ public class EventsController {
     public String setDeleteSector(@RequestParam(value = "evnt", required = true) int evnt,
                                   SessionStatus status) {
         Event event = eventService.getEventById(evnt);
-        event.setDeleted(true);
-        eventService.updateEvent(event);
-        List<Sector> sectors = sectorService.getSectorsByEvent(event);
-        if (sectors.size() != 0) {
-            List copy = new ArrayList(sectors);
-            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
-                Sector sector = it.next();
-                boolean isDeleted = true;
-                sector.setDeleted(isDeleted);
-                sectorService.updateSector(sector);
-                sectors.add(sector);
-            }
-        }
-
+        eventService.deleteEvent(event);
         status.setComplete();
         return "redirect:/Events/Events.do";
     }
