@@ -59,7 +59,7 @@
 &MediumSpace;
 &MediumSpace;
 <h1>
-    <div class="panel-heading" style="text-align:center;"><b>Список мероприятий</b></div>
+    <caption><h1 class="panel-heading text-info" style="text-align:center;"><b> Список мероприятий</b></h1></caption>
 </h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%; margin-bottom: 50px;">
     <div class="table responsive">
@@ -110,7 +110,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h4 id="myModalLabel">Вопрос!</h4>
             </div>
             <div class="modal-body">
