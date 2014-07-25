@@ -60,6 +60,7 @@
             <div class="row clearfix">
                 <div class="col-md-6 column">
                     <strong class="text-info">Мероприятие</strong>
+
                     <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
                         <p><select size="10" name="eventId" data-size="3" class="form-control">
                             <c:forEach items="${bookingEvents}" var="evnt">
@@ -103,7 +104,7 @@
                     <strong class="text-info">Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
-                        <p><select style="width:250px" size="11" name="row" class="form-control">
+                        <p><select  size="11" name="row" class="form-control">
                             <c:forEach items="${bookingRowsMap}" var="rowEntry">
                                 <c:if test="${rowEntry.key==bookingRow}">
                                     <option value="${rowEntry.key}" onclick="this.form.submit()"
@@ -118,32 +119,32 @@
                         </select></p>
                     </form>
                 </div>
-                <div class="col-md-5 column">
+                <div class="col-md-6 column">
                     <%--<strong class="text-info">Место</strong>--%>
 
                     <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
-                        <p><select multiple="multiple" id="my-select" name="seats" name="my-select[]">
+                        <select multiple="multiple" id="my-select" name="seats" name="my-select[]">
                             <c:forEach items="${bookingSeatsMap}" var="seatEntry">
-                                <c:if test="${seatEntry.value==1}">
-                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в заказе]
-                                    </option>
-                                </c:if>
-                                <c:if test="${seatEntry.value==2}">
-                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [забронирован]
-                                    </option>
-                                </c:if>
-                                <c:if test="${seatEntry.value==3}">
-                                    <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [продан]
-                                    </option>
-                                </c:if>
-                                <c:if test="${seatEntry.value==0}">
-                                    <option value="${seatEntry.key}">${seatEntry.key}</option>
-                                </c:if>
+                            <c:if test="${seatEntry.value==1}">
+                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [в заказе]
+                            </option>
+                            </c:if>
+                            <c:if test="${seatEntry.value==2}">
+                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [забронирован]
+                            </option>
+                            </c:if>
+                            <c:if test="${seatEntry.value==3}">
+                            <option disabled="disabled" value="${seatEntry.key}">${seatEntry.key} [продан]
+                            </option>
+                            </c:if>
+                            <c:if test="${seatEntry.value==0}">
+                            <option value="${seatEntry.key}">${seatEntry.key}</option>
+                            </c:if>
                             </c:forEach>
                             <%--<c:forEach items="${seatsMap}" var="seatEntry">--%>
                             <%--<option value="${seatEntry}">${seatEntry}</option>--%>
                             <%--</c:forEach>--%>
-
+                        </select>
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $('#my-select').multiSelect({
@@ -172,22 +173,17 @@
                     </c:if>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="button" name="Order" onclick="document.cancelForm.submit()" class="btn btn-danger btn-md" value="Отмена">
-                    <%--<form action="${pageContext.request.contextPath}/Booking/Finish.do" method="post">--%>
-                    <%--<input type="submit" name="Order" class="btn btn-primary btn-lg" value="Оформить"></form>--%>
+                    <a class="btn btn-danger btn-md" href="${pageContext.request.contextPath}/Booking/Cancel.do"
+                       role="button">Отмена</a>
                 </div>
                 <div class="col-md-4 column">
                     <input type="submit" name="Order" class="btn btn-primary btn-md" value="Добавить">
                     </form>
-
-
-                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post" name="cancelForm" id="cancelForm">
-</form>
                 </div>
             </div>
         </div>
         <div class="col-md-4 column">
-            <table class="table table-hover table-condensed"  style=" margin-bottom: 50px;">
+            <table class="table table-hover table-condensed" style=" margin-bottom: 50px;">
                 <caption>
                     <strong class="text-info">Сектора по ценам</strong>
                 </caption>
@@ -215,7 +211,8 @@
         </div>
     </div>
 </div>
-<button style="display: none;" class="btn btn-danger btn-sm" id="bookingCancelNotificationButton" data-toggle="modal" data-target="#bookingCancelNotification">
+<button style="display: none;" class="btn btn-danger btn-sm" id="bookingCancelNotificationButton" data-toggle="modal"
+        data-target="#bookingCancelNotification">
     Отмена брони
 </button>
 <!-- Modal bookingCancelNotification-->
@@ -236,9 +233,9 @@
                     <div class="col-lg-1 column col-lg-offset-9">
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
-                                <button type="submit"
-                                        class="btn btn-danger btn-lg" value="">Закрыть
-                                </button>
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg" value="">Закрыть
+                            </button>
                         </form>
                     </div>
                 </div>

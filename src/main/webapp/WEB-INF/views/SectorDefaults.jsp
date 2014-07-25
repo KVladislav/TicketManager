@@ -76,20 +76,30 @@
                                 </td>
                                 <td></td>
                                 <td>
+                                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                       title="Сохранить">
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
                                     <button tabindex="0" type="submit" name="action" value="save" class="btn btn-default btn-md">
-                                        <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                        <span class="glyphicon glyphicon-floppy-disk"></span></button>  </a>
                                 </td>
                                 <td>
+                                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                       title="Сделать копию">
                                     <button tabindex="0" type="submit" name="action" value="clone" class="btn btn-default btn-md">
-                                        <span class="glyphicon glyphicon-export"></span></button>
+                                        <span class="glyphicon glyphicon-export"></span></button>     </a>
                                 </td>
                                 <td>
+                                    <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                       title="Удалить">
                                     <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector" data-id="${sector.id}"
                                             data-toggle="modal" data-target="#sectorDeleteConfirmation">
                                         <span class="glyphicon glyphicon-trash"></span></button>
                                     <%--<button type="submit" name="action" value="delete" class="btn btn-default btn-xs">--%>
                                         <%--<span class="glyphicon glyphicon-trash"></span></button>--%>
+                                    </a>
+                                    <script>
+                                        $("a.my-tool-tip").tooltip();
+                                    </script>
                                 </td>
                             </tr>
                         </form>

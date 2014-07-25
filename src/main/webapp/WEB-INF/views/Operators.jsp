@@ -36,8 +36,11 @@
                     <th width="30%">Фамилия</th>
                     <th width="30%">Логин</th>
                     <th></th>
-                    <th><a href="/NewOperator/NewOperator.do" role="button" class="btn btn-sm"
-                           data-toggle="modal" title="Создать нового оператора">+<span class="glyphicon glyphicon-user"></span></a></th>
+                    <th>
+                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                           title="Создать нового оператора">
+                        <button type="button" href="/NewOperator/NewOperator.do"class="btn btn-md">
+                            +<span class="glyphicon glyphicon-user"></span></button></a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,15 +52,22 @@
                         <td>
                             <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditGet.do"
                                   method="get">
+                                <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                   title="Изменить">
                                 <button type="submit" name="operatorId" value="${operator.id}"
-                                        class="btn btn-default btn-xs" title="Изменить">
-                                    <span class="glyphicon glyphicon-edit"></span></button>
+                                        class="btn btn-default btn-md">
+                                    <span class="glyphicon glyphicon-edit"></span></button> </a>
                             </form>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default btn-xs deleteOperator" data-id="${operator.id}"
-                                    data-toggle="modal" data-target="#operatorDeleteConfirmation" title="Удалить">
-                                <span class="glyphicon glyphicon-trash"></span></button>
+                            <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                               title="Удалить">
+                            <button type="button" class="btn btn-default btn-md deleteOperator" data-id="${operator.id}"
+                                    data-toggle="modal" data-target="#operatorDeleteConfirmation">
+                                <span class="glyphicon glyphicon-trash"></span></button>  </a>
+                            <script>
+                                $("a.my-tool-tip").tooltip();
+                            </script>
                         </td>
                     </tr>
                 </c:forEach>
