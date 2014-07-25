@@ -36,10 +36,13 @@
                     </h1></caption>
                     <thead>
                     <tr>
-                        <th colspan="2">Название</th>
-                        <th>Кол-во рядов</th>
-                        <th>Мест в ряду</th>
-                        <th>Цена</th>
+                        <th width="30%">Название</th>
+                        <th width="15%">Рядов</th>
+                        <th width="15%">Мест</th>
+                        <th width="20%">Цена</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
 
@@ -48,38 +51,38 @@
                         <form name="sectorDefaults" action="${pageContext.request.contextPath}/Sectors/Modify.do"
                               method="post" role="form">
                             <tr>
-                                <td colspan="2">
-                                    <input tabindex="1" class="span2" size="16" maxlength="10" type="text" name="sectorName" required
+                                <td>
+                                    <input tabindex="1" class="form-control" size="16" maxlength="10" type="text" name="sectorName" required
                                            placeholder="Название сектора" value="${sector.sectorName}"
                                            pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                                            title="Не пустое, не начинатся с пробела, до 10 знаков">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="span1" size="16" maxlength="2" name="maxRows" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows" required
                                            placeholder="Рядов" value="${sector.maxRows}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="span1" size="16" maxlength="2" name="maxSeats" required
+                                    <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxSeats" required
                                            placeholder="Мест" value="${sector.maxSeats}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="span2" size="16" type="text" maxlength="8" name="defaultPrice"
+                                    <input tabindex="1" class="form-control" size="16" type="text" maxlength="8" name="defaultPrice"
                                            placeholder="Цена" value="${sector.defaultPrice}"
                                            required pattern="\d{0,5}(\.\d{0,2}){0,1}"
                                            title="В интервале [0-99999] до двух знаков после запятой">
                                 <td>
                                     <input type="hidden" name="sectorDefaultsId" value="${sector.id}">
-                                    <button tabindex="0" type="submit" name="action" value="save" class="btn btn-default btn-xs">
+                                    <button tabindex="0" type="submit" name="action" value="save" class="btn btn-default btn-md">
                                         <span class="glyphicon glyphicon-floppy-disk"></span></button>
                                 </td>
                                 <td>
-                                    <button tabindex="0" type="submit" name="action" value="clone" class="btn btn-default btn-xs">
+                                    <button tabindex="0" type="submit" name="action" value="clone" class="btn btn-default btn-md">
                                         <span class="glyphicon glyphicon-export"></span></button>
                                 </td>
                                 <td>
-                                    <button tabindex="0" type="button" class="btn btn-default btn-xs deleteSector" data-id="${sector.id}"
+                                    <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector" data-id="${sector.id}"
                                             data-toggle="modal" data-target="#sectorDeleteConfirmation">
                                         <span class="glyphicon glyphicon-trash"></span></button>
                                     <%--<button type="submit" name="action" value="delete" class="btn btn-default btn-xs">--%>
