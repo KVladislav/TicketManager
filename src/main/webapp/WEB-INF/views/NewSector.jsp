@@ -1,4 +1,12 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@include file="header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<html lang="ru">
+
 <%--
   Created by IntelliJ IDEA.
   User: Lora
@@ -9,56 +17,79 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Создание нового сектора</title>
 </head>
 <body>
-<form:form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
-    <h4>Задайте параметры нового сектора:</h4>
-    <tr>
-    <td>
-    <div class="control-group ">
-    <label class="my-control-label" for="sectorName">Название сектора
-    </label>
-    <div class="my-controls">
-    <input type="text" id="sectorName" name="sectorName" required pattern=[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}" title="Не пустое, не начинатся с пробела, до 10 знаков">
-    </div>
-    </div>
 
-    </td>
-    <td>
-    <div class="control-group ">
-    <label class="my-control-label" for="maxRows">Максимальное количество рядов
-    </label>
-    <div class="my-controls">
-    <input type="text" id="maxRows" name="maxRows" required pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
-    </div>
-    </div>
+<center>
+    <h1>
+        <caption><h1 class="panel-heading text-info"><b> Создание нового сектора </b></h1></caption>
+    </h1>
+    <h3>
+        <caption><h3 class="panel-heading text-info" style="text-align:center;"><b> Задайте параметры нового
+            сектора:</b></h3></caption>
+    </h3>
+    <div class="container" style="margin-bottom: 50px">
+        <div class="row clearfix">
+            <div class="col-md-3 column">
+            </div>
+            <div class="col-md-4 column">
+                <form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
+                    <table class="table table-hover">
 
-    </td>
-    <td>
-    <div class="control-group ">
-    <label class="my-control-label" for="maxSeats">Максимальное количество мест
-    </label>
-    <div class="my-controls">
-    <input type="text" id="maxSeats" name="maxSeats" required pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
-    </div>
-    </div>
+                        <thead>
+                        <tr>
+                            <th width="30%">Название сектора</th>
+                            <th width="20%">Рядов</th>
+                            <th width="20%">Мест</th>
+                            <th width="30%">Цена</th>
 
-    </td>
-    <td>
-    <div class="control-group ">
-    <label class="my-control-label" for="newPrice">Цена
-    </label>
-    <div class="my-controls">
-    <input type="text" id="newPrice" name="newPrice" required pattern="\d{0,5}(\.\d{0,2}){0,1}" title="В интервале [0-99999] до двух знаков после запятой">
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <input type="hidden" name="dateEvent"
+                               value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+                        <input type="hidden" name="eventTime" value="${eventTime}">
+                        <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
+                        <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
+                        <input type="hidden" name="allSectors" value="${allSectors}">
+
+                        <tr>
+                            <td>
+                                <input tabindex="1" class="form-control" size="16" maxlength="10" type="text"
+                                       name="sectorName" required
+                                       placeholder="Название сектора" value=""
+                                       pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
+                                       title="Не пустое, не начинатся с пробела, до 10 знаков">
+                            </td>
+                            <td>
+                                <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows"
+                                       required
+                                       placeholder="Рядов" value=""
+                                       pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
+                            </td>
+                            <td>
+                                <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxSeats"
+                                       required
+                                       placeholder="Мест" value=""
+                                       pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
+                            </td>
+                            <td>
+                                <input tabindex="1" class="form-control" size="16" type="text" maxlength="8"
+                                       name="newPrice"
+                                       placeholder="Цена" value=""
+                                       required pattern="\d{0,5}(\.\d{0,2}){0,1}"
+                                       title="В интервале [0-99999] до двух знаков после запятой">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+            <div class="col-md-2 column"></div>
+        </div>
     </div>
-    </div>
-
-    </td>
-    </tr>
-
-    <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
-
-    </form>
-    </body>
-    </html>
+</center>
+</body>
+</html>
