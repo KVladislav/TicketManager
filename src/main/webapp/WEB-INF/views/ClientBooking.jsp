@@ -205,7 +205,7 @@
 
     <tr>
         <td colspan="3">
-            <strong>Стоимость заказа ${bookingPrice}</strong>
+<c:if test="${!empty bookingTickets}"><strong>Стоимость заказа ${bookingPrice}</strong></c:if>
         </td>
         <td colspan="8">
         </td>

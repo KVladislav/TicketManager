@@ -30,7 +30,7 @@
 <body>
 <body>
 <%--<img style="margin-left: 22%" src="${pageContext.request.contextPath}/resources/images/ogo.jpg"  />--%>
-<div style="float:left; margin-left: 30%; width:900px; display:block;">
+<div style="float:left; margin-left: 30%; width:700px; display:block;">
     <center style="font-size: 100px">JavaArt Team</center>
         <table>
         <tr>
@@ -60,15 +60,15 @@
         <tr>
             <td>
                 <center>
-                <a  href="${pageContext.request.contextPath}/resources/images/4.jpg" class="pirobox_gall" title="Лариса Назаренко">
-                    <img width="150" height="200" src="${pageContext.request.contextPath}/resources/images/4.jpg"  /></a>
+                <a  href="${pageContext.request.contextPath}/resources/images/5.jpg" class="pirobox_gall" title="Анна Стоянова">
+                    <img width="228" height="200" src="${pageContext.request.contextPath}/resources/images/5.jpg"  /></a>
                 </center>
             </td>
 
             <td style="padding: 11px">
                 <center>
-                <a  href="${pageContext.request.contextPath}/resources/images/5.jpg" class="pirobox_gall" title="Анна Стоянова">
-                    <img width="228" height="200" src="${pageContext.request.contextPath}/resources/images/5.jpg"  /></a>
+                <a  href="${pageContext.request.contextPath}/resources/images/4.jpg" class="pirobox_gall" title="Лариса Назаренко">
+                    <img width="150" height="200" src="${pageContext.request.contextPath}/resources/images/4.jpg"  /></a>
                 </center>
             </td>
 

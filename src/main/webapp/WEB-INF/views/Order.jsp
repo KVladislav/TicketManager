@@ -320,7 +320,7 @@
                                 </td>
                                 <td>
                                     <div class="col-md-3 column">
-                                        <form action="${pageContext.request.contextPath}/Order/Cancel.do" method="post">
+                                        <form action="${pageContext.request.contextPath}/Order/Cancel.do" method="get">
                                             <button type="submit" class="btn btn-primary" value=""> Да </button>
                                         </form>
                                     </div>
@@ -333,6 +333,7 @@
         </div>
     </center>
 </div>
+
 
 
 </body>

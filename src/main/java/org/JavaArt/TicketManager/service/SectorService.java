@@ -41,16 +41,18 @@ public class SectorService {
         return sectorRepository.getSectorById(id);
     }
 
-    public List<String> getLegenda(List<Sector> sector) {
+    public List<String> getLegenda(List<Sector> sectorByPrice) {
         List<Double> sortByPrice = new LinkedList<>();
         List<String> legenda = new LinkedList<>();
         StringBuilder buf = new StringBuilder(100);
         int index;
-        sortByPrice.add(0, sector.get(0).getPrice());
-        for (int i = 1; i < sector.size(); i++) {
-            if (sector.get(i).getPrice() > sector.get(i - 1).getPrice())
-                sortByPrice.add(sector.get(i).getPrice());
+        int element=0;
+        sortByPrice.add(0, sectorByPrice.get(0).getPrice());
+        for (int i = 1; i < sectorByPrice.size(); i++) {
+            if (sectorByPrice.get(i).getPrice() > sectorByPrice.get(i - 1).getPrice())
+                sortByPrice.add(sectorByPrice.get(i).getPrice());
         }
+        List<Sector> sector=sectorRepository.getSectorsByEvent(sectorByPrice.get(0).getEvent());
         for (int j = 0; j < sortByPrice.size(); j++) {
             buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
             index = 0;
@@ -60,17 +62,19 @@ public class SectorService {
                     if (index > 0) buf.append(", ").append(sector2.getName());
                     index++;
                     if (buf.toString().length()>46){
-                        legenda.add(j, buf.toString());
+                        legenda.add(element, buf.toString());
                         buf.delete(0, 99);
                         buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
                         index = 0;
+                        element++;
                     }
                 }
             }
             if (buf.toString().length()<15)    buf.delete(0, 99);
             else{
-                legenda.add(j, buf.toString());
+                legenda.add(element, buf.toString());
                 buf.delete(0, 99);
+                element++;
             }
 
         }
