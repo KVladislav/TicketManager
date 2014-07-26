@@ -278,7 +278,9 @@
             </div>
             <div class="modal-body">
                 <h4>Подтвердите бронирование билетов</h4>
+                <br>
                 <h4>Клиент: ${bookingClient.name}</h4>
+                <br>
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
@@ -366,7 +368,9 @@
             </div>
             <div class="modal-body">
                 <h4>Подтвердите выкуп брони</h4>
-                <h2>Клиент: ${bookingClient.name}</h2>
+                <br>
+                <h4>Клиент: ${bookingClient.name}</h4>
+                <br>
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
