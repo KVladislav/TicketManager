@@ -10,10 +10,10 @@
 
 <head>
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
     <script type="text/javascript">
         function confirmRefund(ticket) {
             return confirm("Вы действительно хотите вернуть билет " + ticket + "?")
@@ -26,10 +26,10 @@
 <body>
     <div class="Refund">
     <center>
-         <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
+         <form class="form-inline" name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
              <br><h3 class="panel-heading" style=" color:Blue" >Поиск по номеру билета</h3><br>
              <div>
-                  <input type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
+                  <input class="form-control" type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
                          title="Целые числа без пробелов"  style="text-align:center "
                          required placeholder="Введите ID билета" />
                   <button type="submit" name="action" class="btn btn-primary" >Поиск</button>

@@ -4,7 +4,7 @@
     <div style="
     text-align: center;
     position: fixed;
-    left: 0;
+        left: 0;
     bottom: 0;
     padding: 0.3%;
     background: #e7e7e7;
