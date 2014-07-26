@@ -18,6 +18,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/js/date.js"></script>
     <!-- Bootstrap -->
+
+
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
@@ -33,6 +35,12 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
+
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap-responsive.css"
+          rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">
 
     <script type="text/javascript">
         $(document).on("hover", ".cont", function () {
@@ -98,11 +106,18 @@
             }
         }
     </script>
-    <script language="JavaScript">
-        function confirmAction() {
-            return confirm("Do you really want this subscription?")
-        }
+    <script>
+        $(document).ready(function () {
+            $(".deleteSector").click(function () {
+                var data_id = '';
+                if (typeof $(this).data('id') !== 'undefined') {
+                    data_id = $(this).data('id');
+                }
+                $('#sectorId').val(data_id);
+            })
+        });
     </script>
+
 
     <title>
         <c:if test="${empty eventEdit.id}"> Создание нового мероприятия </c:if>
@@ -116,24 +131,25 @@
 
 <c:if test="${empty eventEdit.id}">
 <h1>
-    <div class="panel-heading" style="text-align:center;"><b> Создание нового мероприятия </b></div>
-</h1>&MediumSpace;&MediumSpace;
+    <caption><h1 class="panel-heading text-info"><b> Создание нового мероприятия </b></h1></caption>
+</h1>
 <c:if test="${eventErrorMessage!=null}">
-    <div class="alert  alert-error" style="color: red">
-        <h4 style="color: red">Error! ${eventErrorMessage}</h4>
-    </div>
+
+    <h4 style="color: red"> ${eventErrorMessage}</h4>
+
 </c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
-      onsubmit="return ValidFormFields(this)"></c:if>
+      onsubmit="return ValidFormFields(this)">
+</c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
-    <div class="panel-heading" style="text-align:center;"><b> Редактирование мероприятия </b></div>
-</h1>&MediumSpace;&MediumSpace;
+    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></caption>
+</h1>
 
 <c:if test="${errorMessageEdit!=null}">
-<div class="alert  alert-error" style="color: red">
-    <h4 style="color: red">Error! ${errorMessageEdit}</h4>
-</div>
+
+<h4 style="color: red"> ${errorMessageEdit} </h4>
+
 </c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
       onsubmit="return ValidFormFields(this)">
@@ -145,230 +161,250 @@
     <table>
         <td>
             <tr>
-                <label class="my-control-label" required warning for="dateEvent"> Дата мероприятия </label>
+                <label class="my-control-label  text-info" required warning for="dateEvent"> Дата мероприятия </label>
 
-<center>
+                <center>
 
-    <div class="control-group">
-        <input type="text" name="dateEvent" readonly id="dateEvent"
-               value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
+                    <div class="control-group">
+                        <input type="text" name="dateEvent" readonly id="dateEvent"
+                               value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
 
-        <p>
-            <script type="text/javascript"> calendar.set("dateEvent");</script>
-        </p>
-    </div>
+                        <p>
+                            <script type="text/javascript"> calendar.set("dateEvent");</script>
+                        </p>
+                    </div>
             </tr>
             <tr>
-            <label class="my-control-label" for="inputTime"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="inputTime"> Время мероприятия </label>
 
-    <div class="control-group">
-        <select name="inputTime" id="inputTime">
+                <div class="control-group text-info">
+                    <select name="inputTime" id="inputTime">
 
-            <c:if test="${eventTime.equals(inputTime)}">
-                <option selected value="${eventTime}">${eventTime}</option>
-            </c:if>
+                    <c:if test="${eventTime.equals(inputTime)}">
+                            <option selected value="${eventTime}">${eventTime}</option>
+                        </c:if>
 
-            <c:if test="${eventTime.equals('10:00')}">
-                <option selected value="10:00">10:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('10:00')}">
-                <option value="10:00">10:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('10:30')}">
-                <option selected value="10:30">10:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('10:30')}">
-                <option value="10:30">10:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('11:00')}">
-                <option selected value="11:00">11:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('11:00')}">
-                <option value="11:00">11:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('11:30')}">
-                <option selected value="11:30">11:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('11:30')}">
-                <option value="11:30">11:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('12:00')}">
-                <option selected value="12:00">12:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('12:00')}">
-                <option value="12:00">12:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('12:30')}">
-                <option selected value="12:30">12:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('12:30')}">
-                <option value="12:30">12:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('13:00')}">
-                <option selected value="13:00">13:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('13:00')}">
-                <option value="13:00">13:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('13:30')}">
-                <option selected value="13:30">13:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('13:30')}">
-                <option value="13:30">13:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('14:00')}">
-                <option selected value="14:00">14:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('14:00')}">
-                <option value="14-00">14-00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('14:30')}">
-                <option selected value="14:30">14:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('14:30')}">
-                <option value="14:30">14:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('15:00')}">
-                <option selected value="15:00">15:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('15:00')}">
-                <option value="15:00">15:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('15:30')}">
-                <option selected value="15:30">15:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('15:30')}">
-                <option value="15:30">15:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('16:00')}">
-                <option selected value="16:00">16:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('16:00')}">
-                <option value="16:00">16:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('16:30')}">
-                <option selected value="16:30">16:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('16:30')}">
-                <option value="16:30">16:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('17:00')}">
-                <option selected value="17:00">17:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('17:00')}">
-                <option value="17:00">17:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('17:30')}">
-                <option selected value="17:30">17:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('17:30')}">
-                <option value="17:30">17:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('18:00')}">
-                <option selected value="18:00">18:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('18:00')}">
-                <option value="18:00">18:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('18:30')}">
-                <option selected value="18:30">18:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('18:30')}">
-                <option value="18:30">18:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('19:00')}">
-                <option selected value="19:00">19:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('19:00')}">
-                <option value="19:00">19:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('19:30')}">
-                <option selected value="19:30">19:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('19:30')}">
-                <option value="19:30">19:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('20:00')}">
-                <option selected value="20:00">20:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('20:00')}">
-                <option value="20:00">20:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('20:30')}">
-                <option selected value="20:30">20:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('20:30')}">
-                <option value="20:30">20:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('21:00')}">
-                <option selected value="21:00">21:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('21:00')}">
-                <option value="21:00">21:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('21:30')}">
-                <option selected value="21:30">21:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('21:30')}">
-                <option value="21:30">21:30</option>
-            </c:if>
-            <c:if test="${eventTime.equals('22:00')}">
-                <option selected value="22:00">22:00</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('22:00')}">
-                <option value="22:00">22:00</option>
-            </c:if>
-            <c:if test="${eventTime.equals('22:30')}">
-                <option selected value="22:30">22:30</option>
-            </c:if>
-            <c:if test="${!eventTime.equals('22:30')}">
-                <option value="22:30">22:30</option>
-            </c:if>
+                        <c:if test="${eventTime.equals('10:00')}">
+                            <option selected value="10:00">10:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('10:00')}">
+                            <option value="10:00">10:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('10:30')}">
+                            <option selected value="10:30">10:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('10:30')}">
+                            <option value="10:30">10:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('11:00')}">
+                            <option selected value="11:00">11:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('11:00')}">
+                            <option value="11:00">11:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('11:30')}">
+                            <option selected value="11:30">11:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('11:30')}">
+                            <option value="11:30">11:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('12:00')}">
+                            <option selected value="12:00">12:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('12:00')}">
+                            <option value="12:00">12:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('12:30')}">
+                            <option selected value="12:30">12:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('12:30')}">
+                            <option value="12:30">12:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('13:00')}">
+                            <option selected value="13:00">13:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('13:00')}">
+                            <option value="13:00">13:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('13:30')}">
+                            <option selected value="13:30">13:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('13:30')}">
+                            <option value="13:30">13:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('14:00')}">
+                            <option selected value="14:00">14:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('14:00')}">
+                            <option value="14-00">14-00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('14:30')}">
+                            <option selected value="14:30">14:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('14:30')}">
+                            <option value="14:30">14:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('15:00')}">
+                            <option selected value="15:00">15:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('15:00')}">
+                            <option value="15:00">15:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('15:30')}">
+                            <option selected value="15:30">15:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('15:30')}">
+                            <option value="15:30">15:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('16:00')}">
+                            <option selected value="16:00">16:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('16:00')}">
+                            <option value="16:00">16:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('16:30')}">
+                            <option selected value="16:30">16:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('16:30')}">
+                            <option value="16:30">16:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('17:00')}">
+                            <option selected value="17:00">17:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('17:00')}">
+                            <option value="17:00">17:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('17:30')}">
+                            <option selected value="17:30">17:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('17:30')}">
+                            <option value="17:30">17:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('18:00')}">
+                            <option selected value="18:00">18:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('18:00')}">
+                            <option value="18:00">18:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('18:30')}">
+                            <option selected value="18:30">18:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('18:30')}">
+                            <option value="18:30">18:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('19:00')}">
+                            <option selected value="19:00">19:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('19:00')}">
+                            <option value="19:00">19:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('19:30')}">
+                            <option selected value="19:30">19:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('19:30')}">
+                            <option value="19:30">19:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('20:00')}">
+                            <option selected value="20:00">20:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('20:00')}">
+                            <option value="20:00">20:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('20:30')}">
+                            <option selected value="20:30">20:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('20:30')}">
+                            <option value="20:30">20:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('21:00')}">
+                            <option selected value="21:00">21:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('21:00')}">
+                            <option value="21:00">21:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('21:30')}">
+                            <option selected value="21:30">21:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('21:30')}">
+                            <option value="21:30">21:30</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('22:00')}">
+                            <option selected value="22:00">22:00</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('22:00')}">
+                            <option value="22:00">22:00</option>
+                        </c:if>
+                        <c:if test="${eventTime.equals('22:30')}">
+                            <option selected value="22:30">22:30</option>
+                        </c:if>
+                        <c:if test="${!eventTime.equals('22:30')}">
+                            <option value="22:30">22:30</option>
+                        </c:if>
 
-        </select>
-    </div>
+                    </select>
+                </div>
 </center>
 </tr>
 <tr>
     <div class="control-group">
-    <label class="my-control-label" for="description"> Наименование </label>
+        <label class="my-control-label text-info" for="description"> Наименование </label>
 
-    <div class="my-controls">
-        <input style="resize: none" type="text" id="description" maxlength="50" data-min-length=1 name="description"
-               required pattern="^\S+*$"
-               title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
-               value="${eventDescriptions}"/>
+        <div class="my-controls">
+            <input style="resize: none" type="text" size="20" id="description" maxlength="50" data-min-length=1
+                   name="description"
+                   required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
+                   title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
+                   value="${eventDescriptions}"/>
+        </div>
     </div>
+</tr>
+<tr>
+    <div class="control-group">
+        <label class="my-control-label text-info" for="timeRemoveBooking"> Установка времени удаления брони в
+            минутах </label>
+
+        <div class="my-controls">
+
+            <input type="text" id="timeRemoveBooking" size="20" maxlength="10" name="timeRemoveBooking"
+                   value="${eventBookingTimeOut}"
+                   required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+
+            <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
+
+            <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
+                Поле
+                позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум три
+                цифры)</p>
+
+                <p id="helpText" class="helpText">Help text</p></div>
+
+            <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
+
+            <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                 onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
+                 onMouseOut="helpBox()">
+
+</tr>
 </div>
-</tr>
-</tr>
-<div class="control-group">
-    <label class="my-control-label" for="timeRemoveBooking"> Установка времени удаления брони в минутах </label>
-
-    <div class="my-controls">
-        <input type="text" id="timeRemoveBooking" maxlength="10" name="timeRemoveBooking" value="${eventBookingTimeOut}"
-               required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
-
-        <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
-
-        <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">Поле
-            позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум три
-            цифры)</p>
-
-            <p id="helpText" class="helpText">Help text</p></div>
-
-        <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
-
-        <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-             onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
-             onMouseOut="helpBox()">
-
-        </tr>
-    </div>
 </div>
 </td>
 </table>
 
+<!-- Button to trigger modal -->
+<%---<button type="button" data-toggle="modal" data-target="#myModal"> Добавить сектор</button>
+<a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Добавить сектор">---%>
+<button type="button" class="btn btn-default btn-md" href="${pageContext.request.contextPath}/views/NewSector.jsp">
+    Добавить сектор
+</button>
+<%--
+</a>
+data-toggle="modal">
+data-target="#sectorAddConfirmation"
+<script>
+    $("a.my-tool-tip").tooltip();
+</script>
+
+--%>
 
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
@@ -387,21 +423,36 @@
 
                 <tr>
                     <td>
-                        <input type="text" style="resize: none" readonly name="name" required placeholder="Сектор"
+                        <input tabindex="0" type="text" class="form-control" size="15" style="resize: none" readonly
+                               name="name" required
+                               placeholder="Сектор"
                                value="${sector.value.name}">
                     </td>
                     <td>
 
                         <div>
-                            <input type="text" maxlength="5" required pattern="^\d{0,5}(\.\d{0,2}){0,1}$ "
+                            <input tabindex="1" type="text" class="form-control" size="15" maxlength="5" required
+                                   pattern="^\d{0,5}(\.\d{0,2}){0,1}$"
                                    title="только числа до двух знаков после запятой"
                                    name="price${sector.value.id}" placeholder="Цена" value="${sector.value.price}">
                         </div>
                     </td>
                     <td>
-                        <input type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
-                        <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-trash"></span></button>
+                            <%--    <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
+                                <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-trash"></span></button>
+        --%>
+                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
+                            <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
+                                    data-id="${sector.value.id}"
+                                    data-toggle="modal" data-target="#sectorDeleteRequest">
+                                <span class="glyphicon glyphicon-trash"></span></button>
+                        </a>
+                        <script>
+                            $("a.my-tool-tip").tooltip();
+                        </script>
+
+
                     </td>
                 </tr>
             </c:forEach>
@@ -409,26 +460,159 @@
             </tbody>
         </table>
 
-        &MediumSpace;
-        &MediumSpace;
-        <table>
-            <tr>
-                <td>
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-4 column">
+                <big> <a class="btn btn-danger btn-lg" href="${pageContext.request.contextPath}/Events/Cancel.do"
+                         role="button"></a></big>
+            </div>
+            <div class="col-md-2 column">
                 <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
-        &MediumSpace;
-        &MediumSpace;
-                </td>
-</form>
-<td>
-    <div class="control-group">
-    <div class="col-md-4 column">
-        <form action="${pageContext.request.contextPath}/Events/Cancel.do" method="get">
-        <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+            </div>
+        </div>
     </div>
 </div>
-</td>
-</table>
+</form>
+
 </center>
+
+<div class="modal" id="sectorDeleteRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">Вопрос! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Вы действительно хотите удалить сектор?</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Отменить</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <c:if test="${empty eventEdit.id}">
+                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+                            <c:if test="${not empty eventEdit.id}">
+                            <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
+                                  method="post"></c:if>
+                                <input type="hidden" name="dateEvent"
+                                       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+                                <input type="hidden" name="inputTime" value="${eventTime}">
+                                <input type="hidden" name="description" value="${eventDescriptions}">
+                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+                                <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
+                                <button type="submit" name="delete" value="" id="sectorId"
+                                        class="btn btn-danger btn-md">Удалить?
+                                </button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal sector-->
+<div class="modal" id="sectorAddConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Задайте параметры нового сектора:</h4>
+                <tr>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="sectorName">Название сектора
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="sectorName" name="sectorName" required
+                                       pattern=[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
+                                       title="Не пустое, не начинатся с пробела, до 10 знаков">
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="maxRows">Максимальное количество рядов
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="maxRows" name="maxRows" required pattern="[1-9][0-9]{0,1}"
+                                       title="В интервале [1-99]">
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="maxSeats">Максимальное количество мест
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="maxSeats" name="maxSeats" required pattern="[1-9][0-9]{0,1}"
+                                       title="В интервале [1-99]">
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="newPrice">Цена
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="newPrice" name="newPrice" required
+                                       pattern="\d{0,5}(\.\d{0,2}){0,1}"
+                                       title="В интервале [0-99999] до двух знаков после запятой">
+                            </div>
+                        </div>
+
+                    </td>
+                <tr>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-danger btn-md" data-dismiss="modal">Отмена</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <c:if test="${empty eventEdit.id}">
+                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+                            <c:if test="${not empty eventEdit.id}">
+                            <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
+                                  method="post"></c:if>
+                                <input type="hidden" name="sectorName" value="${sectorName}">
+                                <input type="hidden" name="maxRows" value="${maxRows}">
+                                <input type="hidden" name="maxSeats" value="${maxSeats}">
+                                <input type="hidden" name="newPrice" value="${newPrice}">
+                                <input type="hidden" name="addSector" value="addSector">
+                                <input type="hidden" name="dateEvent"
+                                       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+                                <input type="hidden" name="inputTime" value="${eventTime}">
+                                <input type="hidden" name="description" value="${eventDescriptions}">
+                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+                                <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
+
+                                <button type="submit" name="addSector" value="" id="addSector"
+                                        class="btn btn-primary btn-md">Добавить сектор
+                                </button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

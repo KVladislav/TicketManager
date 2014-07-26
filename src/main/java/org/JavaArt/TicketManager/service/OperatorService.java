@@ -28,7 +28,7 @@ public class OperatorService implements UserDetailsService {
         operatorRepository.updateOperator(operator);
     }
 
-    public void editOperator(Operator operator) {
+    public void updateOperator(Operator operator) {
         operatorRepository.updateOperator(operator);
     }
 
@@ -44,5 +44,9 @@ public class OperatorService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return operatorRepository.getOperatorByUserName(userName);
+    }
+
+    public Operator getOperatorByLogin(String login) {
+        return operatorRepository.getOperatorBylogin(login);
     }
 }

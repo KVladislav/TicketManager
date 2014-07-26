@@ -7,69 +7,109 @@
 <%@include file="header.jsp" %>
 
 <head>
-    <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-</head>
-    <script type="text/javascript">
-        function confirmDelete(operator) {
-            return confirm("Вы действительно хотите удалить оператора " + operator + "?")
-        }
+    <script>
+        $(document).ready(function () {
+            $(".deleteOperator").click(function () {
+                var data_id = '';
+                if (typeof $(this).data('id') !== 'undefined') {
+                    data_id = $(this).data('id');
+                }
+                $('#operatorId').val(data_id);
+            })
+        });
     </script>
+
 </head>
 
 <body>
-<br><br>
-<div class="panel-heading" style="text-align:center; "><b>
-    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg"
-       data-toggle="modal">Добавить нового оператора</a>
-</b></div>
+<div class="container" style="margin-bottom: 50px">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+        </div>
+        <div class="col-md-6 column">
 
-<h1 class="panel-heading" style=" color:Blue; text-align:center">Список операторов</h1>
-<div class="panel-body" style="padding:15px; width:50%; margin-left: 25%;margin-bottom: 50px  ">
-    <div class="table responsive">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Логин</th>
-                <th>Редактировать</th>
-                <th>Удалить</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${operators}" var="operator">
+            <table class="table table-hover">
+                <caption><h1 class="panel-heading text-info">Список операторов</h1></caption>
+                <thead>
                 <tr>
-                    <td>${operator.id}</td>
-                    <td>${operator.name}</td>
-                    <td>${operator.surname}</td>
-                    <td>${operator.login}</td>
-                    <td>
-                        <form action="${pageContext.request.contextPath}/EditOperator/Edit.do" method="get">
-                            <button type="submit" name="operatorId" value="${operator.id}"
-                                    class="btn">Редактировать</button>
-
-                        </form>
-                    </td>
-                    <td>
-                    <form action="${pageContext.request.contextPath}/Operators/Delete.do" method="post"
-                          onSubmit="return confirmDelete('${operator.name} ${operator.surname} ')">
-                        <button type="submit" name="operatorId" value="${operator.id}" class="btn">Удалить</button>
-                    </form>
-                    </td>
+                    <th width="30%">Имя</th>
+                    <th width="30%">Фамилия</th>
+                    <th width="30%">Логин</th>
+                    <th></th>
+                    <th>
+                            <a data-placement="right" data-toggle="tooltip" type="button" href="${pageContext.request.contextPath}/Operators/NewOperator.do"
+                                    class="btn btn-md my-tool-tip" title="Создать нового оператора">
+                                +<span class="glyphicon glyphicon-user"></span></a>
+                    </th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach items="${operators}" var="operator">
+                    <tr>
+                        <td width="30%">${operator.name}</td>
+                        <td width="30%">${operator.surname}</td>
+                        <td width="30%">${operator.login}</td>
+                        <td>
+                            <form action="${pageContext.request.contextPath}/Operators/OperatorEdit.do"
+                                  method="POST">
+                                <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                                   title="Изменить">
+                                    <button type="submit" name="operatorId" value="${operator.id}"
+                                            class="btn btn-default btn-md">
+                                        <span class="glyphicon glyphicon-edit"></span></button>
+                                </a>
+                            </form>
+                        </td>
+                        <td>
+                            <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
+                               title="Удалить">
+                                <button type="button" class="btn btn-default btn-md deleteOperator"
+                                        data-id="${operator.id}"
+                                        data-toggle="modal" data-target="#operatorDeleteConfirmation">
+                                    <span class="glyphicon glyphicon-trash"></span></button>
+                            </a>
+                            <script>
+                                $("a.my-tool-tip").tooltip();
+                            </script>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="col-md-3 column"></div>
+</div>
+
+<!-- Modal operatorDeleteConfirmations-->
+<div class="modal" id="operatorDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Подтвердите удаление оператора</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Отмена</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <form action="${pageContext.request.contextPath}/Operators/OperatorsDelete.do"
+                              method="post" id="submitDelete">
+                            <button type="submit" name="operatorId" value="" id="operatorId"
+                                    class="btn btn-danger btn-md">Удалить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
-
 <%@include file="footer.jsp" %>
-</html>
-
-

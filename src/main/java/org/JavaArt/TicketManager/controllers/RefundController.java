@@ -1,13 +1,13 @@
 package org.JavaArt.TicketManager.controllers;
 
-import org.JavaArt.TicketManager.entities.*;
-import org.JavaArt.TicketManager.service.*;
+import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes({"pageName", "errorRefund", "messageRefund"})
@@ -31,7 +31,7 @@ public class RefundController {
         try{
             int id=Integer.parseInt(ticketId);
             ticket = ticketService.getTicketById(id);
-            if (ticket!=null && ticket.isConfirmed()==true && ticket.isReserved()==false){
+            if (ticket!=null && ticket.isConfirmed() && !ticket.isReserved()){
                 model.addAttribute(ticket);
                 model.addAttribute("errorRefund", "");
             }

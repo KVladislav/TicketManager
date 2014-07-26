@@ -26,4 +26,5 @@ public interface OperatorRepository {
     public List<Operator> getAllOperators();
 //    public void deleteOperator(Operator operator);
     public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException;
+    public Operator getOperatorBylogin(String login);
 }

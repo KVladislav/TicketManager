@@ -57,10 +57,12 @@
 <div class="col-md-4 column">
     <div class="row clearfix">
         <div class="col-md-12 column">
+            <br>
+
             <form class="form" action="${pageContext.request.contextPath}/Booking/ClientSave.do"
                   method="post" name="NewClient">
                 <div class="control-group">
-                    <label class="control-label" for="clientName" style="text-align:center; color:Blue">ФИО</label>
+                    <label class="control-label text-info" for="clientName">ФИО</label>
 
                     <div class="controls">
                         <input class="form-control" maxlength="50" id="clientName" type="text" name="clientName"
@@ -72,14 +74,15 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="clientDescription" style="text-align:center; color:Blue">Описание</label>
+                    <label class="control-label text-info" for="clientDescription">Описание</label>
 
                     <div class="controls">
 
-                        <textarea style="resize:none" rows="3" class="form-control" id="clientDescription"
+                        <textarea style="resize:none" rows="3" maxlength="200" class="form-control"
+                                  id="clientDescription"
                                   name="clientDescription"
                                   placeholder="Описание">${bookingClient.description}</textarea> <br>
-                        <button class="btn btn-primary btn-sm" type="submit">Сохранить</button>
+                        <button class="btn btn-primary btn-md" type="submit">Сохранить</button>
                     </div>
                 </div>
             </form>
@@ -91,12 +94,12 @@
 <div class="col-md-12 column">
 <table class="table table-hover table-condensed">
     <caption>
-        <h3 class="panel-heading" style=" color:Blue">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                           pattern="dd.MM.yy H:mm"/></h3>
+        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                     pattern="dd.MM.yy H:mm"/></h3>
     </caption>
     <thead>
     <tr>
-        <th>#</th>
+        <th>ID</th>
         <th colspan="2">Мероприятие</th>
         <th colspan="1">Статус</th>
         <th colspan="1">Дата</th>
@@ -111,11 +114,11 @@
 
     <tbody>
     <form name="delTicket" id="delTicket">
-        <c:set var="number" value="1"/>
+        <%--<c:set var="number" value="1"/>--%>
         <c:forEach items="${bookingTickets}" var="ticket">
             <tr>
-                <td>${number}</td>
-                <c:set var="number" value="${number+1}"/>
+                <td>${ticket.id}</td>
+                <%--<c:set var="number" value="${number+1}"/>--%>
                 <td colspan="2">
                     <small>${ticket.sector.event.description}</small>
                 </td>
@@ -224,13 +227,13 @@
 
 <div class="row clearfix">
     <div class="col-md-2 column">
-        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#bookingCancelConfirmation">
+        <button class="btn btn-danger btn-md" data-toggle="modal" data-target="#bookingCancelConfirmation">
             Отмена брони
         </button>
     </div>
     <div class="col-md-2 column">
         <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
-            <input type="submit" name="Order" class="btn btn-primary btn-sm"
+            <input type="submit" name="Order" class="btn btn-primary btn-md"
                    value="Добавить билет">
         </form>
     </div>
@@ -271,12 +274,12 @@
                 <h4>Подтвердите бронирование билетов</h4>
                 <table class="table table-hover table-condensed">
                     <caption>
-                        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                           pattern="dd.MM.yy H:mm"/></code></h3>
+                        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                                     pattern="dd.MM.yy H:mm"/></h3>
                     </caption>
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th colspan="2">Мероприятие</th>
                         <th colspan="1">Дата</th>
                         <th colspan="1">Сектор</th>
@@ -287,11 +290,11 @@
                     </thead>
 
                     <tbody>
-                    <c:set var="number" value="1"/>
+                    <%--<c:set var="number" value="1"/>--%>
                     <c:forEach items="${bookingTickets}" var="ticket">
                         <tr>
-                            <td>${number}</td>
-                            <c:set var="number" value="${number+1}"/>
+                            <td>${ticket.id}</td>
+                            <%--<c:set var="number" value="${number+1}"/>--%>
                             <td colspan="2">
                                 <small>${ticket.sector.event.description}</small>
                             </td>
@@ -327,12 +330,12 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
                               method="post">
-                            <input type="submit" name="Order" class="btn btn-success btn-lg"
+                            <input type="submit" name="Order" class="btn btn-success btn-md"
                                    value="Забронировать">
                         </form>
                     </div>
@@ -358,12 +361,12 @@
                 <h4>Подтвердите выкуп брони</h4>
                 <table class="table table-hover table-condensed">
                     <caption>
-                        <h3><code>Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                           pattern="dd.MM.yy H:mm"/></code></h3>
+                        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                                     pattern="dd.MM.yy H:mm"/></h3>
                     </caption>
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th>ID</th>
                         <th colspan="2">Мероприятие</th>
                         <th colspan="1">Дата</th>
                         <th colspan="1">Сектор</th>
@@ -374,11 +377,11 @@
                     </thead>
 
                     <tbody>
-                    <c:set var="number" value="1"/>
+                    <%--<c:set var="number" value="1"/>--%>
                     <c:forEach items="${bookingTickets}" var="ticket">
                         <tr>
-                            <td>${number}</td>
-                            <c:set var="number" value="${number+1}"/>
+                            <td>${ticket.id}</td>
+                                <%--<c:set var="number" value="${number+1}"/>--%>
                             <td colspan="2">
                                 <small>${ticket.sector.event.description}</small>
                             </td>
@@ -414,12 +417,12 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/BookingPayment.do"
                               method="post">
-                            <input type="submit" name="Order" class="btn btn-success btn-lg"
+                            <input type="submit" name="Order" class="btn btn-success btn-md"
                                    value="Выкуп брони">
                         </form>
                     </div>
@@ -437,8 +440,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
@@ -447,14 +448,14 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
 
                         <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
                               method="post" id="submitDelete">
                             <button type="submit" name="ticketId" id="ticketId"
-                                    class="btn btn-danger btn-lg" value="">Удалить
+                                    class="btn btn-danger btn-md" value="">Удалить
                             </button>
                         </form>
 
@@ -472,8 +473,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
@@ -482,13 +481,13 @@
             <div class="modal-footer">
                 <div class="row clearfix">
                     <div class="col-md-9 column">
-                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Назад</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
                             <button type="submit"
-                                    class="btn btn-danger btn-lg" value="">удалить
+                                    class="btn btn-danger btn-md" value="">Удалить
                             </button>
                         </form>
                     </div>
@@ -505,7 +504,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <%--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span--%>
-                        <%--class="sr-only">Close</span></button>--%>
+                <%--class="sr-only">Close</span></button>--%>
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
@@ -516,9 +515,9 @@
                     <div class="col-lg-1 column col-lg-offset-9">
                         <form action="${pageContext.request.contextPath}/Booking/CancelOrder.do"
                               method="post">
-                                <button type="submit"
-                                        class="btn btn-danger btn-lg" value="">Закрыть
-                                </button>
+                            <button type="submit"
+                                    class="btn btn-danger btn-md" value="">Закрыть
+                            </button>
                         </form>
                     </div>
                 </div>

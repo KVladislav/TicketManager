@@ -18,6 +18,9 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-8 column col-md-offset-2">
+            <br>
+            <br>
+
             <form class="form-inline" action="${pageContext.request.contextPath}/Booking/ProceedClientName.do"
                   method="post" name="searchForm">
                 <div class="form-group">

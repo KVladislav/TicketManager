@@ -20,7 +20,8 @@ public interface EventRepository {
     public List<Event> getFutureBookableEvents();
 
     public List<Event> getAllEvents();
-//    public void deleteEvent(Event event);
+
+    public void deleteEvent(Event event);
 
     public List<Event> getEventByDate(Date date);
 
