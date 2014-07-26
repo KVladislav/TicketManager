@@ -57,7 +57,7 @@
                                            name="sectorName" required
                                            placeholder="Название сектора" value="${sector.sectorName}"
                                            pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                                           title="Не пустое, не начинатся с пробела, до 10 знаков">
+                                           title="Не пустое, не начинается с пробела, только буквы и цифры, до 10 знаков">
                                 </td>
                                 <td>
                                     <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows"
