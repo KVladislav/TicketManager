@@ -12,7 +12,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
+</head>
     <script type="text/javascript">
         function confirmDelete(operator) {
             return confirm("Вы действительно хотите удалить оператора " + operator + "?")
@@ -20,13 +20,14 @@
     </script>
 </head>
 
+<body>
 <br><br>
 <div class="panel-heading" style="text-align:center; "><b>
-    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Добавить нового оператора</a>
+    <a href="/NewOperator/NewOperator.do" role="button" class="btn btn-success btn-lg"
+       data-toggle="modal">Добавить нового оператора</a>
 </b></div>
 
-<br>
-<h4><div class="panel-heading" style="text-align:center; "><b>Список операторов</b></div></h4>
+<h1 class="panel-heading" style=" color:Blue; text-align:center">Список операторов</h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%;margin-bottom: 50px  ">
     <div class="table responsive">
         <table class="table table-bordered">
@@ -48,16 +49,17 @@
                     <td>${operator.surname}</td>
                     <td>${operator.login}</td>
                     <td>
-                        <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditGet.do" method="get">
+                        <form action="${pageContext.request.contextPath}/EditOperator/Edit.do" method="get">
                             <button type="submit" name="operatorId" value="${operator.id}"
                                     class="btn">Редактировать</button>
+
                         </form>
                     </td>
                     <td>
-                        <form action="${pageContext.request.contextPath}/Operators/OperatorsDelete.do" method="post"
-                              onSubmit="return confirmDelete('${operator.name} ${operator.surname}')">
-                            <button type="submit" name="operatorId" value="${operator.id}" class="btn">Удалить</button>
-                        </form>
+                    <form action="${pageContext.request.contextPath}/Operators/Delete.do" method="post"
+                          onSubmit="return confirmDelete('${operator.name} ${operator.surname} ')">
+                        <button type="submit" name="operatorId" value="${operator.id}" class="btn">Удалить</button>
+                    </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -65,5 +67,9 @@
         </table>
     </div>
 </div>
+</body>
 
 <%@include file="footer.jsp" %>
+</html>
+
+

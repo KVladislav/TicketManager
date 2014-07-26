@@ -12,9 +12,11 @@
     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
 </head>
+
 <h3 style="text-align:center; color:Blue"><b>Создание нового оператора</b></h3>
+
     <center>
-     <form action="${pageContext.request.contextPath}/NewOperator/OperatorsAdd.do" method="post">
+     <form action="${pageContext.request.contextPath}/NewOperator/Save.do" method="post">
          <label>Имя*</label>
          <div>
 
@@ -54,12 +56,34 @@
              <input type="text" name="description" size=40 maxlength=50
                     style="text-align:center">
          </div>
-                  <br>
+         <br>
          <h4 style="text-align:center; color:Red">${errorOperator}</h4>
-        <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
+
+         <table>
+             <tr>
+                 <td>
+                     <form name = "newOperator" action="${pageContext.request.contextPath}
+                                   /NewOperator/Save.do" method="post">
+                         <h3 style="text-align:center">
+                             <button  type="submit" name="action" class="btn btn-primary" >Сохранить</button></h3>
+                     </form>
+                 </td>
+
+                 <td>
+                     <div class="control-group">
+                         <div class="col-md-1 column">
+                             <form name = "cancelTicket" action="${pageContext.request.contextPath} /NewOperator/Cancel.do"
+                                   method="get">
+                                 <h3 style="text-align:center">
+                                     <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена">
+                                 </h3>
+                             </form>
+                         </div>
+                     </div>
+                 </td>
+         </table>
      </form>
 
-</center>
-
-
+    </center>
+<%@include file="footer.jsp" %>
 

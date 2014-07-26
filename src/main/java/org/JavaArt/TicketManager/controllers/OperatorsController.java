@@ -27,27 +27,27 @@ public class OperatorsController {
 
     @RequestMapping(value = "NewOperator/NewOperator.do", method = RequestMethod.GET)
     public String newOperatortGet(Model model) {
-        model.addAttribute("pageName", 8);//set menu page number
+        model.addAttribute("pageName", 8);
         model.addAttribute("errorOperator", "");
         return "NewOperator";
     }
 
-    @RequestMapping(value = "Operators/OperatorsDelete.do", method = RequestMethod.POST)
+    @RequestMapping(value = "Operators/Delete.do", method = RequestMethod.POST)
     public String operatorDelete(@RequestParam(value = "operatorId") int operatorId) {
         operatorService.deleteOperator(operatorId);
         return "redirect:/Operators/Operators.do";
     }
 
-    @RequestMapping(value = "EditOperator/OperatorsEditGet.do", method = RequestMethod.GET)
+    @RequestMapping(value = "EditOperator/Edit.do", method = RequestMethod.GET)
     public String editOperatorGet(@RequestParam(value = "operatorId", required = true) int operatorId, Model model) {
-        model.addAttribute("pageName", 9);//set menu page number
+        model.addAttribute("pageName", 9);
         Operator operator = operatorService.getOperatorById(operatorId);
         model.addAttribute("operator", operator);
         model.addAttribute("errorOperator", "");
         return "EditOperator";
     }
 
-    @RequestMapping(value = "EditOperator/OperatorsEditSave.do", method = RequestMethod.POST)
+    @RequestMapping(value = "EditOperator/Save.do", method = RequestMethod.POST)
     public String editOperatorSave(@RequestParam("operatorId") int id,
                                    @RequestParam("name") String name,
                                    @RequestParam("surname") String surname,
@@ -88,7 +88,7 @@ public class OperatorsController {
     }
 
 
-    @RequestMapping(value = "NewOperator/OperatorsAdd.do", method = RequestMethod.POST)
+    @RequestMapping(value = "NewOperator/Save.do", method = RequestMethod.POST)
     public String operatorAdd(@RequestParam("name") String name,
                               @RequestParam("surname") String surname,
                               @RequestParam("login") String login,
@@ -115,5 +115,19 @@ public class OperatorsController {
         }
         operatorService.addOperator(operator);
         return "redirect:/Operators/Operators.do";
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "EditOperator/Cancel.do")
+    public String operatorCancel(Model model) {
+        model.addAttribute("errorOperator", "");
+        return "Operators";
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "NewOperator/Cancel.do")
+    public String operatorNewCancel(Model model) {
+        model.addAttribute("errorOperator", "");
+        return "Operators";
     }
 }

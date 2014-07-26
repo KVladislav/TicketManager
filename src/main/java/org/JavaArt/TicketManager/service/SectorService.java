@@ -6,10 +6,7 @@ import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 
 @Service
@@ -45,9 +42,9 @@ public class SectorService {
     }
 
     public List<String> getLegenda(List<Sector> sector) {
-        List<Double> sortByPrice = new ArrayList<>();
-        List<String> legenda = new ArrayList<>();
-        StringBuilder buf = new StringBuilder(200);
+        List<Double> sortByPrice = new LinkedList<>();
+        List<String> legenda = new LinkedList<>();
+        StringBuilder buf = new StringBuilder(100);
         int index;
         sortByPrice.add(0, sector.get(0).getPrice());
         for (int i = 1; i < sector.size(); i++) {
@@ -62,10 +59,20 @@ public class SectorService {
                     if (index == 0) buf.append(sector2.getName());
                     if (index > 0) buf.append(", ").append(sector2.getName());
                     index++;
+                    if (buf.toString().length()>46){
+                        legenda.add(j, buf.toString());
+                        buf.delete(0, 99);
+                        buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
+                        index = 0;
+                    }
                 }
             }
-            legenda.add(j, buf.toString());
-            buf.delete(0, 199);
+            if (buf.toString().length()<15)    buf.delete(0, 99);
+            else{
+                legenda.add(j, buf.toString());
+                buf.delete(0, 99);
+            }
+
         }
         return legenda;
     }

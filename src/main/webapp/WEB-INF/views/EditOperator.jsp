@@ -5,15 +5,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp" %>
 
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
 </head>
-<h3 style="text-align:center; color:Blue"><b>Редактирование оператора</b></h3>
+
+<body>
+
+<h3 style="text-align:center; color:Blue">Редактирование оператора</h3>
 <center>
-    <form action="${pageContext.request.contextPath}/EditOperator/OperatorsEditSave.do" method="post">
+    <form action="${pageContext.request.contextPath}/EditOperator/Save.do" method="post">
         <input type="hidden" name="operatorId" value="${operator.id}">
         <label>Имя*</label>
         <div>
@@ -59,9 +64,31 @@
                    style="text-align:center" value="${operator.description}">
         </div>
         <h4 style="text-align:center; color:Red">${errorOperator}</h4>
-        <button type="submit" name="action" class="btn btn-primary">Сохранить</button>
+        <table>
+            <tr>
+                <td>
+                    <form name = "delTicket" action="${pageContext.request.contextPath}/EditOperator/Save.do" method="post">
+                        <h3 style="text-align:center">
+                        <button  type="submit" name="action" class="btn btn-primary" >Сохранить</button></h3>
+                    </form>
+                </td>
+                <td>
+                    <div class="control-group">
+                        <div class="col-md-1 column">
+                            <form name = "cancelTicket" action="${pageContext.request.contextPath} /EditOperator/Cancel.do"
+                                  method="get">
+                                <h3 style="text-align:center">
+                                    <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена">
+                                </h3>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+        </table>
      </form>
-
 </center>
 
+</body>
 
+
+</html>

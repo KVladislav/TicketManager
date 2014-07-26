@@ -24,10 +24,8 @@
 <body>
     <div class="Refund">
     <center>
-        <h3 class="panel-heading" style=" color:Blue" >Возврат билета</h3>
-        <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
-             <br><h4> Поиск по номеру билета</h4>
-             <td><br>
+         <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
+             <br><h3 class="panel-heading" style=" color:Blue" >Поиск по номеру билета</h3><br>
              <div>
                   <input type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
                          title="Целые числа без пробелов"  style="text-align:center "
@@ -65,12 +63,12 @@
         <tr>
             <td>
                 <div class="col-md-3 column">
-                     <c:if test="${ticket.sector!=null}">
+                     <c:if test="${ticket!=null}">
                      <h3 style="text-align:center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#Confirm">Возврат</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmRefund">Возврат</button>
                      </h3>
                     </c:if>
-                    <c:if test="${ticket.sector==null}">
+                    <c:if test="${ticket==null}">
                         <form name = "delTicket" action="${pageContext.request.contextPath}/Refund/Delete.do" method="post">
                             <h3 style="text-align:center">
                                 <button  type="submit" name="delete" class="btn btn-primary" >Возврат</button>
@@ -97,7 +95,7 @@
     </center>
     </div>
 
-    <div class="modal" id="Confirm"  aria-labelledby="myModalLabel"  aria-hidden="true">
+    <div class="modal" id="ConfirmRefund"  aria-labelledby="myModalLabel"  aria-hidden="true">
         <center>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -108,21 +106,21 @@
                 <div class="modal-body">
                     <h4 style="text-align:center">Вы действительно хотите вернуть билет с ID = ${ticket.id}?</h4>
                     <div class="row clearfix">
-                        <br><br><br>
+                        <br><br>
                         <center>
                         <table>
                         <td>
                         <div class="col-md-3 column">
                             <form action="${pageContext.request.contextPath}/Refund/Delete.do"
                                   method="post">
-                                <button type="submit" class="btn btn-primary" value="">OK</button>
+                                <button type="submit" class="btn btn-primary" value=""> Да </button>
                             </form>
                         </div>
                         </td>
                         <td>
                              <div class="control-group">
                                  <div class="col-md-1 column">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
                                  </div>
                              </div>
                         </td>
