@@ -4,12 +4,13 @@
     <div style="
     text-align: center;
     position: fixed;
+    margin-left: 25%;
     left: 0;
     bottom: 0;
     padding: 0.3%;
     background: #e7e7e7;
     color: #000000;
-    width: 100%;
+    width: 50%;
    	">(C) Copyright 2014 by  <a href="/about">JavaArt Team</a>
 
     </div>
