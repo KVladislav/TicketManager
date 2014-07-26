@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link href="${pageContext.request.contextPath}/resources/ico/tickets.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="${pageContext.request.contextPath}/resources/ico/favicon" rel="shortcut icon" type="image/x-icon"/>
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet"/>
@@ -25,11 +25,11 @@
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation" >
-    <div class="container-fluid" style="margin-left: 25%" >
+    <div class="container-fluid" >
         <div class="navbar-header" >
-            <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.png"/>TicketManager</a>
+            <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.ico"/>TicketManager</a>
         </div>
-        <div class="collapse navbar-collapse" style="margin-top:5px">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <c:choose>
                     <c:when test="${pageName==1}">
