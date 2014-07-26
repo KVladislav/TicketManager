@@ -163,3 +163,24 @@
     background: #ff9900;
     color: red; /* Красный цвет выделения */
 }
+
+#myModal {
+    display: none;
+}
+
+#myModal .tab-pane .row {
+    margin: 3px 0;
+    width: 100%;
+    float: none;
+    padding: 0;
+    float: none;
+    clear: both;
+    display: block;
+}
+
+#myModal .tab-pane .row label {
+    display: block;
+    float: left;
+    cursor: pointer;
+    width: 200px;
+}

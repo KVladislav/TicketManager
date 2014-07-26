@@ -66,7 +66,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>##</th>
+                <th>#</th>
                 <th>Наименование</th>
                 <th>Дата</th>
                 <th>Редактировать</th>

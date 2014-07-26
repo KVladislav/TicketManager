@@ -18,6 +18,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/js/date.js"></script>
     <!-- Bootstrap -->
+
+
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
@@ -33,6 +35,12 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
+
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap-responsive.css"
+          rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">
 
     <script type="text/javascript">
         $(document).on("hover", ".cont", function () {
@@ -110,6 +118,7 @@
         });
     </script>
 
+
     <title>
         <c:if test="${empty eventEdit.id}"> Создание нового мероприятия </c:if>
         <c:if test="${not empty eventEdit.id}"> Редактирование мероприятия </c:if>
@@ -125,9 +134,9 @@
     <caption><h1 class="panel-heading text-info"><b> Создание нового мероприятия </b></h1></caption>
 </h1>
 <c:if test="${eventErrorMessage!=null}">
-    <div class="alert  alert-error" style="color: red">
-        <h4 style="color: red"> ${eventErrorMessage} </h4>
-    </div>
+
+    <h4 style="color: red"> ${eventErrorMessage}</h4>
+
 </c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
       onsubmit="return ValidFormFields(this)">
@@ -138,9 +147,9 @@
 </h1>
 
 <c:if test="${errorMessageEdit!=null}">
-<div class="alert  alert-error" style="color: red">
-    <h4 style="color: red"> ${errorMessageEdit} </h4>
-</div>
+
+<h4 style="color: red"> ${errorMessageEdit} </h4>
+
 </c:if>
 <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
       onsubmit="return ValidFormFields(this)">
@@ -159,6 +168,7 @@
                     <div class="control-group">
                         <input type="text" name="dateEvent" readonly id="dateEvent"
                                value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
+
                         <p>
                             <script type="text/javascript"> calendar.set("dateEvent");</script>
                         </p>
@@ -168,9 +178,9 @@
                 <label class="my-control-label  text-info" for="inputTime"> Время мероприятия </label>
 
                 <div class="control-group text-info">
-                <select name="inputTime" id="inputTime">
+                    <select name="inputTime" id="inputTime">
 
-                        <c:if test="${eventTime.equals(inputTime)}">
+                    <c:if test="${eventTime.equals(inputTime)}">
                             <option selected value="${eventTime}">${eventTime}</option>
                         </c:if>
 
@@ -357,21 +367,22 @@
 
             <input type="text" id="timeRemoveBooking" size="20" maxlength="10" name="timeRemoveBooking"
                    value="${eventBookingTimeOut}"
-               required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+                   required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
 
-        <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
+            <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
 
-        <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">Поле
-            позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум три
-            цифры)</p>
+            <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
+                Поле
+                позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум три
+                цифры)</p>
 
-            <p id="helpText" class="helpText">Help text</p></div>
+                <p id="helpText" class="helpText">Help text</p></div>
 
-        <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
+            <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
 
-        <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-             onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
-             onMouseOut="helpBox()">
+            <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                 onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
+                 onMouseOut="helpBox()">
 
 </tr>
 </div>
@@ -379,6 +390,21 @@
 </td>
 </table>
 
+<!-- Button to trigger modal -->
+<%---<button type="button" data-toggle="modal" data-target="#myModal"> Добавить сектор</button>
+<a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Добавить сектор">---%>
+<button type="button" class="btn btn-default btn-md" href="${pageContext.request.contextPath}/views/NewSector.jsp">
+    Добавить сектор
+</button>
+<%--
+</a>
+data-toggle="modal">
+data-target="#sectorAddConfirmation"
+<script>
+    $("a.my-tool-tip").tooltip();
+</script>
+
+--%>
 
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
@@ -434,25 +460,19 @@
             </tbody>
         </table>
 
-        &MediumSpace;
-        &MediumSpace;
-        <table>
-            <tr>
-                <td>
-                    <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
-                    &MediumSpace;
-                    &MediumSpace;
-                </td>
-</form>
-<td>
-    <div class="control-group">
-        <div class="col-md-4 column">
-            <form action="${pageContext.request.contextPath}/Events/Cancel.do" method="get">
-                <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена"></form>
+        <div class="form-group">
+            <div class="col-md-2 col-md-offset-4 column">
+                <big> <a class="btn btn-danger btn-lg" href="${pageContext.request.contextPath}/Events/Cancel.do"
+                         role="button"></a></big>
+            </div>
+            <div class="col-md-2 column">
+                <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+            </div>
         </div>
     </div>
-</td>
-</table>
+</div>
+</form>
+
 </center>
 
 <div class="modal" id="sectorDeleteRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -484,7 +504,107 @@
                                 <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
                                 <button type="submit" name="delete" value="" id="sectorId"
-                                        class="btn btn-danger btn-md">Удалить
+                                        class="btn btn-danger btn-md">Удалить?
+                                </button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal sector-->
+<div class="modal" id="sectorAddConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+            </div>
+            <div class="modal-body">
+                <h4>Задайте параметры нового сектора:</h4>
+                <tr>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="sectorName">Название сектора
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="sectorName" name="sectorName" required
+                                       pattern=[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
+                                       title="Не пустое, не начинатся с пробела, до 10 знаков">
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="maxRows">Максимальное количество рядов
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="maxRows" name="maxRows" required pattern="[1-9][0-9]{0,1}"
+                                       title="В интервале [1-99]">
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="maxSeats">Максимальное количество мест
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="maxSeats" name="maxSeats" required pattern="[1-9][0-9]{0,1}"
+                                       title="В интервале [1-99]">
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="control-group ">
+                            <label class="my-control-label" for="newPrice">Цена
+                            </label>
+
+                            <div class="my-controls">
+                                <input type="text" id="newPrice" name="newPrice" required
+                                       pattern="\d{0,5}(\.\d{0,2}){0,1}"
+                                       title="В интервале [0-99999] до двух знаков после запятой">
+                            </div>
+                        </div>
+
+                    </td>
+                <tr>
+            </div>
+            <div class="modal-footer">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <button type="button" class="btn btn-danger btn-md" data-dismiss="modal">Отмена</button>
+                    </div>
+                    <div class="col-md-2 column">
+                        <c:if test="${empty eventEdit.id}">
+                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+                            <c:if test="${not empty eventEdit.id}">
+                            <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
+                                  method="post"></c:if>
+                                <input type="hidden" name="sectorName" value="${sectorName}">
+                                <input type="hidden" name="maxRows" value="${maxRows}">
+                                <input type="hidden" name="maxSeats" value="${maxSeats}">
+                                <input type="hidden" name="newPrice" value="${newPrice}">
+                                <input type="hidden" name="addSector" value="addSector">
+                                <input type="hidden" name="dateEvent"
+                                       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+                                <input type="hidden" name="inputTime" value="${eventTime}">
+                                <input type="hidden" name="description" value="${eventDescriptions}">
+                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+                                <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
+
+                                <button type="submit" name="addSector" value="" id="addSector"
+                                        class="btn btn-primary btn-md">Добавить сектор
                                 </button>
                             </form>
                     </div>
