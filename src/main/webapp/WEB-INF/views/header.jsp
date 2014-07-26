@@ -26,7 +26,7 @@
 <body>
 <nav class="navbar navbar-default" role="navigation" >
     <div class="container-fluid" >
-        <div class="navbar-header" >
+        <div class="navbar-header">
             <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.ico"/>TicketManager</a>
         </div>
         <div class="collapse navbar-collapse">
