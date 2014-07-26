@@ -24,8 +24,8 @@
 
 </head>
 <body>
-<nav style="margin-left: 15%; margin-right: 15%; "class="navbar navbar-default" role="navigation" >
-    <div class="container-fluid" >
+<nav class="navbar navbar-default" role="navigation" >
+    <div class="container-fluid" style="margin-left: 25%" >
         <div class="navbar-header" >
             <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.png"/>TicketManager</a>
         </div>
