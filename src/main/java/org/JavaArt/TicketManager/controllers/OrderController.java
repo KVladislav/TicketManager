@@ -15,8 +15,9 @@ import java.util.*;
 
 @Controller
 @SessionAttributes({"pageName", "eventsOrder", "eventOrder", "sectorsMapOrder", "sectorOrder", "legendaOrder",
-        "rowOrder", "rowsMapOrder", "seatOrder", "seatsMapOrder", "orderList", "orderPrice"})
-public class OrderController {
+     "rowOrder", "rowsMapOrder", "seatOrder", "seatsMapOrder", "orderList", "orderPrice", "messageOrder", "errorOrder"})
+public class OrderController
+{
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
@@ -64,8 +65,8 @@ public class OrderController {
                 model.addAttribute("seatsMapOrder", seatsMap1);
                 model.addAttribute("orderPrice", orderPrice);
                 model.addAttribute("orderList", orderTickets);
-                //model.addAttribute("messageOrder", "");
-                //model.addAttribute("errorOrder", "");
+                model.addAttribute("messageOrder", "");
+                model.addAttribute("errorOrder", "");
             }
         }
         return "Order";
@@ -107,10 +108,11 @@ public class OrderController {
         Double orderPrice = (Double) model.asMap().get("orderPrice");
         Sector currentSector = (Sector) model.asMap().get("sectorOrder");
         Integer currentRow = (Integer) model.asMap().get("rowOrder");
-        StringBuilder message = new StringBuilder(300);
-        message.append("");
+        Event currentEvent = (Event) model.asMap().get("eventOrder");
         model.addAttribute("errorOrder", "");
         model.addAttribute("messageOrder", "");
+        StringBuilder message = new StringBuilder(500);
+        message.append("");
         if (orderTickets!=null && orderTickets.size()>0){
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
             for (Ticket ord : orderTickets) {
@@ -129,7 +131,7 @@ public class OrderController {
                     orderTickets.remove(tic);
                      orderPrice -= tic.getSector().getPrice();
                 }
-                model.addAttribute("errorOrder", "Билеты ID = "+ builder +
+                model.addAttribute("errorOrder", "Билеты ID = "+ builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
@@ -141,7 +143,7 @@ public class OrderController {
             if (orderTickets.size() > 0) {
                 for (Ticket ord : orderTickets) {
                     if (ord.getSector().equals(currentSector) && ord.getSeat() == seat1 && ord.getRow() == currentRow)
-                        return "redirect:/Order/Order.do";
+                        return "Order";
                 }
             }
             if (ticketService.isPlaceFree(currentSector, currentRow, seat1)==0){
@@ -151,19 +153,38 @@ public class OrderController {
             }
             else message.append( "Билет ").append(currentSector.getEvent().getDescription()).append(" Сектор: ").
                  append(currentSector.getName()).append(" Ряд: ").append(currentRow).append(" Место: ").append(seat1).
-                 append(" заблокирован<br>");
+                 append(" уже продан<br>");
         }
+        List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
+        Map<Sector, Short> sectorsMap = new TreeMap<>();
+        for (Sector sector : sectors) {
+            sectorsMap.put(sector,(short) ticketService.getFreeTicketsAmountBySector(sector));
+        }
+        model.addAttribute("sectorsMapOrder", sectorsMap);
+        Map<Byte, Byte> rowsMap1 = new TreeMap<>();
+        for (byte i = 1; i <= currentSector.getMaxRows(); i++) {
+            rowsMap1.put(i, (byte)ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
+        }
+        model.addAttribute("rowsMapOrder", rowsMap1);
+        Map<Integer, Integer> seatsMap1 = new TreeMap<>();
+        for (int i = 1; i <= currentSector.getMaxSeats(); i++) {
+            seatsMap1.put(i, ticketService.isPlaceFree(currentSector, currentRow, i));
+        }
+        model.addAttribute("seatsMapOrder", seatsMap1);
         model.addAttribute("messageOrder", message);
         model.addAttribute("seatOrder", seat[(seat.length-1)]);
         model.addAttribute("orderPrice", orderPrice);
         model.addAttribute("orderList", orderTickets);
-        return "redirect:/Order/Order.do";
+        return "Order";
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
     public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model){
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
         Double orderPrice = (Double) model.asMap().get("orderPrice");
+        Event currentEvent = (Event) model.asMap().get("eventOrder");
+        Sector currentSector = (Sector) model.asMap().get("sectorOrder");
+        Integer currentRow = (Integer) model.asMap().get("rowOrder");
         model.addAttribute("errorOrder","");
         model.addAttribute("messageOrder", "");
         if (orderTickets!=null && orderTickets.size()>0){
@@ -184,7 +205,7 @@ public class OrderController {
                     orderTickets.remove(tic);
                     orderPrice -= tic.getSector().getPrice();
                 }
-                model.addAttribute("errorOrder", "Билеты ID = "+ builder +
+                model.addAttribute("errorOrder", "Билеты ID = "+ builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
@@ -197,15 +218,33 @@ public class OrderController {
                 break;
             }
         }
+        List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
+        Map<Sector, Short> sectorsMap = new TreeMap<>();
+        for (Sector sector : sectors) {
+            sectorsMap.put(sector,(short) ticketService.getFreeTicketsAmountBySector(sector));
+        }
+        model.addAttribute("sectorsMapOrder", sectorsMap);
+        Map<Byte, Byte> rowsMap1 = new TreeMap<>();
+        for (byte i = 1; i <= currentSector.getMaxRows(); i++) {
+            rowsMap1.put(i, (byte)ticketService.getFreeTicketsAmountBySectorRow(currentSector, i));
+        }
+        model.addAttribute("rowsMapOrder", rowsMap1);
+        Map<Integer, Integer> seatsMap1 = new TreeMap<>();
+        for (int i = 1; i <= currentSector.getMaxSeats(); i++) {
+            seatsMap1.put(i, ticketService.isPlaceFree(currentSector, currentRow, i));
+        }
+        model.addAttribute("seatsMapOrder", seatsMap1);
         model.addAttribute("orderPrice", orderPrice);
         model.addAttribute("orderList", orderTickets);
-        return "redirect:/Order/Order.do";
+        return "Order";
     }
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
     public String orderBuy(Model model) {
         Double orderPrice = (Double) model.asMap().get("orderPrice");
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
+        Sector currentSector = (Sector) model.asMap().get("sectorOrder");
+        Integer currentRow = (Integer) model.asMap().get("rowOrder");
         StringBuilder idBuy = new StringBuilder(200);
         model.addAttribute("errorOrder","");
         model.addAttribute("messageOrder", "");
@@ -227,7 +266,7 @@ public class OrderController {
                     orderTickets.remove(tic);
                     orderPrice -= tic.getSector().getPrice();
                 }
-                model.addAttribute("errorOrder", "Билеты ID = "+ builder +
+                model.addAttribute("errorOrder", "Билеты ID = "+ builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
@@ -239,7 +278,7 @@ public class OrderController {
                 orderTickets.remove(ticket);
                 orderPrice -= ticket.getSector().getPrice();
                 model.addAttribute("orderPrice", orderPrice);
-                return "redirect:/Order/Order.do";
+                return "Order";
             }
         }
         for (Ticket ticket : orderTickets) {
@@ -250,9 +289,14 @@ public class OrderController {
         if (orderTickets.size()==1) model.addAttribute("messageOrder", "Билет ID = "+ idBuy +" из заказа куплен");
         if (orderTickets.size()>1) model.addAttribute("messageOrder", "Билеты ID = "+ idBuy +" из заказа куплены");
         orderTickets.clear();
+        Map<Integer, Integer> seatsMap1 = new TreeMap<>();
+        for (int i = 1; i <= currentSector.getMaxSeats(); i++) {
+            seatsMap1.put(i, ticketService.isPlaceFree(currentSector, currentRow, i));
+        }
+        model.addAttribute("seatsMapOrder", seatsMap1);
         model.addAttribute("orderPrice", 0.0);
         model.addAttribute("orderList", orderTickets);
-        return "redirect:/Order/Order.do";
+        return "Order";
     }
 
     @SuppressWarnings("unchecked")
@@ -269,5 +313,4 @@ public class OrderController {
         model.addAttribute("messageOrder", "Заказ отменён");
         return "redirect:/Order/Order.do";
     }
-
 }
