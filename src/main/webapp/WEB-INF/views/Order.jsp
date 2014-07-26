@@ -27,13 +27,13 @@
             <h4 style="text-align:center; color:Blue">Выбор мероприятия</h4>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
                 <p><select size="8" name="eventId" data-size="3" class="form-control">
-                    <c:forEach items="${events}" var="evnt">
-                        <c:if test="${event.id==evnt.id}">
+                    <c:forEach items="${eventsOrder}" var="evnt">
+                        <c:if test="${eventOrder.id==evnt.id}">
                             <option value="${evnt.id}" onclick="this.form.submit()"
                                    selected> ${evnt.description},
                                    <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                         </c:if>
-                        <c:if test="${event.id!=evnt.id}">
+                        <c:if test="${eventOrder.id!=evnt.id}">
                             <option value="${evnt.id}"
                                    onclick="this.form.submit()">${evnt.description},
                                    <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
@@ -46,8 +46,8 @@
             <h4 style="text-align:center; color:Blue">Выбор сектора</h4>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
                 <p><select size="8" name="sectorId" class="form-control">
-                    <c:forEach items="${sectorsMap}" var="sectorEntry">
-                        <c:if test="${sector.id==sectorEntry.key.id}">
+                    <c:forEach items="${sectorsMapOrder}" var="sectorEntry">
+                        <c:if test="${sectorOrder.id==sectorEntry.key.id}">
                              <c:if test="${sectorEntry.value==0}">
                                  <option value="${sectorEntry.key.id}" onclick="this.form.submit()"style="color:Red"
                                          selected>${sectorEntry.key.name} Сектор ${sectorEntry.key.price}
@@ -59,7 +59,7 @@
                                          грн. Свободно ${sectorEntry.value} мест</option>
                              </c:if>
                         </c:if>
-                        <c:if test="${sector.id!=sectorEntry.key.id}">
+                        <c:if test="${sectorOrder.id!=sectorEntry.key.id}">
                             <c:if test="${sectorEntry.value==0}">
                                 <option value="${sectorEntry.key.id}" onclick="this.form.submit()"style="color:Red"
                                         >${sectorEntry.key.name} Сектор ${sectorEntry.key.price}
@@ -79,7 +79,7 @@
             <h4 style="text-align:center; color:Blue">Сектора по возрастанию цены</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <select multiple size="8" name="Legend" class="form-control">
-                    <c:forEach items="${legenda}" var="leg">
+                    <c:forEach items="${legendaOrder}" var="leg">
                         <option value="${leg}"> ${leg}</option>
                     </c:forEach>
                 </select>
@@ -91,8 +91,8 @@
              <h4 style="text-align:center; color:Blue">Выбор ряда</h4>
              <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
                  <p><select size="12" name="row" class="form-control">
-                     <c:forEach items="${rowsMap}" var="rowEntry">
-                         <c:if test="${row==rowEntry.key}">
+                     <c:forEach items="${rowsMapOrder}" var="rowEntry">
+                         <c:if test="${rowOrder==rowEntry.key}">
                              <c:if test="${rowEntry.value==0}">
                                  <option value="${rowEntry.key} "onclick="this.form.submit()" style="color:Red"
                                          selected >${rowEntry.key} ряд.  В продаже мест нет</option>
@@ -102,7 +102,7 @@
                                          ряд. В продаже ${rowEntry.value} мест</option>
                              </c:if>
                          </c:if>
-                         <c:if test="${row!=rowEntry.key}">
+                         <c:if test="${rowOrder!=rowEntry.key}">
                              <c:if test="${rowEntry.value==0}">
                                  <option value="${rowEntry.key} "onclick="this.form.submit()" style="color:Red">
                                          ${rowEntry.key} ряд. В продаже мест нет</option>
@@ -120,8 +120,8 @@
              <h4 style="text-align:center; color:Blue">Выбор места</h4>
              <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
                  <p><select multiple size="12" id="select" name="seat" class="form-control" name="select">
-                     <c:forEach items="${seatsMap}" var="seatEntry">
-                         <c:if test="${seat==seatEntry.key}">
+                     <c:forEach items="${seatsMapOrder}" var="seatEntry">
+                         <c:if test="${seatOrder==seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
                                  <option value="${seatEntry.key}" style="color:Red" selected >
                                          ${seatEntry.key}. (продан)</option>
@@ -139,7 +139,7 @@
                                          selected >${seatEntry.key}. (в продаже)</option>
                              </c:if>
                          </c:if>
-                         <c:if test="${seat!=seatEntry.key}">
+                         <c:if test="${seatOrder!=seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
                                  <option value="${seatEntry.key}" style="color:Red">
                                          ${seatEntry.key}. (продан)</option>
@@ -205,7 +205,7 @@
             <center>
                 <h5 style="text-align:center; color:Green">${messageOrder}</h5>
                 <h5 style="text-align:center; color:Red">${errorOrder}</h5>
-                <c:if test="${orderPrice>0}">
+                <c:if test="${orderList.size()>0}">
                      <h4 style="text-align:center">Стоимость заказа: ${orderPrice} грн.</h4>
                     <tr>
                     <td>
