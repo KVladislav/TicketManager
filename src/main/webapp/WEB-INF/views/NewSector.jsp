@@ -22,22 +22,21 @@
 <body>
 
 <center>
-    <h1>
-        <caption><h1 class="panel-heading text-info"><b> Создание нового сектора </b></h1></caption>
-    </h1>
-    <h3>
-        <caption><h3 class="panel-heading text-info" style="text-align:center;"><b> Задайте параметры нового
-            сектора:</b></h3></caption>
-    </h3>
-    <div class="container" style="margin-bottom: 50px">
+    <caption><h1 class="panel-heading text-info" style="text-align:center;"><b>Создание нового сектора</b></h1>
+    </caption>
+    <caption><h3 class="panel-heading  text-info" style="text-align:center;"><b>Задайте параметры нового
+        сектора:</b></h3></caption>
+    <div class="container" style="text-align:center;">
         <div class="row clearfix">
+
+
             <div class="col-md-3 column">
             </div>
             <div class="col-md-4 column">
                 <form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="text-align:center;">
 
-                        <thead>
+                    <thead>
                         <tr>
                             <th width="30%">Название сектора</th>
                             <th width="20%">Рядов</th>
