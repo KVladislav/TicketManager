@@ -404,8 +404,6 @@ a.active_switch ,a:hover.active_switch{
 center a{  display:block;border:3px solid #efefef;}
 center a:hover{ border:3px solid #e38d13}
 
-
-
 .demo a{ float:left; margin:0; padding:0;  margin:5px 10px 5px 10px; display:block; border:3px solid #efefef;}
 .demo a:hover{ border:3px solid #e38d13}
 .demo a img{ float:left; margin:0; padding:0; margin:0;}
