@@ -62,9 +62,16 @@ public class OperatorsController {
         operator.setName(name);
         operator.setSurname(surname);
         operator.setDescription(description);
+        operator.setLogin(login);
 
         List<String> errorMessage = new ArrayList<>();
-        if (operator.getId()!=null && !password.equals(operator.getPassword())) {
+
+        Operator dbOperator = operatorService.getOperatorByLogin(login);
+        if (dbOperator != null && !dbOperator.getId().equals(operator.getId())) {
+            errorMessage.add("Такой логин занят. Введите другой логин.");
+        }
+
+        if (operator.getId() != null && !password.equals(operator.getPassword())) {
             errorMessage.add("Пароль введён неверно.");
         }
 
@@ -76,15 +83,8 @@ public class OperatorsController {
             errorMessage.add("Пароли не совпадают");
         }
 
-        if (operator.getId()==null && passwordNew.length()<6){
+        if (operator.getId() == null && passwordNew.length() < 6) {
             errorMessage.add("Измените новый пароль: минимум 6 символов.");
-        }
-
-
-        if (!login.equals(operator.getLogin()) && operatorService.getOperatorByLogin(login) != null) {
-            errorMessage.add("Такой логин занят. Введите другой логин.");
-        } else {
-            operator.setLogin(login);
         }
 
         if (errorMessage.size() > 0) {
@@ -94,7 +94,6 @@ public class OperatorsController {
 
         if (passwordNew.length() > 0)
             operator.setPassword(passwordNew);
-
 
 
         if (operator.getId() != null) {
