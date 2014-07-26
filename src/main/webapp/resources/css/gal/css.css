@@ -1,42 +1,11 @@
-body{
-	background:white;
-	margin:0;
-	padding:0;
-	font-family:Trebuchet MS,Arial;
-	font-size:80%;
-
-
-}
-img{
-	margin:0;
-	padding:0;
-	border:none;
+body {
+    background: white;
+    margin: 0;
+    padding: 0;
 }
 
-h1{
-	padding:0;
-	margin:0;
-	text-indent:-999em;
-}
-.logo {
-	position:absolute;
-	left:0;
-	top:68px;
-	background: url(logo.jpg) center no-repeat;
-	height:133px;
-	width:100%;
-	display:block;
-}
-.logo a{
-	position:absolute;
-	left:50%;
-	top:0;
-	height:133px;
-	width:300px;
-	margin:0 0 0 -151px;
-	background:none;
-	display:block;
-}
+
+
 
 /*h2,h3,h4{text-shadow: 0px 0 4px #222; }*/
 
@@ -62,13 +31,8 @@ h3{
 	padding:0 10px 5px 7px;
 	background: url(shad_bg.jpg) left bottom no-repeat;
 }
-h4{
-	margin:0;
-	padding:0;
 
-}
-a{	color:#cc0505; font-weight:700; text-decoration:none; outline:none;}
-a:hover{color:#777;text-decoration:none;outline:none;}
+
 .main{
 	background:#fff url(bg.jpg) center repeat-y;
 	position:absolute;
@@ -85,16 +49,6 @@ a:hover{color:#777;text-decoration:none;outline:none;}
 	margin:0 auto;
 	padding:0;
 	width:900px;
-	display:block;
-}
-.header{
-	position:absolute;
-	left:50%;
-	top:0;
-	margin:0 0 0 -455px;
-	width:910px;
-	height:68px;
-	background:url(header.jpg) center top no-repeat;
 	display:block;
 }
 .switch_ul{
@@ -447,9 +401,15 @@ a.active_switch ,a:hover.active_switch{
 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.demo a{ float:left; margin:0; padding:0; margin:5px 0px 5px 19px!important; margin:5px 10px 5px 10px; display:block; border:3px solid #efefef;}
-.demo a:hover{ border:3px solid #fff}
-.demo a img{ float:left; margin:0; padding:0; margin:0; background:url(bg_tms.jpg) no-repeat;}
+center a{  display:block;border:3px solid #efefef;}
+center a:hover{ border:3px solid #e38d13}
+
+
+
+.demo a{ float:left; margin:0; padding:0;  margin:5px 10px 5px 10px; display:block; border:3px solid #efefef;}
+.demo a:hover{ border:3px solid #e38d13}
+.demo a img{ float:left; margin:0; padding:0; margin:0;}
+
 ul,li,dl,dt,dd{
 	list-style-type:none;
 	margin:0;

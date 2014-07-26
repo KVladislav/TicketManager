@@ -18,6 +18,7 @@
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet"/>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
@@ -89,7 +90,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="<c:url value="/j_spring_security_logout" />" title="Выйти"><strong>[${pageContext.request.userPrincipal.name}]</strong></a>
+                        <a href="<c:url value="/j_spring_security_logout" />" title="Выйти"><strong> Вы зашли под ${pageContext.request.userPrincipal.name}</strong></a>
                     </li>
                 </ul>
         </div>
