@@ -202,25 +202,80 @@
            </table>
         </div>
         <div class="col-md-7 col-lg-offset-5 ">
-            <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
-                <h5 style="text-align:center; color:Green">${message}</h5>
-                <h5 style="text-align:center; color:Red">${error}</h5>
-                <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
-                <h4 style="text-align:center"><input type="submit" name="Order"
-                           class="btn btn-primary btn-lg" value="Купить"></h4>
-            </form>
+            <center>
+           <%-- <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">--%>
+                <h5 style="text-align:center; color:Green">${messageOrder}</h5>
+                <h5 style="text-align:center; color:Red">${errorOrder}</h5>
 
-             <%--   <div class="col-md-4 column">
-                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
-                        <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Отмена"></form>
-                </div>
---%>
+                <c:if test="${orderPrice>0}">
+                     <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
+                    <%-- <h4 style="text-align:center"><input type="submit" name="Order"
+                           class="btn btn-primary btn-lg" value="Купить"></h4>--%>
+                <tr>
+                    <td>
+                        <div class="control-group">
+                            <div class="col-md-3  col-lg-offset-3">
+                                <form name = "cancelTicket" action="${pageContext.request.contextPath}/Order/Cancel.do"
+                                      method="get">
+                                    <h3 style="text-align:center">
+                                        <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена">
+                                    </h3>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-3 column">
+                            <h3 style="text-align:center">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmOrderBuy">Купить</button>
+                            </h3>
+                        </div>
+                    </td>
 
+                </c:if>
+            <%--</form>--%>
+            </center>
         </div>
    </div>
 </div>
 </div>
 
+<div class="modal" id="ConfirmOrderBuy"  aria-labelledby="myModalLabel"  aria-hidden="true">
+    <center>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <h4 style="text-align:center">Вы действительно хотите сделать заказ?</h4>
+                    <div class="row clearfix">
+                        <br><br>
+                        <center>
+                            <table>
+                                <td>
+                                    <div class="control-group">
+                                        <div class="col-md-1 column">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-3 column">
+                                        <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
+                                            <button type="submit" class="btn btn-primary" value=""> Да </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+</div>
 </body>
 <%@include file="footer.jsp" %>
 </html>
