@@ -65,8 +65,8 @@
             <label class="col-md-4 control-label text-info" for="OperatorOldPass">Старый пароль</label>
             <div class="col-md-4 column">
                 <input class="form-control input-md" type="password" name="password" size=20 maxlength=15 required
-                       pattern="^[a-zA-Z0-9]{0,10}$" id="OperatorOldPass"
-                       title="Латинские буквы и цифры от 6 до 10 символов">
+                       pattern="^[a-zA-Z0-9]{0,15}$" id="OperatorOldPass"
+                       title="Латинские буквы и цифры от 6 до 15 символов">
             </div>
         </div>
         </c:if>
@@ -76,9 +76,9 @@
             <div class="col-md-4 column">
 
                 <c:if test="${operator.id!=null}"><input class="form-control input-md" type="password" name="passwordNew" size=20 maxlength=15
-                       pattern="^[a-zA-Z0-9]{0,10}$" id="OperatorNewPass1" title="Латинские буквы и цифры от 6 до 10 символов"></c:if>
+                       pattern="^[a-zA-Z0-9]{0,15}$" id="OperatorNewPass1" title="Латинские буквы и цифры от 6 до 15 символов"></c:if>
                 <c:if test="${operator.id==null}"><input class="form-control input-md" type="password" name="passwordNew" size=20 maxlength=15
-                                                         required pattern="^[a-zA-Z0-9]{6,10}$" id="OperatorNewPass1" title="Латинские буквы и цифры от 6 до 10 символов"></c:if>
+                                                         required pattern="^[a-zA-Z0-9]{6,15}$" id="OperatorNewPass1" title="Латинские буквы и цифры от 6 до 15 символов"></c:if>
             </div>
         </div>
 
@@ -86,9 +86,9 @@
             <label class="col-md-4 control-label text-info" for="OperatorNewPass2">Подтвердите новый пароль</label>
             <div class="col-md-4 column">
                 <c:if test="${operator.id!=null}"><input class="form-control input-md" type="password" name="passwordNewRepeat" size=20 maxlength=15
-                       pattern="^[a-zA-Z0-9]{0,10}$" id="OperatorNewPass2" title="Латинские буквы и цифры от 6 до 10 символов"> </c:if>
+                       pattern="^[a-zA-Z0-9]{0,15}$" id="OperatorNewPass2" title="Латинские буквы и цифры от 6 до 15 символов"> </c:if>
                 <c:if test="${operator.id==null}"><input class="form-control input-md" type="password" name="passwordNewRepeat" size=20 maxlength=15
-                                                        required pattern="^[a-zA-Z0-9]{6,10}$" id="OperatorNewPass2" title="Латинские буквы и цифры от 6 до 10 символов"> </c:if>
+                                                        required pattern="^[a-zA-Z0-9]{6,15}$" id="OperatorNewPass2" title="Латинские буквы и цифры от 6 до 15 символов"> </c:if>
             </div>
         </div>
 
