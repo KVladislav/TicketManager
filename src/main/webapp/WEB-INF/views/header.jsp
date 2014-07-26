@@ -23,7 +23,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation" >
+<nav style="margin-left: 25%; margin-right: 25%; "class="navbar navbar-default" role="navigation" >
     <div class="container-fluid" >
         <div class="navbar-header" >
             <a class="navbar-brand" href="/">TicketManager</a>
