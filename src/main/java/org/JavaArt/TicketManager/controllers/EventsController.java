@@ -641,7 +641,7 @@ public class EventsController {
         Date dateEv = (Date) model.asMap().get("dateEvent");
         String timeEv = (String) model.asMap().get("eventTime");
         String eventDescriptions = (String) model.asMap().get("eventDescriptions");
-        String eventBookingTimeOut = (String) model.asMap().get("eventBookingTimeOut");
+        Integer eventBookingTimeOut = (Integer) model.asMap().get("eventBookingTimeOut");
         model.addAttribute("eventEdit", editEvent);
         model.addAttribute("allSectors", allSectors);
         model.addAttribute("dateEvent", dateEv);
@@ -669,7 +669,7 @@ public class EventsController {
         Date dateEv = (Date) model.asMap().get("dateEvent");
         String timeEv = (String) model.asMap().get("eventTime");
         String eventDescriptions = (String) model.asMap().get("eventDescriptions");
-        String eventBookingTimeOut = (String) model.asMap().get("eventBookingTimeOut");
+        Integer eventBookingTimeOut = (Integer) model.asMap().get("eventBookingTimeOut");
         double newPriceD = 0d;
         if (newPrice != null) {
             newPriceD = Double.parseDouble(newPrice);
