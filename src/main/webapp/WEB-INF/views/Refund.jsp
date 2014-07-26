@@ -104,19 +104,19 @@
                         <center>
                         <table>
                         <td>
-                        <div class="col-md-3 column">
-                            <form action="${pageContext.request.contextPath}/Refund/Delete.do"
-                                  method="post">
-                                <button type="submit" class="btn btn-primary" value=""> Да </button>
-                            </form>
-                        </div>
+                            <div class="control-group">
+                                <div class="col-md-1 column">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                                </div>
+                            </div>
                         </td>
                         <td>
-                             <div class="control-group">
-                                 <div class="col-md-1 column">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
-                                 </div>
-                             </div>
+                            <div class="col-md-3 column">
+                                <form action="${pageContext.request.contextPath}/Refund/Delete.do"
+                                      method="post">
+                                    <button type="submit" class="btn btn-primary" value=""> Да </button>
+                                </form>
+                            </div>
                         </td>
                         </table>
                         </center>
