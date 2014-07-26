@@ -15,7 +15,7 @@ import java.util.*;
 
 @Controller
 @SessionAttributes({"pageName", "events", "event", "sectorsMap", "sector", "legenda",
-        "row", "rowsMap", "seat", "seatsMap", "orderList", "orderPrice", "message", "error"})
+        "row", "rowsMap", "seat", "seatsMap", "orderList", "orderPrice", "messageOrder", "errorOrder"})
 public class OrderController {
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
@@ -98,8 +98,8 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
-        model.addAttribute("message", "");
-        model.addAttribute("error", "");
+        model.addAttribute("messageOrder", "");
+        model.addAttribute("errorOrder", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -122,8 +122,8 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
-        model.addAttribute("message", "");
-        model.addAttribute("error", "");
+        model.addAttribute("messageOrder", "");
+        model.addAttribute("errorOrder", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -140,8 +140,8 @@ public class OrderController {
         model.addAttribute("row", currentRow);
         model.addAttribute("seat", currentSeat);
         model.addAttribute("seatsMap", seatsMap1);
-        model.addAttribute("message", "");
-        model.addAttribute("error", "");
+        model.addAttribute("messageOrder", "");
+        model.addAttribute("errorOrder", "");
         return "redirect:/Order/Order.do";
     }
 
@@ -151,7 +151,7 @@ public class OrderController {
                                  @RequestParam(value = "seat") int[] seat, Model model) {
         StringBuilder error = new StringBuilder(300);
         error.append("");
-        model.addAttribute("error", "");
+        model.addAttribute("errorOrder", "");
         if (row==null) row=currentRow;
         if (sector==null) sector=currentSector;
         if (order.size()>0){
@@ -160,7 +160,7 @@ public class OrderController {
                 if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
             }
             if (deletingTicket.size()==1){
-                 model.addAttribute("error", "Билет ID = " + deletingTicket.get(0).getId() +
+                 model.addAttribute("errorOrder", "Билет ID = " + deletingTicket.get(0).getId() +
                          " автоматически удален из заказа, так как не был куплен в течении 5 минут");
                  order.remove(deletingTicket.get(0));
                  orderPrice -= deletingTicket.get(0).getSector().getPrice();
@@ -172,7 +172,7 @@ public class OrderController {
                      order.remove(tic);
                      orderPrice -= tic.getSector().getPrice();
                 }
-                model.addAttribute("error", "Билеты ID = "+ builder +
+                model.addAttribute("errorOrder", "Билеты ID = "+ builder +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
@@ -197,24 +197,22 @@ public class OrderController {
                  append(sector.getName()).append(" Ряд: ").append(row).append(" Место: ").append(seat1).
                  append(" заблокирован<br>");
         }
-        model.addAttribute("message", error);
+        model.addAttribute("messageOrder", error);
         model.addAttribute("seat", currentSeat);
-       //if (seat.length==1) model.addAttribute("message", "Билет добавлен в заказ");
-       // if (seat.length>1) model.addAttribute("message", "Билеты добавлены в заказ");
         return "redirect:/Order/Order.do";
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
     public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model){
-        model.addAttribute("error","");
-        model.addAttribute("message", "");
+        model.addAttribute("errorOrder","");
+        model.addAttribute("messageOrder", "");
         if (order.size()>0){
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
             for (Ticket ord : order) {
                 if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
             }
             if (deletingTicket.size()==1){
-                model.addAttribute("error", "Билет ID = " + deletingTicket.get(0).getId() +
+                model.addAttribute("errorOrder", "Билет ID = " + deletingTicket.get(0).getId() +
                         " автоматически удален из заказа, так как не был куплен в течении 5 минут");
                 order.remove(deletingTicket.get(0));
                 orderPrice -= deletingTicket.get(0).getSector().getPrice();
@@ -226,7 +224,7 @@ public class OrderController {
                     order.remove(tic);
                     orderPrice -= tic.getSector().getPrice();
                 }
-                model.addAttribute("error", "Билеты ID = "+ builder +
+                model.addAttribute("errorOrder", "Билеты ID = "+ builder +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
@@ -235,7 +233,7 @@ public class OrderController {
                 ticketService.deleteTicket(ord);
                 order.remove(ord);
                 orderPrice-=ord.getSector().getPrice();
-                model.addAttribute("message", "Билет ID = "+ord.getId()+" удалён из заказа");
+                model.addAttribute("messageOrder", "Билет ID = "+ord.getId()+" удалён из заказа");
                 break;
             }
         }
@@ -245,8 +243,8 @@ public class OrderController {
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
     public String orderBuy(Model model) {
         StringBuilder idBuy = new StringBuilder(200);
-        model.addAttribute("error","");
-        model.addAttribute("message", "");
+        model.addAttribute("errorOrder","");
+        model.addAttribute("messageOrder", "");
         if (order.size()==0)  return "redirect:/Order/Order.do";
         if (order.size()>0){
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
@@ -254,7 +252,7 @@ public class OrderController {
                 if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
             }
             if (deletingTicket.size()==1){
-                model.addAttribute("error", "Билет ID = " + deletingTicket.get(0).getId() +
+                model.addAttribute("errorOrder", "Билет ID = " + deletingTicket.get(0).getId() +
                         " автоматически удален из заказа, так как не был куплен в течении 5 минут");
                 order.remove(deletingTicket.get(0));
                 orderPrice -= deletingTicket.get(0).getSector().getPrice();
@@ -266,15 +264,15 @@ public class OrderController {
                     order.remove(tic);
                     orderPrice -= tic.getSector().getPrice();
                 }
-                model.addAttribute("error", "Билеты ID = "+ builder +
+                model.addAttribute("errorOrder", "Билеты ID = "+ builder +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
             }
         }
         for (Ticket ticket : order) {
             if (ticketService.getTicketById(ticket.getId()).isConfirmed()) {
                 if (ticketService.getTicketById(ticket.getId()).isReserved())
-                    model.addAttribute("error", "ОШИБКА! Билет ID = " + ticket.getId() + " уже забронирован");
-                else model.addAttribute("error", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
+                    model.addAttribute("errorOrder", "ОШИБКА! Билет ID = " + ticket.getId() + " уже забронирован");
+                else model.addAttribute("errorOrder", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
                 order.remove(ticket);
                 orderPrice -= ticket.getSector().getPrice();
                 return "redirect:/Order/Order.do";
@@ -285,10 +283,23 @@ public class OrderController {
              idBuy.append(ticket.getId()).append("  ");
              ticketService.addTicket(ticket);
         }
-        if (order.size()==1) model.addAttribute("message", "Билет ID = "+ idBuy +" из заказа куплен");
-        if (order.size()>1) model.addAttribute("message", "Билеты ID = "+ idBuy +" из заказа куплены");
+        if (order.size()==1) model.addAttribute("messageOrder", "Билет ID = "+ idBuy +" из заказа куплен");
+        if (order.size()>1) model.addAttribute("messageOrder", "Билеты ID = "+ idBuy +" из заказа куплены");
         order.clear();
         orderPrice = 0;
+        return "redirect:/Order/Order.do";
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "Order/Cancel.do")
+    public String  orderCancel(Model model) {
+        for (Ticket ord : order) {
+            ticketService.deleteTicket(ord);
+        }
+        order.clear();
+        orderPrice = 0;
+        model.addAttribute("errorOrder", "");
+        model.addAttribute("messageOrder", "Заказ отменён");
         return "redirect:/Order/Order.do";
     }
 
