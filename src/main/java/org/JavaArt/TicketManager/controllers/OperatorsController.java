@@ -68,23 +68,23 @@ public class OperatorsController {
 
         Operator dbOperator = operatorService.getOperatorByLogin(login);
         if (dbOperator != null && !dbOperator.getId().equals(operator.getId())) {
-            errorMessage.add("Такой логин занят. Введите другой логин.");
+            errorMessage.add("Такой логин занят. Введите другой логин");
         }
 
         if (operator.getId() != null && !password.equals(operator.getPassword())) {
-            errorMessage.add("Пароль введён неверно.");
+            errorMessage.add("Пароль введён неверно");
         }
 
         if (passwordNew.length() > 0 && passwordNew.length() < 6) {
-            errorMessage.add("Измените новый пароль: минимум 6 символов.");
+            errorMessage.add("Измените новый пароль: минимум 6 символов");
         }
 
         if (passwordNew.length() > 0 && !passwordNew.equals(passwordNewRepeat)) {
             errorMessage.add("Пароли не совпадают");
         }
 
-        if (operator.getId() == null && passwordNew.length() < 6) {
-            errorMessage.add("Измените новый пароль: минимум 6 символов.");
+        if (operator.getId() == null && passwordNew.length() == 0) {
+            errorMessage.add("Введите пароль");
         }
 
         if (errorMessage.size() > 0) {
