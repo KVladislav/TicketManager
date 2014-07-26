@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link href="${pageContext.request.contextPath}/resources/ico/tickets.ico" rel="shortcut icon" type="image/x-icon"/>
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
@@ -29,7 +30,7 @@
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
                     <input name="username" type="text" placeholder="Имя пользователя" title="Только буквы и цифры"
-                           pattern="^[А-Яа-яa-zA-Z0-9]{3,}$" maxlength=10 class="form-control input-md">
+                           pattern="^[А-Яа-яa-zA-Z0-9]{3,}$" maxlength=10 class="form-control input-md" value="<c:out value="${sessionScope.LAST_USERNAME}"/>">
                 </div>
             </div>
 

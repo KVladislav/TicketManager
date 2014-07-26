@@ -9,10 +9,10 @@
 <html lang="ru">
 <head>
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
     <style type="text/css">
         .bs-example {
             margin: 0;
@@ -27,13 +27,13 @@
             <h4 style="text-align:center; color:Blue">Выбор мероприятия</h4>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
                 <p><select size="8" name="eventId" data-size="3" class="form-control">
-                    <c:forEach items="${events}" var="evnt">
-                        <c:if test="${event.id==evnt.id}">
+                    <c:forEach items="${eventsOrder}" var="evnt">
+                        <c:if test="${eventOrder.id==evnt.id}">
                             <option value="${evnt.id}" onclick="this.form.submit()"
                                    selected> ${evnt.description},
                                    <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                         </c:if>
-                        <c:if test="${event.id!=evnt.id}">
+                        <c:if test="${eventOrder.id!=evnt.id}">
                             <option value="${evnt.id}"
                                    onclick="this.form.submit()">${evnt.description},
                                    <fmt:formatDate value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
@@ -46,8 +46,8 @@
             <h4 style="text-align:center; color:Blue">Выбор сектора</h4>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
                 <p><select size="8" name="sectorId" class="form-control">
-                    <c:forEach items="${sectorsMap}" var="sectorEntry">
-                        <c:if test="${sector.id==sectorEntry.key.id}">
+                    <c:forEach items="${sectorsMapOrder}" var="sectorEntry">
+                        <c:if test="${sectorOrder.id==sectorEntry.key.id}">
                              <c:if test="${sectorEntry.value==0}">
                                  <option value="${sectorEntry.key.id}" onclick="this.form.submit()"style="color:Red"
                                          selected>${sectorEntry.key.name} Сектор ${sectorEntry.key.price}
@@ -59,7 +59,7 @@
                                          грн. Свободно ${sectorEntry.value} мест</option>
                              </c:if>
                         </c:if>
-                        <c:if test="${sector.id!=sectorEntry.key.id}">
+                        <c:if test="${sectorOrder.id!=sectorEntry.key.id}">
                             <c:if test="${sectorEntry.value==0}">
                                 <option value="${sectorEntry.key.id}" onclick="this.form.submit()"style="color:Red"
                                         >${sectorEntry.key.name} Сектор ${sectorEntry.key.price}
@@ -79,7 +79,7 @@
             <h4 style="text-align:center; color:Blue">Сектора по возрастанию цены</h4>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <select multiple size="8" name="Legend" class="form-control">
-                    <c:forEach items="${legenda}" var="leg">
+                    <c:forEach items="${legendaOrder}" var="leg">
                         <option value="${leg}"> ${leg}</option>
                     </c:forEach>
                 </select>
@@ -91,8 +91,8 @@
              <h4 style="text-align:center; color:Blue">Выбор ряда</h4>
              <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
                  <p><select size="12" name="row" class="form-control">
-                     <c:forEach items="${rowsMap}" var="rowEntry">
-                         <c:if test="${row==rowEntry.key}">
+                     <c:forEach items="${rowsMapOrder}" var="rowEntry">
+                         <c:if test="${rowOrder==rowEntry.key}">
                              <c:if test="${rowEntry.value==0}">
                                  <option value="${rowEntry.key} "onclick="this.form.submit()" style="color:Red"
                                          selected >${rowEntry.key} ряд.  В продаже мест нет</option>
@@ -102,7 +102,7 @@
                                          ряд. В продаже ${rowEntry.value} мест</option>
                              </c:if>
                          </c:if>
-                         <c:if test="${row!=rowEntry.key}">
+                         <c:if test="${rowOrder!=rowEntry.key}">
                              <c:if test="${rowEntry.value==0}">
                                  <option value="${rowEntry.key} "onclick="this.form.submit()" style="color:Red">
                                          ${rowEntry.key} ряд. В продаже мест нет</option>
@@ -120,8 +120,8 @@
              <h4 style="text-align:center; color:Blue">Выбор места</h4>
              <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
                  <p><select multiple size="12" id="select" name="seat" class="form-control" name="select">
-                     <c:forEach items="${seatsMap}" var="seatEntry">
-                         <c:if test="${seat==seatEntry.key}">
+                     <c:forEach items="${seatsMapOrder}" var="seatEntry">
+                         <c:if test="${seatOrder==seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
                                  <option value="${seatEntry.key}" style="color:Red" selected >
                                          ${seatEntry.key}. (продан)</option>
@@ -139,7 +139,7 @@
                                          selected >${seatEntry.key}. (в продаже)</option>
                              </c:if>
                          </c:if>
-                         <c:if test="${seat!=seatEntry.key}">
+                         <c:if test="${seatOrder!=seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
                                  <option value="${seatEntry.key}" style="color:Red">
                                          ${seatEntry.key}. (продан)</option>
@@ -202,24 +202,138 @@
            </table>
         </div>
         <div class="col-md-7 col-lg-offset-5 ">
-            <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
-                <h5 style="text-align:center; color:Green">${message}</h5>
-                <h5 style="text-align:center; color:Red">${error}</h5>
-                <h4 style="text-align:center; color:Red">Стоимость заказа: ${orderPrice} грн.</h4>
-                <h4 style="text-align:center"><input type="submit" name="Order"
-                           class="btn btn-primary btn-lg" value="Купить"></h4>
-            </form>
-
-             <%--   <div class="col-md-4 column">
-                    <form action="${pageContext.request.contextPath}/Booking/Cancel.do" method="post">
-                        <input type="submit" name="Order" class="btn btn-primary btn-sm" value="Отмена"></form>
-                </div>
---%>
-
+            <center>
+                <h5 style="text-align:center; color:Green">${messageOrder}</h5>
+                <h5 style="text-align:center; color:Red">${errorOrder}</h5>
+                <c:if test="${orderList.size()>0}">
+                     <h4 style="text-align:center">Стоимость заказа: ${orderPrice} грн.</h4>
+                    <tr>
+                    <td>
+                        <div class="control-group">
+                            <div class="col-md-3  col-lg-offset-3">
+                                 <h3 style="text-align:center">
+                                     <button class="btn  btn-danger" data-toggle="modal"
+                                             data-target="#ConfirmOrderCancel">Отмена</button>
+                                 </h3>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-md-3 column">
+                            <h3 style="text-align:center">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmOrderBuy">Купить</button>
+                            </h3>
+                        </div>
+                    </td>
+                </c:if>
+               </center>
         </div>
    </div>
 </div>
 </div>
+
+<div class="modal" id="ConfirmOrderBuy"  aria-labelledby="myModalLabel"  aria-hidden="true">
+    <center>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <h4 style="text-align:center">Вы действительно хотите сделать заказ?</h4>
+                    <br><br>
+                    <table class="table text-center table-bordered">
+                        <thead>
+                        <th>ID</th>
+                        <th>Мероприятие</th>
+                        <th>Дата</th>
+                        <th>Сектор</th>
+                        <th>Ряд</th>
+                        <th>Место</th>
+                        <th>Цена</th>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${orderList}" var="ord">
+                            <tr>
+                                <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
+                                      method="post">
+                                    <td>${ord.id}</td>
+                                    <td>${ord.sector.event.description}</td>
+                                    <td><fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
+                                    <td>${ord.sector.name}</td>
+                                    <td>${ord.row}</td>
+                                    <td>${ord.seat}</td>
+                                    <td>${ord.sector.price}</td>
+                                </form>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <h4 style="text-align:center;">Стоимость заказа: ${orderPrice} грн.</h4>
+                    <br><br>
+                    <div class="row clearfix">
+                        <center>
+                            <table>
+                                <td>
+                                    <div class="control-group">
+                                        <div class="col-md-1 column">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-3 column">
+                                        <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
+                                            <button type="submit" class="btn btn-primary" value=""> Да </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+</div>
+<div class="modal" id="ConfirmOrderCancel"  aria-labelledby="myModalLabel"  aria-hidden="true">
+    <center>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <h4 style="text-align:center">Вы действительно хотите удалить заказ?</h4>
+                    <div class="row clearfix">
+                        <br><br>
+                        <center>
+                            <table>
+                                <td>
+                                    <div class="control-group">
+                                        <div class="col-md-1 column">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-3 column">
+                                        <form action="${pageContext.request.contextPath}/Order/Cancel.do" method="post">
+                                            <button type="submit" class="btn btn-primary" value=""> Да </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+</div>
+
 
 </body>
 <%@include file="footer.jsp" %>

@@ -1,17 +1,19 @@
+<%@include file="header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
-<%@include file="header.jsp"%>
+<html lang="ru">
 
 <head>
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
     <script type="text/javascript">
         function confirmRefund(ticket) {
             return confirm("Вы действительно хотите вернуть билет " + ticket + "?")
@@ -24,12 +26,10 @@
 <body>
     <div class="Refund">
     <center>
-        <h3 class="panel-heading" style=" color:Blue" >Возврат билета</h3>
-        <form name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
-             <br><h4> Поиск по номеру билета</h4>
-             <td><br>
+         <form class="form-inline" name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
+             <br><h3 class="panel-heading" style=" color:Blue" >Поиск по номеру билета</h3><br>
              <div>
-                  <input type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
+                  <input class="form-control" type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
                          title="Целые числа без пробелов"  style="text-align:center "
                          required placeholder="Введите ID билета" />
                   <button type="submit" name="action" class="btn btn-primary" >Поиск</button>
@@ -37,10 +37,11 @@
              </div>
              <br><br>
              <div class="panel-body"  style=" width:60%;">
+                  <c:if test="${ticket!=null}">
                   <div class="table responsive">
                        <table class="table table-bordered table-bordered">
                        <thead>
-                             <th>ID билета</th>
+                             <th> ID </th>
                              <th>Мероприятие</th>
                              <th>Дата</th>
                              <th>Сектор</th>
@@ -59,27 +60,12 @@
                        </tbody>
                        </table>
                   </div>
+                  </c:if>
              </div>
         </form>
         <table>
+        <c:if test="${ticket!=null}">
         <tr>
-            <td>
-                <div class="col-md-3 column">
-                     <c:if test="${ticket.sector!=null}">
-                     <h3 style="text-align:center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#Confirm">Возврат</button>
-                     </h3>
-                    </c:if>
-                    <c:if test="${ticket.sector==null}">
-                        <form name = "delTicket" action="${pageContext.request.contextPath}/Refund/Delete.do" method="post">
-                            <h3 style="text-align:center">
-                                <button  type="submit" name="delete" class="btn btn-primary" >Возврат</button>
-                            </h3>
-                        </form>
-                    </c:if>
-
-                </div>
-            </td>
             <td>
                 <div class="control-group">
                     <div class="col-md-1 column">
@@ -92,12 +78,20 @@
                     </div>
                 </div>
             </td>
+            <td>
+                <div class="col-md-3 column">
+                     <h3 style="text-align:center">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmRefund">Возврат</button>
+                     </h3>
+                </div>
+            </td>
+        </c:if>
         </table>
     <h4 style="text-align:center; color:Green">${messageRefund}</h4>
     </center>
     </div>
 
-    <div class="modal" id="Confirm"  aria-labelledby="myModalLabel"  aria-hidden="true">
+    <div class="modal" id="ConfirmRefund"  aria-labelledby="myModalLabel"  aria-hidden="true">
         <center>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -108,23 +102,23 @@
                 <div class="modal-body">
                     <h4 style="text-align:center">Вы действительно хотите вернуть билет с ID = ${ticket.id}?</h4>
                     <div class="row clearfix">
-                        <br><br><br>
+                        <br><br>
                         <center>
                         <table>
                         <td>
-                        <div class="col-md-3 column">
-                            <form action="${pageContext.request.contextPath}/Refund/Delete.do"
-                                  method="post">
-                                <button type="submit" class="btn btn-primary" value="">OK</button>
-                            </form>
-                        </div>
+                            <div class="control-group">
+                                <div class="col-md-1 column">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                                </div>
+                            </div>
                         </td>
                         <td>
-                             <div class="control-group">
-                                 <div class="col-md-1 column">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
-                                 </div>
-                             </div>
+                            <div class="col-md-3 column">
+                                <form action="${pageContext.request.contextPath}/Refund/Delete.do"
+                                      method="post">
+                                    <button type="submit" class="btn btn-primary" value=""> Да </button>
+                                </form>
+                            </div>
                         </td>
                         </table>
                         </center>

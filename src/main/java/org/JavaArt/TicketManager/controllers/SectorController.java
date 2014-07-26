@@ -90,6 +90,7 @@ public class SectorController {
                 }
 
                 if (action.equals("clone")) {
+                    System.out.println(sectorDefaultsService.getSectorDefaultsByName("00 НОВЫЙ"));
                     if (sectorDefaultsService.getSectorDefaultsByName("00 НОВЫЙ") == null) {
                         SectorDefaults sectorDefaultsClone = new SectorDefaults();
                         sectorDefaultsClone.setSectorName("00 НОВЫЙ");
