@@ -70,8 +70,8 @@
                     <div class="col-md-4 column">
                         <input class="form-control input-md" type="password" name="password" size=20 maxlength=15
                                required
-                               pattern="^[a-zA-Z0-9]{0,15}$" id="OperatorOldPass"
-                               title="Латинские буквы и цифры от 6 до 15 символов">
+                               pattern="^.{0,15}$" id="OperatorOldPass"
+                               title="От 6 до 15 символов">
                     </div>
                 </div>
             </c:if>
@@ -84,7 +84,7 @@
 
                     <div class="col-md-4 column">
                         <input class="form-control input-md" type="password" name="passwordNew" size=20 maxlength=15
-                               pattern="^[a-zA-Z0-9]{0,15}$" id="OperatorNewPass1"
+                               pattern="^.{0,15}$" id="OperatorNewPass1"
                                title="Латинские буквы и цифры от 6 до 15 символов">
                     </div>
                 </c:if>
@@ -95,7 +95,7 @@
 
                     <div class="col-md-4 column">
                         <input class="form-control input-md" type="password" name="passwordNew" size=20 maxlength=15
-                               required pattern="^[a-zA-Z0-9]{6,15}$" id="OperatorNewPass1"
+                               required pattern="^.{6,15}$" id="OperatorNewPass1"
                                title="Латинские буквы и цифры от 6 до 15 символов">
                     </div>
                 </c:if>
@@ -112,7 +112,7 @@
                     <div class="col-md-4 column">
                         <input class="form-control input-md" type="password"
                                name="passwordNewRepeat" size=20 maxlength=15
-                               pattern="^[a-zA-Z0-9]{0,15}$" id="OperatorNewPass2"
+                               pattern="^.{0,15}$" id="OperatorNewPass2"
                                title="Латинские буквы и цифры от 6 до 15 символов">
                     </div>
 
@@ -124,7 +124,7 @@
                     <div class="col-md-4 column">
                         <input class="form-control input-md" type="password" name="passwordNewRepeat" size=20
                                maxlength=15
-                               required pattern="^[a-zA-Z0-9]{6,15}$" id="OperatorNewPass2"
+                               required pattern="^.{6,15}$" id="OperatorNewPass2"
                                title="Латинские буквы и цифры от 6 до 15 символов">
                     </div>
 
