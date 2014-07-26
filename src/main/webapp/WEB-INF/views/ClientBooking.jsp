@@ -118,7 +118,7 @@
         <c:forEach items="${bookingTickets}" var="ticket">
             <tr>
                 <td>${ticket.id}</td>
-                <%--<c:set var="number" value="${number+1}"/>--%>
+                    <%--<c:set var="number" value="${number+1}"/>--%>
                 <td colspan="2">
                     <small>${ticket.sector.event.description}</small>
                 </td>
@@ -152,9 +152,15 @@
                 </td>
 
                 <td>
-                    <button type="button" class="btn btn-default btn-xs deleteTicket" data-id="${ticket.id}"
-                            data-toggle="modal" data-target="#ticketDeleteConfirmation">
-                        <span class="glyphicon glyphicon-trash"></span></button>
+
+                    <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
+                          method="post">
+
+                        <button type="submit" class="btn btn-default btn-xs" value="${ticket.id}"
+                                name="ticketId">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </form>
                 </td>
             </tr>
         </c:forEach>
@@ -294,7 +300,7 @@
                     <c:forEach items="${bookingTickets}" var="ticket">
                         <tr>
                             <td>${ticket.id}</td>
-                            <%--<c:set var="number" value="${number+1}"/>--%>
+                                <%--<c:set var="number" value="${number+1}"/>--%>
                             <td colspan="2">
                                 <small>${ticket.sector.event.description}</small>
                             </td>
@@ -435,37 +441,37 @@
 </div>
 
 <!-- Modal ticketDeleteConfirmation-->
-<div class="modal" id="ticketDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
-            </div>
-            <div class="modal-body">
-                <h4>Подтвердите удаление билета</h4>
-            </div>
-            <div class="modal-footer">
-                <div class="row clearfix">
-                    <div class="col-md-8 column">
-                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
-                    </div>
-                    <div class="col-md-2 column">
+<%--<div class="modal" id="ticketDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--%>
+<%--aria-hidden="true">--%>
+<%--<div class="modal-dialog">--%>
+<%--<div class="modal-content">--%>
+<%--<div class="modal-header">--%>
+<%--<h4 class="modal-title" id="myModalLabel">Внимание! </h4>--%>
+<%--</div>--%>
+<%--<div class="modal-body">--%>
+<%--<h4>Подтвердите удаление билета</h4>--%>
+<%--</div>--%>
+<%--<div class="modal-footer">--%>
+<%--<div class="row clearfix">--%>
+<%--<div class="col-md-8 column">--%>
+<%--<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>--%>
+<%--</div>--%>
+<%--<div class="col-md-2 column">--%>
 
-                        <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
-                              method="post" id="submitDelete">
-                            <button type="submit" name="ticketId" id="ticketId"
-                                    class="btn btn-danger btn-md" value="">Удалить
-                            </button>
-                        </form>
+<%--<form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"--%>
+<%--method="post" id="submitDelete">--%>
+<%--<button type="submit" name="ticketId" id="ticketId"--%>
+<%--class="btn btn-danger btn-md" value="">Удалить--%>
+<%--</button>--%>
+<%--</form>--%>
 
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
 
 <!-- Modal bookingCancelConfirmation-->
 <div class="modal" id="bookingCancelConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -476,7 +482,7 @@
                 <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
             </div>
             <div class="modal-body">
-                <h4>Подтвердите удаление бронирования</h4>
+                <h4>Подтвердите отмену бронирования</h4>
             </div>
             <div class="modal-footer">
                 <div class="row clearfix">

@@ -21,14 +21,19 @@
                 default-target-url="/"
                 authentication-failure-url="/login.do?error"
                 username-parameter="username"
-                password-parameter="password" />
+                password-parameter="password"
+                authentication-failure-handler-ref="userNameCachingAuthenticationFailureHandler"/>
         <!--<logout logout-success-url="/login.do?logout" />-->
         <!-- enable csrf protection -->
         <!--<csrf/>-->
     </http>
 
+
     <authentication-manager>
         <authentication-provider user-service-ref="operatorService">
         </authentication-provider>
     </authentication-manager>
+    <beans:bean id="userNameCachingAuthenticationFailureHandler" class="org.JavaArt.TicketManager.service.UserNameCachingAuthenticationFailureHandler">
+        <beans:property name="defaultFailureUrl" value="/login.do?error=true"/>
+    </beans:bean>
 </beans:beans>
