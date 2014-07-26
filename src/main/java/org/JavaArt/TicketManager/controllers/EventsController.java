@@ -23,7 +23,7 @@ import java.util.*;
 
 @Controller
 @SessionAttributes({"pageName", "eventErrorMessage", "errorMessageEdit", "events", "event",
-        "sector", "sectors", "allSectors", "eventTime", "eventDescriptions", "eventBookingTimeOut", "dateEvent", "sectorName", "maxRows", "maxSeats", "newPrice"})
+        "sector", "sectors", "allSectors", "eventEditHidden", "eventTime", "eventDescriptions", "eventBookingTimeOut", "dateEvent", "sectorName", "maxRows", "maxSeats", "newPrice"})
 
 public class EventsController {
     public Event editEvent;
@@ -337,10 +337,10 @@ public class EventsController {
                 allSectors.put(sector.getName(), sector);
             }
         }
-        Date dateEvent = (Date) model.asMap().get("dateEvent");
+     /*   Date dateEvent = (Date) model.asMap().get("dateEvent");
         String eventTime = (String) model.asMap().get("eventTime");
         String eventDescriptions = (String) model.asMap().get("eventDescriptions");
-        String eventBookingTimeOutSt = (String) model.asMap().get("eventBookingTimeOut");
+        String eventBookingTimeOutSt = (String) model.asMap().get("eventBookingTimeOut"); */
         model.addAttribute("allSectors", allSectors);
         model.addAttribute("eventDescriptions", (editEvent.getDescription()).trim());
         Date fullEventBookingTimeOut = editEvent.getBookingTimeOut();
@@ -374,24 +374,24 @@ public class EventsController {
 
     @RequestMapping(value = "AddEditEvent/editEventNow.do", method = RequestMethod.POST)
     public String editEvent(Model model,
-                    /*        @RequestParam(value = "dateEvent", required = true) String dateEvent,
-                            @RequestParam(value = "eventTime") String eventTime,
-                            @RequestParam(value = "eventDescriptions") String eventDescriptions,
-                            @RequestParam(value = "eventBookingTimeOut") String eventBookingTimeOut, */
+                    /*        @RequestParam(value = "dateEvent", required = true) String dateEvent,*/
+                    /*         @RequestParam(value = "eventTime") String eventTime,*/
+                    //      @RequestParam(value = "eventDescriptions") String eventDescriptions,
+                       /*      @RequestParam(value = "eventBookingTimeOut") String eventBookingTimeOut, */
                             int eventEditHidden,
                             SessionStatus status, HttpServletRequest request)
             throws SQLException, ParseException {
         String errorMessageEdit = "";
         Map allSectors = (TreeMap) model.asMap().get("allSectors");
-     /*   Date dateEvent = (Date) model.asMap().get("dateEvent");
+        Date dateEvent = (Date) model.asMap().get("dateEvent");
         String eventTime = (String) model.asMap().get("eventTime");
         String eventDescriptions = (String) model.asMap().get("eventDescriptions");
-        String eventBookingTimeOut = (String) model.asMap().get("eventBookingTimeOut"); */
+        int eventBookingTimeOut = (Integer) model.asMap().get("eventBookingTimeOut");
 
-        String dateEvent = request.getParameter("dateEvent");
+        /*String dateEvent = request.getParameter("dateEvent");
         String eventTime = request.getParameter("eventTime");
         String eventDescriptions = request.getParameter("eventDescriptions");
-        String eventBookingTimeOut = request.getParameter("eventBookingTimeOut");
+        String eventBookingTimeOut = request.getParameter("eventBookingTimeOut");*/
 
         String action = request.getParameter("delete");
         int idSectorDel;
@@ -404,18 +404,18 @@ public class EventsController {
             model.addAttribute("eventDescriptions", eventDescriptions);
             model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
 
-            Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
-            model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEvent, eventTime).get(1);
+            //  Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);simpleDate
+            model.addAttribute("dateEvent", dateEvent);
+         /*   int hour = (int) getDateByString(dateEvent, eventTime).get(1);
             int min = (int) getDateByString(dateEvent, eventTime).get(2);
             String timeEvent;
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
             } else {
                 timeEvent = "" + hour + ":" + min;
-            }
+            } timeEvent*/
 
-            model.addAttribute("eventTime", timeEvent);
+            model.addAttribute("eventTime", eventTime);
             return "AddEditEvent";
         }
 
@@ -464,13 +464,17 @@ public class EventsController {
         } */
         String action1 = request.getParameter("action");
         if (action1.equals("save")) {
-            if (!eventDescriptions.equals("") && !dateEvent.equals("") && (dateValid(dateEvent) != false) && !eventTime.equals("") && !eventBookingTimeOut.equals("")) {
+            String dateEventN = request.getParameter("dateEvent");
+            String eventTimeN = request.getParameter("eventTime");
+            String eventDescriptionsN = request.getParameter("eventDescriptions");
+            String eventBookingTimeOutN = request.getParameter("eventBookingTimeOut");
+            if (!eventDescriptionsN.equals("") && !dateEventN.equals("") && (dateValid(dateEventN) != false) && !eventTimeN.equals("") && !eventBookingTimeOutN.equals("")) {
                 Event event = eventService.getEventById(eventEditHidden);
-                Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
                 int intHour = 0;
                 int intMin = 0;
-                if ((eventTime != null) && (eventTime != "")) {
-                    String[] str = eventTime.split(":");
+                if ((eventTimeN != null) && (eventTimeN != "")) {
+                    String[] str = eventTimeN.split(":");
                     intHour = Integer.parseInt(str[0]);
                     intMin = Integer.parseInt(str[1]);
                 }
@@ -485,11 +489,11 @@ public class EventsController {
                     event.setDate(trueDate);
                     boolean isDeleted = false;
                     event.setDeleted(isDeleted);
-                    event.setDescription("" + eventDescriptions.trim());
+                    event.setDescription("" + eventDescriptionsN.trim());
                     //    event.setOperator(operator);
                     Date nowDate = new Date();
                     event.setTimeStamp(nowDate);
-                    int time = Integer.parseInt(eventBookingTimeOut);
+                    int time = Integer.parseInt(eventBookingTimeOutN);
                     event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 60000));
                     eventService.updateEvent(event);
                     Iterator<Sector> sectorNewList = allSectors.values().iterator();
@@ -515,7 +519,10 @@ public class EventsController {
                 if (eventDescriptions.equals("")) {
                     errorMessageEdit += " Заполните наименование мероприятия!" + "<br>";
                 }
-                if (dateValid(dateEvent) == false) {
+                if (dateValidDate(dateEvent) == false) {
+                    errorMessageEdit += " Некорректно заполненная дата - дата может быть только в формате 'дд.мм.гггг' и больше текущей!" + "<br>";
+                }
+                if (dateValid(dateEventN) == false) {
                     errorMessageEdit += " Некорректно заполненная дата - дата может быть только в формате 'дд.мм.гггг' и больше текущей!" + "<br>";
                 }
                 if (dateEvent.equals("")) {
@@ -524,11 +531,40 @@ public class EventsController {
                 if (eventTime.equals("")) {
                     errorMessageEdit += " Заполните время мероприятия!" + "<br>";
                 }
-                if (eventBookingTimeOut.equals("")) {
+                if (eventBookingTimeOut == 0) {
                     errorMessageEdit += " Заполните время удаления брони мероприятия!" + "<br>";
                 }
             }
+            model.addAttribute("allSectors", allSectors);
+            if (errorMessageEdit != null && !errorMessageEdit.equals("")) {
+                model.addAttribute("errorMessageEdit", errorMessageEdit);
+                model.addAttribute("eventDescriptions", eventDescriptions);
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+                List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
+                if (sectors.size() != 0) {
+                    List copy = new ArrayList(sectors);
+                    for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                        Sector sector = it.next();
+                        model.addAttribute("id" + sector.getId(), sector.getId());
+                        allSectors.put(sector.getName(), sector);
+                    }
+                }
+                model.addAttribute("allSectors", allSectors);
+                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                model.addAttribute("dateEvent", simpleDate);
+                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                String timeEvent = "";
+                if (min == 0) {
+                    timeEvent = "" + hour + ":" + "00";
+                } else {
+                    timeEvent = "" + hour + ":" + min;
+                }
 
+                model.addAttribute("eventTime", timeEvent);
+                model.addAttribute("eventEdit", editEvent);
+                return "AddEditEvent";
+            }
         }
         model.addAttribute("allSectors", allSectors);
         if (errorMessageEdit != null && !errorMessageEdit.equals("")) {
@@ -545,18 +581,18 @@ public class EventsController {
                 }
             }
             model.addAttribute("allSectors", allSectors);
-            Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
-            model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEvent, eventTime).get(1);
+            //      Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);simpleDate
+            model.addAttribute("dateEvent", dateEvent);
+          /*  int hour = (int) getDateByString(dateEvent, eventTime).get(1);
             int min = (int) getDateByString(dateEvent, eventTime).get(2);
             String timeEvent = "";
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
             } else {
                 timeEvent = "" + hour + ":" + min;
-            }
-
-            model.addAttribute("eventTime", timeEvent);
+            }timeEvent */
+            model.addAttribute("eventEdit", editEvent);
+            model.addAttribute("eventTime", eventTime);
             return "AddEditEvent";
         }
         status.setComplete();
@@ -672,14 +708,14 @@ public class EventsController {
         }
     }
 
-    /*
-        public boolean dateValid(Date inputDate) {
+
+    public boolean dateValidDate(Date inputDate) {
                 Date now = new Date();
                 if (inputDate.getTime() > now.getTime()) {
                     return true;
                 } else return false;
          }
-    */
+
     public List getDateByString(String dateEvent, String eventTime) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         Date trueDate = format.parse(dateEvent);

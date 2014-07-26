@@ -528,9 +528,9 @@ data-target="#sectorAddConfirmation"
                                   method="post"></c:if>
                                 <input type="hidden" name="dateEvent"
                                        value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
-                                <input type="hidden" name="inputTime" value="${eventTime}">
-                                <input type="hidden" name="description" value="${eventDescriptions}">
-                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+                                <input type="hidden" name="eventTime" value="${eventTime}">
+                                <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
+                                <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
                                 <button type="submit" name="delete" value="" id="sectorId"
                                         class="btn btn-danger btn-md">Удалить?
