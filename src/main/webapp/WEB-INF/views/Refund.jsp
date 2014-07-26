@@ -35,10 +35,11 @@
              </div>
              <br><br>
              <div class="panel-body"  style=" width:60%;">
+                  <c:if test="${ticket!=null}">
                   <div class="table responsive">
                        <table class="table table-bordered table-bordered">
                        <thead>
-                             <th>ID билета</th>
+                             <th> ID </th>
                              <th>Мероприятие</th>
                              <th>Дата</th>
                              <th>Сектор</th>
@@ -57,27 +58,12 @@
                        </tbody>
                        </table>
                   </div>
+                  </c:if>
              </div>
         </form>
         <table>
+        <c:if test="${ticket!=null}">
         <tr>
-            <td>
-                <div class="col-md-3 column">
-                     <c:if test="${ticket!=null}">
-                     <h3 style="text-align:center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmRefund">Возврат</button>
-                     </h3>
-                    </c:if>
-                    <c:if test="${ticket==null}">
-                        <form name = "delTicket" action="${pageContext.request.contextPath}/Refund/Delete.do" method="post">
-                            <h3 style="text-align:center">
-                                <button  type="submit" name="delete" class="btn btn-primary" >Возврат</button>
-                            </h3>
-                        </form>
-                    </c:if>
-
-                </div>
-            </td>
             <td>
                 <div class="control-group">
                     <div class="col-md-1 column">
@@ -90,6 +76,14 @@
                     </div>
                 </div>
             </td>
+            <td>
+                <div class="col-md-3 column">
+                     <h3 style="text-align:center">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmRefund">Возврат</button>
+                     </h3>
+                </div>
+            </td>
+        </c:if>
         </table>
     <h4 style="text-align:center; color:Green">${messageRefund}</h4>
     </center>
