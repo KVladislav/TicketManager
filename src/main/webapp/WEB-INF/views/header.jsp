@@ -23,12 +23,12 @@
 
 </head>
 <body>
-<nav style="margin-left: 25%; margin-right: 25%; "class="navbar navbar-default" role="navigation" >
+<nav style="margin-left: 15%; margin-right: 15%; "class="navbar navbar-default" role="navigation" >
     <div class="container-fluid" >
         <div class="navbar-header" >
-            <a class="navbar-brand" href="/">TicketManager</a>
+            <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.png"/>TicketManager</a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" style="margin-top:5px">
             <ul class="nav navbar-nav">
                 <c:choose>
                     <c:when test="${pageName==1}">

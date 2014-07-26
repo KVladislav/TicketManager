@@ -32,45 +32,38 @@
 <div style="float:left; margin-left: 30%; width:900px; display:block;">
     <h1 style="font-size: 72px">  </h1>
 
-    <center>  <div class="demo">
+     <div class="demo" style="clear: both; align:r;">
         <a href="${pageContext.request.contextPath}/resources/images/1.jpg" class="pirobox_gall" title="Владислав Карпенко">
             <img width="200" height="200" src="${pageContext.request.contextPath}/resources/images/1.jpg"  /></a>
-    </div>
-        <div class="demo">
+
             <a href="${pageContext.request.contextPath}/resources/images/2.jpg" class="pirobox_gall" title="Юрий Попов">
                 <img width="145" height="200" src="${pageContext.request.contextPath}/resources/images/2.jpg"  /></a>
-        </div>
-        <div class="demo">
+
             <a  href="${pageContext.request.contextPath}/resources/images/3.jpg" class="pirobox_gall" title="Екатерина Крылова">
                 <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/3.jpg"  /></a>
         </div>
-    </center>
-    <br><br><br><br><br><br><br><br><br><br><br>
+
+
 
     <div class="demo">
-        <a  href="${pageContext.request.contextPath}/resources/images/4.jpg" class="pirobox_gall" title="Лариса Назаренко">
+       <a  href="${pageContext.request.contextPath}/resources/images/4.jpg" class="pirobox_gall" title="Лариса Назаренко">
             <img width="150" height="200" src="${pageContext.request.contextPath}/resources/images/4.jpg"  /></a>
-    </div>
-    <div class="demo">
+
         <a  href="${pageContext.request.contextPath}/resources/images/5.jpg" class="pirobox_gall" title="Анна Стоянова">
             <img width="228" height="200" src="${pageContext.request.contextPath}/resources/images/5.jpg"  /></a>
-    </div>
-    <div class="demo">
+
         <a  href="${pageContext.request.contextPath}/resources/images/6.jpg" class="pirobox_gall" title="Виталий Сипличук">
             <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/6.jpg"  /></a>
+
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br>
+
     <div class="demo">
         <a  href="${pageContext.request.contextPath}/resources/images/7.jpg" class="pirobox_gall" title="Сергей Прокопов">
             <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/7.jpg"  /></a>
-    </div>
 
-    <div class="demo">
         <a  href="${pageContext.request.contextPath}/resources/images/8.jpg" class="pirobox_gall" title="Галенда Антон">
             <img width="133" height="200" src="${pageContext.request.contextPath}/resources/images/8.jpg"  /></a>
-    </div>
 
-    <div class="demo">
         <a  href="${pageContext.request.contextPath}/resources/images/9.jpg" class="pirobox_gall" title="Алеександр Трибушный">
             <img width="182" height="200" src="${pageContext.request.contextPath}/resources/images/9.jpg"  /></a>
     </div>
