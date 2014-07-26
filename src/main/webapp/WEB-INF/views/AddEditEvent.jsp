@@ -236,7 +236,7 @@
                             <option selected value="14:00">14:00</option>
                         </c:if>
                         <c:if test="${!eventTime.equals('14:00')}">
-                            <option value="14-00">14-00</option>
+                            <option value="14-00">14:00</option>
                         </c:if>
                         <c:if test="${eventTime.equals('14:30')}">
                             <option selected value="14:30">14:30</option>
@@ -348,12 +348,13 @@
 <tr>
     <div class="control-group">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
+        <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
 
         <div class="my-controls">
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                   title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
+                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 10 знаков"
                    value="${eventDescriptions}"/>
         </div>
     </div>

@@ -414,7 +414,7 @@ public class EventsController {
             } else {
                 timeEvent = "" + hour + ":" + min;
             } timeEvent*/
-
+            model.addAttribute("eventEdit", editEvent);
             model.addAttribute("eventTime", eventTime);
             return "AddEditEvent";
         }
@@ -642,7 +642,7 @@ public class EventsController {
         String timeEv = (String) model.asMap().get("eventTime");
         String eventDescriptions = (String) model.asMap().get("eventDescriptions");
         String eventBookingTimeOut = (String) model.asMap().get("eventBookingTimeOut");
-
+        model.addAttribute("eventEdit", editEvent);
         model.addAttribute("allSectors", allSectors);
         model.addAttribute("dateEvent", dateEv);
         model.addAttribute("eventTime", timeEv);
@@ -690,6 +690,7 @@ public class EventsController {
         if (eventBookingTimeOut != null) {
             model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
         }
+        model.addAttribute("eventEdit", editEvent);
         model.addAttribute("allSectors", allSectors);
         return "AddEditEvent";
     }
