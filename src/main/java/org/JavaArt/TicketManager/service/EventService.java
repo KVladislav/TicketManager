@@ -56,7 +56,7 @@ public class EventService {
     }
 
     public List<Event> getEventsByDateFromEvent(Date date, Event event) {
-        List<Event> events = (List<Event>) eventRepository.getEventByDateFromEvent(date, event);
+        List<Event> events = eventRepository.getEventByDateFromEvent(date, event);
         return events;
     }
 
