@@ -47,7 +47,7 @@
             <label class="col-md-4 control-label text-info" for="OperatorSureName">Фамилия</label>
             <div class="col-md-4 column">
                 <input class="form-control input-md" type="text" name="surname" size=20 maxlength=15 required
-                       pattern="^[a-zA-Zа-яА-Я]{1,12}$" id="OperatorSureName"
+                       pattern="^[a-zA-Zа-яА-Я]{1,15}$" id="OperatorSureName"
                        title="Буквы без пробелов" value="${operator.surname}">
             </div>
         </div>
