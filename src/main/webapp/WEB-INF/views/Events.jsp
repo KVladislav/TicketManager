@@ -51,8 +51,8 @@
 
 &MediumSpace;
 &MediumSpace;
-<div class="panel-heading" style="text-align:center;"><b>
-    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового
+<div class="panel-heading text-info" style="text-align:center;"><b>
+<a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
 
@@ -82,14 +82,15 @@
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
                             <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Редактировать">
-                                <button type="submit" name="evnt" value="${evnt.id}" class="btn">Редактировать</button>
+                                <button type="submit" name="evnt" value="${evnt.id}" class="btn"></button>
                                 <span class="glyphicon glyphicon-edit"></span>
+                            </a>
                         </form>
                     </td>
                     <td>
                         <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
                             <button type="button" class="btn btn-default btn-md deleteEvent" data-id="${evnt.id}"
-                                    data-toggle="modal" data-target="#Cancel">Удалить
+                                    data-toggle="modal" data-target="#Cancel">
                             </button>
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>

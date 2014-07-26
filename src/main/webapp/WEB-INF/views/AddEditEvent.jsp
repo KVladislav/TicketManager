@@ -175,12 +175,12 @@
                     </div>
             </tr>
             <tr>
-                <label class="my-control-label  text-info" for="inputTime"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="eventTime"> Время мероприятия </label>
 
                 <div class="control-group text-info">
-                    <select name="inputTime" id="inputTime">
+                    <select name="eventTime" id="eventTime">
 
-                    <c:if test="${eventTime.equals(inputTime)}">
+                        <c:if test="${eventTime.equals(eventTime)}">
                             <option selected value="${eventTime}">${eventTime}</option>
                         </c:if>
 
@@ -347,11 +347,11 @@
 </tr>
 <tr>
     <div class="control-group">
-        <label class="my-control-label text-info" for="description"> Наименование </label>
+        <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
 
         <div class="my-controls">
-            <input style="resize: none" type="text" size="20" id="description" maxlength="50" data-min-length=1
-                   name="description"
+            <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
+                   name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                    title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
                    value="${eventDescriptions}"/>
@@ -360,12 +360,12 @@
 </tr>
 <tr>
     <div class="control-group">
-        <label class="my-control-label text-info" for="timeRemoveBooking"> Установка времени удаления брони в
+        <label class="my-control-label text-info" for="eventBookingTimeOut"> Установка времени удаления брони в
             минутах </label>
 
         <div class="my-controls">
 
-            <input type="text" id="timeRemoveBooking" size="20" maxlength="10" name="timeRemoveBooking"
+            <input type="text" id="eventBookingTimeOut" size="20" maxlength="10" name="eventBookingTimeOut"
                    value="${eventBookingTimeOut}"
                    required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
 
@@ -383,8 +383,10 @@
             <img src="${pageContext.request.contextPath}/resources/img/Question.png"
                  onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
                  onMouseOut="helpBox()">
-
+        </div>
+    </div>
 </tr>
+
 </div>
 </div>
 </td>
@@ -392,10 +394,13 @@
 
 <!-- Button to trigger modal -->
 <%---<button type="button" data-toggle="modal" data-target="#myModal"> Добавить сектор</button>
-<a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Добавить сектор">---%>
-<button type="button" class="btn btn-default btn-md" href="${pageContext.request.contextPath}/views/NewSector.jsp">
+<a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Добавить сектор">
+<a type="button" class="btn btn-default btn-md" href="${pageContext.request.contextPath}/AddEditEvent/NewSector.do" method="post" >
     Добавить сектор
-</button>
+</a>
+---%>
+
+
 <%--
 </a>
 data-toggle="modal">
@@ -416,7 +421,7 @@ data-target="#sectorAddConfirmation"
                 <th>Удалить</th>
             </tr>
             </thead>
-            `
+
             <tbody>
 
             <c:forEach items="${allSectors}" var="sector" varStatus="theCount">  <%--{sectors} --%>
@@ -461,19 +466,43 @@ data-target="#sectorAddConfirmation"
         </table>
 
         <div class="form-group">
-            <div class="col-md-2 col-md-offset-4 column">
-                <big> <a class="btn btn-danger btn-lg" href="${pageContext.request.contextPath}/Events/Cancel.do"
-                         role="button"></a></big>
+            <div class="col-md-3 col-md-offset-1 column">
+                <a class="btn btn-danger btn-lg btn-primary" href="${pageContext.request.contextPath}/Events/Cancel.do"
+                   role="button">Отменить</a>
             </div>
-            <div class="col-md-2 column">
-                <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+            <div class="col-md-3 column">
+            <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+            </div>
+            <div class="col-md-3 column">
+                <input type="hidden" name="dateEvent"
+                       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+                <input type="hidden" name="eventTime" value="${eventTime}">
+                <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
+                <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
+                <a href="/NewSector/NewSector.do" class="btn success btn-lg" role="button" data-toggle="modal">+
+                    Добавить сектор</a>
+
             </div>
         </div>
     </div>
 </div>
 </form>
-
 </center>
+
+<%--
+<form action=${pageContext.request.contextPath}/NewSector/NewSector.do">
+<input type="hidden" name="dateEvent"
+       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
+<input type="hidden" name="inputTime" value="${eventTime}">
+<input type="hidden" name="description" value="${eventDescriptions}">
+<input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+<input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
+
+<button type="submit" name="addd" value="" id="addd" class="btn btn-primary btn-md">Добавить сектор?
+    +<span class="glyphicon glyphicon-export"></span></button>
+
+</form>
+--%>
 
 <div class="modal" id="sectorDeleteRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -602,7 +631,7 @@ data-target="#sectorAddConfirmation"
                                 <input type="hidden" name="description" value="${eventDescriptions}">
                                 <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
-
+                                <input type="hidden" name="allSectors" value="${allSectors}">
                                 <button type="submit" name="addSector" value="" id="addSector"
                                         class="btn btn-primary btn-md">Добавить сектор
                                 </button>
