@@ -213,7 +213,7 @@
 
     <tr>
         <td colspan="3">
-            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа ${bookingPrice}</strong></c:if>
+            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong></c:if>
         </td>
         <td colspan="8">
         </td>
@@ -333,7 +333,7 @@
                     </c:forEach>
                     <tr>
                         <td colspan="3">
-                            <strong>Стоимость заказа ${bookingPrice}</strong>
+                            <strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong>
                         </td>
                         <td colspan="8">
                         </td>
@@ -421,7 +421,7 @@
                     </c:forEach>
                     <tr>
                         <td colspan="3">
-                            <strong>Стоимость заказа ${bookingPrice}</strong>
+                            <strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong>
                         </td>
                         <td colspan="8">
                         </td>

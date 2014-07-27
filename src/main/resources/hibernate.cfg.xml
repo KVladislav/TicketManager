@@ -7,12 +7,12 @@
 
 
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://127.0.0.1:5432/tickets</property>
-        <!--<property name="connection.url">jdbc:postgresql://80.90.239.40:5432/tickets</property>-->
+        <!--<property name="connection.url">jdbc:postgresql://127.0.0.1:5432/tickets</property>-->
+        <property name="connection.url">jdbc:postgresql://80.90.239.40:5432/tickets</property>
         <property name="databasename">tickets</property>
         <property name="connection.username">postgres</property>
-        <property name="connection.password">1111</property>
-        <!--<property name="connection.password">javaartr2d2</property>-->
+        <!--<property name="connection.password">1111</property>-->
+        <property name="connection.password">javaartr2d2</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
         <property name="connection.schemaname">public</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>
