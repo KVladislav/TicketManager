@@ -24,7 +24,7 @@
 <div class="panel-body" style="padding:0px; width:92%; margin-left: 4%">
    <div class="row">
         <div class="col-md-4 column">
-            <h4 style="text-align:center; color:Blue">Выбор мероприятия</h4>
+            <strong class="text-info">Выбор мероприятия</strong>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
                 <p><select size="8" name="eventId" data-size="3" class="form-control">
                     <c:forEach items="${eventsOrder}" var="evnt">
@@ -43,7 +43,7 @@
             </form>
         </div>
         <div class="col-md-4 column">
-            <h4 style="text-align:center; color:Blue">Выбор сектора</h4>
+            <strong class="text-info">Выбор сектора</strong>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
                 <p><select size="8" name="sectorId" class="form-control">
                     <c:forEach items="${sectorsMapOrder}" var="sectorEntry">
@@ -76,7 +76,7 @@
             </form>
         </div>
         <div class="col-md-4 column">
-            <h4 style="text-align:center; color:Blue">Сектора по возрастанию цены</h4>
+            <strong class="text-info">Сектора по возрастанию цены</strong>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <select multiple size="8" name="Legend" class="form-control">
                     <c:forEach items="${legendaOrder}" var="leg">
@@ -88,7 +88,7 @@
    </div>
    <div class="row">
         <div class="col-md-3">
-             <h4 style="text-align:center; color:Blue">Выбор ряда</h4>
+             <strong class="text-info">Выбор ряда</strong>
              <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
                  <p><select size="12" name="row" class="form-control">
                      <c:forEach items="${rowsMapOrder}" var="rowEntry">
@@ -117,7 +117,7 @@
              </form>
         </div>
         <div class="col-md-2">
-             <h4 style="text-align:center; color:Blue">Выбор места</h4>
+             <strong class="text-info">Выбор места</strong>
              <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
                  <p><select multiple size="12" size="12" id="select" name="seat" name="select[]">
                      <c:forEach items="${seatsMapOrder}" var="seatEntry">
@@ -162,7 +162,7 @@
              </form>
         </div>
         <div class="col-md-7 col-lg-offset-0 ">
-            <h4 style="text-align:center; color:Blue">Выбранные билеты</h4>
+            <h3 class="panel-heading text-info" style="text-align: center">Выбранные билеты</h3>
             <h5 style="text-align:center; color:Green">(Выбранный, но не купленный билет через
                                                         5 мин. возвратится в продажу)</h5>
             <table class="table text-center table-bordered">
