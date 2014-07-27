@@ -18,6 +18,20 @@
             margin: 0;
         }
     </style>
+
+
+
+    <script type='text/javascript'>
+       function rrr () {
+          ('ConfirmOrderCancel').click();
+            }
+
+
+
+
+    </script>
+
+
 </head>
 <body>
 <div class="order">
@@ -119,7 +133,7 @@
         <div class="col-md-2">
              <h4 style="text-align:center; color:Blue">Выбор места</h4>
              <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
-                 <p><select multiple size="12" size="12" id="select" name="seat" name="select[]">
+                 <p><select multiple size="12" name="seat"  class="form-control">
                      <c:forEach items="${seatsMapOrder}" var="seatEntry">
                          <c:if test="${seatOrder==seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
@@ -180,8 +194,6 @@
                 <tbody>
                 <c:forEach items="${orderList}" var="ord">
                      <tr>
-                     <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
-                           method="post">
                      <td>${ord.id}</td>
                      <td>${ord.sector.event.description}</td>
                      <td><fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
@@ -190,13 +202,14 @@
                      <td>${ord.seat}</td>
                      <td><fmt:formatDate value="${ord.timeStamp}" pattern="HH:mm"/></td>
                      <td>${ord.sector.price}</td>
-                          <td>
-                               <input type="hidden" name="orderId" value="${ord.id}">
-                               <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();">
-                                   <span class="glyphicon glyphicon-trash" ></span></button>
-                          </td>
-                     </form>
-                      </tr>
+                     <td>
+                         <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
+                               method="post">
+                                 <button type="submit" name="orderId" class="btn btn-default btn-xs" value="${ord.id}">
+                                 <span class="glyphicon glyphicon-trash" ></span></button>
+                          </form>
+                     </td>
+                     </tr>
                 </c:forEach>
                 </tbody>
            </table>
@@ -221,7 +234,8 @@
                     <td>
                         <div class="col-md-3 column">
                             <h3 style="text-align:center">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmOrderBuy">Купить</button>
+                                <button class="btn btn-primary" data-toggle="modal"
+                                        data-target="#ConfirmOrderBuy">Купить</button>
                             </h3>
                         </div>
                     </td>
