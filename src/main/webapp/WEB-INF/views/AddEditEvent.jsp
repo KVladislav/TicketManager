@@ -1,3 +1,9 @@
+<%@include file="header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
   Created by IntelliJ IDEA.
   User: Lora
@@ -5,13 +11,6 @@
   Time: 23:56
   To change this template use File | Settings | File Templates.
 --%>
-<%--suppress ALL --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
 <html lang="ru">
 <head>
 
@@ -20,8 +19,8 @@
     <!-- Bootstrap -->
 
 
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
+    <%-- <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -346,7 +345,7 @@
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 10 знаков"
+                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 50 знаков"
                    value="${eventDescriptions}"/>
         </div>
     </div>
@@ -358,7 +357,7 @@
 
         <div class="my-controls">
 
-            <input type="text" id="eventBookingTimeOut" size="20" maxlength="10" name="eventBookingTimeOut"
+            <input type="text" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
                    value="${eventBookingTimeOut}"
                    required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
 
