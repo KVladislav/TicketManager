@@ -34,18 +34,29 @@
               return confirm("Вы действительно хотите удалить событие " + event + " ?")
           }
       </script>
-      --%>
-    <script>
+--%>
+    <script type="text/javascript">
         $(document).ready(function () {
             $(".deleteEvent").click(function () {
-                var data_id = '';
+                var data_id = ''
+                var data_name = ''
                 if (typeof $(this).data('id') !== 'undefined') {
                     data_id = $(this).data('id');
                 }
+                if (typeof $(this).data('name') !== 'undefined') {
+                    data_name = $(this).data('name');
+                }
                 $('#eventId').val(data_id);
+                $('#eventName').val(data_name);
             })
         });
     </script>
+<pre>
+       <script type="text/javascript">
+           document.write(data_name);
+       </script>
+    </pre>
+
 </head>
 
 
@@ -90,6 +101,7 @@
                     <td>
                         <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
                             <button type="button" class="btn btn-default btn-md deleteEvent" data-id="${evnt.id}"
+                                    data-name="${evnt.description}"
                                     data-toggle="modal" data-target="#Cancel">
                             </button>
                             <span class="glyphicon glyphicon-trash"></span>
@@ -115,7 +127,9 @@
                 <h4 id="myModalLabel">Вопрос!</h4>
             </div>
             <div class="modal-body">
-                <h4>Подтвердите удаление мероприятия ${description} !!!</h4>
+                <h4 value="$('#eventName')">Подтвердите удаление мероприятия !!!</h4>
+
+
             </div>
             <div class="modal-footer">
                 <div class="row clearfix">
