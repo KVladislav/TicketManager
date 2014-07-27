@@ -6,9 +6,12 @@ import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.service.EventService;
 import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
+import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.*;
 
@@ -101,17 +104,20 @@ public class OrderController
         return "redirect:/Order/Order.do";
     }
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "Order/addTicket.do", method = RequestMethod.POST)
-    public String orderAddTicket(@RequestParam(value = "seat") int[] seat, Model model) {
+    public String orderAddTicket(@RequestParam(value = "seat", required = false) int[] seat, Model model,
+                                 @ModelAttribute("eventOrder") Event currentEvent,
+                                 @ModelAttribute("sectorOrder") Sector currentSector,
+                                 @ModelAttribute("rowOrder") Integer currentRow){
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
         if (orderTickets == null) orderTickets = new ArrayList<>();
         Double orderPrice = (Double) model.asMap().get("orderPrice");
-        Sector currentSector = (Sector) model.asMap().get("sectorOrder");
-        Integer currentRow = (Integer) model.asMap().get("rowOrder");
-        Event currentEvent = (Event) model.asMap().get("eventOrder");
+        if (orderPrice==null) orderPrice = 0.0;
         model.addAttribute("errorOrder", "");
         model.addAttribute("messageOrder", "");
         StringBuilder message = new StringBuilder(500);
+        boolean doubleTicket;
         message.append("");
         if (orderTickets!=null && orderTickets.size()>0){
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
@@ -129,7 +135,7 @@ public class OrderController
                 for (Ticket tic: deletingTicket){
                     builder.append(tic.getId()).append("  ");
                     orderTickets.remove(tic);
-                     orderPrice -= tic.getSector().getPrice();
+                    orderPrice -= tic.getSector().getPrice();
                 }
                 model.addAttribute("errorOrder", "Билеты ID = "+ builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 5 минут");
@@ -140,20 +146,25 @@ public class OrderController
             ticket.setSector(currentSector);
             ticket.setRow(currentRow);
             ticket.setSeat(seat1);
+            doubleTicket=false;
             if (orderTickets.size() > 0) {
                 for (Ticket ord : orderTickets) {
-                    if (ord.getSector().equals(currentSector) && ord.getSeat() == seat1 && ord.getRow() == currentRow)
-                        return "Order";
+                    if (ord.getSector().equals(currentSector) && ord.getSeat() == seat1 && ord.getRow()==currentRow){
+                        doubleTicket=true;
+                        break;
+                    }
                 }
             }
-            if (ticketService.isPlaceFree(currentSector, currentRow, seat1)==0){
-                ticketService.addTicket(ticket);
-                orderTickets.add(ticket);
-                orderPrice += currentSector.getPrice();
+            if (!doubleTicket){
+                if (ticketService.isPlaceFree(currentSector, currentRow, seat1)==0){
+                    ticketService.addTicket(ticket);
+                    orderPrice += currentSector.getPrice();
+                    orderTickets.add(ticket);
+                }
+                else message.append( "Билет ").append(currentSector.getEvent().getDescription()).append(" Сектор: ").
+                        append(currentSector.getName()).append(" Ряд: ").append(currentRow).append(" Место: ").
+                        append(seat1).append(" уже продан<br>");
             }
-            else message.append( "Билет ").append(currentSector.getEvent().getDescription()).append(" Сектор: ").
-                 append(currentSector.getName()).append(" Ряд: ").append(currentRow).append(" Место: ").append(seat1).
-                 append(" уже продан<br>");
         }
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();
@@ -179,12 +190,12 @@ public class OrderController
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-    public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model){
+    public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model,
+                                 @ModelAttribute("eventOrder") Event currentEvent,
+                                 @ModelAttribute("sectorOrder") Sector currentSector,
+                                 @ModelAttribute("rowOrder") Integer currentRow){
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
         Double orderPrice = (Double) model.asMap().get("orderPrice");
-        Event currentEvent = (Event) model.asMap().get("eventOrder");
-        Sector currentSector = (Sector) model.asMap().get("sectorOrder");
-        Integer currentRow = (Integer) model.asMap().get("rowOrder");
         model.addAttribute("errorOrder","");
         model.addAttribute("messageOrder", "");
         if (orderTickets!=null && orderTickets.size()>0){
@@ -240,11 +251,10 @@ public class OrderController
     }
 
     @RequestMapping(value = "Order/Buy.do", method = RequestMethod.POST)
-    public String orderBuy(Model model) {
+    public String orderBuy(Model model, @ModelAttribute("sectorOrder") Sector currentSector,
+                           @ModelAttribute("rowOrder") Integer currentRow) {
         Double orderPrice = (Double) model.asMap().get("orderPrice");
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
-        Sector currentSector = (Sector) model.asMap().get("sectorOrder");
-        Integer currentRow = (Integer) model.asMap().get("rowOrder");
         StringBuilder idBuy = new StringBuilder(200);
         model.addAttribute("errorOrder","");
         model.addAttribute("messageOrder", "");
@@ -303,14 +313,15 @@ public class OrderController
     @RequestMapping(value = "Order/Cancel.do")
     public String  orderCancel(Model model) {
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
-        for (Ticket ord : orderTickets) {
-            ticketService.deleteTicket(ord);
+        if (orderTickets!=null){
+            for (Ticket ord : orderTickets) {
+                ticketService.deleteTicket(ord);
+            }
+            orderTickets.clear();
+            model.addAttribute("orderList", orderTickets);
+
         }
-        orderTickets.clear();
         model.addAttribute("orderPrice", 0.0);
-        model.addAttribute("orderList", orderTickets);
-        model.addAttribute("errorOrder", "");
-        model.addAttribute("messageOrder", "Заказ отменён");
         return "redirect:/Order/Order.do";
-    }
+   }
 }
