@@ -180,10 +180,6 @@
                 <div class="control-group text-info">
                     <select name="eventTime" id="eventTime">
 
-                        <c:if test="${eventTime.equals(eventTime)}">
-                            <option selected value="${eventTime}">${eventTime}</option>
-                        </c:if>
-
                         <c:if test="${eventTime.equals('10:00')}">
                             <option selected value="10:00">10:00</option>
                         </c:if>
@@ -236,7 +232,7 @@
                             <option selected value="14:00">14:00</option>
                         </c:if>
                         <c:if test="${!eventTime.equals('14:00')}">
-                            <option value="14-00">14:00</option>
+                            <option value="14:00">14:00</option>
                         </c:if>
                         <c:if test="${eventTime.equals('14:30')}">
                             <option selected value="14:30">14:30</option>
@@ -442,19 +438,18 @@ data-target="#sectorAddConfirmation"
                         </div>
                     </td>
                     <td>
-                            <%--    <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
-                                <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
+                        <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
+                        <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
                                     <span class="glyphicon glyphicon-trash"></span></button>
-        --%>
-                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
-                            <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
-                                    data-id="${sector.value.id}"
-                                    data-toggle="modal" data-target="#sectorDeleteRequest">
-                                <span class="glyphicon glyphicon-trash"></span></button>
-                        </a>
-                        <script>
-                            $("a.my-tool-tip").tooltip();
-                        </script>
+
+                            <%--   <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
+                                   <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
+                                           data-id="${sector.value.id}"  data-toggle="modal" data-target="#sectorDeleteRequest">
+                                       <span class="glyphicon glyphicon-trash"></span></button>
+                               </a>
+                               <script>
+                                   $("a.my-tool-tip").tooltip();
+                               </script> --%>
 
 
                     </td>
