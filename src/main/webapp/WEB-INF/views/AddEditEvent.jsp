@@ -75,7 +75,7 @@
 
 //Здесь координаты присваиватся положению слоя относительно окна и к координате х плюсуется 15 пикселов, чтоб курсор не был на подсказке.
             document.getElementById('help').style.left = defPosition(event).x + 15 + "px";
-            document.getElementById('help').style.top = defPosition(event).y + "px";
+            document.getElementById('help').style.top = defPosition(event).y - 40 + "px";
         }
 
         //Функция, которая делает видимым наш слой и вкладывает в него необходимый текст.
@@ -138,12 +138,11 @@
     <h4 style="color: red"> ${eventErrorMessage}</h4>
 
 </c:if>
-<form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
-      onsubmit="return ValidFormFields(this)">
+<form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post">
 </c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
-    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></caption>
+    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></h1></caption>
 </h1>
 
 <c:if test="${errorMessageEdit!=null}">
@@ -151,8 +150,7 @@
 <h4 style="color: red"> ${errorMessageEdit} </h4>
 
 </c:if>
-<form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
-      onsubmit="return ValidFormFields(this)">
+<form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post">
 
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
 
@@ -439,10 +437,11 @@ data-target="#sectorAddConfirmation"
                     </td>
                     <td>
                         <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
-                        <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-trash"></span></button>
+                        <button type="submit" name="delete" value="${sector.value.id}" formnovalidate
+                                class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span></button>
 
-                            <%--   <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
+                    <%--   <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
                                    <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
                                            data-id="${sector.value.id}"  data-toggle="modal" data-target="#sectorDeleteRequest">
                                        <span class="glyphicon glyphicon-trash"></span></button>
@@ -516,18 +515,20 @@ data-target="#sectorAddConfirmation"
                     </div>
                     <div class="col-md-2 column">
                         <c:if test="${empty eventEdit.id}">
-                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+                            <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
+                                  novalidate></c:if>
                             <c:if test="${not empty eventEdit.id}">
                             <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
-                                  method="post"></c:if>
+                                  method="post" novalidate></c:if>
                                 <input type="hidden" name="dateEvent"
                                        value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
                                 <input type="hidden" name="eventTime" value="${eventTime}">
                                 <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
                                 <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
-                                <button type="submit" name="delete" value="" id="sectorId"
-                                        class="btn btn-danger btn-md">Удалить?
+                                <input type="submit" name="delete" formnovalidate="formnovalidate" value="submit"
+                                       id="sectorId"
+                                       class="btn btn-danger btn-md">Удалить?
                                 </button>
                             </form>
                     </div>
