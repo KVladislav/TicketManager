@@ -206,7 +206,7 @@
                 <h5 style="text-align:center; color:Green">${messageOrder}</h5>
                 <h5 style="text-align:center; color:Red">${errorOrder}</h5>
                 <c:if test="${orderList.size()>0}">
-                     <h4 style="text-align:center">Стоимость заказа: ${orderPrice} грн.</h4>
+                     <h4 style="text-align:center">Стоимость заказа: ${orderPrice.floatValue()} грн.</h4>
                     <tr>
                     <td>
                         <div class="control-group">
