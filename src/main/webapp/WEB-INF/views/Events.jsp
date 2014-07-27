@@ -64,37 +64,37 @@
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading text-info" style="text-align:center;"><b>
-    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Создание нового
+    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-info btn-md" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
 
 &MediumSpace;
 &MediumSpace;
 <h1>
-    <caption><h1 class="panel-heading text-info" style="text-align:center;">Список мероприятий</h1></caption>
+    <caption><h1 class="panel-heading text-info" style="text-align:center;"><b> Список мероприятий</b></h1></caption>
 </h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%; margin-bottom: 50px;">
     <div class="table responsive">
         <table class="table table-hover">
             <thead>
             <tr>
-                <th width="5%">#</th>
-                <th>Наименование</th>
-                <th width="20%">Дата</th>
-                <th width="5%"></th>
-                <th width="5%"></th>
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">Наименование</th>
+                <th style="text-align:center;">Дата</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${events}" var="evnt" varStatus="theCount">
                 <tr>
-                    <td style="vertical-align: middle;">${theCount.count}</td>
-                    <td style="vertical-align: middle;">${evnt.description}</td>
-                    <td style="vertical-align: middle;"><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm"/></td>
+                    <td>${theCount.count}</td>
+                    <td>${evnt.description}</td>
+                    <td><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
                             <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Редактировать">
-                                <button type="submit" name="evnt" value="${evnt.id}" class="btn btn-default btn-md">
+                                <button type="submit" name="evnt" value="${evnt.id}" class="btn">
                                     <span class="glyphicon glyphicon-edit"></span></button>
                             </a>
                         </form>
