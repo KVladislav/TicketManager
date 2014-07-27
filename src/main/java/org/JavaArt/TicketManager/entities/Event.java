@@ -60,10 +60,6 @@ public class Event implements Comparable<Event>{
         this.bookingTimeOut = bookingTimeOut;
     }
 
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
     public Date getTimeStamp() {
         return timeStamp;
     }
@@ -85,5 +81,11 @@ public class Event implements Comparable<Event>{
     public int compareTo(Event event) {
         Date compareDate = ((Event) event).getDate();
         return this.date.compareTo(compareDate);
+    }
+
+    public boolean isDeleted() { return isDeleted; }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
