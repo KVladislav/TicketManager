@@ -46,9 +46,9 @@
                 <tbody>
                 <c:forEach items="${operators}" var="operator">
                     <tr>
-                        <td width="30%">${operator.name}</td>
-                        <td width="30%">${operator.surname}</td>
-                        <td width="30%">${operator.login}</td>
+                        <td width="30%" style="vertical-align: middle;">${operator.name}</td>
+                        <td width="30%" style="vertical-align: middle;">${operator.surname}</td>
+                        <td width="30%" style="vertical-align: middle;">${operator.login}</td>
                         <td>
                             <form action="${pageContext.request.contextPath}/Operators/OperatorEdit.do"
                                   method="POST">
