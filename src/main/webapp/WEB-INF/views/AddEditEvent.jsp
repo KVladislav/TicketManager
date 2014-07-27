@@ -75,7 +75,7 @@
 
 //Здесь координаты присваиватся положению слоя относительно окна и к координате х плюсуется 15 пикселов, чтоб курсор не был на подсказке.
             document.getElementById('help').style.left = defPosition(event).x + 15 + "px";
-            document.getElementById('help').style.top = defPosition(event).y + "px";
+            document.getElementById('help').style.top = defPosition(event).y - 40 + "px";
         }
 
         //Функция, которая делает видимым наш слой и вкладывает в него необходимый текст.
@@ -138,12 +138,11 @@
     <h4 style="color: red"> ${eventErrorMessage}</h4>
 
 </c:if>
-<form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
-      onsubmit="return ValidFormFields(this)">
+<form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post">
 </c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
-    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></caption>
+    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></h1></caption>
 </h1>
 
 <c:if test="${errorMessageEdit!=null}">
@@ -151,8 +150,7 @@
 <h4 style="color: red"> ${errorMessageEdit} </h4>
 
 </c:if>
-<form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post"
-      onsubmit="return ValidFormFields(this)">
+<form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do" method="post">
 
 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
 
@@ -179,10 +177,6 @@
 
                 <div class="control-group text-info">
                     <select name="eventTime" id="eventTime">
-
-                        <c:if test="${eventTime.equals(eventTime)}">
-                            <option selected value="${eventTime}">${eventTime}</option>
-                        </c:if>
 
                         <c:if test="${eventTime.equals('10:00')}">
                             <option selected value="10:00">10:00</option>
@@ -236,7 +230,7 @@
                             <option selected value="14:00">14:00</option>
                         </c:if>
                         <c:if test="${!eventTime.equals('14:00')}">
-                            <option value="14-00">14-00</option>
+                            <option value="14:00">14:00</option>
                         </c:if>
                         <c:if test="${eventTime.equals('14:30')}">
                             <option selected value="14:30">14:30</option>
@@ -348,12 +342,11 @@
 <tr>
     <div class="control-group">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
-
         <div class="my-controls">
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                   title="Введите данные в указанном формате: Только непустое значение до 50 символов!"
+                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 10 знаков"
                    value="${eventDescriptions}"/>
         </div>
     </div>
@@ -443,19 +436,19 @@ data-target="#sectorAddConfirmation"
                         </div>
                     </td>
                     <td>
-                            <%--    <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
-                                <button type="submit" name="delete" value="${sector.value.id}" class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-trash"></span></button>
-        --%>
-                        <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
-                            <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
-                                    data-id="${sector.value.id}"
-                                    data-toggle="modal" data-target="#sectorDeleteRequest">
-                                <span class="glyphicon glyphicon-trash"></span></button>
-                        </a>
-                        <script>
-                            $("a.my-tool-tip").tooltip();
-                        </script>
+                        <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
+                        <button type="submit" name="delete" value="${sector.value.id}" formnovalidate
+                                class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span></button>
+
+                    <%--   <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
+                                   <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
+                                           data-id="${sector.value.id}"  data-toggle="modal" data-target="#sectorDeleteRequest">
+                                       <span class="glyphicon glyphicon-trash"></span></button>
+                               </a>
+                               <script>
+                                   $("a.my-tool-tip").tooltip();
+                               </script> --%>
 
 
                     </td>
@@ -522,18 +515,20 @@ data-target="#sectorAddConfirmation"
                     </div>
                     <div class="col-md-2 column">
                         <c:if test="${empty eventEdit.id}">
-                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
+                            <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
+                                  novalidate></c:if>
                             <c:if test="${not empty eventEdit.id}">
                             <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
-                                  method="post"></c:if>
+                                  method="post" novalidate></c:if>
                                 <input type="hidden" name="dateEvent"
                                        value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
-                                <input type="hidden" name="inputTime" value="${eventTime}">
-                                <input type="hidden" name="description" value="${eventDescriptions}">
-                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
+                                <input type="hidden" name="eventTime" value="${eventTime}">
+                                <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
+                                <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
-                                <button type="submit" name="delete" value="" id="sectorId"
-                                        class="btn btn-danger btn-md">Удалить?
+                                <input type="submit" name="delete" formnovalidate="formnovalidate" value="submit"
+                                       id="sectorId"
+                                       class="btn btn-danger btn-md">Удалить?
                                 </button>
                             </form>
                     </div>

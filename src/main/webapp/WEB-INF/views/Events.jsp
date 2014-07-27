@@ -52,7 +52,7 @@
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading text-info" style="text-align:center;"><b>
-<a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового
+    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
 
@@ -115,7 +115,7 @@
                 <h4 id="myModalLabel">Вопрос!</h4>
             </div>
             <div class="modal-body">
-                <h4>Подтвердите удаление мероприятия!!!</h4>
+                <h4>Подтвердите удаление мероприятия ${description} !!!</h4>
             </div>
             <div class="modal-footer">
                 <div class="row clearfix">
@@ -125,9 +125,9 @@
                     <div class="col-md-2 column">
                         <form action="${pageContext.request.contextPath}/Events/setDelete.do" method="post">
                             <%--       onSubmit="return confirmAction('${evnt.description}')"   --%>
-                                <button type="submit" name="eventId" value="eventId" class="btn btn-danger btn-md"
-                                        id="eventId">Удалить
-                                </button>
+                            <button type="submit" name="eventId" value="eventId" class="btn btn-danger btn-md"
+                                    id="eventId">Удалить
+                            </button>
                         </form>
                     </div>
                 </div>

@@ -113,7 +113,7 @@
     </thead>
 
     <tbody>
-    <form name="delTicket" id="delTicket">
+    <%--<form name="delTicket" id="delTicket">--%>
         <%--<c:set var="number" value="1"/>--%>
         <c:forEach items="${bookingTickets}" var="ticket">
             <tr>
@@ -164,7 +164,7 @@
                 </td>
             </tr>
         </c:forEach>
-    </form>
+
 
     <c:forEach items="${bookingErrorTickets}" var="ticket">
         <tr class="alert-warning">
@@ -205,7 +205,7 @@
 
     <tr>
         <td colspan="3">
-            <strong>Стоимость заказа ${bookingPrice}</strong>
+            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа ${bookingPrice}</strong></c:if>
         </td>
         <td colspan="8">
         </td>
@@ -274,10 +274,13 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+                <h2 class="modal-title" id="myModalLabel">Внимание! </h2>
             </div>
             <div class="modal-body">
                 <h4>Подтвердите бронирование билетов</h4>
+                <br>
+                <h4>Клиент: ${bookingClient.name}</h4>
+                <br>
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
@@ -365,6 +368,9 @@
             </div>
             <div class="modal-body">
                 <h4>Подтвердите выкуп брони</h4>
+                <br>
+                <h4>Клиент: ${bookingClient.name}</h4>
+                <br>
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"

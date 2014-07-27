@@ -211,6 +211,7 @@
         </div>
     </div>
 </div>
+
 <button style="display: none;" class="btn btn-danger btn-sm" id="bookingCancelNotificationButton" data-toggle="modal"
         data-target="#bookingCancelNotification">
     Отмена брони

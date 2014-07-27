@@ -22,22 +22,21 @@
 <body>
 
 <center>
-    <h1>
-        <caption><h1 class="panel-heading text-info"><b> Создание нового сектора </b></h1></caption>
-    </h1>
-    <h3>
-        <caption><h3 class="panel-heading text-info" style="text-align:center;"><b> Задайте параметры нового
-            сектора:</b></h3></caption>
-    </h3>
-    <div class="container" style="margin-bottom: 50px">
+    <caption><h1 class="panel-heading text-info" style="text-align:center;"><b>Создание нового сектора</b></h1>
+    </caption>
+    <caption><h3 class="panel-heading  text-info" style="text-align:center;"><b>Задайте параметры нового
+        сектора:</b></h3></caption>
+    <div class="container" style="text-align:center;">
         <div class="row clearfix">
+
+
             <div class="col-md-3 column">
             </div>
             <div class="col-md-4 column">
                 <form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="text-align:center;">
 
-                        <thead>
+                    <thead>
                         <tr>
                             <th width="30%">Название сектора</th>
                             <th width="20%">Рядов</th>
@@ -60,7 +59,7 @@
                                        name="sectorName" required
                                        placeholder="Название сектора" value=""
                                        pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                                       title="Не пустое, не начинатся с пробела, до 10 знаков">
+                                       title="Не пустое, не начинается с пробела,только буквы и цифры,до 10 знаков">
                             </td>
                             <td>
                                 <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows"
@@ -92,4 +91,5 @@
     </div>
 </center>
 </body>
+<%@include file="footer.jsp" %>
 </html>
