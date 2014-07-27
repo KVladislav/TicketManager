@@ -18,13 +18,27 @@
             margin: 0;
         }
     </style>
+
+
+
+    <script type='text/javascript'>
+       function rrr () {
+          ('ConfirmOrderCancel').click();
+            }
+
+
+
+
+    </script>
+
+
 </head>
 <body>
 <div class="order">
 <div class="panel-body" style="padding:0px; width:92%; margin-left: 4%">
    <div class="row">
         <div class="col-md-4 column">
-            <h4 style="text-align:center; color:Blue">Выбор мероприятия</h4>
+            <strong class="text-info">Выбор мероприятия</strong>
             <form action="${pageContext.request.contextPath}/Order/setSectors.do" method="post">
                 <p><select size="8" name="eventId" data-size="3" class="form-control">
                     <c:forEach items="${eventsOrder}" var="evnt">
@@ -43,7 +57,7 @@
             </form>
         </div>
         <div class="col-md-4 column">
-            <h4 style="text-align:center; color:Blue">Выбор сектора</h4>
+            <strong class="text-info">Выбор сектора</strong>
             <form action="${pageContext.request.contextPath}/Order/setRow.do" method="post">
                 <p><select size="8" name="sectorId" class="form-control">
                     <c:forEach items="${sectorsMapOrder}" var="sectorEntry">
@@ -76,7 +90,7 @@
             </form>
         </div>
         <div class="col-md-4 column">
-            <h4 style="text-align:center; color:Blue">Сектора по возрастанию цены</h4>
+            <strong class="text-info">Сектора по возрастанию цены</strong>
             <form action="${pageContext.request.contextPath}/Order/Order.do" method="post">
                 <select multiple size="8" name="Legend" class="form-control">
                     <c:forEach items="${legendaOrder}" var="leg">
@@ -88,7 +102,7 @@
    </div>
    <div class="row">
         <div class="col-md-3">
-             <h4 style="text-align:center; color:Blue">Выбор ряда</h4>
+             <strong class="text-info">Выбор ряда</strong>
              <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
                  <p><select size="12" name="row" class="form-control">
                      <c:forEach items="${rowsMapOrder}" var="rowEntry">
@@ -117,9 +131,9 @@
              </form>
         </div>
         <div class="col-md-2">
-             <h4 style="text-align:center; color:Blue">Выбор места</h4>
+             <strong class="text-info">Выбор места</strong>
              <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
-                 <p><select multiple size="12" size="12" id="select" name="seat" name="select[]">
+                 <p><select multiple size="12" name="seat"  class="form-control">
                      <c:forEach items="${seatsMapOrder}" var="seatEntry">
                          <c:if test="${seatOrder==seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
@@ -162,7 +176,7 @@
              </form>
         </div>
         <div class="col-md-7 col-lg-offset-0 ">
-            <h4 style="text-align:center; color:Blue">Выбранные билеты</h4>
+            <h3 class="panel-heading text-info" style="text-align: center">Выбранные билеты</h3>
             <h5 style="text-align:center; color:Green">(Выбранный, но не купленный билет через
                                                         5 мин. возвратится в продажу)</h5>
             <table class="table text-center table-bordered">
@@ -180,8 +194,6 @@
                 <tbody>
                 <c:forEach items="${orderList}" var="ord">
                      <tr>
-                     <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
-                           method="post">
                      <td>${ord.id}</td>
                      <td>${ord.sector.event.description}</td>
                      <td><fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
@@ -190,13 +202,14 @@
                      <td>${ord.seat}</td>
                      <td><fmt:formatDate value="${ord.timeStamp}" pattern="HH:mm"/></td>
                      <td>${ord.sector.price}</td>
-                          <td>
-                               <input type="hidden" name="orderId" value="${ord.id}">
-                               <button class="btn btn-default btn-xs" onclick="document.delTicket.submit();">
-                                   <span class="glyphicon glyphicon-trash" ></span></button>
-                          </td>
-                     </form>
-                      </tr>
+                     <td>
+                         <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
+                               method="post">
+                                 <button type="submit" name="orderId" class="btn btn-default btn-xs" value="${ord.id}">
+                                 <span class="glyphicon glyphicon-trash" ></span></button>
+                          </form>
+                     </td>
+                     </tr>
                 </c:forEach>
                 </tbody>
            </table>
@@ -206,7 +219,7 @@
                 <h5 style="text-align:center; color:Green">${messageOrder}</h5>
                 <h5 style="text-align:center; color:Red">${errorOrder}</h5>
                 <c:if test="${orderList.size()>0}">
-                     <h4 style="text-align:center">Стоимость заказа: ${orderPrice} грн.</h4>
+                     <h4 style="text-align:center">Стоимость заказа: ${orderPrice.floatValue()} грн.</h4>
                     <tr>
                     <td>
                         <div class="control-group">
@@ -221,7 +234,8 @@
                     <td>
                         <div class="col-md-3 column">
                             <h3 style="text-align:center">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#ConfirmOrderBuy">Купить</button>
+                                <button class="btn btn-primary" data-toggle="modal"
+                                        data-target="#ConfirmOrderBuy">Купить</button>
                             </h3>
                         </div>
                     </td>

@@ -196,6 +196,29 @@ public class TicketRepositoryImpl implements TicketRepository {
         return tickets;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Ticket> getBoughtTicketsByClient(Client client) {
+        if (client==null) return new ArrayList<>();
+        Session session = null;
+        List<Ticket> tickets = null;
+//        List<Ticket> result = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets = session.createCriteria(Ticket.class)
+                    .add(Restrictions.eq("client", client))
+                    .add(Restrictions.eq("isDeleted", false))
+                    .addOrder(Order.asc("sector")).list();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return tickets;
+    }
+
     @Override
     public int getTicketsAmountByClient(Client client) {
         if  (client==null) return 0;

@@ -27,7 +27,7 @@
     <div class="Refund">
     <center>
          <form class="form-inline" name = "findTicket"  action="${pageContext.request.contextPath}/Refund/Find.do" method="post">
-             <br><h3 class="panel-heading" style=" color:Blue" >Поиск по номеру билета</h3><br>
+             <br><h3 class="panel-heading text-info">Поиск по номеру билета</h3><br>
              <div>
                   <input class="form-control" type="text" name="ticketId"  size=20  maxlength=10 required pattern="^[0-9]+$"
                          title="Целые числа без пробелов"  style="text-align:center "
