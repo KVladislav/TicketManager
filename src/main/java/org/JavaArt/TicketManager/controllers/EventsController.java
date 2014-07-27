@@ -35,7 +35,9 @@ public class EventsController {
     public String eventGet(Model model) {
         model.addAttribute("pageName", 4);
         List<Event> events = eventService.getAllEvents();
-        Collections.sort(events);
+        if (events.size() > 0) {
+            Collections.sort(events);
+        }
         if (events != null && events.size() > 0) {
             model.addAttribute("event", events.get(0));
             model.addAttribute("events", events);
