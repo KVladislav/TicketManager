@@ -119,7 +119,7 @@
         <div class="col-md-2">
              <h4 style="text-align:center; color:Blue">Выбор места</h4>
              <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
-                 <p><select multiple size="12" id="select" name="seat" class="form-control" name="select">
+                 <p><select multiple size="12" size="12" id="select" name="seat" name="select[]">
                      <c:forEach items="${seatsMapOrder}" var="seatEntry">
                          <c:if test="${seatOrder==seatEntry.key}">
                              <c:if test="${seatEntry.value==3}">
@@ -135,8 +135,8 @@
                                          (не утверждён)</option>
                              </c:if>
                              <c:if test="${seatEntry.value==0}">
-                                 <option value="${seatEntry.key} "onclick="this.form.submit()" style="color:Green"
-                                         selected >${seatEntry.key}. (в продаже)</option>
+                                 <option value="${seatEntry.key}" ondblclick="this.form.submit()"
+                                         style="color:Green" selected >${seatEntry.key}. (в продаже)</option>
                              </c:if>
                          </c:if>
                          <c:if test="${seatOrder!=seatEntry.key}">
@@ -153,7 +153,7 @@
                                          ${seatEntry.key}. (не утверждён)</option>
                              </c:if>
                              <c:if test="${seatEntry.value==0}">
-                                  <option value="${seatEntry.key} "onclick="this.form.submit()"
+                                  <option value="${seatEntry.key}" ondblclick="this.form.submit()"
                                           style="color:Green">${seatEntry.key}. (в продаже)</option>
                              </c:if>
                          </c:if>

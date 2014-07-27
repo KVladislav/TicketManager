@@ -76,7 +76,6 @@ public class SectorService {
                 buf.delete(0, 99);
                 element++;
             }
-
         }
         return legenda;
     }
