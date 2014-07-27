@@ -26,22 +26,20 @@
     </caption>
     <caption><h3 class="panel-heading  text-info" style="text-align:center;"><b>Задайте параметры нового
         сектора:</b></h3></caption>
-    <div class="container" style="text-align:center;">
-        <div class="row clearfix">
+    <div class="table responsive">
+        <div class="container" style="margin-left: 350px">
+            <div class="row clearfix">
 
-
-            <div class="col-md-3 column">
-            </div>
-            <div class="col-md-4 column">
-                <form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
+                <div class="col-md-6 column">
+                    <form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
                     <table class="table table-hover" style="text-align:center;">
 
                     <thead>
                         <tr>
-                            <th width="30%">Название сектора</th>
+                            <th width="40%">Название сектора</th>
                             <th width="20%">Рядов</th>
                             <th width="20%">Мест</th>
-                            <th width="30%">Цена</th>
+                            <th width="20%">Цена</th>
 
                         </tr>
                         </thead>
@@ -74,7 +72,7 @@
                                        pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                             </td>
                             <td>
-                                <input tabindex="1" class="form-control" size="16" type="text" maxlength="8"
+                                <input tabindex="1" class="form-control" size="16" type="text" maxlength="5"
                                        name="newPrice"
                                        placeholder="Цена" value=""
                                        required pattern="\d{0,5}(\.\d{0,2}){0,1}"
@@ -83,10 +81,20 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
-                </form>
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-3 column">
+                                <a class="btn btn-danger btn-md"
+                                   href="${pageContext.request.contextPath}/NewSector/Cancel.do"
+                                   role="button">Отменить</a>
+                            </div>
+                            <div class="col-md-2 column">
+                            <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
             </div>
-            <div class="col-md-2 column"></div>
+                <div class="col-md-4 column"></div>
+            </div>
         </div>
     </div>
 </center>
