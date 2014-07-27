@@ -4,6 +4,8 @@ import org.JavaArt.TicketManager.DAO.SectorRepository;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.service.TicketService;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,6 +24,8 @@ import java.util.List;
 @Repository
 
 public class SectorRepositoryImpl implements SectorRepository {
+    private TicketService ticketService = TicketService.getInstance();
+
     @Override
     public void addSector(Sector sector) {
         if (sector == null) return;
@@ -86,6 +90,10 @@ public class SectorRepositoryImpl implements SectorRepository {
     public void deleteSector(Sector sector) {
         if (sector == null) return;
         sector.setDeleted(true);
+        List<Ticket> tickets = ticketService.getAllTicketsBySector(sector);
+        if (tickets.size() != 0) {
+            ticketService.deleteTickets(tickets);
+        }
         updateSector(sector);
 
     }

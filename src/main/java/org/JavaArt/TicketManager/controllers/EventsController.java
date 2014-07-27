@@ -275,7 +275,7 @@ public class EventsController {
                 if (eventTime.equals("")) {
                     eventErrorMessage += " Заполните время мероприятия!" + "<br>";
                 }
-                if (eventBookingTimeOut != 0) {
+                if (eventBookingTimeOut == 0) {
                     eventErrorMessage += " Заполните время удаления брони мероприятия!" + "<br>";
                 }
             }
