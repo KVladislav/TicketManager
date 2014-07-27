@@ -64,7 +64,7 @@
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading text-info" style="text-align:center;"><b>
-    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-info btn-lg" data-toggle="modal">Создание нового
+    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-info btn-md" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
 
@@ -75,12 +75,12 @@
 </h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%; margin-bottom: 50px;">
     <div class="table responsive">
-        <table class="table table-bordered">
+        <table class="table table-hover">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Наименование</th>
-                <th>Дата</th>
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">Наименование</th>
+                <th style="text-align:center;">Дата</th>
                 <th></th>
                 <th></th>
             </tr>
