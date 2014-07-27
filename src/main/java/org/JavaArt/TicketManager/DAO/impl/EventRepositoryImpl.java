@@ -75,7 +75,12 @@ public class EventRepositoryImpl implements EventRepository {
         Event event = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            event = (Event) session.get(Event.class, id);
+            //event = (Event) session.get(Event.class, id);
+            event = (Event) session.createCriteria(Event.class).
+                    add(Restrictions.eq("isDeleted", false)).
+                    add(Restrictions.eq("id", id)).uniqueResult();
+
+
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
