@@ -402,7 +402,7 @@ public class BookingController {
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
         if  (tickets == null || tickets.size()==0) return;
 //        List<String> bookingErrorMessages = new ArrayList<>();
-        Map<Object, String> bookingErrorMessagesMap = new HashMap<>();
+        Map<String, String> bookingErrorMessagesMap = new HashMap<>();
 
         List<Ticket> ticketsForRemove = new ArrayList<>();
         double bookingPrice=0;
@@ -413,14 +413,14 @@ public class BookingController {
             Event event1 = eventService.getEventById(event.getId());
             if (event1==null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
-                bookingErrorMessagesMap.put(event, "Внимание, мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
+                bookingErrorMessagesMap.put("e" + event.getId(), "Внимание, мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
                         + " удалено, поэтому все билеты удалены также");
                 ticketsForRemove.add(ticket);
             } else
 
             if (sectorService.getSectorById(sector.getId())==null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
-                bookingErrorMessagesMap.put(sector, "Внимание, у мероприятия " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
+                bookingErrorMessagesMap.put("s" + sector.getId(), "Внимание, у мероприятия " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
                         + " удален сектор " + sector.getName() + ", поэтому все билеты из этого сектора также удалены");
                 ticketsForRemove.add(ticket);
             }
