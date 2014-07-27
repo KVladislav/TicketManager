@@ -471,7 +471,7 @@ data-target="#sectorAddConfirmation"
                 <input type="hidden" name="eventTime" value="${eventTime}">
                 <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
                 <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
-                <a href="/NewSector/NewSector.do" class="btn success btn-lg" role="button" data-toggle="modal">+
+                <a href="/NewSector/NewSector.do" class="btn btn-info btn-lg" role="button" data-toggle="modal">+
                     Добавить сектор</a>
 
             </div>
@@ -627,7 +627,7 @@ data-target="#sectorAddConfirmation"
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
                                 <input type="hidden" name="allSectors" value="${allSectors}">
                                 <button type="submit" name="addSector" value="" id="addSector"
-                                        class="btn btn-primary btn-md">Добавить сектор
+                                        class="btn btn-info btn-lg">+ Добавить сектор
                                 </button>
                             </form>
                     </div>
