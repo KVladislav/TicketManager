@@ -348,8 +348,6 @@
 <tr>
     <div class="control-group">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
-        <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
-
         <div class="my-controls">
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
