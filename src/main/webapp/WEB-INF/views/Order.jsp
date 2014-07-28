@@ -224,13 +224,13 @@
                     <tr>
                     <td>
                         <div class="control-group">
-                            <div class="col-md-3  col-lg-offset-3">
-                                 <h3 style="text-align:center">
-                                     <button class="btn  btn-danger" data-toggle="modal"
-                                             data-target="#ConfirmOrderCancel">Отмена</button>
-                                 </h3>
-                            </div>
+                        <div class="col-md-3  col-lg-offset-3">
+                            <h3 style="text-align:center">
+                                <button class="btn  btn-danger" data-toggle="modal"
+                                        data-target="#ConfirmOrderCancel">Отмена</button>
+                            </h3>
                         </div>
+                    </div>
                     </td>
                     <td>
                         <div class="col-md-3 column">
@@ -271,16 +271,13 @@
                         <tbody>
                         <c:forEach items="${orderList}" var="ord">
                             <tr>
-                                <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
-                                      method="post">
-                                    <td>${ord.id}</td>
-                                    <td>${ord.sector.event.description}</td>
-                                    <td><fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
-                                    <td>${ord.sector.name}</td>
-                                    <td>${ord.row}</td>
-                                    <td>${ord.seat}</td>
-                                    <td>${ord.sector.price}</td>
-                                </form>
+                                <td>${ord.id}</td>
+                                <td>${ord.sector.event.description}</td>
+                                <td><fmt:formatDate value="${ord.sector.event.date}" pattern="d.MM.yy H:mm"/></td>
+                                <td>${ord.sector.name}</td>
+                                <td>${ord.row}</td>
+                                <td>${ord.seat}</td>
+                                <td>${ord.sector.price}</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -312,6 +309,7 @@
         </div>
     </center>
 </div>
+
 <div class="modal" id="ConfirmOrderCancel"  aria-labelledby="myModalLabel" aria-hidden="true">
     <center>
         <div class="modal-dialog">
@@ -348,8 +346,6 @@
         </div>
     </center>
 </div>
-
-
 
 </body>
 <%@include file="footer.jsp" %>
