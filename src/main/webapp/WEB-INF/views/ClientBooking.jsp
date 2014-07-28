@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>Бронирование билета</title>
     <!-- Bootstrap -->
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" media="screen">--%>
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
@@ -213,7 +214,8 @@
 
     <tr>
         <td colspan="3">
-            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong></c:if>
+            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа <fmt:formatNumber pattern="0.00"
+                                                                                             value="${bookingPrice}"/></strong></c:if>
         </td>
         <td colspan="8">
         </td>
@@ -290,7 +292,8 @@
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h4 class="panel-heading text-info">Клиент: <strong>${bookingClient.name}</strong></h4>
-                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="dd.MM.yy H:mm"/></h4>
+                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                                     pattern="dd.MM.yy H:mm"/></h4>
                     </caption>
                     <thead>
                     <tr>
@@ -377,7 +380,8 @@
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h4 class="panel-heading text-info">Клиент: <strong>${bookingClient.name}</strong></h4>
-                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="dd.MM.yy H:mm"/></h4>
+                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                                     pattern="dd.MM.yy H:mm"/></h4>
 
                     </caption>
                     <thead>

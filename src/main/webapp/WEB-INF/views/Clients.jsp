@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>Бронирование билета</title>
     <!-- Bootstrap -->
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" media="screen">--%>
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
@@ -28,8 +29,8 @@
                            name="clientName"
                            required placeholder="Введите ФИО клиента" value="${client.name}">
                 </div>
-                <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
-                <button class="btn" type="submit" name="action" value="NewClient">Новая бронь</button>
+                <button class="btn btn-primary" type="submit" name="action" value="FindClient">Найти</button>
+                <button class="btn btn-primary" type="submit" name="action" value="NewClient">Новая бронь</button>
             </form>
         </div>
     </div>

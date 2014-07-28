@@ -19,8 +19,6 @@
     <!-- Bootstrap -->
 
 
-    <%-- <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -344,8 +342,8 @@
         <div class="my-controls">
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
-                   required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 50 знаков"
+                   required pattern="[A-Za-zА-Яа-я0-9][\w\W]{0,9}"
+                   title="Не пустое,не начинается с пробела,только буквы,цифры и спецсимволы, до 50 знаков"
                    value="${eventDescriptions}"/>
         </div>
     </div>
@@ -383,24 +381,14 @@
 </td>
 </table>
 
-<!-- Button to trigger modal -->
-<%---<button type="button" data-toggle="modal" data-target="#myModal"> Добавить сектор</button>
-<a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Добавить сектор">
-<a type="button" class="btn btn-default btn-md" href="${pageContext.request.contextPath}/AddEditEvent/NewSector.do" method="post" >
-    Добавить сектор
-</a>
----%>
+<c:if test="${sectorErrorMessage!=null}">
+    <div class="alert alert-error" style="color: red" class="panel-heading text-info" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="panel-heading text-info" style="text-align:center;">"Этот сектор удалить нельзя, так как на
+            мероприятие уже куплены билеты!"</h4>
+    </div>
+</c:if>
 
-
-<%--
-</a>
-data-toggle="modal">
-data-target="#sectorAddConfirmation"
-<script>
-    $("a.my-tool-tip").tooltip();
-</script>style="display:block;height:400px;overflow:auto;"
-
---%>
 
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
@@ -439,15 +427,6 @@ data-target="#sectorAddConfirmation"
                                 class="btn btn-default btn-xs">
                             <span class="glyphicon glyphicon-trash"></span></button>
 
-                    <%--   <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
-                                   <button tabindex="0" type="button" class="btn btn-default btn-md deleteSector"
-                                           data-id="${sector.value.id}"  data-toggle="modal" data-target="#sectorDeleteRequest">
-                                       <span class="glyphicon glyphicon-trash"></span></button>
-                               </a>
-                               <script>
-                                   $("a.my-tool-tip").tooltip();
-                               </script> --%>
-
 
                     </td>
                 </tr>
@@ -475,12 +454,6 @@ data-target="#sectorAddConfirmation"
                 <a href="${pageContext.request.contextPath}/NewSector/NewSector.do" class="btn btn-info btn-md"
                    title="Перед заполнением формы можно добавить недостающие сектора!" role="button">+ Добавить
                     сектор</a>
-                <%--     <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-                          onMouseOver="helpBox('Подсказка', 'Перед заполением формы можно добавить недостающие сектора')"
-                          onMouseOut="helpBox()">
-                     <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
-                         Перед заполением формы можно добавитьнедостающие сектора)</p>
-                         <p id="helpText" class="helpText">Help text</p></div> --%>
             </div>
 
         </div>
@@ -489,20 +462,6 @@ data-target="#sectorAddConfirmation"
 </form>
 </center>
 
-<%--
-<form action=${pageContext.request.contextPath}/NewSector/NewSector.do">
-<input type="hidden" name="dateEvent"
-       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
-<input type="hidden" name="inputTime" value="${eventTime}">
-<input type="hidden" name="description" value="${eventDescriptions}">
-<input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
-<input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
-
-<button type="submit" name="addd" value="" id="addd" class="btn btn-primary btn-md">Добавить сектор?
-    +<span class="glyphicon glyphicon-export"></span></button>
-
-</form>
---%>
 
 <div class="modal" id="sectorDeleteRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -544,107 +503,6 @@ data-target="#sectorAddConfirmation"
         </div>
     </div>
 </div>
-
-
-<!-- Modal sector-->
-<div class="modal" id="sectorAddConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span
-                        class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
-            </div>
-            <div class="modal-body">
-                <h4>Задайте параметры нового сектора:</h4>
-                <tr>
-                    <td>
-                        <div class="control-group ">
-                            <label class="my-control-label" for="sectorName">Название сектора
-                            </label>
-
-                            <div class="my-controls">
-                                <input type="text" id="sectorName" name="sectorName" required
-                                       pattern=[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                                       title="Не пустое, не начинатся с пробела, до 10 знаков">
-                            </div>
-                        </div>
-
-                    </td>
-                    <td>
-                        <div class="control-group ">
-                            <label class="my-control-label" for="maxRows">Максимальное количество рядов
-                            </label>
-
-                            <div class="my-controls">
-                                <input type="text" id="maxRows" name="maxRows" required pattern="[1-9][0-9]{0,1}"
-                                       title="В интервале [1-99]">
-                            </div>
-                        </div>
-
-                    </td>
-                    <td>
-                        <div class="control-group ">
-                            <label class="my-control-label" for="maxSeats">Максимальное количество мест
-                            </label>
-
-                            <div class="my-controls">
-                                <input type="text" id="maxSeats" name="maxSeats" required pattern="[1-9][0-9]{0,1}"
-                                       title="В интервале [1-99]">
-                            </div>
-                        </div>
-
-                    </td>
-                    <td>
-                        <div class="control-group ">
-                            <label class="my-control-label" for="newPrice">Цена
-                            </label>
-
-                            <div class="my-controls">
-                                <input type="text" id="newPrice" name="newPrice" required
-                                       pattern="\d{0,5}(\.\d{0,2}){0,1}"
-                                       title="В интервале [0-99999] до двух знаков после запятой">
-                            </div>
-                        </div>
-
-                    </td>
-                <tr>
-            </div>
-            <div class="modal-footer">
-                <div class="row clearfix">
-                    <div class="col-md-8 column">
-                        <button type="button" class="btn btn-danger btn-md" data-dismiss="modal">Отмена</button>
-                    </div>
-                    <div class="col-md-2 column">
-                        <c:if test="${empty eventEdit.id}">
-                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"></c:if>
-                            <c:if test="${not empty eventEdit.id}">
-                            <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
-                                  method="post"></c:if>
-                                <input type="hidden" name="sectorName" value="${sectorName}">
-                                <input type="hidden" name="maxRows" value="${maxRows}">
-                                <input type="hidden" name="maxSeats" value="${maxSeats}">
-                                <input type="hidden" name="newPrice" value="${newPrice}">
-                                <input type="hidden" name="addSector" value="addSector">
-                                <input type="hidden" name="dateEvent"
-                                       value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
-                                <input type="hidden" name="inputTime" value="${eventTime}">
-                                <input type="hidden" name="description" value="${eventDescriptions}">
-                                <input type="hidden" name="timeRemoveBooking" value="${eventBookingTimeOut}">
-                                <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
-                                <input type="hidden" name="allSectors" value="${allSectors}">
-                                <button type="submit" name="addSector" value="" id="addSector"
-                                        class="btn btn-info btn-lg">+ Добавить сектор
-                                </button>
-                            </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 </body>
 <%@include file="footer.jsp" %>

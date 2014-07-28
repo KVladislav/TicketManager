@@ -79,35 +79,37 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/ViewClient.do")
-    public String bookingViewClient(@RequestParam(value = "clientId", required = true) Integer clientId, Model
-            model) {
+    public String bookingViewClient(@RequestParam(value = "clientId", required = true) Integer clientId, ModelMap
+            modelMap, HttpSession session) {
 
         if (clientId == null) {
             return "redirect:/Booking/GetClient.do";
         }
         Client client = clientService.getClientById(clientId);
         List<Ticket> tickets = ticketService.getTicketsByClient(client);
+        modelMap.addAttribute("bookingTickets", tickets);
+        checkEventState(modelMap, session);
 
-        double bookingPrice = 0;
-        Date date = new Date();
-        boolean isConfirmed = true;
-        for (Ticket ticket : tickets) {
-            if (!ticket.isConfirmed()) {
-                isConfirmed = false;
-                if (date.getTime() > ticket.getTimeStamp().getTime()) {
-                    date = ticket.getTimeStamp();
-                }
-            }
-            bookingPrice += ticket.getSector().getPrice();
-        }
-        if (!isConfirmed) {
-            System.out.printf("found non confirmed");
-            model.addAttribute("bookingTimeOut", date);
-            model.addAttribute("bookingTime", (new Date().getTime() - date.getTime()) / 1000);
-        }
-        model.addAttribute("bookingPrice", bookingPrice);
-        model.addAttribute("bookingClient", client);
-        model.addAttribute("bookingTickets", tickets);
+//        double bookingPrice = 0;
+//        Date date = new Date();
+//        boolean isConfirmed = true;
+//        for (Ticket ticket : tickets) {
+//            if (!ticket.isConfirmed()) {
+//                isConfirmed = false;
+//                if (date.getTime() > ticket.getTimeStamp().getTime()) {
+//                    date = ticket.getTimeStamp();
+//                }
+//            }
+//            bookingPrice += ticket.getSector().getPrice();
+//        }
+//        if (!isConfirmed) {
+//            System.out.printf("found non confirmed");
+//            model.addAttribute("bookingTimeOut", date);
+//            model.addAttribute("bookingTime", (new Date().getTime() - date.getTime()) / 1000);
+//        }
+//        model.addAttribute("bookingPrice", bookingPrice);
+        modelMap.addAttribute("bookingClient", client);
+
 
         return "ClientBooking";
     }
@@ -231,40 +233,53 @@ public class BookingController {
 
 
     @RequestMapping(value = "Booking/Booking.do", method = RequestMethod.POST)
-    public String booking(Model model) {
-        if (model.asMap().get("bookingClient") == null) {
+    public String booking(ModelMap model, HttpSession session) {
+        if (model.get("bookingClient") == null) {
             return "redirect:/Booking/GetClient.do";
         }
 
         List<Event> events;
-        Event event = (Event) model.asMap().get("bookingEvent");
+        Event event = (Event) model.get("bookingEvent");
         events = eventService.getFutureBookableEvents();
         if (events == null || events.size() == 0) {
-            return "redirect:/Booking/GetClient.do";
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Нет новых мероприятий.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+
+//            return "redirect:/Booking/GetClient.do";
         }
         if (event == null || eventService.getEventById(event.getId()) == null) event = events.get(0);
 
         model.addAttribute("bookingEvents", events);
-        bookingSetSectors(event.getId(), model);
+        bookingSetSectors(event.getId(), model, session);
         return "Booking";
     }
 
     @RequestMapping(value = "Booking/setSectors.do")
-    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, Model
-            model) {
+    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, ModelMap
+            model, HttpSession session) {
 
         Event event = eventService.getEventById(eventId);
-        if (event == null) return "ClientBooking";
+        if (event == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Мероприятие удалено.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
 
         List<Sector> sectors = sectorService.getSectorsByEvent(event);
         Map<Sector, Integer> sectorsMap = new TreeMap<>();
 
         Sector sector = null;
-        if (model.asMap().get("bookingEvent") != null && ((Event) model.asMap().get("bookingEvent")).getId() == eventId) {
-            sector = (Sector) model.asMap().get("bookingSector");
+        if (model.get("bookingEvent") != null && ((Event) model.get("bookingEvent")).getId() == eventId) {
+            sector = (Sector) model.get("bookingSector");
         }
         if (sectors == null || sectors.size() == 0) {
-            return "redirect:/Booking/GetClient.do";
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! У мероприятия " + event.getDescription() + " не настроены сектора");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
         }
         if (sector == null) sector = sectors.get(0);
 
@@ -277,44 +292,61 @@ public class BookingController {
         model.addAttribute("sectorsGroupedMap", sectorsGroupedMap);
         model.addAttribute("bookingEvent", event);
 
-        bookingSetRow(sector.getId(), model);
+        bookingSetRow(sector.getId(), model, session);
         return "Booking";
     }
 
     @RequestMapping(value = "Booking/setRow.do", method = RequestMethod.POST)
-    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, Model
-            model) {
+    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, ModelMap
+            model, HttpSession session) {
         Sector sector = sectorService.getSectorById(sectorId);
-        if (sector == null) return "ClientBooking";
+        if (sector == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Сектор удален");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
 
         Map<Integer, Integer> rowsMap = new TreeMap<>();
 
-        if (sector == null) {
-            return "redirect:/Booking/GetClient.do";
-        }
         for (int i = 1; i <= sector.getMaxRows(); i++) {
             rowsMap.put(i, ticketService.getFreeTicketsAmountBySectorRow(sector, i));
         }
         int row = 1;
-        if (model.asMap().get("bookingSector") != null &&
-                ((Sector) model.asMap().get("bookingSector")).getId() == sectorId &&
-                model.asMap().get("bookingRow") != null) {
-            row = (Integer) model.asMap().get("bookingRow");
+        if (model.get("bookingSector") != null &&
+                ((Sector) model.get("bookingSector")).getId() == sectorId &&
+                model.get("bookingRow") != null) {
+            row = (Integer) model.get("bookingRow");
         }
 
 
         model.addAttribute("bookingSector", sector);
         model.addAttribute("bookingRowsMap", rowsMap);
 
-        bookingSetSeat(row, model);
+        bookingSetSeat(row, model, session);
         return "Booking";
     }
 
     @RequestMapping(value = "Booking/setSeat.do", method = RequestMethod.POST)
-    public String bookingSetSeat(@RequestParam(value = "row", required = true) Integer row, Model model) {
+    public String bookingSetSeat(@RequestParam(value = "row", required = true) Integer row, ModelMap model, HttpSession session) {
+        checkEventState(model, session);
+        Sector sector = (Sector) model.get("bookingSector");
+        Event event = eventService.getEventById(sector.getEvent().getId());
+        if (event != null && event.getBookingTimeOut().getTime() < (new Date()).getTime()) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
+            bookingErrorMessages.add("Внимание, на мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate()) + " бронирование завершено, все забронированные билеты возвращены  продажу");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
 
-        Sector sector = (Sector) model.asMap().get("bookingSector");
-        if (sectorService.getSectorById(sector.getId()) == null) return "ClientBooking";
+
+        if (sectorService.getSectorById(sector.getId()) == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription() + " cектор " + sector.getName() + " удален.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
         Map<Integer, Integer> seatsMap = new TreeMap<>();
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
             seatsMap.put(i, ticketService.isPlaceFree(sector, row, i));
@@ -322,8 +354,8 @@ public class BookingController {
 
         model.addAttribute("bookingRow", row);
         model.addAttribute("bookingSeatsMap", seatsMap);
-        if (model.asMap().get("bookingTimeOut") != null) {
-            model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.asMap().get("bookingTimeOut")).getTime()) / 1000);
+        if (model.get("bookingTimeOut") != null) {
+            model.addAttribute("bookingTime", (new Date().getTime() - ((Date) model.get("bookingTimeOut")).getTime()) / 1000);
         }
         return "Booking";
     }
@@ -335,7 +367,12 @@ public class BookingController {
                                    @ModelAttribute("bookingRow") Integer row,
                                    @ModelAttribute("bookingClient") Client client) {
 
-        if (sectorService.getSectorById(sector.getId()) == null) return "ClientBooking";
+        if (sectorService.getSectorById(sector.getId()) == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription() + " cектор " + sector.getName() + " удален.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
         Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
         if (bookingTimeOut == null) {
             bookingTimeOut = new Date();
@@ -381,7 +418,7 @@ public class BookingController {
         model.addAttribute("bookingTickets", tickets);
         model.addAttribute("bookingPrice", bookingPrice);
 
-        if (tickets.size()>0) {
+        if (tickets.size() > 0) {
             model.addAttribute("bookingTimeOut", bookingTimeOut);
             model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
         }
@@ -399,29 +436,37 @@ public class BookingController {
 
     @SuppressWarnings("unchecked")
     public void checkEventState(ModelMap modelMap, HttpSession session) {
+        modelMap.addAttribute("pageName", 2);
+
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
-        if  (tickets == null || tickets.size()==0) return;
+        if (tickets == null || tickets.size() == 0) return;
 //        List<String> bookingErrorMessages = new ArrayList<>();
         Map<String, String> bookingErrorMessagesMap = new HashMap<>();
 
         List<Ticket> ticketsForRemove = new ArrayList<>();
-        double bookingPrice=0;
+        double bookingPrice = 0;
 
         for (Ticket ticket : tickets) {
-            Event event =  ticket.getSector().getEvent();
+            Event event = ticket.getSector().getEvent();
             Sector sector = ticket.getSector();
             Event event1 = eventService.getEventById(event.getId());
-            if (event1==null) {
+            if (event1 == null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
                 bookingErrorMessagesMap.put("e" + event.getId(), "Внимание, мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
                         + " удалено, поэтому все билеты удалены также");
                 ticketsForRemove.add(ticket);
-            } else
+            }
 
-            if (sectorService.getSectorById(sector.getId())==null) {
+            if (sectorService.getSectorById(sector.getId()) == null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
                 bookingErrorMessagesMap.put("s" + sector.getId(), "Внимание, у мероприятия " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
                         + " удален сектор " + sector.getName() + ", поэтому все билеты из этого сектора также удалены");
+                ticketsForRemove.add(ticket);
+            }
+
+            if (event1 != null && event1.getBookingTimeOut().getTime() < (new Date()).getTime()) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
+                bookingErrorMessagesMap.put("s" + sector.getId(), "Внимание, на мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate()) + " бронирование завершено, все забронированные билеты возвращены  продажу");
                 ticketsForRemove.add(ticket);
             }
 
@@ -443,9 +488,9 @@ public class BookingController {
             modelMap.addAttribute("bookingTimeOut", date);
             modelMap.addAttribute("bookingTime", (new Date().getTime() - date.getTime()) / 1000);
         } else {
-                modelMap.remove("bookingTimeOut");
-                session.removeAttribute("bookingTimeOut");
-            }
+            modelMap.remove("bookingTimeOut");
+            session.removeAttribute("bookingTimeOut");
+        }
 
         Collection<String> bookingErrorMessages = bookingErrorMessagesMap.values();
         modelMap.addAttribute("bookingErrorMessages", bookingErrorMessages);

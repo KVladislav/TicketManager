@@ -21,4 +21,5 @@ public interface SectorRepository {
 
     public List<Sector> getSectorsByEventOrderPrice(Event event);
 
+    public boolean busySector(Sector sector);
 }

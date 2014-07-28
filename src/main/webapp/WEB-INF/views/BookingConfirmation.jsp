@@ -24,8 +24,9 @@
         <div class="col-md-8 col-md-offset-2 column" style="margin-bottom: 50px">
             <table class="table table-hover table-condensed">
                 <caption>
-                    <h3 class="panel-heading text-info">Подтверждение бронирования от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                                                 pattern="dd.MM.yy H:mm"/></h3>
+                    <h3 class="panel-heading text-info">Подтверждение бронирования от <fmt:formatDate
+                            value="${bookingClient.timeStamp}"
+                            pattern="dd.MM.yy H:mm"/></h3>
                     <br>
                     <h4>Клиент: ${bookingClient.name}</h4>
                 </caption>
@@ -77,6 +78,12 @@
             </table>
         </div>
     </div>
+    <div class="row clearfix">
+        <div class="col-md-2 col-md-offset-5 column">
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}\Booking\GetClient.do">Ok</a>
+        </div>
+    </div>
+
 </div>
 </body>
 <%@include file="footer.jsp" %>
