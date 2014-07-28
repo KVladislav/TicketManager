@@ -342,7 +342,7 @@
         <div class="my-controls">
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
-                   required pattern="[A-Za-zА-Яа-яЁё0-9][\w\W]{0,9}"
+                   required pattern="[A-Za-zА-Яа-я0-9][\w\W]{0,9}"
                    title="Не пустое,не начинается с пробела,только буквы,цифры и спецсимволы, до 50 знаков"
                    value="${eventDescriptions}"/>
         </div>

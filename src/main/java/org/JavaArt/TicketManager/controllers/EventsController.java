@@ -79,22 +79,22 @@ public class EventsController {
             }
         }
         if (allSectors != null && allSectors.size() > 0) {
-            Date today = new Date();
-            GregorianCalendar gc = new GregorianCalendar();
-            gc.setTime(today);
-            int year = gc.get(GregorianCalendar.YEAR);
-            int mon = gc.get(GregorianCalendar.MONTH);
-            int day = gc.get(GregorianCalendar.DATE);
-            GregorianCalendar calendarN = new GregorianCalendar();
-            calendarN.set(year, mon, day + 1, 0, 0, 0);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            String localisedDate = dateFormat.format(calendarN.getTime());
-            Date dateEvent = dateFormat.parse(localisedDate);
-            String eventTime = "12:00";
-            model.addAttribute("eventTime", eventTime);
-            model.addAttribute("dateEvent", dateEvent);
             model.addAttribute("allSectors", allSectors);
         }
+        Date today = new Date();
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(today);
+        int year = gc.get(GregorianCalendar.YEAR);
+        int mon = gc.get(GregorianCalendar.MONTH);
+        int day = gc.get(GregorianCalendar.DATE);
+        GregorianCalendar calendarN = new GregorianCalendar();
+        calendarN.set(year, mon, day + 1, 0, 0, 0);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String localisedDate = dateFormat.format(calendarN.getTime());
+        Date dateEvent = dateFormat.parse(localisedDate);
+        String eventTime = "12:00";
+        model.addAttribute("eventTime", eventTime);
+        model.addAttribute("dateEvent", dateEvent);
         return "AddEditEvent";
     }
 
@@ -203,7 +203,7 @@ public class EventsController {
                 Date trueDateNew = rightAgain.getTime();
 
                 List<Event> list = eventService.getEventsByDate(trueDateNew);
-                if (list != null && list.size() == 0) {
+                if ((list == null) || (list.size() == 0)) {
                     event.setDate(trueDateNew);
                     boolean isDeleted = false;
                     event.setDeleted(isDeleted);
@@ -254,8 +254,13 @@ public class EventsController {
             model.addAttribute("eventErrorMessage", eventErrorMessage);
             model.addAttribute("eventDescriptions", eventDescriptions);
             model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-
-            Iterator<Sector> sectorNewList = allSectors.values().iterator();
+            Iterator<Sector> sectorNewList = null;
+            if (allSectors != null) {
+                sectorNewList = allSectors.values().iterator();
+            } else {
+                allSectors = new TreeMap<>();
+                sectorNewList = allSectors.values().iterator();
+            }
             while (sectorNewList.hasNext()) {
                 Sector sectorNew = sectorNewList.next();
                 String price = request.getParameter("price" + sectorNew.getId());
