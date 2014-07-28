@@ -77,6 +77,11 @@
             </table>
         </div>
     </div>
+    <div class="row clearfix">
+        <div class="col-md-2 col-md-offset-5 column">
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}\Booking\GetClient.do">Ok</a>
+        </div>
+    </div>
 </div>
 </body>
 <%@include file="footer.jsp" %>
