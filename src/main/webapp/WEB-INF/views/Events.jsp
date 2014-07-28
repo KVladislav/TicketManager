@@ -78,9 +78,9 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th style="text-align:center;">#</th>
-                <th style="text-align:center;">Наименование</th>
-                <th style="text-align:center;">Дата</th>
+                <th>#</th>
+                <th>Наименование</th>
+                <th>Дата</th>
                 <th></th>
                 <th></th>
             </tr>
