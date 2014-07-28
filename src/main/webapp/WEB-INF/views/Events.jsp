@@ -7,6 +7,7 @@
 
 <html lang="ru">
 <head>
+    <title>Управление мероприятиями</title>
     <!-- Bootstrap -->
     <%--  <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
       <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
