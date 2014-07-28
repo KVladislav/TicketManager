@@ -214,7 +214,7 @@
                 </tbody>
            </table>
         </div>
-        <div class="col-md-7 col-lg-offset-5 ">
+        <div class="col-md-7 col-lg-offset-5 " style="margin-bottom: 50px">
             <center>
                 <h5 style="text-align:center; color:Green">${messageOrder}</h5>
                 <h5 style="text-align:center; color:Red">${errorOrder}</h5>
