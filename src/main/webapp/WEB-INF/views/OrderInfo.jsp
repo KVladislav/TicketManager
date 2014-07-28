@@ -17,8 +17,12 @@
         <div class="col-md-8 col-md-offset-2 column">
             <table class="table table-hover table-condensed">
                 <caption>
-                    <h3 class="panel-heading text-info">Билеты успешно куплены</h3>
-
+                    <c:if test="${orderConfirmation.size()==1}">
+                        <h3 class="panel-heading text-info">Билет успешно куплен</h3>
+                    </c:if>
+                    <c:if test="${orderConfirmation.size()>1}">
+                        <h3 class="panel-heading text-info">Билеты успешно куплены</h3>
+                    </c:if>
                 </caption>
                 <br><br>
                 <table class="table text-center table-bordered">
