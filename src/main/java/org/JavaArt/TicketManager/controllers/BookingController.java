@@ -240,7 +240,12 @@ public class BookingController {
         Event event = (Event) model.asMap().get("bookingEvent");
         events = eventService.getFutureBookableEvents();
         if (events == null || events.size() == 0) {
-            return "redirect:/Booking/GetClient.do";
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Нет новых мероприятий.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+
+//            return "redirect:/Booking/GetClient.do";
         }
         if (event == null || eventService.getEventById(event.getId()) == null) event = events.get(0);
 
@@ -254,7 +259,12 @@ public class BookingController {
             model) {
 
         Event event = eventService.getEventById(eventId);
-        if (event == null) return "ClientBooking";
+        if (event == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Мероприятие удалено.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
 
         List<Sector> sectors = sectorService.getSectorsByEvent(event);
         Map<Sector, Integer> sectorsMap = new TreeMap<>();
@@ -264,7 +274,10 @@ public class BookingController {
             sector = (Sector) model.asMap().get("bookingSector");
         }
         if (sectors == null || sectors.size() == 0) {
-            return "redirect:/Booking/GetClient.do";
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! У мероприятия " + event.getDescription() + " не настроены сектора");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
         }
         if (sector == null) sector = sectors.get(0);
 
@@ -285,13 +298,15 @@ public class BookingController {
     public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, Model
             model) {
         Sector sector = sectorService.getSectorById(sectorId);
-        if (sector == null) return "ClientBooking";
+        if (sector == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Сектор удален");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
 
         Map<Integer, Integer> rowsMap = new TreeMap<>();
 
-        if (sector == null) {
-            return "redirect:/Booking/GetClient.do";
-        }
         for (int i = 1; i <= sector.getMaxRows(); i++) {
             rowsMap.put(i, ticketService.getFreeTicketsAmountBySectorRow(sector, i));
         }
@@ -314,7 +329,12 @@ public class BookingController {
     public String bookingSetSeat(@RequestParam(value = "row", required = true) Integer row, Model model) {
 
         Sector sector = (Sector) model.asMap().get("bookingSector");
-        if (sectorService.getSectorById(sector.getId()) == null) return "ClientBooking";
+        if (sectorService.getSectorById(sector.getId()) == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription()+ " cектор " + sector.getName() + " удален.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
         Map<Integer, Integer> seatsMap = new TreeMap<>();
         for (int i = 1; i <= sector.getMaxSeats(); i++) {
             seatsMap.put(i, ticketService.isPlaceFree(sector, row, i));
@@ -335,7 +355,12 @@ public class BookingController {
                                    @ModelAttribute("bookingRow") Integer row,
                                    @ModelAttribute("bookingClient") Client client) {
 
-        if (sectorService.getSectorById(sector.getId()) == null) return "ClientBooking";
+        if (sectorService.getSectorById(sector.getId()) == null) {
+            List<String> bookingErrorMessages = new ArrayList<>();
+            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription()+ " cектор " + sector.getName() + " удален.");
+            model.addAttribute("bookingErrorMessages", bookingErrorMessages);
+            return "ClientBooking";
+        }
         Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
         if (bookingTimeOut == null) {
             bookingTimeOut = new Date();
@@ -399,6 +424,8 @@ public class BookingController {
 
     @SuppressWarnings("unchecked")
     public void checkEventState(ModelMap modelMap, HttpSession session) {
+        modelMap.addAttribute("pageName", 2);
+
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
         if  (tickets == null || tickets.size()==0) return;
 //        List<String> bookingErrorMessages = new ArrayList<>();
