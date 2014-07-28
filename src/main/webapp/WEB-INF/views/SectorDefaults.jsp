@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>Настройка секторов</title>
     <script>
         $(document).ready(function () {
             $(".deleteSector").click(function () {
