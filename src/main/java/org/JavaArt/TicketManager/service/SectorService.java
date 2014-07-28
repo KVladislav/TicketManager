@@ -91,5 +91,10 @@ public class SectorService {
     public void deleteSector(Sector sector) {
         sectorRepository.deleteSector(sector);
     }
+
+    public boolean busySector(Sector sector) {
+        return sectorRepository.busySector(sector);
+    }
+
 }
 

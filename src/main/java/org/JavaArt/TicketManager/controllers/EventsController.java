@@ -77,7 +77,6 @@ public class EventsController {
             }
         }
         if (allSectors != null && allSectors.size() > 0) {
-
             Date today = new Date();
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(today);
@@ -85,7 +84,7 @@ public class EventsController {
             int mon = gc.get(GregorianCalendar.MONTH);
             int day = gc.get(GregorianCalendar.DATE);
             GregorianCalendar calendarN = new GregorianCalendar();
-            calendarN.set(year, mon, day, 0, 0, 0);
+            calendarN.set(year, mon, day + 1, 0, 0, 0);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String localisedDate = dateFormat.format(calendarN.getTime());
             Date dateEvent = dateFormat.parse(localisedDate);
@@ -99,11 +98,19 @@ public class EventsController {
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
     public String eventsSetDelete(@RequestParam(value = "eventId", required = true) int eventId,
-                                  SessionStatus status) {
+                                  SessionStatus status, Model model) {
         Event event = eventService.getEventById(eventId);
-        eventService.deleteEvent(event);
-        status.setComplete();
-        return "redirect:/Events/Events.do";
+        if (eventService.busyEvent(event) == false) {
+            eventService.deleteEvent(event);
+            status.setComplete();
+            return "redirect:/Events/Events.do";
+        } else {
+            String eventsErrorMessage = "Это мероприятие удалить нельзя, так как на него уже куплены билеты!";
+            model.addAttribute("eventsErrorMessage", eventsErrorMessage);
+
+            return "Events";
+        }
+
     }
 
     @RequestMapping(value = "Events/Redirect.do", method = RequestMethod.POST)
@@ -143,28 +150,47 @@ public class EventsController {
         if (action != null) {
             idSectorDel = Integer.parseInt(action);
             Sector sector = sectorService.getSectorById(idSectorDel);
-            sectorService.deleteSector(sector);
-            allSectors.values().remove(sector);
-
-            if (allSectors != null) {
-                model.addAttribute("allSectors", allSectors);
-            }
-            model.addAttribute("eventDescriptions", eventDescriptions);
-            model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-
-            Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
-            model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-            int min = (int) getDateByString(dateEvent, eventTime).get(2);
-            String timeEvent;
-            if (min == 0) {
-                timeEvent = "" + hour + ":" + "00";
+            if (sectorService.busySector(sector) == false) {
+                sectorService.deleteSector(sector);
+                allSectors.values().remove(sector);
+                if (allSectors != null) {
+                    model.addAttribute("allSectors", allSectors);
+                }
+                model.addAttribute("eventDescriptions", eventDescriptions);
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+                Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                model.addAttribute("dateEvent", simpleDate);
+                int hour = (int) getDateByString(dateEvent, eventTime).get(1);
+                int min = (int) getDateByString(dateEvent, eventTime).get(2);
+                String timeEvent;
+                if (min == 0) {
+                    timeEvent = "" + hour + ":" + "00";
+                } else {
+                    timeEvent = "" + hour + ":" + min;
+                }
+                model.addAttribute("eventTime", timeEvent);
+                return "AddEditEvent";
             } else {
-                timeEvent = "" + hour + ":" + min;
+                String sectorErrorMessage = "Этот сектор удалить нельзя, так как на мероприятие уже куплены билеты!";
+                model.addAttribute("sectorErrorMessage", sectorErrorMessage);
+                if (allSectors != null) {
+                    model.addAttribute("allSectors", allSectors);
+                }
+                model.addAttribute("eventDescriptions", eventDescriptions);
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+                Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                model.addAttribute("dateEvent", simpleDate);
+                int hour = (int) getDateByString(dateEvent, eventTime).get(1);
+                int min = (int) getDateByString(dateEvent, eventTime).get(2);
+                String timeEvent;
+                if (min == 0) {
+                    timeEvent = "" + hour + ":" + "00";
+                } else {
+                    timeEvent = "" + hour + ":" + min;
+                }
+                model.addAttribute("eventTime", timeEvent);
+                return "AddEditEvent";
             }
-
-            model.addAttribute("eventTime", timeEvent);
-            return "AddEditEvent";
         }
     /*    String action2 = request.getParameter("addSector");
         if (action2 != null) {
@@ -417,26 +443,50 @@ public class EventsController {
                 eventBookingTimeOut = Integer.parseInt(eventBookingTimeOutN);
             }
             Sector sector = sectorService.getSectorById(idSectorDel);
-            sectorService.deleteSector(sector);
-            allSectors.values().remove(sector);
-            model.addAttribute("allSectors", allSectors);
-            model.addAttribute("eventDescriptions", eventDescriptionsN);
-            model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
 
-            Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
-            model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-            int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
-            String timeEvent;
-            if (min == 0) {
-                timeEvent = "" + hour + ":" + "00";
+            Event event = eventService.getEventById(eventEditHidden);
+            if (eventService.busyEvent(event) == false) {
+                sectorService.deleteSector(sector);
+                allSectors.values().remove(sector);
+                model.addAttribute("allSectors", allSectors);
+                model.addAttribute("eventDescriptions", eventDescriptionsN);
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                model.addAttribute("dateEvent", simpleDate);
+                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                String timeEvent;
+                if (min == 0) {
+                    timeEvent = "" + hour + ":" + "00";
+                } else {
+                    timeEvent = "" + hour + ":" + min;
+                }
+                model.addAttribute("eventEdit", editEvent);
+                model.addAttribute("eventTime", timeEvent);
+                return "AddEditEvent";
             } else {
-                timeEvent = "" + hour + ":" + min;
+                String sectorErrorMessage = "Этот сектор удалить нельзя, так как на мероприятие уже куплены билеты!";
+                model.addAttribute("sectorErrorMessage", sectorErrorMessage);
+                if (allSectors != null) {
+                    model.addAttribute("allSectors", allSectors);
+                }
+                model.addAttribute("eventDescriptions", eventDescriptionsN);
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                model.addAttribute("dateEvent", simpleDate);
+                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                String timeEvent;
+                if (min == 0) {
+                    timeEvent = "" + hour + ":" + "00";
+                } else {
+                    timeEvent = "" + hour + ":" + min;
+                }
+                model.addAttribute("eventEdit", editEvent);
+                model.addAttribute("eventTime", timeEvent);
+                return "AddEditEvent";
             }
-            model.addAttribute("eventEdit", editEvent);
-            model.addAttribute("eventTime", timeEvent);
-            return "AddEditEvent";
-        }
+            }
 
       /*  String action2 = request.getParameter("addSector");
         if (action2 != null) {

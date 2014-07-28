@@ -344,8 +344,8 @@
         <div class="my-controls">
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
-                   required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 50 знаков"
+                   required pattern="[A-Za-zА-Яа-яЁё0-9][\w\W]{0,9}"
+                   title="Не пустое,не начинается с пробела,только буквы,цифры и спецсимволы, до 50 знаков"
                    value="${eventDescriptions}"/>
         </div>
     </div>
@@ -401,6 +401,15 @@ data-target="#sectorAddConfirmation"
 </script>style="display:block;height:400px;overflow:auto;"
 
 --%>
+
+<c:if test="${sectorErrorMessage!=null}">
+    <div class="alert alert-error" style="color: red" class="panel-heading text-info" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="panel-heading text-info" style="text-align:center;">"Этот сектор удалить нельзя, так как на
+            мероприятие уже куплены билеты!"</h4>
+    </div>
+</c:if>
+
 
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
