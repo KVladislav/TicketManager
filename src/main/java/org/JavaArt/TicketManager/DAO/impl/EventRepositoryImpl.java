@@ -56,9 +56,25 @@ public class EventRepositoryImpl implements EventRepository {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(event);
-            session.getTransaction().commit();
-            session.flush();
+            List<Sector> sectors = sectorService.getSectorsByEvent(event);
+            int size = sectors.size();
+            int count = 0;
+            if (size != 0) {
+                List copy = new ArrayList(sectors);
+                for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                    Sector sector = it.next();
+                    int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+                    int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+                    if (dif == 0) {
+                        count++;
+                    }
+                }
+            }
+            if (size == count) {
+                session.update(event);
+                session.getTransaction().commit();
+                session.flush();
+            }
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -75,7 +91,12 @@ public class EventRepositoryImpl implements EventRepository {
         Event event = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            event = (Event) session.get(Event.class, id);
+            //event = (Event) session.get(Event.class, id);
+            event = (Event) session.createCriteria(Event.class).
+                    add(Restrictions.eq("isDeleted", false)).
+                    add(Restrictions.eq("id", id)).uniqueResult();
+
+
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -195,9 +216,21 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public void deleteEvent(Event event) {
         if (event == null) return;
-        event.setDeleted(true);
         List<Sector> sectors = sectorService.getSectorsByEvent(event);
-        if (sectors.size() != 0) {
+        int size = sectors.size();
+        int count = 0;
+        if (size != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+                int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+                if (dif == 0) {
+                    count++;
+                }
+            }
+        }
+        if (size == count) {
             List copy = new ArrayList(sectors);
             for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
                 Sector sector = it.next();
@@ -207,14 +240,35 @@ public class EventRepositoryImpl implements EventRepository {
                 }
                 boolean isDeleted = true;
                 sector.setDeleted(isDeleted);
+                count++;
                 sectorService.updateSector(sector);
                 sectors.add(sector);
             }
+            event.setDeleted(true);
+            updateEvent(event);
         }
-
-        updateEvent(event);
-
     }
 
-
+    @Override
+    public boolean busyEvent(Event event) {
+        if (event == null) return false;
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        int size = sectors.size();
+        int count = 0;
+        if (size != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+                int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+                if (dif == 0) {
+                    count++;
+                }
+            }
+        }
+        if (size == count) {
+            return false;
+        }
+        return true;
+    }
 }

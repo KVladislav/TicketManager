@@ -29,8 +29,8 @@
                            name="clientName"
                            required placeholder="Введите ФИО клиента" value="${client.name}">
                 </div>
-                <button class="btn" type="submit" name="action" value="FindClient">Найти</button>
-                <button class="btn" type="submit" name="action" value="NewClient">Новая бронь</button>
+                <button class="btn btn-primary" type="submit" name="action" value="FindClient">Найти</button>
+                <button class="btn btn-primary" type="submit" name="action" value="NewClient">Новая бронь</button>
             </form>
         </div>
     </div>

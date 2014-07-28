@@ -35,7 +35,9 @@ public class EventsController {
     public String eventGet(Model model) {
         model.addAttribute("pageName", 4);
         List<Event> events = eventService.getAllEvents();
-        Collections.sort(events);
+        if (events.size() > 0) {
+            Collections.sort(events);
+        }
         if (events != null && events.size() > 0) {
             model.addAttribute("event", events.get(0));
             model.addAttribute("events", events);
@@ -70,7 +72,7 @@ public class EventsController {
                 sector.setMaxSeats(sectorDefaults.getMaxSeats());
                 sector.setPrice(sectorDefaults.getDefaultPrice());
                 sectorService.addSector(sector);
-                model.addAttribute("id" + sector.getId(), sector.getId());
+                model.addAttribute("price" + sector.getId(), sector.getId());
                 allSectors.put(sector.getName(), sector);
             }
         }
@@ -512,18 +514,20 @@ public class EventsController {
                     event.setTimeStamp(nowDate);
                     int time = Integer.parseInt(eventBookingTimeOutN);
                     event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 60000));
-                    eventService.updateEvent(event);
-                    Iterator<Sector> sectorNewList = allSectors.values().iterator();
-                    while (sectorNewList.hasNext()) {
-                        Sector sectorNew = sectorNewList.next();
-                        String price = request.getParameter("price" + sectorNew.getId());
-                        try {
-                            Double priceNew = Double.parseDouble(price);
-                            sectorNew.setPrice(priceNew);
-                            sectorNew.setEvent(event);
-                        } catch (Exception e) {
+                    if (eventService.busyEvent(event) == false) {
+                        eventService.updateEvent(event);
+                        Iterator<Sector> sectorNewList = allSectors.values().iterator();
+                        while (sectorNewList.hasNext()) {
+                            Sector sectorNew = sectorNewList.next();
+                            String price = request.getParameter("price" + sectorNew.getId());
+                            try {
+                                Double priceNew = Double.parseDouble(price);
+                                sectorNew.setPrice(priceNew);
+                                sectorNew.setEvent(event);
+                            } catch (Exception e) {
+                            }
+                            sectorService.updateSector(sectorNew);
                         }
-                        sectorService.updateSector(sectorNew);
                     }
                 } else {
                     errorMessageEdit = " Мероприятие на эту дату уже существует!" + "<br>";
@@ -652,13 +656,59 @@ public class EventsController {
         return "Events";
     }
 
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "NewSector/Cancel.do", method = RequestMethod.GET)
+    public String cancelNewSector(Model model, SessionStatus status) {
+        model.addAttribute("pageName", 4);
+        Map allSectors = (TreeMap) model.asMap().get("allSectors");
+        Date dateEv = (Date) model.asMap().get("dateEvent");
+        String timeEv = (String) model.asMap().get("eventTime");
+        String eventDescriptions = (String) model.asMap().get("eventDescriptions");
+        Integer eventBookingTimeOut = (Integer) model.asMap().get("eventBookingTimeOut");
+        model.addAttribute("dateEvent", dateEv);
+        model.addAttribute("eventTime", timeEv);
+        if (eventDescriptions != null) {
+            model.addAttribute("eventDescriptions", eventDescriptions);
+        }
+        if (eventBookingTimeOut != null) {
+            model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+        }
+        model.addAttribute("eventEdit", editEvent);
+        model.addAttribute("allSectors", allSectors);
+        return "AddEditEvent";
+    }
+
+
+    @RequestMapping(value = "AddEditEvent/NewSector.do")
+    public String eventsNewSector(Model model,
+//                                @RequestParam(value = "dateEvent", required = true) String dateEvent,
+//                                @RequestParam(value = "eventTime") String eventTime,
+//                                @RequestParam(value = "eventDescriptions") String eventDescriptions,
+//                                @RequestParam(value = "eventBookingTimeOut") String eventBookingTimeOut,
+                                  HttpServletRequest request) {
+        Map allSectors = (TreeMap) model.asMap().get("allSectors");
+        Date dateEvent = (Date) model.asMap().get("dateEvent");
+        String eventTime = (String) model.asMap().get("eventTime");
+        String eventDescriptions = (String) model.asMap().get("eventDescriptions");
+        Integer eventBookingTimeOut = (Integer) model.asMap().get("eventBookingTimeOut");
+
+        Iterator<Sector> sectorNewList = allSectors.values().iterator();
+        while (sectorNewList.hasNext()) {
+            Sector sector = sectorNewList.next();
+            String price = request.getParameter("price" + sector.getId());
+            model.addAttribute("price" + sector.getId(), sector.getId());
+            allSectors.put(sector.getName(), sector);
+        }
+        model.addAttribute("dateEvent", dateEvent);
+        model.addAttribute("allSectors", allSectors);
+        model.addAttribute("eventDescriptions", eventDescriptions);
+        model.addAttribute("eventTime", eventTime);
+        model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+        return "redirect:/NewSector/NewSector.do";
+    }
+
     @RequestMapping(value = "NewSector/NewSector.do", method = RequestMethod.GET)
     public String sectorNew(Model model,
-                            //    @RequestParam(value = "dateEvent", required = true) String dateEvent,
-                            //    @RequestParam(value = "eventTime") String eventTime,
-                            //    @RequestParam(value = "eventDescriptions") String eventDescriptions,
-                            //   @RequestParam(value = "eventBookingTimeOut") String eventBookingTimeOut,
-                            //    int eventEditHidden,
                             SessionStatus status, HttpServletRequest request) {
         model.addAttribute("pageName", 4);
         Map allSectors = (TreeMap) model.asMap().get("allSectors");

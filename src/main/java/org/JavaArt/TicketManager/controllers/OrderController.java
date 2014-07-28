@@ -38,13 +38,13 @@ public class OrderController
         model.addAttribute("pageName", 1);
         List<Event> events = eventService.getFutureEvents();
         if (events != null && events.size() > 0) {
-            if (currentEvent==null || eventService.getEventById(currentEvent.getId()).isDeleted())
+            if (currentEvent==null || eventService.getEventById(currentEvent.getId())==null)
                 currentEvent = events.get(0);
             model.addAttribute("eventOrder", currentEvent);
             model.addAttribute("eventsOrder", events);
             List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
             if (sectors != null && sectors.size() > 0) {
-                if (currentSector==null || sectorService.getSectorById(currentSector.getId()).isDeleted()){
+                if (currentSector==null || sectorService.getSectorById(currentSector.getId())==null){
                     currentSector = sectors.get(0);
                     currentRow = 1;
                     currentSeat = 1;
@@ -171,13 +171,13 @@ public class OrderController
             }
         }
         List<Event> events = eventService.getFutureEvents();
-        if (eventService.getEventById(currentEvent.getId()).isDeleted()) currentEvent = events.get(0);
+        if (eventService.getEventById(currentEvent.getId())==null) currentEvent = events.get(0);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();
         for (Sector sector : sectors) {
             sectorsMap.put(sector,(short) ticketService.getFreeTicketsAmountBySector(sector));
         }
-        if (sectorService.getSectorById(currentSector.getId()).isDeleted()){
+        if (sectorService.getSectorById(currentSector.getId())==null){
             currentSector = sectors.get(0);
             currentRow = 1;
         }
@@ -243,13 +243,13 @@ public class OrderController
             }
         }
         List<Event> events = eventService.getFutureEvents();
-        if (!events.contains(currentEvent)) currentEvent = events.get(0);
+        if (eventService.getEventById(currentEvent.getId())==null) currentEvent = events.get(0);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();
         for (Sector sector : sectors) {
             sectorsMap.put(sector,(short) ticketService.getFreeTicketsAmountBySector(sector));
         }
-        if (sectorService.getSectorById(currentSector.getId()).isDeleted()){
+        if (sectorService.getSectorById(currentSector.getId())==null){
             currentSector = sectors.get(0);
             currentRow = 1;
         }
@@ -323,13 +323,13 @@ public class OrderController
         if (orderTickets.size()>1) model.addAttribute("messageOrder", "Билеты ID = "+ idBuy +" из заказа куплены");
         orderTickets.clear();
         List<Event> events = eventService.getFutureEvents();
-        if (eventService.getEventById(currentEvent.getId()).isDeleted()) currentEvent = events.get(0);
+        if (eventService.getEventById(currentEvent.getId())==null) currentEvent = events.get(0);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();
         for (Sector sector : sectors) {
             sectorsMap.put(sector,(short) ticketService.getFreeTicketsAmountBySector(sector));
         }
-        if (sectorService.getSectorById(currentSector.getId()).isDeleted()){
+        if (sectorService.getSectorById(currentSector.getId())==null){
             currentSector = sectors.get(0);
             currentRow = 1;
         }

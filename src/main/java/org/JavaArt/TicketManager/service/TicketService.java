@@ -38,6 +38,11 @@ public class TicketService {
         return ticketRepository.getTicketsByClient(client);
     }
 
+    public List<Ticket> getBoughtTicketsByClient(Client client) {
+        return ticketRepository.getBoughtTicketsByClient(client);
+    }
+
+
     public int getFreeTicketsAmountBySector(Sector sector) {
         return ticketRepository.getFreeTicketsAmountBySector(sector);
     }
