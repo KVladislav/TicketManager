@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>Продажа билетов</title>
     <!-- Bootstrap -->
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">--%>
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
@@ -178,7 +179,7 @@
         <div class="col-md-7 col-lg-offset-0 ">
             <h3 class="panel-heading text-info" style="text-align: center">Выбранные билеты</h3>
             <h5 style="text-align:center; color:Green">(Выбранный, но не купленный билет через
-                                                        5 мин. возвратится в продажу)</h5>
+                                                        10 мин. возвратится в продажу)</h5>
             <table class="table text-center table-bordered">
                 <thead>
                     <th>ID</th>

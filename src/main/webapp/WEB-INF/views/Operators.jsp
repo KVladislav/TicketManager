@@ -7,6 +7,7 @@
 <%@include file="header.jsp" %>
 
 <head>
+    <title>Управление операторами</title>
     <script>
         $(document).ready(function () {
             $(".deleteOperator").click(function () {

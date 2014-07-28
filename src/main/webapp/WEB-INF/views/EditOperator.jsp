@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <title>Управление операторами</title>
 </head>
 <body>
 
