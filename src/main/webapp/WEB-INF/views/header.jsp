@@ -24,8 +24,8 @@
 
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation" >
-    <div class="container-fluid" >
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.ico"/>TicketManager</a>
         </div>
@@ -87,12 +87,13 @@
                             стадиона</a></li>
                     </c:otherwise>
                 </c:choose>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="<c:url value="/j_spring_security_logout" />" title="Выйти"><strong> Вы зашли под ${pageContext.request.userPrincipal.name}</strong></a>
-                    </li>
-                </ul>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="<c:url value="/j_spring_security_logout" />" title="Выйти"><strong> Вы зашли
+                        под ${pageContext.request.userPrincipal.name}</strong></a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

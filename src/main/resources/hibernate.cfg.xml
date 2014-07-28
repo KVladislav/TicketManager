@@ -22,15 +22,15 @@
         <property name="hibernate.connection.characterEncoding">utf8</property>
 
 
-     <!--  <property name="connection.driver_class">org.postgresql.Driver</property>
-       <property name="connection.url">jdbc:postgresql://localhost:5432/Tickets</property>
-       <property name="databasename">Tickets</property>
-       <property name="connection.username">postgres</property>
-       <property name="connection.password">1111</property>
-       <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
-       <property name="connection.schemaname">public</property>
-       <property name="hibernate.connection.characterEncoding">utf8</property>
--->
+        <!--  <property name="connection.driver_class">org.postgresql.Driver</property>
+          <property name="connection.url">jdbc:postgresql://localhost:5432/Tickets</property>
+          <property name="databasename">Tickets</property>
+          <property name="connection.username">postgres</property>
+          <property name="connection.password">1111</property>
+          <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+          <property name="connection.schemaname">public</property>
+          <property name="hibernate.connection.characterEncoding">utf8</property>
+   -->
 
         <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
         <!--<property name="connection.url">jdbc:mysql://80.90.239.40:3306/tickets</property>-->
@@ -53,12 +53,12 @@
         <property name="hibernate.c3p0.max_statements">10</property>
         <property name="hibernate.c3p0.min_size">10</property>
         <property name="hibernate.c3p0.timeout">100</property>
-        <mapping class="org.JavaArt.TicketManager.entities.Client" />
-        <mapping class="org.JavaArt.TicketManager.entities.Event" />
-        <mapping class="org.JavaArt.TicketManager.entities.Ticket" />
-        <mapping class="org.JavaArt.TicketManager.entities.Sector" />
-        <mapping class="org.JavaArt.TicketManager.entities.SectorDefaults" />
-        <mapping class="org.JavaArt.TicketManager.entities.Operator" />
+        <mapping class="org.JavaArt.TicketManager.entities.Client"/>
+        <mapping class="org.JavaArt.TicketManager.entities.Event"/>
+        <mapping class="org.JavaArt.TicketManager.entities.Ticket"/>
+        <mapping class="org.JavaArt.TicketManager.entities.Sector"/>
+        <mapping class="org.JavaArt.TicketManager.entities.SectorDefaults"/>
+        <mapping class="org.JavaArt.TicketManager.entities.Operator"/>
 
     </session-factory>
 </hibernate-configuration>

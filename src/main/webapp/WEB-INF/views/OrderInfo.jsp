@@ -51,16 +51,16 @@
                 </table>
                 <h4 style="text-align:center;">Стоимость заказа: ${priceConfirmation} грн.</h4>
                 <br><br>
-                </table>
-                <div class="control-group">
-                    <form name = "clear" action="${pageContext.request.contextPath}/OrderInfo/Clear.do"
-                          method="get">
-                        <h3 style="text-align:center">
-                        <button type="submit" name="action" class="btn btn-primary" >Назад</button>
-                        </h3>
-                    </form>
-                </div>
-          </div>
+            </table>
+            <div class="control-group">
+                <form name="clear" action="${pageContext.request.contextPath}/OrderInfo/Clear.do"
+                      method="get">
+                    <h3 style="text-align:center">
+                        <button type="submit" name="action" class="btn btn-primary">Назад</button>
+                    </h3>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>
