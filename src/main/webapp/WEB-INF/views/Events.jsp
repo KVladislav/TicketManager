@@ -51,19 +51,20 @@
             })
         });
     </script>
+    <%--
 <pre>
        <script type="text/javascript">
            document.write(data_name);
        </script>
     </pre>
-
+--%>
 </head>
 
 
 &MediumSpace;
 &MediumSpace;
 <div class="panel-heading text-info" style="text-align:center;"><b>
-    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-success btn-lg" data-toggle="modal">Создание нового
+    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-info btn-md" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
 
@@ -74,14 +75,14 @@
 </h1>
 <div class="panel-body" style="padding:15px; width:50%; margin-left: 25%; margin-bottom: 50px;">
     <div class="table responsive">
-        <table class="table table-bordered">
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>#</th>
                 <th>Наименование</th>
                 <th>Дата</th>
-                <th>Редактировать</th>
-                <th>Удалить</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -93,8 +94,8 @@
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
                             <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Редактировать">
-                                <button type="submit" name="evnt" value="${evnt.id}" class="btn"></button>
-                                <span class="glyphicon glyphicon-edit"></span>
+                                <button type="submit" name="evnt" value="${evnt.id}" class="btn">
+                                    <span class="glyphicon glyphicon-edit"></span></button>
                             </a>
                         </form>
                     </td>
@@ -103,8 +104,7 @@
                             <button type="button" class="btn btn-default btn-md deleteEvent" data-id="${evnt.id}"
                                     data-name="${evnt.description}"
                                     data-toggle="modal" data-target="#Cancel">
-                            </button>
-                            <span class="glyphicon glyphicon-trash"></span>
+                                <span class="glyphicon glyphicon-trash"></span></button>
                         </a>
                         <script>
                             $("a.my-tool-tip").tooltip();

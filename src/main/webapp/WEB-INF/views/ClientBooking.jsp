@@ -91,6 +91,14 @@
 </div>
 <div class="col-md-8 column">
 <div class="row clearfix">
+    <div class="col-md-12 column">
+        <c:forEach items="${bookingErrorMessages}" var="errorMessage">
+            <div class="alert alert-warning" role="alert">${errorMessage}</div>
+        </c:forEach>
+        <%--</c:if>--%>
+    </div>
+</div>
+<div class="row clearfix">
 <div class="col-md-12 column">
 <table class="table table-hover table-condensed">
     <caption>
@@ -114,56 +122,56 @@
 
     <tbody>
     <%--<form name="delTicket" id="delTicket">--%>
-        <%--<c:set var="number" value="1"/>--%>
-        <c:forEach items="${bookingTickets}" var="ticket">
-            <tr>
-                <td>${ticket.id}</td>
-                    <%--<c:set var="number" value="${number+1}"/>--%>
-                <td colspan="2">
-                    <small>${ticket.sector.event.description}</small>
-                </td>
-                <td>
-                    <c:if test="${ticket.confirmed==false}">
-                        <span class="label label-warning">Не подтвержден</span>
-                    </c:if>
-                    <c:if test="${ticket.confirmed==true}">
-                        <small>Забронирован</small>
-                    </c:if>
-                </td>
-                <td colspan="1">
-                    <small><fmt:formatDate value="${ticket.sector.event.date}"
-                                           pattern="dd.MM.yy H:mm"/></small>
-                </td>
-                <td colspan="1">
-                    <small><fmt:formatDate value="${ticket.sector.event.bookingTimeOut}"
-                                           pattern="dd.MM.yy H:mm"/></small>
-                </td>
-                <td>
-                    <small>${ticket.sector.name}</small>
-                </td>
-                <td>
-                    <small>${ticket.row}</small>
-                </td>
-                <td>
-                    <small>${ticket.seat}</small>
-                </td>
-                <td>
-                    <small>${ticket.sector.price}</small>
-                </td>
+    <%--<c:set var="number" value="1"/>--%>
+    <c:forEach items="${bookingTickets}" var="ticket">
+        <tr>
+            <td>${ticket.id}</td>
+                <%--<c:set var="number" value="${number+1}"/>--%>
+            <td colspan="2">
+                <small>${ticket.sector.event.description}</small>
+            </td>
+            <td>
+                <c:if test="${ticket.confirmed==false}">
+                    <span class="label label-warning">Не подтвержден</span>
+                </c:if>
+                <c:if test="${ticket.confirmed==true}">
+                    <small>Забронирован</small>
+                </c:if>
+            </td>
+            <td colspan="1">
+                <small><fmt:formatDate value="${ticket.sector.event.date}"
+                                       pattern="dd.MM.yy H:mm"/></small>
+            </td>
+            <td colspan="1">
+                <small><fmt:formatDate value="${ticket.sector.event.bookingTimeOut}"
+                                       pattern="dd.MM.yy H:mm"/></small>
+            </td>
+            <td>
+                <small>${ticket.sector.name}</small>
+            </td>
+            <td>
+                <small>${ticket.row}</small>
+            </td>
+            <td>
+                <small>${ticket.seat}</small>
+            </td>
+            <td>
+                <small>${ticket.sector.price}</small>
+            </td>
 
-                <td>
+            <td>
 
-                    <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
-                          method="post">
+                <form action="${pageContext.request.contextPath}/Booking/DelBookedTicket.do"
+                      method="post">
 
-                        <button type="submit" class="btn btn-default btn-xs" value="${ticket.id}"
-                                name="ticketId">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
+                    <button type="submit" class="btn btn-default btn-xs" value="${ticket.id}"
+                            name="ticketId">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </c:forEach>
 
 
     <c:forEach items="${bookingErrorTickets}" var="ticket">
@@ -205,7 +213,7 @@
 
     <tr>
         <td colspan="3">
-            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа ${bookingPrice}</strong></c:if>
+            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong></c:if>
         </td>
         <td colspan="8">
         </td>
@@ -278,13 +286,11 @@
             </div>
             <div class="modal-body">
                 <h4>Подтвердите бронирование билетов</h4>
-                <br>
-                <h4>Клиент: ${bookingClient.name}</h4>
-                <br>
+
                 <table class="table table-hover table-condensed">
                     <caption>
-                        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                                                     pattern="dd.MM.yy H:mm"/></h3>
+                        <h4 class="panel-heading text-info">Клиент: <strong>${bookingClient.name}</strong></h4>
+                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="dd.MM.yy H:mm"/></h4>
                     </caption>
                     <thead>
                     <tr>
@@ -327,7 +333,7 @@
                     </c:forEach>
                     <tr>
                         <td colspan="3">
-                            <strong>Стоимость заказа ${bookingPrice}</strong>
+                            <strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong>
                         </td>
                         <td colspan="8">
                         </td>
@@ -368,13 +374,11 @@
             </div>
             <div class="modal-body">
                 <h4>Подтвердите выкуп брони</h4>
-                <br>
-                <h4>Клиент: ${bookingClient.name}</h4>
-                <br>
                 <table class="table table-hover table-condensed">
                     <caption>
-                        <h3 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
-                                                                                     pattern="dd.MM.yy H:mm"/></h3>
+                        <h4 class="panel-heading text-info">Клиент: <strong>${bookingClient.name}</strong></h4>
+                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="dd.MM.yy H:mm"/></h4>
+
                     </caption>
                     <thead>
                     <tr>
@@ -417,7 +421,7 @@
                     </c:forEach>
                     <tr>
                         <td colspan="3">
-                            <strong>Стоимость заказа ${bookingPrice}</strong>
+                            <strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong>
                         </td>
                         <td colspan="8">
                         </td>

@@ -1,14 +1,12 @@
 package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.SectorRepository;
-import org.JavaArt.TicketManager.entities.Event;
-import org.JavaArt.TicketManager.entities.Operator;
-import org.JavaArt.TicketManager.entities.Sector;
-import org.JavaArt.TicketManager.entities.Ticket;
+import org.JavaArt.TicketManager.entities.*;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -75,7 +73,12 @@ public class SectorRepositoryImpl implements SectorRepository {
         Sector sector = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            sector = (Sector) session.get(Sector.class, id);
+//            sector = (Sector) session.get(Sector.class, id);
+
+            sector = (Sector) session.createCriteria(Sector.class).
+                    add(Restrictions.eq("isDeleted", false)).
+                    add(Restrictions.eq("id", id)).uniqueResult();
+
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

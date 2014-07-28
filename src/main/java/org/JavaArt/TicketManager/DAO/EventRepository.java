@@ -26,4 +26,6 @@ public interface EventRepository {
     public List<Event> getEventByDate(Date date);
 
     public List<Event> getEventByDateFromEvent(Date inputDate, Event event);
+
+    public boolean busyEvent(Event event);
 }

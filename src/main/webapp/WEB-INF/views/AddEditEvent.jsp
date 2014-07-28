@@ -1,3 +1,9 @@
+<%@include file="header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
   Created by IntelliJ IDEA.
   User: Lora
@@ -5,13 +11,6 @@
   Time: 23:56
   To change this template use File | Settings | File Templates.
 --%>
-<%--suppress ALL --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
 <html lang="ru">
 <head>
 
@@ -20,8 +19,8 @@
     <!-- Bootstrap -->
 
 
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
+    <%-- <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+     <%--<link href="${pageContext.request.contextPath}/resources/ico/favicon.ico">--%>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -346,7 +345,7 @@
             <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
-                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 10 знаков"
+                   title="Не пустое,не начинается с пробела,только буквы и цифры,до 50 знаков"
                    value="${eventDescriptions}"/>
         </div>
     </div>
@@ -358,16 +357,15 @@
 
         <div class="my-controls">
 
-            <input type="text" id="eventBookingTimeOut" size="20" maxlength="10" name="eventBookingTimeOut"
+            <input type="text" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
                    value="${eventBookingTimeOut}"
                    required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
 
             <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
 
             <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
-                Поле
-                позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум три
-                цифры)</p>
+                Поле позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум
+                три цифры)</p>
 
                 <p id="helpText" class="helpText">Help text</p></div>
 
@@ -400,14 +398,14 @@ data-toggle="modal">
 data-target="#sectorAddConfirmation"
 <script>
     $("a.my-tool-tip").tooltip();
-</script>
+</script>style="display:block;height:400px;overflow:auto;"
 
 --%>
 
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
-        <table class="table table-bordered" style="display:block;height:400px;overflow:auto;">
-            <thead>
+        <table class="table table-hover" style="text-align:center;">
+        <thead>
             <tr>
                 <th>Сектор</th>
                 <th>Цена</th>
@@ -459,23 +457,32 @@ data-target="#sectorAddConfirmation"
         </table>
 
         <div class="form-group">
-            <div class="col-md-3 col-md-offset-1 column">
-                <a class="btn btn-danger btn-lg btn-primary" href="${pageContext.request.contextPath}/Events/Cancel.do"
+            <div class="col-md-3 column">
+                <a class="btn btn-danger btn-md" href="${pageContext.request.contextPath}/Events/Cancel.do"
                    role="button">Отменить</a>
             </div>
             <div class="col-md-3 column">
-            <button type="submit" name="action" value="save" class="btn btn-primary">Сохранить</button>
+                <button type="submit" name="action" value="save" class="btn btn-primary btn-md">Сохранить</button>
             </div>
+
             <div class="col-md-3 column">
                 <input type="hidden" name="dateEvent"
                        value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
                 <input type="hidden" name="eventTime" value="${eventTime}">
                 <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
                 <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
-                <a href="/NewSector/NewSector.do" class="btn success btn-lg" role="button" data-toggle="modal">+
-                    Добавить сектор</a>
 
+                <a href="${pageContext.request.contextPath}/NewSector/NewSector.do" class="btn btn-info btn-md"
+                   title="Перед заполнением формы можно добавить недостающие сектора!" role="button">+ Добавить
+                    сектор</a>
+                <%--     <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                          onMouseOver="helpBox('Подсказка', 'Перед заполением формы можно добавить недостающие сектора')"
+                          onMouseOut="helpBox()">
+                     <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
+                         Перед заполением формы можно добавитьнедостающие сектора)</p>
+                         <p id="helpText" class="helpText">Help text</p></div> --%>
             </div>
+
         </div>
     </div>
 </div>
@@ -628,7 +635,7 @@ data-target="#sectorAddConfirmation"
                                 <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
                                 <input type="hidden" name="allSectors" value="${allSectors}">
                                 <button type="submit" name="addSector" value="" id="addSector"
-                                        class="btn btn-primary btn-md">Добавить сектор
+                                        class="btn btn-info btn-lg">+ Добавить сектор
                                 </button>
                             </form>
                     </div>
