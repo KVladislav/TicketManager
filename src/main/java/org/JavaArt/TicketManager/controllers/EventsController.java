@@ -35,7 +35,9 @@ public class EventsController {
     public String eventGet(Model model) {
         model.addAttribute("pageName", 4);
         List<Event> events = eventService.getAllEvents();
-        Collections.sort(events);
+        if (events.size() > 0) {
+            Collections.sort(events);
+        }
         if (events != null && events.size() > 0) {
             model.addAttribute("event", events.get(0));
             model.addAttribute("events", events);
@@ -512,18 +514,20 @@ public class EventsController {
                     event.setTimeStamp(nowDate);
                     int time = Integer.parseInt(eventBookingTimeOutN);
                     event.setBookingTimeOut(new Date(event.getDate().getTime() - time * 60000));
-                    eventService.updateEvent(event);
-                    Iterator<Sector> sectorNewList = allSectors.values().iterator();
-                    while (sectorNewList.hasNext()) {
-                        Sector sectorNew = sectorNewList.next();
-                        String price = request.getParameter("price" + sectorNew.getId());
-                        try {
-                            Double priceNew = Double.parseDouble(price);
-                            sectorNew.setPrice(priceNew);
-                            sectorNew.setEvent(event);
-                        } catch (Exception e) {
+                    if (eventService.busyEvent(event) == false) {
+                        eventService.updateEvent(event);
+                        Iterator<Sector> sectorNewList = allSectors.values().iterator();
+                        while (sectorNewList.hasNext()) {
+                            Sector sectorNew = sectorNewList.next();
+                            String price = request.getParameter("price" + sectorNew.getId());
+                            try {
+                                Double priceNew = Double.parseDouble(price);
+                                sectorNew.setPrice(priceNew);
+                                sectorNew.setEvent(event);
+                            } catch (Exception e) {
+                            }
+                            sectorService.updateSector(sectorNew);
                         }
-                        sectorService.updateSector(sectorNew);
                     }
                 } else {
                     errorMessageEdit = " Мероприятие на эту дату уже существует!" + "<br>";

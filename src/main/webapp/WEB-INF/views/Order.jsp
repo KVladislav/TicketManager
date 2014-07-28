@@ -246,7 +246,7 @@
 </div>
 </div>
 
-<div class="modal" id="ConfirmOrderBuy"  aria-labelledby="myModalLabel"  aria-hidden="true">
+<div class="modal" id="ConfirmOrderBuy"  style="margin-bottom: 50px;" aria-labelledby="myModalLabel"  aria-hidden="true">
     <center>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -311,7 +311,7 @@
         </div>
     </center>
 </div>
-<div class="modal" id="ConfirmOrderCancel"  aria-labelledby="myModalLabel"  aria-hidden="true">
+<div class="modal" id="ConfirmOrderCancel"  aria-labelledby="myModalLabel" aria-hidden="true">
     <center>
         <div class="modal-dialog">
             <div class="modal-content">

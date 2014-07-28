@@ -63,4 +63,9 @@ public class EventService {
     public void deleteEvent(Event event) {
         eventRepository.deleteEvent(event);
     }
+
+    public boolean busyEvent(Event event) {
+        return eventRepository.busyEvent(event);
+    }
+
 }
