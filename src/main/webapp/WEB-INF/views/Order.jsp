@@ -211,7 +211,7 @@
                     <tr>
                     <td>
                     <div class="control-group">
-                        <div class="col-md-3  col-lg-offset-3" style="margin-bottom: 50px">
+                        <div class="col-md-3  col-lg-offset-3">
                             <h3 style="text-align:center">
                                 <button class="btn  btn-danger" data-toggle="modal"
                                         data-target="#ConfirmOrderCancel">Отмена</button>
