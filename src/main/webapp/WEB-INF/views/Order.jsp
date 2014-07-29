@@ -210,8 +210,8 @@
                      <h4 style="text-align:center">Стоимость заказа: ${orderPrice.floatValue()} грн.</h4>
                     <tr>
                     <td>
-                        <div class="control-group">
-                        <div class="col-md-3  col-lg-offset-3">
+                    <div class="control-group">
+                        <div class="col-md-3  col-lg-offset-3" style="margin-bottom: 50px">
                             <h3 style="text-align:center">
                                 <button class="btn  btn-danger" data-toggle="modal"
                                         data-target="#ConfirmOrderCancel">Отмена</button>
@@ -220,7 +220,7 @@
                     </div>
                     </td>
                     <td>
-                        <div class="col-md-3 column">
+                        <div class="col-md-3 column" style="margin-bottom: 50px">
                             <h3 style="text-align:center">
                                 <button class="btn btn-primary" data-toggle="modal"
                                         data-target="#ConfirmOrderBuy">Купить</button>
