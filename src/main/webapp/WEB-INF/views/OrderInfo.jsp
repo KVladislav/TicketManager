@@ -49,7 +49,7 @@
                     </tbody>
                 </table>
                 <h4 style="text-align:center;">Стоимость заказа: ${priceConfirmation} грн.</h4>
-                <br><br>
+                <br>
             </table>
             <div class="control-group" style="margin-bottom: 70px">
                 <form name="clear" action="${pageContext.request.contextPath}/OrderInfo/Clear.do"

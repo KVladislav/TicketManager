@@ -467,7 +467,7 @@ public class EventsController {
                             sectorService.updateSector(sectorNew);
                         }
                     } else {
-                        errorMessageEdit = " Мероприятие c проданными билетами не радактируется!" + "<br>";
+                        errorMessageEdit = " Мероприятие c проданными билетами не редактируется!" + "<br>";
                     }
                 } else {
                     errorMessageEdit = " Мероприятие на эту дату уже существует!" + "<br>";

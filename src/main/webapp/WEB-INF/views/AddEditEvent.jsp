@@ -350,9 +350,10 @@
         <label class="my-control-label text-info" for="eventBookingTimeOut"> Установка времени удаления брони в
             минутах
 
-            <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-                 onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
-                 onMouseOut="helpBox()">
+           <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время до начала ' +
+                 'мероприятия, по достижению которого бронь полностью снимается (в минутах, максимум три цифры)')"
+                onMouseOut="helpBox()">
 
         </label>
 
@@ -365,9 +366,9 @@
             </div>
 
             <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
-            <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
-                Поле позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум
-                три цифры)</p>
+            <div id="help" class="helpBox" style="display:none; position:absolute;"><p id="helpTitle" class="helpTitle">
+                Поле позволяет установить время до начала мероприятия, по достижению которого бронь
+                полностью снимается (в минутах, максимум три цифры)</p>
                 <p id="helpText" class="helpText">Help text</p></div>
         </div>
     </div>
