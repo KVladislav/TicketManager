@@ -715,8 +715,8 @@ public class EventsController {
         if (eventBookingTimeOut != null) {
             model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
         }
-        model.addAttribute("eventEdit", editEvent);
-        model.addAttribute("allSectors", allSectors);
+        if (this. editEvent!=null) { model.addAttribute("eventEdit", editEvent);}
+        if (allSectors!=null){ model.addAttribute("allSectors", allSectors);}
         return "AddEditEvent";
     }
 

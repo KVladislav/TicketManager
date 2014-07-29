@@ -30,7 +30,7 @@
 <body>
 <body>
 <%--<img style="margin-left: 22%" src="${pageContext.request.contextPath}/resources/images/ogo.jpg"  />--%>
-<div style="float:left; margin-left: 30%; width:700px; display:block;">
+<div  style="float:left; margin-left: 30%; width:700px; display:block;">
     <center style="font-size: 100px">JavaArt Team</center>
         <table>
         <tr>
@@ -45,14 +45,14 @@
             <td style="padding: 11px">
                 <center>
                 <a href="${pageContext.request.contextPath}/resources/images/2.jpg" class="pirobox_gall" title="Юрий Попов">
-                    <img width="145" height="200" src="${pageContext.request.contextPath}/resources/images/2.jpg"  /></a>
+                    <img width="145" height="200" src="${pageContext.request.contextPath}/resources/images/2.jpg"/></a>
                 </center>
             </td>
 
             <td>
                 <center>
                 <a  href="${pageContext.request.contextPath}/resources/images/3.jpg" class="pirobox_gall" title="Екатерина Крылова">
-                    <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/3.jpg"  /></a>
+                    <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/3.jpg"/></a>
                 </center>
             </td>
 
@@ -61,21 +61,21 @@
             <td>
                 <center>
                 <a  href="${pageContext.request.contextPath}/resources/images/5.jpg" class="pirobox_gall" title="Анна Стоянова">
-                    <img width="228" height="200" src="${pageContext.request.contextPath}/resources/images/5.jpg"  /></a>
+                    <img width="228" height="200" src="${pageContext.request.contextPath}/resources/images/5.jpg"/></a>
                 </center>
             </td>
 
             <td style="padding: 11px">
                 <center>
                 <a  href="${pageContext.request.contextPath}/resources/images/4.jpg" class="pirobox_gall" title="Лариса Назаренко">
-                    <img width="150" height="200" src="${pageContext.request.contextPath}/resources/images/4.jpg"  /></a>
+                    <img width="150" height="200" src="${pageContext.request.contextPath}/resources/images/4.jpg"/></a>
                 </center>
             </td>
 
             <td>
                 <center>
                 <a  href="${pageContext.request.contextPath}/resources/images/6.jpg" class="pirobox_gall" title="Виталий Сипличук">
-                    <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/6.jpg"  /></a>
+                    <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/6.jpg"/></a>
                 </center>
             </td>
         </tr>
@@ -83,7 +83,7 @@
                 <td>
                     <center>
                     <a  href="${pageContext.request.contextPath}/resources/images/7.jpg" class="pirobox_gall" title="Сергей Прокопов">
-                        <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/7.jpg"  /></a>
+                        <img width="267" height="200" src="${pageContext.request.contextPath}/resources/images/7.jpg"/></a>
                     </center>
                 </td>
 
@@ -91,7 +91,7 @@
                     <center>
 
                     <a  href="${pageContext.request.contextPath}/resources/images/8.jpg" class="pirobox_gall" title="Антон Галенда">
-                        <img width="133" height="200" src="${pageContext.request.contextPath}/resources/images/8.jpg"  /></a>
+                        <img width="133" height="200" src="${pageContext.request.contextPath}/resources/images/8.jpg"/></a>
 
                     </center>
                 </td>
@@ -99,7 +99,7 @@
                 <td>
                <center>
                     <a  href="${pageContext.request.contextPath}/resources/images/9.jpg" class="pirobox_gall" title="Александр Трибушный">
-                        <img width="182" height="200" src="${pageContext.request.contextPath}/resources/images/9.jpg"  /></a>
+                        <img width="182" height="200" src="${pageContext.request.contextPath}/resources/images/9.jpg"/></a>
 
                </center>
                 </td>
@@ -109,7 +109,7 @@
 
     <div class="demo">
         <a  href="${pageContext.request.contextPath}/resources/images/logo.jpg" class="pirobox_gall" title="JavaArt Team">
-            <img width="0" height="0" src="${pageContext.request.contextPath}/resources/images/logo.jpg"  /></a>
+            <img width="0" height="0" src="${pageContext.request.contextPath}/resources/images/logo.jpg"/></a>
     </div>
 
 

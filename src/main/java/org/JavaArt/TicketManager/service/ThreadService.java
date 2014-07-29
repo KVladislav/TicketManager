@@ -41,7 +41,7 @@ public class ThreadService implements ServletContextListener {
         public void run() {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
-                    ticketService.deleteNonConfirmedTickets(5);
+                    ticketService.deleteNonConfirmedTickets(10);
                     TimeUnit.MINUTES.sleep(1);
                 }
             } catch (InterruptedException e) {

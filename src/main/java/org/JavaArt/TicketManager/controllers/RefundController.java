@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.Date;
+
 @Controller
 @SessionAttributes({"pageName", "errorRefund", "messageRefund"})
 
@@ -31,14 +33,21 @@ public class RefundController {
         try{
             int id=Integer.parseInt(ticketId);
             ticket = ticketService.getTicketById(id);
-            if (ticket!=null && ticket.isConfirmed() && !ticket.isReserved()){
-                model.addAttribute(ticket);
-                model.addAttribute("errorRefund", "");
+            if (ticket!=null ){
+                if (ticket.isConfirmed() && !ticket.isReserved()){
+                    if (ticket.getSector().getEvent().getDate().before(new Date())){
+                        model.addAttribute("errorRefund", "Билет с № = "+ticketId+" вернуть нельзя! Мероприятие \""+
+                                ticket.getSector().getEvent().getDescription()+ "\" уже прошло.");
+                        ticket=null;
+                    }
+                    else {
+                        model.addAttribute(ticket);
+                        model.addAttribute("errorRefund", "");
+                    }
+                }
+                else  model.addAttribute("errorRefund", "Билет с № = "+ticketId+" не продан");
             }
-            else{
-                ticket=null;
-                model.addAttribute("errorRefund", "Такой билет не продан");
-            }
+            else  model.addAttribute("errorRefund", "Билет с № = "+ticketId+" не продан");
         }
         catch (Exception e){
             ticket=null;

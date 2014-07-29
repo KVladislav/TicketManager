@@ -12,7 +12,6 @@
 <body>
 
 <div class="container">
-
     <div class="row clearfix">
         <div class="col-md-8 col-md-offset-2 column">
             <table class="table table-hover table-condensed">
@@ -52,7 +51,7 @@
                 <h4 style="text-align:center;">Стоимость заказа: ${priceConfirmation} грн.</h4>
                 <br><br>
             </table>
-            <div class="control-group">
+            <div class="control-group" style="margin-bottom: 70px">
                 <form name="clear" action="${pageContext.request.contextPath}/OrderInfo/Clear.do"
                       method="get">
                     <h3 style="text-align:center">
