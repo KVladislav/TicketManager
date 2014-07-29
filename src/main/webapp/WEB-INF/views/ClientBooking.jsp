@@ -254,7 +254,7 @@
         </form>
     </div>
     <div class="col-md-2 column"></div>
-    <div class="col-md-3 column">
+    <div class="col-md-3 column" style="margin-bottom: 60px">
         <c:if test="${!empty bookingTickets && bookingTimeOut!=null}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#BookingConfirmation">
                 Забронировать
@@ -345,12 +345,12 @@
                 </table>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer"">
                 <div class="row clearfix">
-                    <div class="col-md-8 column">
+                    <div class="col-md-8 column" >
                         <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
-                    <div class="col-md-2 column">
+                    <div class="col-md-2 column"style="margin-bottom: 50px">
                         <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
                               method="post">
                             <input type="submit" name="Order" class="btn btn-success btn-md"

@@ -90,7 +90,7 @@
                 <td style="padding: 11px">
                     <center>
 
-                    <a  href="${pageContext.request.contextPath}/resources/images/8.jpg" class="pirobox_gall" title="Галенда Антон">
+                    <a  href="${pageContext.request.contextPath}/resources/images/8.jpg" class="pirobox_gall" title="Антон Галенда">
                         <img width="133" height="200" src="${pageContext.request.contextPath}/resources/images/8.jpg"  /></a>
 
                     </center>
@@ -98,7 +98,7 @@
 
                 <td>
                <center>
-                    <a  href="${pageContext.request.contextPath}/resources/images/9.jpg" class="pirobox_gall" title="Алеександр Трибушный">
+                    <a  href="${pageContext.request.contextPath}/resources/images/9.jpg" class="pirobox_gall" title="Александр Трибушный">
                         <img width="182" height="200" src="${pageContext.request.contextPath}/resources/images/9.jpg"  /></a>
 
                </center>

@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row clearfix">
-        <div class="col-md-8 col-md-offset-2 column">
+        <div class="col-md-8 col-md-offset-2 column"style="margin-bottom: 50px">
             <table class="table table-hover table-condensed">
                 <caption>
                     <h3 class="panel-heading text-info">Подтверждение продажи от <fmt:formatDate
