@@ -172,8 +172,7 @@ public class OrderController
             }
         }
         List<Event> events = eventService.getFutureEvents();
-        if (eventService.getEventById(currentEvent.getId())==null ||!events.contains(currentEvent) ||
-                currentEvent.getDate().before(new Date()))
+        if (eventService.getEventById(currentEvent.getId())==null || currentEvent.getDate().before(new Date()))
             currentEvent = events.get(0);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();
@@ -247,8 +246,7 @@ public class OrderController
             }
         }
         List<Event> events = eventService.getFutureEvents();
-        if (eventService.getEventById(currentEvent.getId())==null ||!events.contains(currentEvent) ||
-                currentEvent.getDate().before(new Date()))
+        if (eventService.getEventById(currentEvent.getId())==null || currentEvent.getDate().before(new Date()))
             currentEvent = events.get(0);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();
@@ -327,8 +325,7 @@ public class OrderController
              ticketService.addTicket(ticket);
         }
         List<Event> events = eventService.getFutureEvents();
-        if (eventService.getEventById(currentEvent.getId())==null ||!events.contains(currentEvent) ||
-                currentEvent.getDate().before(new Date()))
+        if (eventService.getEventById(currentEvent.getId())==null || currentEvent.getDate().before(new Date()))
             currentEvent = events.get(0);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
         Map<Sector, Short> sectorsMap = new TreeMap<>();

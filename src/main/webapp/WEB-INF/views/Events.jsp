@@ -64,8 +64,6 @@
 </head>
 
 
-&MediumSpace;
-&MediumSpace;
 <div class="panel-heading text-info" style="text-align:center;"><b>
     <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-primary" data-toggle="modal">Создание нового
         мероприятия</a>
@@ -79,8 +77,6 @@
     </div>
 </c:if>
 
-&MediumSpace;
-&MediumSpace;
 <h1>
     <caption><h1 class="panel-heading text-info" style="text-align:center;">Список мероприятий</h1></caption>
 </h1>
@@ -126,9 +122,7 @@
             </tbody>
         </table>
     </div>
-    &MediumSpace;
-    &MediumSpace;
-</div>
+ </div>
 
 <div class="modal" id="Cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
