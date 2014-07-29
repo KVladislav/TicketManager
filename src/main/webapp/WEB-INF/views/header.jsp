@@ -89,7 +89,7 @@
                 </c:choose>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li class="active">
                     <a href="<c:url value="/j_spring_security_logout" />" title="Выйти"><strong> Вы зашли
                         под ${pageContext.request.userPrincipal.name}</strong></a>
                 </li>
