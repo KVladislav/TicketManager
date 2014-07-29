@@ -12,7 +12,6 @@
 <body>
 
 <div class="container">
-
     <div class="row clearfix">
         <div class="col-md-8 col-md-offset-2 column">
             <table class="table table-hover table-condensed">
