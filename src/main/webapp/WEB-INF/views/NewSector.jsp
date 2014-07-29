@@ -22,15 +22,15 @@
 <body>
 
 <center>
-    <caption><h1 class="panel-heading text-info" style="text-align:center;"><b>Создание нового сектора</b></h1>
+    <caption><h1 class="panel-heading text-info" style="text-align:center;">Создание нового сектора</h1>
     </caption>
-    <caption><h3 class="panel-heading  text-info" style="text-align:center;"><b>Задайте параметры нового
-        сектора:</b></h3></caption>
+    <caption><h3 class="panel-heading  text-info" style="text-align:center;">Задайте параметры нового
+        сектора:</h3></caption>
     <div class="table responsive">
-        <div class="container" style="margin-left: 350px">
+        <div class="container" >
             <div class="row clearfix">
 
-                <div class="col-md-6 column">
+                <div class="panel-body" style="width:50%">
                     <form action="${pageContext.request.contextPath}/NewSector/addSector.do" method="post">
                     <table class="table table-hover" style="text-align:center;">
 
@@ -40,7 +40,6 @@
                             <th width="20%">Рядов</th>
                             <th width="20%">Мест</th>
                             <th width="20%">Цена</th>
-
                         </tr>
                         </thead>
                         <tbody>

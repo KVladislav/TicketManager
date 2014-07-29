@@ -19,16 +19,16 @@
     <!-- Bootstrap -->
 
 
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
+    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/css/bootstrap.css"></script>--%>
     <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
           type="text/css">
-    <script type="text/javascript"
-            src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>
-    <script type="text/javascript"
-            src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>
+    <%--<script type="text/javascript"--%>
+            <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>--%>
+    <%--<script type="text/javascript"--%>
+            <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>--%>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
@@ -158,7 +158,7 @@
             <tr>
                 <label class="my-control-label  text-info" required warning for="dateEvent"> Дата мероприятия </label>
                     <div class="control-group">
-                        <input type="text" name="dateEvent" readonly id="dateEvent" style="width: 358px;"
+                        <input type="text" name="dateEvent" class="form-control" readonly id="dateEvent" style="width: 420px"
                                value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
 
                         <p>
@@ -167,10 +167,10 @@
                     </div>
             </tr>
             <tr>
-                <label class="my-control-label  text-info" for="eventTime" style="margin-top: 10px;"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="eventTime"> Время мероприятия </label>
 
                 <div class="control-group text-info">
-                    <select name="eventTime" id="eventTime" style="width:358px;">
+                    <select class="form-control" name="eventTime" id="eventTime" style="width: 420px">
 
                         <c:if test="${eventTime.equals('10:00')}">
                             <option selected value="10:00">10:00</option>
@@ -334,10 +334,10 @@
 </center>
 </tr>
 <tr>
-    <div class="control-group" style="margin-top: 10px;">
+    <div class="control-group">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
         <div class="my-controls">
-            <input style="resize: none; width:358px;" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
+            <input class="form-control" style="resize: none; width: 420px" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][\s\S]{0,49}"
                    title="Не пустое,не начинается с пробела, начинается с буквы или цифры, до 50 знаков"
@@ -346,31 +346,29 @@
     </div>
 </tr>
 <tr>
-    <div class="control-group" style="margin-top: 10px;">
+    <div class="control-group" style="margin-top: 20px;">
         <label class="my-control-label text-info" for="eventBookingTimeOut"> Установка времени удаления брони в
-            минутах </label>
+            минутах
+
+            <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                 onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
+                 onMouseOut="helpBox()">
+
+        </label>
 
         <div class="my-controls">
-            <div class="input-append">
-                <input type="text" class="span2" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
-                       value="${eventBookingTimeOut}" style="width: 330px;"
-                       required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
-                <span class="add-on">
-                    <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-                                          onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
-                                          onMouseOut="helpBox()">
-                </span>
+            <div>
+            <input class= "form-control span2" style="width: 420px;" type="text" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
+                   value="${eventBookingTimeOut}"
+                   required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+            <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
             </div>
 
             <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
-
             <div id="help" class="helpBox" style="display:none;position:absolute;"><p id="helpTitle" class="helpTitle">
                 Поле позволяет установить время, по истечении которого бронь полностью снимается (в минутах, максимум
                 три цифры)</p>
-
                 <p id="helpText" class="helpText">Help text</p></div>
-
-            <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
         </div>
     </div>
 </tr>
@@ -423,10 +421,8 @@
                     <td>
                         <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
                         <button type="submit" name="delete" value="${sector.value.id}" formnovalidate
-                                class="btn btn-default btn-md">
+                                class="btn btn-default btn-xm">
                             <span class="glyphicon glyphicon-trash"></span></button>
-
-
                     </td>
                 </tr>
             </c:forEach>
