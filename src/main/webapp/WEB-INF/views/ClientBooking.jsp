@@ -214,7 +214,8 @@
 
     <tr>
         <td colspan="3">
-            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа <fmt:formatNumber pattern="0.00" value="${bookingPrice}"/></strong></c:if>
+            <c:if test="${!empty bookingTickets}"><strong>Стоимость заказа <fmt:formatNumber pattern="0.00"
+                                                                                             value="${bookingPrice}"/></strong></c:if>
         </td>
         <td colspan="8">
         </td>
@@ -253,7 +254,7 @@
         </form>
     </div>
     <div class="col-md-2 column"></div>
-    <div class="col-md-3 column">
+    <div class="col-md-3 column" style="margin-bottom: 60px">
         <c:if test="${!empty bookingTickets && bookingTimeOut!=null}">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#BookingConfirmation">
                 Забронировать
@@ -291,7 +292,8 @@
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h4 class="panel-heading text-info">Клиент: <strong>${bookingClient.name}</strong></h4>
-                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="dd.MM.yy H:mm"/></h4>
+                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                                     pattern="dd.MM.yy H:mm"/></h4>
                     </caption>
                     <thead>
                     <tr>
@@ -343,12 +345,12 @@
                 </table>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer"">
                 <div class="row clearfix">
-                    <div class="col-md-8 column">
+                    <div class="col-md-8 column" >
                         <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
                     </div>
-                    <div class="col-md-2 column">
+                    <div class="col-md-2 column"style="margin-bottom: 50px">
                         <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
                               method="post">
                             <input type="submit" name="Order" class="btn btn-success btn-md"
@@ -378,7 +380,8 @@
                 <table class="table table-hover table-condensed">
                     <caption>
                         <h4 class="panel-heading text-info">Клиент: <strong>${bookingClient.name}</strong></h4>
-                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}" pattern="dd.MM.yy H:mm"/></h4>
+                        <h4 class="panel-heading text-info">Бронь от <fmt:formatDate value="${bookingClient.timeStamp}"
+                                                                                     pattern="dd.MM.yy H:mm"/></h4>
 
                     </caption>
                     <thead>

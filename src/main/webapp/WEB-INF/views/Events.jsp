@@ -7,7 +7,9 @@
 
 <html lang="ru">
 <head>
+    <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css">
     <title>Управление мероприятиями</title>
+
     <!-- Bootstrap -->
     <%--  <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
       <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
@@ -68,6 +70,14 @@
     <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-info btn-md" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
+
+<c:if test="${eventsErrorMessage!=null}">
+    <div class="alert alert-error" style="color: red" class="panel-heading text-info" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="panel-heading text-info" style="text-align:center;">Ошибка! Это мероприятие удалить нельзя, так как
+            на него уже куплены билеты!</h4>
+    </div>
+</c:if>
 
 &MediumSpace;
 &MediumSpace;

@@ -1,7 +1,10 @@
 package org.JavaArt.TicketManager.DAO.impl;
 
 import org.JavaArt.TicketManager.DAO.SectorRepository;
-import org.JavaArt.TicketManager.entities.*;
+import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Operator;
+import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
@@ -139,4 +142,16 @@ public class SectorRepositoryImpl implements SectorRepository {
         }
         return sectors;
     }
+
+    @Override
+    public boolean busySector(Sector sector) {
+        if (sector == null) return false;
+        int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+        int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+        if (dif == 0) {
+            return false;
+        }
+        return true;
+    }
+
 }

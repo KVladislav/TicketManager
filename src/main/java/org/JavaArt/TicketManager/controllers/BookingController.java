@@ -332,7 +332,7 @@ public class BookingController {
         checkEventState(model, session);
         Sector sector = (Sector) model.get("bookingSector");
         Event event = eventService.getEventById(sector.getEvent().getId());
-        if (event!=null && event.getBookingTimeOut().getTime()<(new Date()).getTime()) {
+        if (event != null && event.getBookingTimeOut().getTime() < (new Date()).getTime()) {
             List<String> bookingErrorMessages = new ArrayList<>();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
             bookingErrorMessages.add("Внимание, на мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate()) + " бронирование завершено, все забронированные билеты возвращены  продажу");
@@ -343,7 +343,7 @@ public class BookingController {
 
         if (sectorService.getSectorById(sector.getId()) == null) {
             List<String> bookingErrorMessages = new ArrayList<>();
-            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription()+ " cектор " + sector.getName() + " удален.");
+            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription() + " cектор " + sector.getName() + " удален.");
             model.addAttribute("bookingErrorMessages", bookingErrorMessages);
             return "ClientBooking";
         }
@@ -369,7 +369,7 @@ public class BookingController {
 
         if (sectorService.getSectorById(sector.getId()) == null) {
             List<String> bookingErrorMessages = new ArrayList<>();
-            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription()+ " cектор " + sector.getName() + " удален.");
+            bookingErrorMessages.add("Внимание! Мероприятие " + sector.getEvent().getDescription() + " cектор " + sector.getName() + " удален.");
             model.addAttribute("bookingErrorMessages", bookingErrorMessages);
             return "ClientBooking";
         }
@@ -418,7 +418,7 @@ public class BookingController {
         model.addAttribute("bookingTickets", tickets);
         model.addAttribute("bookingPrice", bookingPrice);
 
-        if (tickets.size()>0) {
+        if (tickets.size() > 0) {
             model.addAttribute("bookingTimeOut", bookingTimeOut);
             model.addAttribute("bookingTime", (new Date().getTime() - bookingTimeOut.getTime()) / 1000);
         }
@@ -439,32 +439,32 @@ public class BookingController {
         modelMap.addAttribute("pageName", 2);
 
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
-        if  (tickets == null || tickets.size()==0) return;
+        if (tickets == null || tickets.size() == 0) return;
 //        List<String> bookingErrorMessages = new ArrayList<>();
         Map<String, String> bookingErrorMessagesMap = new HashMap<>();
 
         List<Ticket> ticketsForRemove = new ArrayList<>();
-        double bookingPrice=0;
+        double bookingPrice = 0;
 
         for (Ticket ticket : tickets) {
-            Event event =  ticket.getSector().getEvent();
+            Event event = ticket.getSector().getEvent();
             Sector sector = ticket.getSector();
             Event event1 = eventService.getEventById(event.getId());
-            if (event1==null) {
+            if (event1 == null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
                 bookingErrorMessagesMap.put("e" + event.getId(), "Внимание, мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
                         + " удалено, поэтому все билеты удалены также");
                 ticketsForRemove.add(ticket);
             }
 
-            if (sectorService.getSectorById(sector.getId())==null) {
+            if (sectorService.getSectorById(sector.getId()) == null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
                 bookingErrorMessagesMap.put("s" + sector.getId(), "Внимание, у мероприятия " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate())
                         + " удален сектор " + sector.getName() + ", поэтому все билеты из этого сектора также удалены");
                 ticketsForRemove.add(ticket);
             }
 
-            if (event1!=null && event1.getBookingTimeOut().getTime()<(new Date()).getTime()) {
+            if (event1 != null && event1.getBookingTimeOut().getTime() < (new Date()).getTime()) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
                 bookingErrorMessagesMap.put("s" + sector.getId(), "Внимание, на мероприятие " + event.getDescription() + " от " + simpleDateFormat.format(event.getDate()) + " бронирование завершено, все забронированные билеты возвращены  продажу");
                 ticketsForRemove.add(ticket);
@@ -488,9 +488,9 @@ public class BookingController {
             modelMap.addAttribute("bookingTimeOut", date);
             modelMap.addAttribute("bookingTime", (new Date().getTime() - date.getTime()) / 1000);
         } else {
-                modelMap.remove("bookingTimeOut");
-                session.removeAttribute("bookingTimeOut");
-            }
+            modelMap.remove("bookingTimeOut");
+            session.removeAttribute("bookingTimeOut");
+        }
 
         Collection<String> bookingErrorMessages = bookingErrorMessagesMap.values();
         modelMap.addAttribute("bookingErrorMessages", bookingErrorMessages);

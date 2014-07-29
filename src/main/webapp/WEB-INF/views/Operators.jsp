@@ -38,9 +38,10 @@
                     <th width="30%">Логин</th>
                     <th></th>
                     <th>
-                            <a data-placement="right" data-toggle="tooltip" type="button" href="${pageContext.request.contextPath}/Operators/NewOperator.do"
-                                    class="btn btn-md my-tool-tip" title="Создать нового оператора">
-                                +<span class="glyphicon glyphicon-user"></span></a>
+                        <a data-placement="right" data-toggle="tooltip" type="button"
+                           href="${pageContext.request.contextPath}/Operators/NewOperator.do"
+                           class="btn btn-md my-tool-tip" title="Создать нового оператора">
+                            +<span class="glyphicon glyphicon-user"></span></a>
                     </th>
                 </tr>
                 </thead>
