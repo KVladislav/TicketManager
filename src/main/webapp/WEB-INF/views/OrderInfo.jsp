@@ -52,7 +52,7 @@
                 <h4 style="text-align:center;">Стоимость заказа: ${priceConfirmation} грн.</h4>
                 <br><br>
             </table>
-            <div class="control-group">
+            <div class="control-group" style="margin-bottom: 50px">
                 <form name="clear" action="${pageContext.request.contextPath}/OrderInfo/Clear.do"
                       method="get">
                     <h3 style="text-align:center">

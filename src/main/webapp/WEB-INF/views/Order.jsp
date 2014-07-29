@@ -253,7 +253,7 @@
                     </div>
                 </td>
                 <td>
-                    <div class="col-md-3 column" style="margin-bottom: 50px">
+                    <div class="col-md-3 column" style="margin-bottom:50px">
                         <h3 style="text-align:center">
                             <button class="btn btn-primary" data-toggle="modal"
                                     data-target="#ConfirmOrderBuy">Купить
