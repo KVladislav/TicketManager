@@ -22,7 +22,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/css/bootstrap.css"></script>
+    <%--<script src="${pageContext.request.contextPath}/resources/css/bootstrap.css"></script>--%>
     <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
           type="text/css">
     <script type="text/javascript"
@@ -34,10 +34,10 @@
             type="text/javascript"></script>
 
     <script src="http://malsup.github.com/jquery.form.js"></script>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap-responsive.css"
-          rel="stylesheet">
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">
+    <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">--%>
+    <%--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap-responsive.css"--%>
+          <%--rel="stylesheet">--%>
+    <%--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">--%>
 
     <script type="text/javascript">
         $(document).on("hover", ".cont", function () {
@@ -128,7 +128,7 @@
 
 <c:if test="${empty eventEdit.id}">
 <h1>
-    <caption><h1 class="panel-heading text-info"><b> Создание нового мероприятия </b></h1></caption>
+    <caption><h1 class="panel-heading text-info">Создание нового мероприятия</h1></caption>
 </h1>
 <c:if test="${eventErrorMessage!=null}">
 
@@ -139,7 +139,7 @@
 </c:if>
 <c:if test="${not empty eventEdit.id}">
 <h1>
-    <caption><h1 class="panel-heading text-info"><b> Редактирование мероприятия </b></h1></caption>
+    <caption><h1 class="panel-heading text-info">Редактирование мероприятия</h1></caption>
 </h1>
 
 <c:if test="${errorMessageEdit!=null}">
@@ -157,11 +157,8 @@
         <td>
             <tr>
                 <label class="my-control-label  text-info" required warning for="dateEvent"> Дата мероприятия </label>
-
-                <center>
-
                     <div class="control-group">
-                        <input type="text" name="dateEvent" readonly id="dateEvent"
+                        <input type="text" name="dateEvent" readonly id="dateEvent" style="width: 358px;"
                                value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
 
                         <p>
@@ -170,10 +167,10 @@
                     </div>
             </tr>
             <tr>
-                <label class="my-control-label  text-info" for="eventTime"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="eventTime" style="margin-top: 10px;"> Время мероприятия </label>
 
                 <div class="control-group text-info">
-                    <select name="eventTime" id="eventTime">
+                    <select name="eventTime" id="eventTime" style="width:358px;">
 
                         <c:if test="${eventTime.equals('10:00')}">
                             <option selected value="10:00">10:00</option>
@@ -337,10 +334,10 @@
 </center>
 </tr>
 <tr>
-    <div class="control-group">
+    <div class="control-group" style="margin-top: 10px;">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
         <div class="my-controls">
-            <input style="resize: none" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
+            <input style="resize: none; width:358px;" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][\s\S]{0,49}"
                    title="Не пустое,не начинается с пробела, начинается с буквы или цифры, до 50 знаков"
@@ -349,15 +346,21 @@
     </div>
 </tr>
 <tr>
-    <div class="control-group">
+    <div class="control-group" style="margin-top: 10px;">
         <label class="my-control-label text-info" for="eventBookingTimeOut"> Установка времени удаления брони в
             минутах </label>
 
         <div class="my-controls">
-
-            <input type="text" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
-                   value="${eventBookingTimeOut}"
-                   required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+            <div class="input-append">
+                <input type="text" class="span2" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
+                       value="${eventBookingTimeOut}" style="width: 330px;"
+                       required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+                <span class="add-on">
+                    <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                                          onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
+                                          onMouseOut="helpBox()">
+                </span>
+            </div>
 
             <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
 
@@ -368,10 +371,6 @@
                 <p id="helpText" class="helpText">Help text</p></div>
 
             <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
-
-            <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-                 onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время, по истечении которого бронь полностью снимается')"
-                 onMouseOut="helpBox()">
         </div>
     </div>
 </tr>
@@ -397,7 +396,7 @@
             <tr>
                 <th>Сектор</th>
                 <th>Цена</th>
-                <th>Удалить</th>
+                <th width="5%">Удалить</th>
             </tr>
             </thead>
 
@@ -424,7 +423,7 @@
                     <td>
                         <input tabindex="0" type="hidden" name="sector${sector.value.id}" value="${sector.value.id}">
                         <button type="submit" name="delete" value="${sector.value.id}" formnovalidate
-                                class="btn btn-default btn-xs">
+                                class="btn btn-default btn-md">
                             <span class="glyphicon glyphicon-trash"></span></button>
 
 
