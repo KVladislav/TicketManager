@@ -167,7 +167,7 @@
                     </div>
             </tr>
             <tr>
-                <label class="my-control-label  text-info" for="eventTime"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="eventTime" style="margin-top: 20px;"> Время мероприятия </label>
 
                 <div class="control-group text-info">
                     <select class="form-control" name="eventTime" id="eventTime" style="width: 420px">
@@ -334,7 +334,7 @@
 </center>
 </tr>
 <tr>
-    <div class="control-group">
+    <div class="control-group" style="margin-top: 20px;">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
         <div class="my-controls">
             <input class="form-control" style="resize: none; width: 420px" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
