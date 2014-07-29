@@ -166,7 +166,7 @@ public class OrderController
                     orderPrice += currentSector.getPrice();
                     orderTickets.add(ticket);
                 }
-                else message.append( "Билет ").append(currentSector.getEvent().getDescription()).append(" Сектор: ").
+                else message.append( "Билет на ").append(currentSector.getEvent().getDescription()).append(" Сектор: ").
                         append(currentSector.getName()).append(" Ряд: ").append(currentRow).append(" Место: ").
                         append(seat1).append(" уже продан<br>");
             }

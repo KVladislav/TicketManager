@@ -20,19 +20,6 @@
         }
     </style>
 
-
-
-    <script type='text/javascript'>
-       function rrr () {
-          ('ConfirmOrderCancel').click();
-            }
-
-
-
-
-    </script>
-
-
 </head>
 <body>
 <div class="order">
