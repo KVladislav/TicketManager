@@ -19,7 +19,18 @@
             margin: 0;
         }
     </style>
-
+    <script>
+        var form_sent = false;
+        function disableInput() {
+           if( form_sent == false ) {
+                form_sent = true;
+                document.getElementById('Submit').submit();
+            }
+            else {
+                document.getElementById('Submit').disabled = "true";
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="order">
@@ -193,9 +204,10 @@
                      <td>
                          <form name = "delTicket" action="${pageContext.request.contextPath}/Order/delTicket.do"
                                method="post">
-                                 <button type="submit" name="orderId" class="btn btn-default btn-xs" value="${ord.id}">
+                                 <button type="submit" onclick="disableInput()" id="Submit" name="orderId"
+                                         class="btn btn-default btn-xs" value="${ord.id}">
                                  <span class="glyphicon glyphicon-trash" ></span></button>
-                          </form>
+                         </form>
                      </td>
                      </tr>
                 </c:forEach>

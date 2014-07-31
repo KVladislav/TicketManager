@@ -8,9 +8,11 @@ import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
@@ -206,12 +208,12 @@ public class OrderController
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-    public String orderDelTicket(@RequestParam(value = "orderId") int orderId, Model model,
+    public String orderDelTicket(@RequestParam(value = "orderId", required = true) int orderId, Model model,
                                  @ModelAttribute("eventOrder") Event currentEvent,
                                  @ModelAttribute("sectorOrder") Sector currentSector,
-                                 @ModelAttribute("rowOrder") Integer currentRow){
-        ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
-        Double orderPrice = (Double) model.asMap().get("orderPrice");
+                                 @ModelAttribute("rowOrder") Integer currentRow,
+                                 @ModelAttribute("orderList")  ArrayList<Ticket> orderTickets,
+                                 @ModelAttribute("orderPrice") Double orderPrice){
         model.addAttribute("errorOrder","");
         model.addAttribute("messageOrder", "");
         if (orderTickets!=null && orderTickets.size()>0){
@@ -236,13 +238,15 @@ public class OrderController
                         " автоматически удалены из заказа, так как не были куплены в течении 10 минут");
             }
         }
-        for (Ticket ord : orderTickets) {
-            if (ord.getId() == orderId) {
-                ticketService.deleteTicket(ord);
-                orderTickets.remove(ord);
-                orderPrice-=ord.getSector().getPrice();
-                model.addAttribute("messageOrder", "Билет ID = "+ord.getId()+" удалён из заказа");
-                break;
+        if (ticketService.getTicketById(orderId)!=null){
+            for (Ticket ord : orderTickets) {
+                if (ord.getId() == orderId) {
+                    orderPrice-=ord.getSector().getPrice();
+                    model.addAttribute("messageOrder", "Билет ID = "+ord.getId()+" удалён из заказа");
+                    ticketService.deleteTicket(ticketService.getTicketById(orderId));
+                    orderTickets.remove(ord);
+                    break;
+                }
             }
         }
         List<Event> events = eventService.getFutureEvents();
