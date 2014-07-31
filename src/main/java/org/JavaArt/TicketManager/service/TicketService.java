@@ -84,7 +84,7 @@ public class TicketService {
         return ticketRepository.getAllTicketsBySector(sector);
     }
 
-    public List<Ticket> getOrderTicketsByOperator(Operator operator){
+    public List<Ticket> getOrderTicketsByOperator(Operator operator) {
         return ticketRepository.getOrderTicketsByOperator(operator);
     }
 }

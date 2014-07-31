@@ -22,10 +22,10 @@ public class Operator implements UserDetails {
     private Long id;
 
 
-    @Column(name = "name", nullable = false, length = 15)
+    @Column(name = "name", length = 15)
     private String name;
 
-    @Column(name = "surname", nullable = false, length = 20)
+    @Column(name = "surname", length = 15)
     private String surname;
 
     @Column(name = "isDeleted")
@@ -37,10 +37,10 @@ public class Operator implements UserDetails {
     @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "login")
+    @Column(name = "login", length = 15)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 20)
     private String password;
 
     public Operator() {

@@ -143,6 +143,6 @@ public class Sector implements Comparable, Serializable {
     public int compareTo(Object o) {
         Sector sector = (Sector) o;
 
-        return (int)(id - sector.id);
+        return (int) (id - sector.id);
     }
 }

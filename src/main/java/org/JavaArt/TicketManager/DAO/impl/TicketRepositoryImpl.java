@@ -381,8 +381,8 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Ticket> getOrderTicketsByOperator(Operator operator){
-        if (operator==null) return new ArrayList<>();
+    public List<Ticket> getOrderTicketsByOperator(Operator operator) {
+        if (operator == null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
         try {

@@ -139,11 +139,12 @@ public class OperatorRepositoryImpl implements OperatorRepository {
     @Override
     public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException {
         if (userName == null) throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
-        if (countOperators() == 0 && userName.equals("root")) {
+        if (countOperators() == 0) {
             Operator operator = new Operator();
             operator.setLogin("root");
             operator.setPassword("root");
-            return operator;
+            addOperator(operator);
+//            return operator;
 
         }
         Session session = null;
