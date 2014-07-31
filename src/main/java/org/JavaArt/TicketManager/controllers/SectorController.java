@@ -49,7 +49,7 @@ public class SectorController {
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Sectors/Modify.do", method = RequestMethod.POST)
     public String sectorsModify(@RequestParam(value = "action") String action,
-                                @RequestParam(value = "sectorDefaultsId") Integer sectorDefaultsId,
+                                @RequestParam(value = "sectorDefaultsId") Long sectorDefaultsId,
                                 @RequestParam(value = "defaultPrice") String defaultPriceString,
                                 @RequestParam(value = "sectorName") String sectorName,
                                 @RequestParam(value = "maxRows") Integer maxRows,
@@ -58,11 +58,11 @@ public class SectorController {
 
 
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
-        String errorMessage=null;
+        String errorMessage = null;
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
-            if (sectorDefaults.getId() == sectorDefaultsId) {
+            if (sectorDefaults.getId().equals(sectorDefaultsId)) {
 
-                if (action.equals("delete") && sectorDefaultsList.size()>1) {
+                if (action.equals("delete") && sectorDefaultsList.size() > 1) {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);
                     sectorDefaultsList.remove(sectorDefaults);
                     break;
@@ -70,10 +70,10 @@ public class SectorController {
 
                 if (action.equals("save")) {
                     SectorDefaults sectorDefaultsTest = sectorDefaultsService.getSectorDefaultsByName(sectorName);
-                    if (sectorDefaultsTest==null || sectorDefaults.getSectorName().equals(sectorName)) {
+                    if (sectorDefaultsTest == null || sectorDefaults.getSectorName().equals(sectorName)) {
                         sectorDefaults.setSectorName(sectorName);
                     } else {
-                        errorMessage="Ошибка! Сектор с именем " + sectorName + " уже существует";
+                        errorMessage = "Ошибка! Сектор с именем " + sectorName + " уже существует";
 
                     }
                     try {
@@ -101,7 +101,7 @@ public class SectorController {
                         sectorDefaultsService.addSectorDefaults(sectorDefaultsClone);
                         break;
                     } else {
-                        errorMessage="Ошибка! Новый сектор уже создан, пожалуйста, заполните данные";
+                        errorMessage = "Ошибка! Новый сектор уже создан, пожалуйста, заполните данные";
                     }
                 }
             }

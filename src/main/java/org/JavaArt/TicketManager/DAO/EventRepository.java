@@ -13,7 +13,7 @@ public interface EventRepository {
 
     public void updateEvent(Event event);
 
-    public Event getEventById(int id);
+    public Event getEventById(Long id);
 
     public List<Event> getFutureEvents();
 

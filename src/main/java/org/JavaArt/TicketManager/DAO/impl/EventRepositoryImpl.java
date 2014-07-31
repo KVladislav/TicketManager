@@ -86,7 +86,7 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public Event getEventById(int id) {
+    public Event getEventById(Long id) {
         Session session = null;
         Event event = null;
         try {

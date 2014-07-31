@@ -39,7 +39,6 @@ public class Starter {
 //        sectorDefaultsRepository.addSectorDefaults(sectorDefaults);
 
 
-
 //        Ticket ticket = new Ticket();
 //        ticket.setReserved(true);
 //        ticket.setDeleted(false);

@@ -60,7 +60,7 @@
                                             class="btn btn-default btn-md">
                                         <span class="glyphicon glyphicon-edit"></span></button>
                                 </a>
-                            </form>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                         </td>
                         <td>
                             <a data-toggle="tooltip" class="my-tool-tip" data-placement="top"
@@ -106,7 +106,7 @@
                             <button type="submit" name="operatorId" value="" id="operatorId"
                                     class="btn btn-danger btn-md">Удалить
                             </button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>

@@ -86,7 +86,7 @@
                         <button class="btn btn-primary btn-md" type="submit">Сохранить</button>
                     </div>
                 </div>
-            </form>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
         </div>
     </div>
 </div>
@@ -169,7 +169,7 @@
                             name="ticketId">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
-                </form>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
             </td>
         </tr>
     </c:forEach>
@@ -251,7 +251,7 @@
         <form action="${pageContext.request.contextPath}/Booking/Booking.do" method="post">
             <input type="submit" name="Order" class="btn btn-primary btn-md"
                    value="Добавить билет">
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-2 column"></div>
     <div class="col-md-3 column" style="margin-bottom: 60px">
@@ -345,24 +345,25 @@
                 </table>
 
             </div>
-            <div class="modal-footer"">
-                <div class="row clearfix">
-                    <div class="col-md-8 column" >
-                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
-                    </div>
-                    <div class="col-md-2 column"style="margin-bottom: 50px">
-                        <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
-                              method="post">
-                            <input type="submit" name="Order" class="btn btn-success btn-md"
-                                   value="Забронировать">
-                        </form>
-                    </div>
+            <div class="modal-footer"
+            ">
+            <div class="row clearfix">
+                <div class="col-md-8 column">
+                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
+                </div>
+                <div class="col-md-2 column" style="margin-bottom: 50px">
+                    <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
+                          method="post">
+                        <input type="submit" name="Order" class="btn btn-success btn-md"
+                               value="Забронировать">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </div>
             </div>
         </div>
-
-
     </div>
+
+
+</div>
 </div>
 
 <!-- Modal CheckoutOrderConfirmation-->
@@ -444,7 +445,7 @@
                               method="post">
                             <input type="submit" name="Order" class="btn btn-success btn-md"
                                    value="Выкуп брони">
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>
@@ -477,7 +478,7 @@
 <%--<button type="submit" name="ticketId" id="ticketId"--%>
 <%--class="btn btn-danger btn-md" value="">Удалить--%>
 <%--</button>--%>
-<%--</form>--%>
+<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>--%>
 
 
 <%--</div>--%>
@@ -509,7 +510,7 @@
                             <button type="submit"
                                     class="btn btn-danger btn-md" value="">Удалить
                             </button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>
@@ -538,7 +539,7 @@
                             <button type="submit"
                                     class="btn btn-danger btn-md" value="">Закрыть
                             </button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>

@@ -26,9 +26,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
           type="text/css">
     <%--<script type="text/javascript"--%>
-            <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>--%>
+    <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>--%>
     <%--<script type="text/javascript"--%>
-            <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>--%>
+    <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>--%>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
@@ -36,7 +36,7 @@
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">--%>
     <%--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap-responsive.css"--%>
-          <%--rel="stylesheet">--%>
+    <%--rel="stylesheet">--%>
     <%--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">--%>
 
     <script type="text/javascript">
@@ -157,17 +157,20 @@
         <td>
             <tr>
                 <label class="my-control-label  text-info" required warning for="dateEvent"> Дата мероприятия </label>
-                    <div class="control-group">
-                        <input type="text" name="dateEvent" class="form-control" readonly id="dateEvent" style="width: 420px"
-                               value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
 
-                        <p>
-                            <script type="text/javascript"> calendar.set("dateEvent");</script>
-                        </p>
-                    </div>
+                <div class="control-group">
+                    <input type="text" name="dateEvent" class="form-control" readonly id="dateEvent"
+                           style="width: 420px"
+                           value="<fmt:formatDate value='${dateEvent}' type='date' />"/>
+
+                    <p>
+                        <script type="text/javascript"> calendar.set("dateEvent");</script>
+                    </p>
+                </div>
             </tr>
             <tr>
-                <label class="my-control-label  text-info" for="eventTime" style="margin-top: 20px;"> Время мероприятия </label>
+                <label class="my-control-label  text-info" for="eventTime" style="margin-top: 20px;"> Время
+                    мероприятия </label>
 
                 <div class="control-group text-info">
                     <select class="form-control" name="eventTime" id="eventTime" style="width: 420px">
@@ -336,8 +339,10 @@
 <tr>
     <div class="control-group" style="margin-top: 20px;">
         <label class="my-control-label text-info" for="eventDescriptions"> Наименование </label>
+
         <div class="my-controls">
-            <input class="form-control" style="resize: none; width: 420px" type="text" size="20" id="eventDescriptions" maxlength="50" data-min-length=1
+            <input class="form-control" style="resize: none; width: 420px" type="text" size="20" id="eventDescriptions"
+                   maxlength="50" data-min-length=1
                    name="eventDescriptions"
                    required pattern="[A-Za-zА-Яа-яЁё0-9][\s\S]{0,49}"
                    title="Не пустое,не начинается с пробела, начинается с буквы или цифры, до 50 знаков"
@@ -350,25 +355,27 @@
         <label class="my-control-label text-info" for="eventBookingTimeOut"> Установка времени удаления брони в
             минутах
 
-           <img src="${pageContext.request.contextPath}/resources/img/Question.png"
-                onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время до начала ' +
+            <img src="${pageContext.request.contextPath}/resources/img/Question.png"
+                 onMouseOver="helpBox('Подсказка', 'Поле позволяет установить время до начала ' +
                  'мероприятия, по достижению которого бронь полностью снимается (в минутах, максимум три цифры)')"
-                onMouseOut="helpBox()">
+                 onMouseOut="helpBox()">
 
         </label>
 
         <div class="my-controls">
             <div>
-            <input class= "form-control span2" style="width: 420px;" type="text" id="eventBookingTimeOut" size="20" maxlength="3" name="eventBookingTimeOut"
-                   value="${eventBookingTimeOut}"
-                   required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
-            <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
+                <input class="form-control span2" style="width: 420px;" type="text" id="eventBookingTimeOut" size="20"
+                       maxlength="3" name="eventBookingTimeOut"
+                       value="${eventBookingTimeOut}"
+                       required pattern="[1-9]\d{0,2}?" title="Только целое положительное число от одной до трех цифр!">
+                <!-- это элемент который вызывает подсказку при наведении курсора мыши на нее, и скрывает, когда курсор убирается-->
             </div>
 
             <!--Это сам слой, который является всплывающей посказкой, состоит из трех дивов, общий контейнер, тайтл и текст-->
             <div id="help" class="helpBox" style="display:none; position:absolute;"><p id="helpTitle" class="helpTitle">
                 Поле позволяет установить время до начала мероприятия, по достижению которого бронь
                 полностью снимается (в минутах, максимум три цифры)</p>
+
                 <p id="helpText" class="helpText">Help text</p></div>
         </div>
     </div>
@@ -391,7 +398,7 @@
 <div class="panel-body" style="padding:30px; width:40%;">
     <div class="table responsive">
         <table class="table table-hover" style="text-align:center;">
-        <thead>
+            <thead>
             <tr>
                 <th>Сектор</th>
                 <th>Цена</th>
@@ -455,7 +462,7 @@
         </div>
     </div>
 </div>
-</form>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
 </center>
 
 
@@ -477,8 +484,8 @@
                     </div>
                     <div class="col-md-2 column">
                         <c:if test="${empty eventEdit.id}">
-                            <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
-                                  novalidate></c:if>
+                        <form action="${pageContext.request.contextPath}/AddEditEvent/addEvent.do" method="post"
+                              novalidate></c:if>
                             <c:if test="${not empty eventEdit.id}">
                             <form action="${pageContext.request.contextPath}/AddEditEvent/editEventNow.do"
                                   method="post" novalidate></c:if>
@@ -492,7 +499,7 @@
                                        id="sectorId"
                                        class="btn btn-danger btn-md">Удалить?
                                 </button>
-                            </form>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>

@@ -17,16 +17,16 @@ public class SectorDefaults implements Comparable<SectorDefaults> {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private int id;
+    private Long id;
     @NotEmpty
     @Column(name = "SectorName", nullable = false)
     private String sectorName;
     @Column(name = "MaxRows")
-    private int maxRows;
+    private int maxRows=20;
     @Column(name = "MaxSeats")
-    private int maxSeats;
+    private int maxSeats=50;
     @Column(name = "defaultPrice")
-    private double defaultPrice;
+    private double defaultPrice=0d;
     @Column(name = "isDeleted")
     private boolean isDeleted;
     @Column(name = "TimeStamp")
@@ -56,11 +56,11 @@ public class SectorDefaults implements Comparable<SectorDefaults> {
         this.operator = operator;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

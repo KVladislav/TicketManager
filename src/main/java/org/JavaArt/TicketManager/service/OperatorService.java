@@ -22,7 +22,7 @@ public class OperatorService implements UserDetailsService {
         return operators;
     }
 
-    public void deleteOperator(int id) {
+    public void deleteOperator(Long id) {
         Operator operator = operatorRepository.getOperatorById(id);
         operator.setDeleted(true);
         operatorRepository.updateOperator(operator);
@@ -36,7 +36,7 @@ public class OperatorService implements UserDetailsService {
         operatorRepository.addOperator(operator);
     }
 
-    public Operator getOperatorById(int id) {
+    public Operator getOperatorById(Long id) {
         Operator operator = operatorRepository.getOperatorById(id);
         return operator;
     }

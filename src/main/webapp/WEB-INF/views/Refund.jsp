@@ -14,7 +14,7 @@
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
     <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
- </head>
+</head>
 
 <body>
 <div class="Refund">
@@ -22,9 +22,11 @@
         <form class="form-inline" name="findTicket" action="${pageContext.request.contextPath}/Refund/Find.do"
               method="post">
             <br>
+
             <h3 class="panel-heading text-info">Поиск по номеру билета</h3><br>
+
             <div>
-                <input class="form-control" type="text" name="ticketId" size=20 maxlength=10 required pattern="^[0-9]+$"
+                <input class="form-control" type="text" name="ticketId" size=25 maxlength=19 required pattern="^[0-9]+$"
                        title="Целые числа без пробелов" style="text-align:center "
                        required placeholder="Введите ID билета"/>
                 <button type="submit" name="action" class="btn btn-primary">Поиск</button>
@@ -59,7 +61,7 @@
                     </div>
                 </c:if>
             </div>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
         <table>
             <c:if test="${ticket!=null}">
             <tr>
@@ -71,7 +73,7 @@
                                 <h3 style="text-align:center">
                                     <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена">
                                 </h3>
-                            </form>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                         </div>
                     </div>
                 </td>
@@ -118,7 +120,7 @@
                                         <form action="${pageContext.request.contextPath}/Refund/Delete.do"
                                               method="post">
                                             <button type="submit" class="btn btn-primary" value=""> Да</button>
-                                        </form>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                                     </div>
                                 </td>
                             </table>

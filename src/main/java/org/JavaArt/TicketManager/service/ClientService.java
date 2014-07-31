@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class ClientService{
+public class ClientService {
     private static ClientService clientService;
     private ClientRepository clientRepository = new ClientRepositoryImpl();
 
@@ -31,13 +31,14 @@ public class ClientService{
         return clientRepository.getClientsByName(clientName);
     }
 
-    public Client getClientById(int clientId) {
+    public Client getClientById(Long clientId) {
         return clientRepository.getClientById(clientId);
     }
 
     public void deleteClientsWithoutOrders(int minutes) {
         clientRepository.deleteClientsWithoutOrders(minutes);
     }
+
     public void deleteClient(Client client) {
         clientRepository.deleteClient(client);
     }

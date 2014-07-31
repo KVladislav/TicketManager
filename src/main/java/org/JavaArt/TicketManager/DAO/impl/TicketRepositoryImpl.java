@@ -25,7 +25,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public void saveOrUpdateTicket(Ticket ticket) {
-        if (ticket==null) return;
+        if (ticket == null) return;
         Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ticket.setOperator(operator);
         Session session = null;
@@ -70,7 +70,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public Ticket getTicketById(int id) {
+    public Ticket getTicketById(Long id) {
         Session session = null;
         Ticket ticket = null;
         try {
@@ -133,7 +133,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public void deleteTicket(Ticket ticket) {
-        if (ticket==null) return;
+        if (ticket == null) return;
         Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ticket.setOperator(operator);
         Session session = null;
@@ -166,7 +166,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getTicketsByClient(Client client) {
-        if (client==null) return new ArrayList<>();
+        if (client == null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
 //        List<Ticket> result = null;
@@ -199,7 +199,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getBoughtTicketsByClient(Client client) {
-        if (client==null) return new ArrayList<>();
+        if (client == null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
 //        List<Ticket> result = null;
@@ -221,7 +221,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public int getTicketsAmountByClient(Client client) {
-        if  (client==null) return 0;
+        if (client == null) return 0;
         Session session = null;
         int counter = 0;
         try {
@@ -242,7 +242,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public int getFreeTicketsAmountBySector(Sector sector) {
-        if (sector==null) return 0;
+        if (sector == null) return 0;
         Session session = null;
         int counter = 0;
         try {
@@ -282,7 +282,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getAllTicketsBySectorAndRow(Sector sector, int row) {
-        if (sector==null) return new ArrayList<>();
+        if (sector == null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
         try {
@@ -300,7 +300,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public int isPlaceFree(Sector sector, int row, int seat) {
-        if (sector==null) return 3;
+        if (sector == null) return 3;
         Session session = null;
         Ticket ticket;
         try {
@@ -363,7 +363,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Ticket> getAllTicketsBySector(Sector sector) {
-        if (sector==null) return new ArrayList<>();
+        if (sector == null) return new ArrayList<>();
         Session session = null;
         List<Ticket> tickets = null;
         try {
@@ -379,4 +379,27 @@ public class TicketRepositoryImpl implements TicketRepository {
         return tickets;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Ticket> getOrderTicketsByOperator(Operator operator) {
+        if (operator == null) return new ArrayList<>();
+        Session session = null;
+        List<Ticket> tickets = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets = session.createCriteria(Ticket.class)
+                    .add(Restrictions.eq("operator", operator))
+                    .add(Restrictions.eq("isReserved", false))
+                    .add(Restrictions.eq("isConfirmed", false))
+                    .add(Restrictions.eq("isDeleted", false))
+                    .addOrder(Order.asc("sector")).list();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return tickets;
+    }
 }

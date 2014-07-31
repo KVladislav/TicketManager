@@ -32,13 +32,13 @@ public class OperatorsController {
     }
 
     @RequestMapping(value = "Operators/OperatorsDelete.do", method = RequestMethod.POST)
-    public String operatorDelete(@RequestParam(value = "operatorId") int operatorId) {
+    public String operatorDelete(@RequestParam(value = "operatorId") Long operatorId) {
         operatorService.deleteOperator(operatorId);
         return "redirect:/Operators/Operators.do";
     }
 
     @RequestMapping(value = "Operators/OperatorEdit.do", method = RequestMethod.POST)
-    public String editOperator(@RequestParam(value = "operatorId", required = true) int operatorId, Model model) {
+    public String editOperator(@RequestParam(value = "operatorId", required = true) Long operatorId, Model model) {
         Operator operator = operatorService.getOperatorById(operatorId);
         model.addAttribute("operator", operator);
 //        model.addAttribute("errorOperator", "");

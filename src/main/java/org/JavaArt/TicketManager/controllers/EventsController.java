@@ -99,7 +99,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/setDelete.do", method = RequestMethod.POST)
-    public String eventsSetDelete(@RequestParam(value = "eventId", required = true) int eventId,
+    public String eventsSetDelete(@RequestParam(value = "eventId", required = true) Long eventId,
                                   SessionStatus status, Model model) {
         Event event = eventService.getEventById(eventId);
         if (eventService.busyEvent(event) == false) {
@@ -136,9 +136,9 @@ public class EventsController {
             eventBookingTimeOut = Integer.parseInt(eventBookingTimeOutS);
         }
         String action = request.getParameter("delete");
-        int idSectorDel;
+        Long idSectorDel;
         if (action != null) {
-            idSectorDel = Integer.parseInt(action);
+            idSectorDel = Long.parseLong(action);
             Sector sector = sectorService.getSectorById(idSectorDel);
             if (sectorService.busySector(sector) == false) {
                 sectorService.deleteSector(sector);
@@ -298,7 +298,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "Events/Edit.do", method = RequestMethod.POST)
-    public String eventsEdit(@RequestParam(value = "evnt") int evnt) {
+    public String eventsEdit(@RequestParam(value = "evnt") Long evnt) {
         this.editEvent = eventService.getEventById(evnt);
         return "redirect:/AddEditEvent/EditEvent.do";
     }
@@ -357,7 +357,7 @@ public class EventsController {
 
     @RequestMapping(value = "AddEditEvent/editEventNow.do", method = RequestMethod.POST)
     public String editEvent(Model model,
-                            int eventEditHidden,
+                            Long eventEditHidden,
                             SessionStatus status, HttpServletRequest request)
             throws SQLException, ParseException {
         String errorMessageEdit = "";
@@ -369,13 +369,13 @@ public class EventsController {
         String eventBookingTimeOutN = request.getParameter("eventBookingTimeOut");
 
         String action = request.getParameter("delete");
-        int idSectorDel;
+        Long idSectorDel;
         if (action != null) {
             dateEventN = request.getParameter("dateEvent");
             eventTimeN = request.getParameter("eventTime");
             eventDescriptionsN = request.getParameter("eventDescriptions");
             eventBookingTimeOutN = request.getParameter("eventBookingTimeOut");
-            idSectorDel = Integer.parseInt(action);
+            idSectorDel = Long.parseLong(action);
             int eventBookingTimeOut = 0;
             if (eventBookingTimeOutN != null) {
                 eventBookingTimeOut = Integer.parseInt(eventBookingTimeOutN);
@@ -423,7 +423,7 @@ public class EventsController {
                 model.addAttribute("eventTime", timeEvent);
                 return "AddEditEvent";
             }
-            }
+        }
 
         String action1 = request.getParameter("action");
         if (action1.equals("save")) {
@@ -565,7 +565,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "AddEditEvent/setDeleteSector.do", method = RequestMethod.POST)
-    public String setDeleteSector(@RequestParam(value = "evnt", required = true) int evnt,
+    public String setDeleteSector(@RequestParam(value = "evnt", required = true) Long evnt,
                                   SessionStatus status) {
         Event event = eventService.getEventById(evnt);
         eventService.deleteEvent(event);
@@ -720,8 +720,12 @@ public class EventsController {
         if (eventBookingTimeOut != null) {
             model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
         }
-        if (this. editEvent!=null) { model.addAttribute("eventEdit", editEvent);}
-        if (allSectors!=null){ model.addAttribute("allSectors", allSectors);}
+        if (this.editEvent != null) {
+            model.addAttribute("eventEdit", editEvent);
+        }
+        if (allSectors != null) {
+            model.addAttribute("allSectors", allSectors);
+        }
         return "AddEditEvent";
     }
 
@@ -741,11 +745,11 @@ public class EventsController {
 
 
     public boolean dateValidDate(Date inputDate) {
-                Date now = new Date();
-                if (inputDate.getTime() > now.getTime()) {
-                    return true;
-                } else return false;
-         }
+        Date now = new Date();
+        if (inputDate.getTime() > now.getTime()) {
+            return true;
+        } else return false;
+    }
 
     public List getDateByString(String dateEvent, String eventTime) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");

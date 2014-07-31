@@ -1,35 +1,42 @@
-.header{
+.header {
     width: 1000px;
     border: 1px;
     align-content: center;
 }
-.content{
+
+.content {
     width: 1000px;
 }
-.left_side{
+
+.left_side {
 
     width: 200px;
     float: left;
 }
-.middle_side{
+
+.middle_side {
     width: 570px;
     float: left;
 }
-.right_side{
+
+.right_side {
     width: 200px;
     float: left;
 }
-.footer{
+
+.footer {
     width: 1000px;
 
 }
-table,th,td
-{
-border:1px solid black;
+
+table, th, td {
+    border: 1px solid black;
 }
-th{
-text-align:center;
+
+th {
+    text-align: center;
 }
+
 select {
-margin: 10px;
+    margin: 10px;
 }

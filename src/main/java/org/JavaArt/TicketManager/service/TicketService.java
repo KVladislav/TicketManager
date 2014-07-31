@@ -3,6 +3,7 @@ package org.JavaArt.TicketManager.service;
 import org.JavaArt.TicketManager.DAO.TicketRepository;
 import org.JavaArt.TicketManager.DAO.impl.TicketRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Client;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class TicketService {
         ticketRepository.saveOrUpdateTicket(ticket);
     }
 
-    public Ticket getTicketById(int ticketId) {
+    public Ticket getTicketById(Long ticketId) {
         return ticketRepository.getTicketById(ticketId);
     }
 
@@ -81,6 +82,10 @@ public class TicketService {
 
     public List<Ticket> getAllTicketsBySector(Sector sector) {
         return ticketRepository.getAllTicketsBySector(sector);
+    }
+
+    public List<Ticket> getOrderTicketsByOperator(Operator operator) {
+        return ticketRepository.getOrderTicketsByOperator(operator);
     }
 }
 

@@ -13,6 +13,7 @@
     margin-bottom: 10px;
     margin-left: 0;
 }
+
 .form-search .bootstrap-select.btn-group,
 .form-inline .bootstrap-select.btn-group,
 .form-horizontal .bootstrap-select.btn-group {
@@ -45,7 +46,7 @@
 
 .bootstrap-select {
     /*width: 220px\9; IE8 and below*/
-    width: 220px\0; /*IE9 and below*/
+    width: 220 px\0; /*IE9 and below*/
 }
 
 .bootstrap-select.form-control:not([class*="span"]) {
@@ -104,8 +105,8 @@
     min-width: 100%;
     z-index: 2000;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .bootstrap-select.btn-group .dropdown-menu.inner {
@@ -114,11 +115,11 @@
     padding: 0;
     margin: 0;
     -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-            border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
     -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .bootstrap-select.btn-group .dropdown-menu dt {
@@ -171,7 +172,7 @@
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small,
 .bootstrap-select.btn-group .dropdown-menu li.active:not(.disabled) > a small {
     color: #64b1d8;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
@@ -222,6 +223,7 @@
     right: 12px;
     left: auto;
 }
+
 .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
     right: 13px;
     left: auto;
@@ -247,12 +249,12 @@
     padding: 3px 5px;
     background: #f5f5f5;
     border: 1px solid #e3e3e3;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     pointer-events: none;
     opacity: 0.9;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .mobile-device {
@@ -279,7 +281,7 @@
     margin-top: -1px;
 }
 
-.control-group.error .bootstrap-select .dropdown-toggle{
+.control-group.error .bootstrap-select .dropdown-toggle {
     border-color: #b94a48;
 }
 
@@ -292,8 +294,8 @@
     float: left;
     width: 100%;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .bootstrap-select-searchbox + .bs-actionsbox {

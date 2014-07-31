@@ -8,8 +8,8 @@
 
         <property name="connection.driver_class">org.postgresql.Driver</property>
 
-        <property name="connection.url">jdbc:postgresql://127.0.0.1:5432/Tickets</property>
-        <property name="connection.password">root</property>
+        <property name="connection.url">jdbc:postgresql://127.0.0.1:5432/tickets</property>
+        <property name="connection.password">1111</property>
 
         <!--<property name="connection.url">jdbc:postgresql://80.90.239.40:5432/tickets</property>-->
         <!--<property name="connection.password">javaartr2d2</property>-->
@@ -23,13 +23,13 @@
 
 
         <!--<property name="connection.driver_class">org.postgresql.Driver</property>-->
-          <!--<property name="connection.url">jdbc:postgresql://localhost:5432/Tickets</property>-->
-          <!--<property name="databasename">Tickets</property>-->
-          <!--<property name="connection.username">postgres</property>-->
-          <!--<property name="connection.password">1111</property>-->
-          <!--<property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>-->
-          <!--<property name="connection.schemaname">public</property>-->
-          <!--<property name="hibernate.connection.characterEncoding">utf8</property>-->
+        <!--<property name="connection.url">jdbc:postgresql://localhost:5432/Tickets</property>-->
+        <!--<property name="databasename">Tickets</property>-->
+        <!--<property name="connection.username">postgres</property>-->
+        <!--<property name="connection.password">1111</property>-->
+        <!--<property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>-->
+        <!--<property name="connection.schemaname">public</property>-->
+        <!--<property name="hibernate.connection.characterEncoding">utf8</property>-->
 
 
         <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
@@ -43,7 +43,7 @@
         <!--<property name="hibernate.connection.characterEncoding">utf8</property>-->
 
 
-          <!--try heroku-->
+        <!--try heroku-->
         <!--<property name="connection.driver_class">org.postgresql.Driver</property>-->
         <!--<property name="connection.url">jdbc:postgresql://ec2-107-21-100-118.compute-1.amazonaws.com:5432/dep0c8nounfs1ss</property>-->
         <!--<property name="connection.password">irc2-az34m7Gs5ujrCLypqp14v</property>-->

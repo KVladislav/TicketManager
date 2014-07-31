@@ -37,7 +37,6 @@ public class BookingController {
     private SectorService sectorService = new SectorService();
     private static final int bookingTimeCounter = 10 * 60;
 
-    //TODO авторизация
 
 
     @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
@@ -80,7 +79,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/ViewClient.do")
-    public String bookingViewClient(@RequestParam(value = "clientId", required = true) Integer clientId, ModelMap
+    public String bookingViewClient(@RequestParam(value = "clientId", required = true) Long clientId, ModelMap
             modelMap, HttpSession session) {
 
         if (clientId == null) {
@@ -129,12 +128,12 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/DelBookedTicket.do")
-    public String bookingDelBookedTicket(HttpSession session, ModelMap modelMap, @RequestParam(value = "ticketId", required = true) int ticketId, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
+    public String bookingDelBookedTicket(HttpSession session, ModelMap modelMap, @RequestParam(value = "ticketId", required = true) Long ticketId, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         if (ticket != null) {
             ticketService.deleteTicket(ticket);
             for (Ticket tckt : tickets) {
-                if (tckt.getId() == ticketId) {
+                if (tckt.getId().equals(ticketId)) {
                     tickets.remove(tckt);
                     break;
                 }
@@ -258,7 +257,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/setSectors.do")
-    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, ModelMap
+    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) Long eventId, ModelMap
             model, HttpSession session) {
 
         Event event = eventService.getEventById(eventId);
@@ -298,7 +297,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/setRow.do", method = RequestMethod.POST)
-    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, ModelMap
+    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) Long sectorId, ModelMap
             model, HttpSession session) {
         Sector sector = sectorService.getSectorById(sectorId);
         if (sector == null) {
@@ -315,7 +314,7 @@ public class BookingController {
         }
         int row = 1;
         if (model.get("bookingSector") != null &&
-                ((Sector) model.get("bookingSector")).getId() == sectorId &&
+                ((Sector) model.get("bookingSector")).getId().equals(sectorId) &&
                 model.get("bookingRow") != null) {
             row = (Integer) model.get("bookingRow");
         }

@@ -39,8 +39,8 @@
                 <label class="col-md-4 control-label text-info" for="OperatorName">Имя*</label>
 
                 <div class="col-md-4 column">
-                    <input class="form-control input-md" type="text" name="name" size=20 maxlength=12 required
-                           pattern="^[a-zA-Zа-яА-Я]{1,12}$" id="OperatorName"
+                    <input class="form-control input-md" type="text" name="name" size=20 maxlength=15 required
+                           pattern="^[a-zA-Zа-яА-Я]{1,15}$" id="OperatorName"
                            title="Буквы без пробелов" value="${operator.name}">
                 </div>
             </div>
@@ -59,8 +59,8 @@
                 <label class="col-md-4 control-label text-info" for="OperatorLogin">Логин*</label>
 
                 <div class="col-md-4 column">
-                    <input class="form-control input-md" type="text" name="login" size=20 maxlength=10 required
-                           pattern="^[a-zA-Z0-9]{3,10}$" id="OperatorLogin"
+                    <input class="form-control input-md" type="text" name="login" size=20 maxlength=15 required
+                           pattern="^[a-zA-Z0-9]{3,15}$" id="OperatorLogin"
                            title="Латинские буквы и цифры от 3 до 10 символов" value="${operator.login}">
                 </div>
             </div>
@@ -153,7 +153,7 @@
                 </div>
 
             </div>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
 </body>
 <%@include file="footer.jsp" %>
 
