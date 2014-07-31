@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class IndexController {
 
-    @RequestMapping ("/")
-    public String showIndex(ModelMap model){
+    @RequestMapping("/")
+    public String showIndex(ModelMap model) {
         model.addAttribute("pageName", 0);
         return "Index";
     }

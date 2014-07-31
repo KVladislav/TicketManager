@@ -71,7 +71,7 @@ public class SectorRepositoryImpl implements SectorRepository {
     }
 
     @Override
-    public Sector getSectorById(int id) {
+    public Sector getSectorById(Long id) {
         Session session = null;
         Sector sector = null;
         try {

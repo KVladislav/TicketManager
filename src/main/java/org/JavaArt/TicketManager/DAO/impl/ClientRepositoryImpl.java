@@ -25,7 +25,7 @@ import java.util.List;
 public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public void saveOrUpdateClient(Client client) {
-        if (client==null) return;
+        if (client == null) return;
         Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         client.setOperator(operator);
 
@@ -49,7 +49,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Client> getClientsByName(String clientName) {
-        if (clientName==null) return new ArrayList<>();
+        if (clientName == null) return new ArrayList<>();
         Session session = null;
         List<Client> clients = null;//new ArrayList<Client>();
         try {
@@ -126,13 +126,13 @@ public class ClientRepositoryImpl implements ClientRepository {
         }
     }
 
-        @Override
-    public void deleteClient(Client client)  {
-            if (client==null) return;
-            Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            client.setOperator(operator);
+    @Override
+    public void deleteClient(Client client) {
+        if (client == null) return;
+        Operator operator = (Operator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        client.setOperator(operator);
         client.setDeleted(true);
-            saveOrUpdateClient(client);
+        saveOrUpdateClient(client);
 
     }
 }

@@ -24,6 +24,7 @@ public class EventService {
         }
         return eventService;
     }
+
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.getAllEvents();
         return events;
@@ -34,7 +35,7 @@ public class EventService {
         return events;
     }
 
-    public Event getEventById(int id) {
+    public Event getEventById(Long id) {
         Event event = eventRepository.getEventById(id);
         return event;
     }
@@ -51,6 +52,7 @@ public class EventService {
         List<Event> events = (List<Event>) eventRepository.getEventByDate(date);
         return events;
     }
+
     public List<Event> getFutureBookableEvents() {
         return eventRepository.getFutureBookableEvents();
     }

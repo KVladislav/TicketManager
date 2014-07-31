@@ -15,14 +15,14 @@ public class Sector implements Comparable, Serializable {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
     @NotEmpty
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "price")
@@ -39,19 +39,20 @@ public class Sector implements Comparable, Serializable {
     Operator operator;
 
     @Column(name = "MaxRows")
-    private int maxRows;
+    private Integer maxRows;
 
     @Column(name = "MaxSeats")
-    private int maxSeats;
+    private Integer maxSeats;
 
 
-    public Sector() {}
+    public Sector() {
+    }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -142,6 +143,6 @@ public class Sector implements Comparable, Serializable {
     public int compareTo(Object o) {
         Sector sector = (Sector) o;
 
-        return id - sector.id;
+        return (int)(id - sector.id);
     }
 }

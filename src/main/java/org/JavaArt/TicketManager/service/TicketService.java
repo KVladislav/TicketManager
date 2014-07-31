@@ -64,7 +64,7 @@ public class TicketService {
         ticketRepository.saveOrUpdateTicket(ticket);
     }
 
-    public Ticket getTicketById(int ticketId) {
+    public Ticket getTicketById(Long ticketId) {
         return ticketRepository.getTicketById(ticketId);
     }
 

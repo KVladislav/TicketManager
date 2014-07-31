@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "event")
-public class Event implements Comparable<Event>{
+public class Event implements Comparable<Event> {
     @JoinColumn(name = "operator_id")
     @ManyToOne(cascade = CascadeType.ALL)
     Operator operator;
@@ -16,8 +16,8 @@ public class Event implements Comparable<Event>{
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private Integer id;
-    @Column(name="description", length = 500)
+    private Long id;
+    @Column(name = "description", length = 500)
     private String description;
     @Column
     private Date date = new Date();
@@ -28,11 +28,11 @@ public class Event implements Comparable<Event>{
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,7 +83,9 @@ public class Event implements Comparable<Event>{
         return this.date.compareTo(compareDate);
     }
 
-    public boolean isDeleted() { return isDeleted; }
+    public boolean isDeleted() {
+        return isDeleted;
+    }
 
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;

@@ -14,7 +14,7 @@
     <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
     <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
- </head>
+</head>
 
 <body>
 <div class="Refund">
@@ -22,7 +22,9 @@
         <form class="form-inline" name="findTicket" action="${pageContext.request.contextPath}/Refund/Find.do"
               method="post">
             <br>
+
             <h3 class="panel-heading text-info">Поиск по номеру билета</h3><br>
+
             <div>
                 <input class="form-control" type="text" name="ticketId" size=20 maxlength=10 required pattern="^[0-9]+$"
                        title="Целые числа без пробелов" style="text-align:center "

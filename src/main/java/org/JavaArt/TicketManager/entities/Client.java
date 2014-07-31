@@ -2,6 +2,7 @@ package org.JavaArt.TicketManager.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class Client {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @NotEmpty
     @Column(name = "name", nullable = false, length = 50)
@@ -44,11 +45,11 @@ public class Client {
         this.operator = operator;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class ClientService{
+public class ClientService {
     private static ClientService clientService;
     private ClientRepository clientRepository = new ClientRepositoryImpl();
 
@@ -38,6 +38,7 @@ public class ClientService{
     public void deleteClientsWithoutOrders(int minutes) {
         clientRepository.deleteClientsWithoutOrders(minutes);
     }
+
     public void deleteClient(Client client) {
         clientRepository.deleteClient(client);
     }

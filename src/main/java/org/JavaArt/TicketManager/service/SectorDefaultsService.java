@@ -13,13 +13,13 @@ import java.util.List;
  * Time: 14:50
  */
 public class SectorDefaultsService {
-    SectorDefaultsRepository sectorDefaultsRepository= new SectorDefaultsRepositoryImpl();
+    SectorDefaultsRepository sectorDefaultsRepository = new SectorDefaultsRepositoryImpl();
 
     public void addSectorDefaults(SectorDefaults sectorDefaults) {
         sectorDefaultsRepository.addSectorDefaults(sectorDefaults);
     }
 
-    public void updateSectorDefaults(SectorDefaults sectorDefaults){
+    public void updateSectorDefaults(SectorDefaults sectorDefaults) {
         sectorDefaultsRepository.updateSectorDefaults(sectorDefaults);
     }
 

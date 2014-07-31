@@ -103,7 +103,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
 
     @Override
     public void deleteSectorDefaults(SectorDefaults sectorDefaults) {
-        if(sectorDefaults== null) return;
+        if (sectorDefaults == null) return;
         sectorDefaults.setDeleted(true);
         updateSectorDefaults(sectorDefaults);
     }
@@ -127,5 +127,5 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         }
         return sectorDefaults;
 
-          }
+    }
 }

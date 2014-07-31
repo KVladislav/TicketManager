@@ -345,24 +345,25 @@
                 </table>
 
             </div>
-            <div class="modal-footer"">
-                <div class="row clearfix">
-                    <div class="col-md-8 column" >
-                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
-                    </div>
-                    <div class="col-md-2 column"style="margin-bottom: 50px">
-                        <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
-                              method="post">
-                            <input type="submit" name="Order" class="btn btn-success btn-md"
-                                   value="Забронировать">
-                        </form>
-                    </div>
+            <div class="modal-footer"
+            ">
+            <div class="row clearfix">
+                <div class="col-md-8 column">
+                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
+                </div>
+                <div class="col-md-2 column" style="margin-bottom: 50px">
+                    <form action="${pageContext.request.contextPath}/Booking/FinishOrder.do"
+                          method="post">
+                        <input type="submit" name="Order" class="btn btn-success btn-md"
+                               value="Забронировать">
+                    </form>
                 </div>
             </div>
         </div>
-
-
     </div>
+
+
+</div>
 </div>
 
 <!-- Modal CheckoutOrderConfirmation-->

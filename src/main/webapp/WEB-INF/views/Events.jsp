@@ -97,7 +97,8 @@
                 <tr>
                     <td style="vertical-align: middle;">${theCount.count}</td>
                     <td style="vertical-align: middle;">${evnt.description}</td>
-                    <td style="vertical-align: middle;"><fmt:formatDate value="${evnt.date}" pattern="dd.MM.yyyy H:mm"/></td>
+                    <td style="vertical-align: middle;"><fmt:formatDate value="${evnt.date}"
+                                                                        pattern="dd.MM.yyyy H:mm"/></td>
                     <td>
                         <form action="${pageContext.request.contextPath}/Events/Edit.do" method="post">
                             <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Редактировать">
@@ -122,7 +123,7 @@
             </tbody>
         </table>
     </div>
- </div>
+</div>
 
 <div class="modal" id="Cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

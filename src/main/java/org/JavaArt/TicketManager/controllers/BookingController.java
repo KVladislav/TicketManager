@@ -129,7 +129,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/DelBookedTicket.do")
-    public String bookingDelBookedTicket(HttpSession session, ModelMap modelMap, @RequestParam(value = "ticketId", required = true) int ticketId, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
+    public String bookingDelBookedTicket(HttpSession session, ModelMap modelMap, @RequestParam(value = "ticketId", required = true) Long ticketId, @ModelAttribute("bookingTickets") List<Ticket> tickets) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         if (ticket != null) {
             ticketService.deleteTicket(ticket);
@@ -258,7 +258,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/setSectors.do")
-    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) int eventId, ModelMap
+    public String bookingSetSectors(@RequestParam(value = "eventId", required = true) Long eventId, ModelMap
             model, HttpSession session) {
 
         Event event = eventService.getEventById(eventId);
@@ -298,7 +298,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/setRow.do", method = RequestMethod.POST)
-    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, ModelMap
+    public String bookingSetRow(@RequestParam(value = "sectorId", required = true) Long sectorId, ModelMap
             model, HttpSession session) {
         Sector sector = sectorService.getSectorById(sectorId);
         if (sector == null) {

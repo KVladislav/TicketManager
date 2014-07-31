@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row clearfix">
-        <div class="col-md-8 col-md-offset-2 column"style="margin-bottom: 50px">
+        <div class="col-md-8 col-md-offset-2 column" style="margin-bottom: 50px">
             <table class="table table-hover table-condensed">
                 <caption>
                     <h3 class="panel-heading text-info">Подтверждение продажи от <fmt:formatDate
@@ -80,7 +80,7 @@
     </div>
     <div class="row clearfix">
         <div class="col-md-2 col-md-offset-5 column">
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}\Booking\GetClient.do">Ok</a>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/Booking/GetClient.do">Ok</a>
         </div>
     </div>
 </div>

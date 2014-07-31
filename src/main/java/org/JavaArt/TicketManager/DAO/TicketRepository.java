@@ -29,7 +29,7 @@ public interface TicketRepository {
 
     public void saveOrUpdateTickets(List<Ticket> tickets);
 
-    public Ticket getTicketById(int id);
+    public Ticket getTicketById(Long id);
 
     public List<Ticket> getAllTickets();
 

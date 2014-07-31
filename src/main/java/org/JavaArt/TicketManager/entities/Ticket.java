@@ -14,7 +14,7 @@ public class Ticket {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "sector_id")
@@ -49,8 +49,8 @@ public class Ticket {
     private Client client;
 
 
-
-    public Ticket() {}
+    public Ticket() {
+    }
 
     public boolean isDeleted() {
         return isDeleted;
@@ -80,11 +80,11 @@ public class Ticket {
         this.timeStamp = timeStamp;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -96,15 +96,21 @@ public class Ticket {
         this.row = row;
     }
 
-    public Integer getSeat() {return seat;}
+    public Integer getSeat() {
+        return seat;
+    }
 
-    public void setSeat(Integer seat) {this.seat = seat;}
+    public void setSeat(Integer seat) {
+        this.seat = seat;
+    }
 
     public void setReserved(boolean isReserved) {
         this.isReserved = isReserved;
     }
 
-    public Sector getSector() {return sector;}
+    public Sector getSector() {
+        return sector;
+    }
 
     public void setSector(Sector sector) {
         this.sector = sector;
@@ -118,7 +124,9 @@ public class Ticket {
         this.client = client;
     }
 
-    public Operator getOperator() {return operator;}
+    public Operator getOperator() {
+        return operator;
+    }
 
     public void setOperator(Operator operator) {
         this.operator = operator;

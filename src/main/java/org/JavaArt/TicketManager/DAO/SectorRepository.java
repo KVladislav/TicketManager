@@ -13,7 +13,7 @@ public interface SectorRepository {
 
     public void updateSector(Sector sector);
 
-    public Sector getSectorById(int id);
+    public Sector getSectorById(Long id);
 
     public void deleteSector(Sector sector);
 

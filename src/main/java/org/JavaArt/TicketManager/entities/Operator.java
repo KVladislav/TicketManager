@@ -2,7 +2,6 @@ package org.JavaArt.TicketManager.entities;
 
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,15 +19,13 @@ public class Operator implements UserDetails {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
 
-
-
-    @Column(name="name", nullable = false, length = 15)
+    @Column(name = "name", nullable = false, length = 15)
     private String name;
 
-    @Column(name="surname", nullable = false, length = 20)
+    @Column(name = "surname", nullable = false, length = 20)
     private String surname;
 
     @Column(name = "isDeleted")
@@ -37,22 +34,23 @@ public class Operator implements UserDetails {
     @Column(name = "TimeStamp")
     private Date timeStamp = new Date();
 
-    @Column(name="description", length = 500)
+    @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name="login")
+    @Column(name = "login")
     private String login;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
-    public Operator(){}
+    public Operator() {
+    }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -131,6 +129,7 @@ public class Operator implements UserDetails {
     public String getUsername() {
         return login;
     }
+
     public void setUsername(String username) {
         login = username;
     }

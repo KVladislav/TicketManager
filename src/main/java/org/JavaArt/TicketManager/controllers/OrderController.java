@@ -95,7 +95,7 @@ public class OrderController
 
     @RequestMapping(value = "Order/setSectors.do", method = RequestMethod.POST)
     public String orderSetSectors(@RequestParam(value = "eventId", required = true)
-                                  int eventId, Model model) {
+                                      Long eventId, Model model) {
         Event currentEvent = eventService.getEventById(eventId);
         model.addAttribute("eventOrder", currentEvent);
         List<Sector> sectors = sectorService.getSectorsByEvent(currentEvent);
@@ -106,7 +106,7 @@ public class OrderController
     }
 
     @RequestMapping(value = "Order/setRow.do", method = RequestMethod.POST)
-    public String orderSetRow(@RequestParam(value = "sectorId", required = true) int sectorId, Model model) {
+    public String orderSetRow(@RequestParam(value = "sectorId", required = true) Long sectorId, Model model) {
         Sector currentSector = sectorService.getSectorById(sectorId);
         model.addAttribute("sectorOrder", currentSector);
         model.addAttribute("rowOrder", 1);
@@ -220,7 +220,7 @@ public class OrderController
     }
 
     @RequestMapping(value = "Order/delTicket.do", method = RequestMethod.POST)
-    public String orderDelTicket(@RequestParam(value = "orderId", required = true) int orderId, Model model,
+    public String orderDelTicket(@RequestParam(value = "orderId", required = true) Long orderId, Model model,
                                  @ModelAttribute("eventOrder") Event currentEvent,
                                  @ModelAttribute("sectorOrder") Sector currentSector,
                                  @ModelAttribute("rowOrder") Integer currentRow,
