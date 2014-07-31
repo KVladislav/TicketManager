@@ -1,18 +1,17 @@
 package org.JavaArt.TicketManager.controllers;
 
 import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
-import org.JavaArt.TicketManager.service.EventService;
-import org.JavaArt.TicketManager.service.SectorService;
-import org.JavaArt.TicketManager.service.TicketService;
+import org.JavaArt.TicketManager.service.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.*;
+
+
 import java.util.*;
 
 
@@ -25,16 +24,30 @@ public class OrderController
     private EventService eventService = new EventService();
     private TicketService ticketService = TicketService.getInstance();
     private SectorService sectorService = new SectorService();
+    private OperatorService operatorService = new OperatorService();
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) {
-        ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
+        Operator operator = operatorService.getOperatorByLogin(SecurityContextHolder.
+                getContext().getAuthentication().getName());
+        List<Ticket> orderTickets = (List) model.asMap().get("orderList");
         Double orderPrice = (Double) model.asMap().get("orderPrice");
         Event currentEvent = (Event) model.asMap().get("eventOrder");
         Sector currentSector = (Sector) model.asMap().get("sectorOrder");
         Integer currentRow = (Integer) model.asMap().get("rowOrder");
         Integer currentSeat = (Integer) model.asMap().get("seatOrder");
-        if (orderTickets == null) orderTickets = new ArrayList<>();
+       //Find all Not Confired tickets of current operator
+        if (orderTickets == null){
+            orderTickets = ticketService.getOrderTicketsByOperator(operator);
+            if (orderTickets!=null){
+                orderPrice = 0.0;
+                for (Ticket tic: orderTickets){
+                    orderPrice+=tic.getSector().getPrice();
+                    System.out.println ("orderPrice = "+ orderPrice);
+                }
+            }
+            else  orderTickets = new ArrayList<>();
+        }
         if (orderPrice==null) orderPrice = 0.0;
         model.addAttribute("pageName", 1);
         List<Event> events = eventService.getFutureEvents();
@@ -315,8 +328,8 @@ public class OrderController
         for (Ticket ticket : orderTickets) {
             if (ticketService.getTicketById(ticket.getId()).isConfirmed()) {
                 if (ticketService.getTicketById(ticket.getId()).isReserved())
-                    model.addAttribute("errorOrder", "ОШИБКА! Билет ID = " + ticket.getId() + " уже забронирован");
-                else model.addAttribute("errorOrder", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
+                    model.addAttribute("messageOrder", "ОШИБКА! Билет ID = " + ticket.getId() + " уже забронирован");
+                else model.addAttribute("messageOrder", "ОШИБКА! Билет ID = " + ticket.getId() + " уже продан");
                 orderTickets.remove(ticket);
                 orderPrice -= ticket.getSector().getPrice();
                 model.addAttribute("orderPrice", orderPrice);

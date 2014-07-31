@@ -1,10 +1,12 @@
 package org.JavaArt.TicketManager.DAO;
 
 import org.JavaArt.TicketManager.entities.Client;
+import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,5 +50,7 @@ public interface TicketRepository {
     public void deleteExpiredBookedTickets();
 
     public List<Ticket> getAllTicketsBySector(Sector sector);
+
+    public List<Ticket> getOrderTicketsByOperator(Operator operator);
 
 }

@@ -379,4 +379,27 @@ public class TicketRepositoryImpl implements TicketRepository {
         return tickets;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Ticket> getOrderTicketsByOperator(Operator operator){
+        if (operator==null) return new ArrayList<>();
+        Session session = null;
+        List<Ticket> tickets = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tickets = session.createCriteria(Ticket.class)
+                    .add(Restrictions.eq("operator", operator))
+                    .add(Restrictions.eq("isReserved", false))
+                    .add(Restrictions.eq("isConfirmed", false))
+                    .add(Restrictions.eq("isDeleted", false))
+                    .addOrder(Order.asc("sector")).list();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return tickets;
+    }
 }
