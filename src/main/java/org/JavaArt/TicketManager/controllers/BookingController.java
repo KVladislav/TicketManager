@@ -35,6 +35,7 @@ public class BookingController {
     private ClientService clientService = ClientService.getInstance();
     private EventService eventService = new EventService();
     private SectorService sectorService = new SectorService();
+    private static final int bookingTimeCounter = 10 * 60;
 
     //TODO авторизация
 
@@ -153,7 +154,7 @@ public class BookingController {
         checkEventState(modelMap, session);
         Date bookingTimeOut = (Date) modelMap.get("bookingTimeOut");
 
-        if (bookingTimeOut != null && (new Date().getTime() - bookingTimeOut.getTime()) > 1000 * 60 * 5) {
+        if (bookingTimeOut != null && (new Date().getTime() - bookingTimeOut.getTime()) > 1000 * bookingTimeCounter) {
             return "redirect:Booking/UndoOrder.do";
         }
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
@@ -181,7 +182,7 @@ public class BookingController {
 
         Date bookingTimeOut = (Date) modelMap.get("bookingTimeOut");
 
-        if (bookingTimeOut != null && (new Date().getTime() - bookingTimeOut.getTime()) > 1000 * 60 * 5) {
+        if (bookingTimeOut != null && (new Date().getTime() - bookingTimeOut.getTime()) > 1000 * bookingTimeCounter) {
             return "redirect:Booking/UndoOrder.do";
         }
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
@@ -378,7 +379,7 @@ public class BookingController {
             bookingTimeOut = new Date();
         }
 
-        if ((new Date().getTime() - bookingTimeOut.getTime()) > 1000 * 60 * 5) {
+        if ((new Date().getTime() - bookingTimeOut.getTime()) > 1000 * bookingTimeCounter) {
             return "redirect:Booking/UndoOrder.do";
         }
 

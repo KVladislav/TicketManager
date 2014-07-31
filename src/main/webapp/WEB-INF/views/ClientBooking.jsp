@@ -30,7 +30,7 @@
         window.onload = function () {
             function countdown(callback) {
                 var bar = document.getElementById('progress'),
-                        time = 0, max = 5 * 60,
+                        time = 0, max = 10 * 60,
                         int = setInterval(function () {
                             if (${bookingTime!=null}) {
                                 bar.style.width = Math.floor((${bookingTime} +time++ ) * 100 / max) + '%';
