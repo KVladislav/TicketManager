@@ -35,7 +35,7 @@ public class OrderController {
         Sector currentSector = (Sector) model.asMap().get("sectorOrder");
         Integer currentRow = (Integer) model.asMap().get("rowOrder");
         Integer currentSeat = (Integer) model.asMap().get("seatOrder");
-        //Find all Not Confired tickets of current operator
+        //Find all do not Confirmed tickets of current operator
         if (orderTickets == null) {
             orderTickets = ticketService.getOrderTicketsByOperator(operator);
             if (orderTickets != null) {
@@ -250,7 +250,7 @@ public class OrderController {
         }
         if (ticketService.getTicketById(orderId) != null) {
             for (Ticket ord : orderTickets) {
-                if (ord.getId() == orderId) {
+                if (ord.getId() == (long)orderId) {
                     orderPrice -= ord.getSector().getPrice();
                     model.addAttribute("messageOrder", "Билет ID = " + ord.getId() + " удалён из заказа");
                     ticketService.deleteTicket(ticketService.getTicketById(orderId));

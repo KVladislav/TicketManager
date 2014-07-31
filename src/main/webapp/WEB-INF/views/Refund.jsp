@@ -26,7 +26,7 @@
             <h3 class="panel-heading text-info">Поиск по номеру билета</h3><br>
 
             <div>
-                <input class="form-control" type="text" name="ticketId" size=20 maxlength=10 required pattern="^[0-9]+$"
+                <input class="form-control" type="text" name="ticketId" size=25 maxlength=19 required pattern="^[0-9]+$"
                        title="Целые числа без пробелов" style="text-align:center "
                        required placeholder="Введите ID билета"/>
                 <button type="submit" name="action" class="btn btn-primary">Поиск</button>
