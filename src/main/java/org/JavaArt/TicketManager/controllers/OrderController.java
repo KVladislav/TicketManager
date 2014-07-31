@@ -43,7 +43,6 @@ public class OrderController
                 orderPrice = 0.0;
                 for (Ticket tic: orderTickets){
                     orderPrice+=tic.getSector().getPrice();
-                    System.out.println ("orderPrice = "+ orderPrice);
                 }
             }
             else  orderTickets = new ArrayList<>();
