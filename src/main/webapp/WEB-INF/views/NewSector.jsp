@@ -91,7 +91,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </div>
                 <div class="col-md-4 column"></div>
             </div>

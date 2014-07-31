@@ -43,9 +43,7 @@
                            pattern="^[А-Яа-яa-zA-Z0-9]{0,15}$" maxlength=15 class="form-control input-md">
                 </div>
             </div>
-            <%--<input type="hidden" name="${_csrf.parameterName}"--%>
-            <%--value="${_csrf.token}" />--%>
-            <!-- Button -->
+
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
                     <c:if test="${not empty error}">
@@ -56,7 +54,7 @@
             </div>
 
         </fieldset>
-    </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
 </div>
 
 </body>

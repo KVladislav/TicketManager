@@ -23,7 +23,7 @@ public class SectorDefaultsService {
         sectorDefaultsRepository.updateSectorDefaults(sectorDefaults);
     }
 
-    public SectorDefaults getSectorDefaultsById(int id) {
+    public SectorDefaults getSectorDefaultsById(Long id) {
         return sectorDefaultsRepository.getSectorDefaultsById(id);
     }
 

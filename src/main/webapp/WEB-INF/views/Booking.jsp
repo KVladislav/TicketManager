@@ -77,7 +77,7 @@
                                 </c:if>
                             </c:forEach>
                         </select></p>
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </div>
                 <div class="col-md-6 column">
                     <strong class="text-info">Сектор</strong>
@@ -97,7 +97,7 @@
                                 </c:if>
                             </c:forEach>
                         </select></p>
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </div>
             </div>
             <div class="row clearfix">
@@ -118,7 +118,7 @@
                                 </c:if>
                             </c:forEach>
                         </select></p>
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </div>
                 <div class="col-md-6 column">
                     <%--<strong class="text-info">Место</strong>--%>
@@ -179,7 +179,7 @@
                 </div>
                 <div class="col-md-4 column">
                     <input type="submit" name="Order" class="btn btn-primary btn-md" value="Добавить">
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </div>
             </div>
         </div>
@@ -238,7 +238,7 @@
                             <button type="submit"
                                     class="btn btn-danger btn-lg" value="">Закрыть
                             </button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>

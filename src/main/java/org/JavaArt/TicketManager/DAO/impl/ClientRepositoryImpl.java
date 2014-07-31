@@ -54,7 +54,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         List<Client> clients = null;//new ArrayList<Client>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            clients = session.createCriteria(Client.class).add(Restrictions.eq("isDeleted", new Boolean("false"))).add(Restrictions.ilike("name", "%" + clientName + "%")).list();
+            clients = session.createCriteria(Client.class).add(Restrictions.eq("isDeleted", false)).add(Restrictions.ilike("name", "%" + clientName + "%")).list();
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -66,7 +66,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public Client getClientById(int id) {
+    public Client getClientById(Long id) {
         Session session = null;
         Client client = null;
         try {
@@ -82,7 +82,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         return client;
     }
 
-
+    @SuppressWarnings("unchecked")
     @Override
     public List<Client> getAllClients() {
         Session session = null;

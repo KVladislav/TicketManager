@@ -462,7 +462,7 @@
         </div>
     </div>
 </div>
-</form>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
 </center>
 
 
@@ -499,7 +499,7 @@
                                        id="sectorId"
                                        class="btn btn-danger btn-md">Удалить?
                                 </button>
-                            </form>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>

@@ -23,9 +23,9 @@
                 username-parameter="username"
                 password-parameter="password"
                 authentication-failure-handler-ref="userNameCachingAuthenticationFailureHandler"/>
-        <!--<logout logout-success-url="/login.do?logout" />-->
-        <!-- enable csrf protection -->
-        <!--<csrf/>-->
+        <logout logout-success-url="/login.do?logout" />
+         <!--enable csrf protection-->
+        <csrf/>
     </http>
 
 

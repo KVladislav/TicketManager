@@ -64,7 +64,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
     }
 
     @Override
-    public SectorDefaults getSectorDefaultsById(int id) {
+    public SectorDefaults getSectorDefaultsById(Long id) {
         Session session = null;
         SectorDefaults sectorDefaults = null;
         try {

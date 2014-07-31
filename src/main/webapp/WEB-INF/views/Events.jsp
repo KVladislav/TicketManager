@@ -105,7 +105,7 @@
                                 <button type="submit" name="evnt" value="${evnt.id}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-edit"></span></button>
                             </a>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </td>
                     <td>
                         <a data-toggle="tooltip" class="my-tool-tip" data-placement="top" title="Удалить">
@@ -148,7 +148,7 @@
                             <button type="submit" name="eventId" value="eventId" class="btn btn-danger btn-md"
                                     id="eventId">Удалить
                             </button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>

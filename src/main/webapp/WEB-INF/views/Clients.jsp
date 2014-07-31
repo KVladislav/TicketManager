@@ -31,7 +31,7 @@
                 </div>
                 <button class="btn btn-primary" type="submit" name="action" value="FindClient">Найти</button>
                 <button class="btn btn-primary" type="submit" name="action" value="NewClient">Новая бронь</button>
-            </form>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
         </div>
     </div>
     <div class="row clearfix">
@@ -66,7 +66,7 @@
                                 </td>
                             </tr>
                         </c:forEach>
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
 
                     </tbody>
                 </table>

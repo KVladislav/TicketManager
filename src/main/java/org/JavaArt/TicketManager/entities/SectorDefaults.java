@@ -22,11 +22,11 @@ public class SectorDefaults implements Comparable<SectorDefaults> {
     @Column(name = "SectorName", nullable = false)
     private String sectorName;
     @Column(name = "MaxRows")
-    private Integer maxRows;
+    private int maxRows=20;
     @Column(name = "MaxSeats")
-    private Integer maxSeats;
+    private int maxSeats=50;
     @Column(name = "defaultPrice")
-    private Double defaultPrice;
+    private double defaultPrice=0d;
     @Column(name = "isDeleted")
     private boolean isDeleted;
     @Column(name = "TimeStamp")

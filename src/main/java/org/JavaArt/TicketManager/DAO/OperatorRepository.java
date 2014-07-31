@@ -21,7 +21,7 @@ public interface OperatorRepository {
 
     public void updateOperator(Operator operator);
 
-    public Operator getOperatorById(int id);
+    public Operator getOperatorById(Long id);
 
     public List<Operator> getAllOperators();
 

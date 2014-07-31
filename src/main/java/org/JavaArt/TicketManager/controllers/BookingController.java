@@ -37,7 +37,6 @@ public class BookingController {
     private SectorService sectorService = new SectorService();
     private static final int bookingTimeCounter = 10 * 60;
 
-    //TODO авторизация
 
 
     @RequestMapping(value = "Booking/GetClient.do", method = RequestMethod.GET)
@@ -80,7 +79,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "Booking/ViewClient.do")
-    public String bookingViewClient(@RequestParam(value = "clientId", required = true) Integer clientId, ModelMap
+    public String bookingViewClient(@RequestParam(value = "clientId", required = true) Long clientId, ModelMap
             modelMap, HttpSession session) {
 
         if (clientId == null) {
@@ -134,7 +133,7 @@ public class BookingController {
         if (ticket != null) {
             ticketService.deleteTicket(ticket);
             for (Ticket tckt : tickets) {
-                if (tckt.getId() == ticketId) {
+                if (tckt.getId().equals(ticketId)) {
                     tickets.remove(tckt);
                     break;
                 }
@@ -315,7 +314,7 @@ public class BookingController {
         }
         int row = 1;
         if (model.get("bookingSector") != null &&
-                ((Sector) model.get("bookingSector")).getId() == sectorId &&
+                ((Sector) model.get("bookingSector")).getId().equals(sectorId) &&
                 model.get("bookingRow") != null) {
             row = (Integer) model.get("bookingRow");
         }

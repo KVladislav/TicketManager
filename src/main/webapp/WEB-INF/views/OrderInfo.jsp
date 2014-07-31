@@ -57,7 +57,7 @@
                     <h3 style="text-align:center">
                         <button type="submit" name="action" class="btn btn-primary">Назад</button>
                     </h3>
-                </form>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
             </div>
         </div>
     </div>

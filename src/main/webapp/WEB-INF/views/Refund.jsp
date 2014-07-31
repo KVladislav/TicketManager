@@ -61,7 +61,7 @@
                     </div>
                 </c:if>
             </div>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
         <table>
             <c:if test="${ticket!=null}">
             <tr>
@@ -73,7 +73,7 @@
                                 <h3 style="text-align:center">
                                     <input type="submit" name="Cancel" class="btn  btn-danger" value="Отмена">
                                 </h3>
-                            </form>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                         </div>
                     </div>
                 </td>
@@ -120,7 +120,7 @@
                                         <form action="${pageContext.request.contextPath}/Refund/Delete.do"
                                               method="post">
                                             <button type="submit" class="btn btn-primary" value=""> Да</button>
-                                        </form>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                                     </div>
                                 </td>
                             </table>

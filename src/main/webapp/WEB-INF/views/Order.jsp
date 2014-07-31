@@ -54,7 +54,7 @@
                     </c:if>
                 </c:forEach>
             </select></p>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-4 column">
         <strong class="text-info">Выбор сектора</strong>
@@ -92,7 +92,7 @@
                     </c:if>
                 </c:forEach>
             </select></p>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-4 column">
         <strong class="text-info">Сектора по возрастанию цены</strong>
@@ -103,7 +103,7 @@
                     <option value="${leg}"> ${leg}</option>
                 </c:forEach>
             </select>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
 </div>
 <div class="row">
@@ -139,7 +139,7 @@
                     </c:if>
                 </c:forEach>
             </select></p>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-2">
         <strong class="text-info">Выбор места</strong>
@@ -194,7 +194,7 @@
                 </c:forEach>
             </select>
             <p>
-        </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-7 col-lg-offset-0 ">
         <h3 class="panel-heading text-info" style="text-align: center">Выбранные билеты</h3>
@@ -229,7 +229,7 @@
                             <button type="submit" onclick="disableInput()" id="Submit" name="orderId"
                                     class="btn btn-default btn-xs" value="${ord.id}">
                                 <span class="glyphicon glyphicon-trash"></span></button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </td>
                 </tr>
             </c:forEach>
@@ -324,7 +324,7 @@
                                     <div class="col-md-3 column">
                                         <form action="${pageContext.request.contextPath}/Order/Buy.do" method="post">
                                             <button type="submit" class="btn btn-primary" value=""> Да</button>
-                                        </form>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                                     </div>
                                 </td>
                             </table>
@@ -364,7 +364,7 @@
                                     <div class="col-md-3 column">
                                         <form action="${pageContext.request.contextPath}/Order/Cancel.do" method="get">
                                             <button type="submit" class="btn btn-primary" value=""> Да</button>
-                                        </form>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                                     </div>
                                 </td>
                             </table>

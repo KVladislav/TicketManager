@@ -26,7 +26,7 @@ public class Sector implements Comparable, Serializable {
     private String name;
 
     @Column(name = "price")
-    private Double price;
+    private double price;
 
     @Column(name = "isDeleted")
     private boolean isDeleted;
@@ -39,10 +39,10 @@ public class Sector implements Comparable, Serializable {
     Operator operator;
 
     @Column(name = "MaxRows")
-    private Integer maxRows;
+    private int maxRows=20;
 
     @Column(name = "MaxSeats")
-    private Integer maxSeats;
+    private int maxSeats=50;
 
 
     public Sector() {

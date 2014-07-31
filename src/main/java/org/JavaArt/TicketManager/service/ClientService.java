@@ -31,7 +31,7 @@ public class ClientService {
         return clientRepository.getClientsByName(clientName);
     }
 
-    public Client getClientById(int clientId) {
+    public Client getClientById(Long clientId) {
         return clientRepository.getClientById(clientId);
     }
 

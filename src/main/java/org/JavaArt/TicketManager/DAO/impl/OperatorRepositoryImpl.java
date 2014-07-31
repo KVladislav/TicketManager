@@ -64,7 +64,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public Operator getOperatorById(int id) {
+    public Operator getOperatorById(Long id) {
         Session session = null;
         Operator operator = null;
         try {

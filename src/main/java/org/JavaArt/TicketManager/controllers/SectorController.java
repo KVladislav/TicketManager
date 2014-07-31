@@ -60,7 +60,7 @@ public class SectorController {
         List<SectorDefaults> sectorDefaultsList = (List) model.asMap().get("sectorDefaultsList");
         String errorMessage = null;
         for (SectorDefaults sectorDefaults : sectorDefaultsList) {
-            if (sectorDefaults.getId() == sectorDefaultsId) {
+            if (sectorDefaults.getId().equals(sectorDefaultsId)) {
 
                 if (action.equals("delete") && sectorDefaultsList.size() > 1) {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);

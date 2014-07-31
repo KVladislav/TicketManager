@@ -19,7 +19,7 @@ public interface SectorDefaultsRepository {
 
     public void updateSectorDefaults(SectorDefaults sectorDefaults);
 
-    public SectorDefaults getSectorDefaultsById(int id);
+    public SectorDefaults getSectorDefaultsById(Long id);
 
     public SectorDefaults getSectorDefaultsByName(String name);
 

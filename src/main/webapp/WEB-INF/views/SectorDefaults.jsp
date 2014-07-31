@@ -112,7 +112,7 @@
                                 </script>
                             </td>
                         </tr>
-                    </form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                 </c:forEach>
                 </tbody>
             </table>
@@ -151,7 +151,7 @@
                             <button type="submit" name="sectorDefaultsId" value="" id="sectorDefaultsId"
                                     class="btn btn-danger btn-md">Удалить
                             </button>
-                        </form>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
                     </div>
                 </div>
             </div>
