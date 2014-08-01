@@ -62,7 +62,12 @@ public class SectorController {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);
                     sectorDefaultsList.remove(sectorDefaults);
                     break;
+                } else
+                if (action.equals("delete")) {
+                    errorMessage = "Внимание! В настройках стадиона должен быть хотя бы один сектор";
+
                 }
+
 
                 if (action.equals("save")) {
                     SectorDefaults sectorDefaultsTest = sectorDefaultsService.getSectorDefaultsByName(sectorName);
