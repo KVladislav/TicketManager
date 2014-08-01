@@ -90,8 +90,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
-                    <a href="<c:url value="/j_spring_security_logout" />" title="Выйти"><strong> Вы зашли
-                        под ${pageContext.request.userPrincipal.name}</strong></a>
+                    <form class="form" name="logOutForm" action="<c:url value='j_spring_security_logout' />" method='POST'>
+                    <button type="submit" class="btn navbar-btn"><strong> Вы зашли
+                        как ${pageContext.request.userPrincipal.name}</strong></button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
+
                 </li>
             </ul>
         </div>
