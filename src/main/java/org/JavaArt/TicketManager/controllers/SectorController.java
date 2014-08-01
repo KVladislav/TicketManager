@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,13 +28,10 @@ public class SectorController {
 //        sessionStatus.setComplete();
         model.addAttribute("pageName", 7);//set menu page number
         List<SectorDefaults> sectorDefaultsList = sectorDefaultsService.getAllSectorDefaults();
-        if (sectorDefaultsList.size() == 0) {
-            SectorDefaults sectorDefaults = new SectorDefaults();
-            sectorDefaults.setSectorName("1");
-            sectorDefaultsList = new ArrayList<>();
-            sectorDefaultsList.add(sectorDefaults);
-            sectorDefaultsService.addSectorDefaults(sectorDefaults);
-        }
+//        if (sectorDefaultsList == null || sectorDefaultsList.size() == 0) {
+//            sectorDefaultsList = new ArrayList<>();
+//            initStadiumSettings(sectorDefaultsList);
+//        }
 
         model.addAttribute("sectorDefaultsList", sectorDefaultsList);
         return "SectorDefaults";
@@ -66,7 +62,12 @@ public class SectorController {
                     sectorDefaultsService.deleteSectorDefaults(sectorDefaults);
                     sectorDefaultsList.remove(sectorDefaults);
                     break;
+                } else
+                if (action.equals("delete")) {
+                    errorMessage = "Внимание! В настройках стадиона должен быть хотя бы один сектор";
+
                 }
+
 
                 if (action.equals("save")) {
                     SectorDefaults sectorDefaultsTest = sectorDefaultsService.getSectorDefaultsByName(sectorName);
@@ -110,4 +111,6 @@ public class SectorController {
         model.addAttribute("errorMessage", errorMessage);
         return "SectorDefaults";
     }
+
+
 }

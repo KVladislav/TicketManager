@@ -284,7 +284,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h2 class="modal-title" id="myModalLabel">Внимание! </h2>
+                <h2 class="modal-title" id="myModalLabel2">Внимание! </h2>
             </div>
             <div class="modal-body">
                 <h4>Подтвердите бронирование билетов</h4>
@@ -345,8 +345,7 @@
                 </table>
 
             </div>
-            <div class="modal-footer"
-            ">
+            <div class="modal-footer">
             <div class="row clearfix">
                 <div class="col-md-8 column">
                     <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">Назад</button>
@@ -374,7 +373,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+                <h4 class="modal-title" id="myModalLabel3">Внимание! </h4>
             </div>
             <div class="modal-body">
                 <h4>Подтвердите выкуп брони</h4>
@@ -494,7 +493,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Внимание! </h4>
+                <h4 class="modal-title" id="myModalLabel4">Внимание! </h4>
             </div>
             <div class="modal-body">
                 <h4>Подтвердите отмену бронирования</h4>

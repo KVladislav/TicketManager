@@ -100,26 +100,8 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         return operators;
     }
 
-//    @Override
-//    public void deleteOperator(Operator operator) {
-//        Session session = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            session.delete(operator);
-//            session.getTransaction().commit();
-//            session.flush();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-//        } finally {
-//            if (session != null && session.isOpen()) {
-//                session.close();
-//            }
-//        }
-//
-//    }
 
-    private long countOperators() {
+    private int countOperators() {
         Session session = null;
         int counter = 0;
         try {
@@ -139,13 +121,11 @@ public class OperatorRepositoryImpl implements OperatorRepository {
     @Override
     public UserDetails getOperatorByUserName(String userName) throws UsernameNotFoundException {
         if (userName == null) throw new UsernameNotFoundException("Пользователь " + userName + " не найден!");
-        if (countOperators() == 0) {
+        if (countOperators() == 0 && userName.equals("root")) {
             Operator operator = new Operator();
             operator.setLogin("root");
             operator.setPassword("root");
             addOperator(operator);
-//            return operator;
-
         }
         Session session = null;
         Operator operator = null;

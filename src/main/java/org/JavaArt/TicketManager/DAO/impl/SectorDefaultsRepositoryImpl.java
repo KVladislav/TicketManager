@@ -4,6 +4,7 @@ import org.JavaArt.TicketManager.DAO.SectorDefaultsRepository;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -41,6 +42,25 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
             }
         }
     }
+
+    @Override
+    public int countSectorDefaults() {
+        Session session = null;
+        int counter = 0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery(String.format("select count (*) from SectorDefaults where isDeleted = false"));
+            counter = ((Long) query.uniqueResult()).intValue();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return counter;
+    }
+
 
     @Override
     public void updateSectorDefaults(SectorDefaults sectorDefaults) {

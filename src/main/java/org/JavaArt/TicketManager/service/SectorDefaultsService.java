@@ -38,4 +38,8 @@ public class SectorDefaultsService {
     public SectorDefaults getSectorDefaultsByName(String name) {
         return sectorDefaultsRepository.getSectorDefaultsByName(name);
     }
+
+    public int countSectorDefaults() {
+        return sectorDefaultsRepository.countSectorDefaults();
+    }
 }
