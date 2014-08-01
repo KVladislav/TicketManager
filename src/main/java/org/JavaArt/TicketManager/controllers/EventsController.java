@@ -694,41 +694,62 @@ public class EventsController {
             newPriceD = Double.parseDouble(newPrice);
         }
         Sector sector = new Sector();
-        sector.setName(sectorName);
-        sector.setMaxRows(maxRows);
-        sector.setMaxSeats(maxSeats);
-        sector.setPrice(newPriceD);
-        sectorService.addSector(sector);
-        model.addAttribute("id" + sector.getId(), sector.getId());
-        if (sector != null && sector.getName() != null) {
-            if (allSectors != null) {
-                allSectors.put(sector.getName(), sector);
-            } else {
-                allSectors = new TreeMap<>();
-                allSectors.put(sector.getName(), sector);
+        if (allSectors == null || !allSectors.containsKey(sectorName)) {
+            sector.setName(sectorName);
+            sector.setMaxRows(maxRows);
+            sector.setMaxSeats(maxSeats);
+            sector.setPrice(newPriceD);
+            sectorService.addSector(sector);
+            model.addAttribute("id" + sector.getId(), sector.getId());
+            if (sector != null && sector.getName() != null) {
+                if (allSectors != null) {
+                    allSectors.put(sector.getName(), sector);
+                } else {
+                    allSectors = new TreeMap<>();
+                    allSectors.put(sector.getName(), sector);
+                }
             }
-        }
-        if (dateEv != null) {
-            model.addAttribute("dateEvent", dateEv);
-        }
-        if (timeEv != null) {
-            model.addAttribute("eventTime", timeEv);
-        }
-        if (eventDescriptions != null) {
-            model.addAttribute("eventDescriptions", eventDescriptions);
-        }
-        if (eventBookingTimeOut != null) {
-            model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-        }
-        if (this.editEvent != null) {
-            model.addAttribute("eventEdit", editEvent);
-        }
-        if (allSectors != null) {
-            model.addAttribute("allSectors", allSectors);
-        }
-        return "AddEditEvent";
-    }
+            if (dateEv != null) {
+                model.addAttribute("dateEvent", dateEv);
+            }
+            if (timeEv != null) {
+                model.addAttribute("eventTime", timeEv);
+            }
+            if (eventDescriptions != null) {
+                model.addAttribute("eventDescriptions", eventDescriptions);
+            }
+            if (eventBookingTimeOut != null) {
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+            }
+            if (this. editEvent!=null) { model.addAttribute("eventEdit", editEvent);}
+            if (allSectors!=null){ model.addAttribute("allSectors", allSectors);}
+            return "AddEditEvent";
+        } else {
+            String errorMessageSector = "Ошибка! Сектор с именем " + sectorName + " уже существует";
+            model.addAttribute("errorMessageSector", errorMessageSector);
+            if (editEvent != null) {
+                model.addAttribute("eventEdit", editEvent);
+            }
+            if (allSectors != null) {
+                model.addAttribute("allSectors", allSectors);
+            }
+            if (dateEv != null) {
+                model.addAttribute("dateEvent", dateEv);
+            }
+            if (timeEv != null) {
+                model.addAttribute("eventTime", timeEv);
+            }
+            if (eventDescriptions != null) {
+                model.addAttribute("eventDescriptions", eventDescriptions);
+            }
+            if (eventBookingTimeOut != null) {
+                model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
+            }
 
+            return "NewSector";
+        }
+
+    }
 
     public boolean dateValid(String inputDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
