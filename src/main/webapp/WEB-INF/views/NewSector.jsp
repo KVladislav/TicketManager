@@ -24,6 +24,14 @@
 <center>
     <caption><h1 class="panel-heading text-info" style="text-align:center;">Создание нового сектора</h1>
     </caption>
+
+    <c:if test="${errorMessageSector!=null}">
+        <div class="alert alert-error" style="color: red" class="panel-heading text-info" style="text-align:center;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="panel-heading text-info" style="text-align:center;">${errorMessageSector}</h4>
+        </div>
+    </c:if>
+
     <caption><h3 class="panel-heading  text-info" style="text-align:center;">Задайте параметры нового
         сектора:</h3></caption>
     <div class="table responsive">
