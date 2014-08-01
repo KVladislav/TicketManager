@@ -29,12 +29,9 @@ public class SectorController {
 //        sessionStatus.setComplete();
         model.addAttribute("pageName", 7);//set menu page number
         List<SectorDefaults> sectorDefaultsList = sectorDefaultsService.getAllSectorDefaults();
-        if (sectorDefaultsList.size() == 0) {
-            SectorDefaults sectorDefaults = new SectorDefaults();
-            sectorDefaults.setSectorName("1");
+        if (sectorDefaultsList == null || sectorDefaultsList.size() == 0) {
             sectorDefaultsList = new ArrayList<>();
-            sectorDefaultsList.add(sectorDefaults);
-            sectorDefaultsService.addSectorDefaults(sectorDefaults);
+            initStadiumSettings(sectorDefaultsList);
         }
 
         model.addAttribute("sectorDefaultsList", sectorDefaultsList);
@@ -109,5 +106,35 @@ public class SectorController {
         }
         model.addAttribute("errorMessage", errorMessage);
         return "SectorDefaults";
+    }
+
+    private void initStadiumSettings(List<SectorDefaults> sectorDefaultsList) {
+        SectorDefaults sectorDefaults;
+        for (int i = 1; i <= 9; i++) {
+            sectorDefaults = new SectorDefaults();
+            sectorDefaults.setSectorName("0" + i);
+            sectorDefaultsList.add(sectorDefaults);
+            sectorDefaultsService.addSectorDefaults(sectorDefaults);
+        }
+
+        for (int i = 10; i <= 25; i++) {
+            sectorDefaults = new SectorDefaults();
+            sectorDefaults.setSectorName("" + i);
+            sectorDefaultsList.add(sectorDefaults);
+            sectorDefaultsService.addSectorDefaults(sectorDefaults);
+        }
+
+        sectorDefaults = new SectorDefaults();
+        sectorDefaults.setSectorName("VIP A");
+        sectorDefaults.setMaxRows(20);
+        sectorDefaults.setMaxSeats(20);
+        sectorDefaultsList.add(sectorDefaults);
+        sectorDefaultsService.addSectorDefaults(sectorDefaults);
+        sectorDefaults = new SectorDefaults();
+        sectorDefaults.setSectorName("VIP D");
+        sectorDefaults.setMaxRows(20);
+        sectorDefaults.setMaxSeats(20);
+        sectorDefaultsList.add(sectorDefaults);
+        sectorDefaultsService.addSectorDefaults(sectorDefaults);
     }
 }
