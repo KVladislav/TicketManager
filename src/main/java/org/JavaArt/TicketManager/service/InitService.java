@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * Date: 03.07.2014
  * Time: 10:57
  */
-public class ThreadService implements ServletContextListener {
+public class InitService implements ServletContextListener {
     private TicketService ticketService;
     private ClientService clientService;
     private ExecutorService executorService;
@@ -33,7 +33,6 @@ public class ThreadService implements ServletContextListener {
         executorService.execute(new ClearNonConfirmedTickets());
         executorService.execute(new ClearEmptyClients());
         executorService.execute(new ClearExpiredBookedTickets());
-
     }
 
     private class ClearNonConfirmedTickets implements Runnable {
