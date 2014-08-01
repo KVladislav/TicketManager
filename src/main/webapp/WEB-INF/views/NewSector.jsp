@@ -31,7 +31,7 @@
             <h4 class="panel-heading text-info" style="text-align:center;">${errorMessageSector}</h4>
         </div>
     </c:if>
-
+    <input type="hidden" name="eventEditHidden" value="${eventEdit.id}">
     <caption><h3 class="panel-heading  text-info" style="text-align:center;">Задайте параметры нового
         сектора:</h3></caption>
     <div class="table responsive">
