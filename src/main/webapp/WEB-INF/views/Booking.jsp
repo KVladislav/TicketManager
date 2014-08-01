@@ -123,7 +123,7 @@
                 <div class="col-md-6 column">
                     <%--<strong class="text-info">Место</strong>--%>
 
-                    <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post">
+                    <form action="${pageContext.request.contextPath}/Booking/addTicket.do" method="post" id="setSeats" name="setSeats">
                         <select multiple="multiple" id="my-select" name="seats" name="my-select[]">
                             <c:forEach items="${bookingSeatsMap}" var="seatEntry">
                                 <c:if test="${seatEntry.value==1}">
@@ -156,6 +156,8 @@
                                 });
                             });
                         </script>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
                 </div>
             </div>
             <div class="row clearfix">
@@ -178,8 +180,8 @@
                        role="button">Отмена</a>
                 </div>
                 <div class="col-md-4 column">
-                    <input type="submit" name="Order" class="btn btn-primary btn-md" value="Добавить">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
+                    <input type="button" onclick="document.setSeats.submit()" name="Order" class="btn btn-primary btn-md" value="Добавить">
+
                 </div>
             </div>
         </div>
