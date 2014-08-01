@@ -213,7 +213,12 @@ public class EventsController {
                     event.setBookingTimeOut(new Date(event.getDate().getTime() - eventBookingTimeOut * 60000));
                     eventService.addEvent(event);
                     events.add(event);
-                    Iterator<Sector> sectorNewList = allSectors.values().iterator();
+                    Iterator<Sector> sectorNewList = null;
+                    if (allSectors!=null){
+                    sectorNewList = allSectors.values().iterator();}
+                    else {
+                        allSectors = new TreeMap<>();
+                        sectorNewList = allSectors.values().iterator();}
                     while (sectorNewList.hasNext()) {
                         Sector sectorNew = sectorNewList.next();
                         String price = request.getParameter("price" + sectorNew.getId());
