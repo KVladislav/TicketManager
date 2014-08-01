@@ -26,7 +26,8 @@
                   method="post" name="searchForm">
                 <div class="form-group">
                     <input class="form-control " maxlength="50" id="appendedInputButtons" size="80" type="text"
-                           name="clientName"
+                           name="clientName" pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,49}"
+                           title="Не пустое, не начинатся с пробела, до 30 знаков"
                            required placeholder="Введите ФИО клиента" value="${client.name}">
                 </div>
                 <button class="btn btn-primary" type="submit" name="action" value="FindClient">Найти</button>
