@@ -27,13 +27,13 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/"><img src="${pageContext.request.contextPath}/resources/ico/favicon.ico"/>TicketManager</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/resources/ico/favicon.ico"/>TicketManager</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <c:choose>
                     <c:when test="${pageName==1}">
-                        <li class="active"><a href="${pageContext.request.contextPath}/Order/Order.do">1Продажа</a>
+                        <li class="active"><a href="${pageContext.request.contextPath}/Order/Order.do">Продажа</a>
                         </li>
                     </c:when>
                     <c:otherwise>
@@ -90,7 +90,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
-                    <form class="form" name="logOutForm" action="<c:url value='${pageContext.request.contextPath}/j_spring_security_logout' />" method='POST'>
+                    <form class="form" name="logOutForm" action="<c:url value='/j_spring_security_logout' />" method='POST'>
                     <button type="submit" class="btn navbar-btn"><strong> Вы зашли
                         как ${pageContext.request.userPrincipal.name}</strong></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
