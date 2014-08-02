@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.*;
 
 
 @Service
 public class EventService {
     private static EventService eventService;
     private EventRepository eventRepository = new EventRepositoryImpl();
-
+    public static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9-_#,:\\.\\s]{0,49}$");
     // private EventService() {
 
     // }
@@ -70,4 +71,11 @@ public class EventService {
         return eventRepository.busyEvent(event);
     }
 
+    public boolean doMatch(String word) {
+        Matcher matcher = pattern.matcher(word);
+        if (matcher.matches())
+            return true;
+        else
+            return false;
+    }
 }

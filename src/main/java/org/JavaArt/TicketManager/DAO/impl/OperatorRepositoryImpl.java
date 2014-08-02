@@ -124,6 +124,8 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         if (countOperators() == 0 && userName.equals("root")) {
             Operator operator = new Operator();
             operator.setLogin("root");
+            operator.setName("root");
+            operator.setSurname("root");
             operator.setPassword("root");
             addOperator(operator);
         }
