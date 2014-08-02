@@ -83,7 +83,7 @@
                             стадиона</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/Sectors/ViewSectors.do">1Настройка
+                        <li><a href="${pageContext.request.contextPath}/Sectors/ViewSectors.do">Настройка
                             стадиона</a></li>
                     </c:otherwise>
                 </c:choose>
