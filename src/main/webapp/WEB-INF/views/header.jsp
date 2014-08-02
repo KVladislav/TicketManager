@@ -33,7 +33,7 @@
             <ul class="nav navbar-nav">
                 <c:choose>
                     <c:when test="${pageName==1}">
-                        <li class="active"><a href="${pageContext.request.contextPath}/Order/Order.do">Продажа</a>
+                        <li class="active"><a href="${pageContext.request.contextPath}/Order/Order.do">1Продажа</a>
                         </li>
                     </c:when>
                     <c:otherwise>
