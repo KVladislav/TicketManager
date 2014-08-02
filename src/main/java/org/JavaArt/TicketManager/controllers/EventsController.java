@@ -310,7 +310,7 @@ public class EventsController {
                             sectorNew.setEvent(event);
                         } catch (Exception e) {
                         }
-                        sectorService.addSector(sectorNew);
+                        sectorService.updateSector(sectorNew);
                     }
                     event.setDate(trueDate);
                 } else {
