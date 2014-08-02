@@ -153,20 +153,20 @@ public class EventsController {
                 while (sectorNewList.hasNext()) {
                     Sector sectorNew = sectorNewList.next();
                     String price = request.getParameter("price" + sectorNew.getId());
-                    if (price!=null){
-                       double priceNew = Double.parseDouble(price);
-                        if (sectorNew.getPrice()!=priceNew){
+                    if (price != null) {
+                        double priceNew = Double.parseDouble(price);
+                        if (sectorNew.getPrice() != priceNew) {
                             sectorNew.setPrice(priceNew);
-                           sectorService.updateSector(sectorNew);
+                            sectorService.updateSector(sectorNew);
                         }
                     }
                     model.addAttribute("price" + sectorNew.getId(), sectorNew.getId());
                     allSectors.put(sectorNew.getName(), sectorNew);
-
                 }
 
-              if (allSectors != null && allSectors.size() > 0) {
-                model.addAttribute("allSectors", allSectors);}
+                if (allSectors != null && allSectors.size() > 0) {
+                    model.addAttribute("allSectors", allSectors);
+                }
                 model.addAttribute("eventDescriptions", eventDescriptions);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
                 Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
@@ -204,8 +204,8 @@ public class EventsController {
             }
         }
         String action1 = request.getParameter("action");
-        if (action1!=null&&action1.equals("save")) {
-            if (allSectors == null||allSectors.size()==0) {
+        if (action1 != null && action1.equals("save")) {
+            if (allSectors == null || allSectors.size() == 0) {
                 eventErrorMessage = " Ошибка - нельзя создавать мероприятия без секторов!" + "<br>";
                 model.addAttribute("eventErrorMessage", eventErrorMessage);
                 model.addAttribute("eventDescriptions", eventDescriptions);
@@ -264,7 +264,7 @@ public class EventsController {
 
                 List<Event> list = eventService.getEventsByDate(trueDateNew);
                 if ((list == null) || (list.size() == 0)) {
-                   if (eventService.doMatch(eventDescriptions)==false){
+                    if (eventService.doMatch(eventDescriptions) == false) {
                         String eventNameErrorMessage = "Поле Наименование не прошло валидацию и содержит запрещенные символы!";
                         model.addAttribute("eventNameErrorMessage", eventNameErrorMessage);
                         if (allSectors != null) {
@@ -338,7 +338,7 @@ public class EventsController {
             }
         }
         String action2 = request.getParameter("newSector");
-        if (action2!=null&&action2.equals("newSector")) {
+        if (action2 != null && action2.equals("newSector")) {
             model.addAttribute("pageName", 4);
             Iterator<Sector> sectorNewList;
             if (allSectors != null) {
@@ -350,10 +350,9 @@ public class EventsController {
             while (sectorNewList.hasNext()) {
                 Sector sectorNew = sectorNewList.next();
                 String price = request.getParameter("price" + sectorNew.getId());
-                if (price!=null){
-                    //  request.getParameterNames()
+                if (price != null) {
                     double priceNew = Double.parseDouble(price);
-                    if (sectorNew.getPrice()!=priceNew){
+                    if (sectorNew.getPrice() != priceNew) {
                         sectorNew.setPrice(priceNew);
                         sectorService.updateSector(sectorNew);
                     }
@@ -361,10 +360,6 @@ public class EventsController {
                 model.addAttribute("price" + sectorNew.getId(), sectorNew.getId());
                 allSectors.put(sectorNew.getName(), sectorNew);
             }
-//
-//            if (editEvent != null) {
-//                model.addAttribute("eventEdit",  eventService.getEventById(eventEditHidden));
-//            }
             if (allSectors != null) {
                 model.addAttribute("allSectors", allSectors);
             }
@@ -450,7 +445,7 @@ public class EventsController {
         Map<String, Sector> allSectors = new TreeMap<>();
 
         List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
-        if(sectors!=null) {
+        if (sectors != null) {
             if (sectors.size() != 0) {
                 List copy = new ArrayList(sectors);
                 for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
@@ -489,7 +484,6 @@ public class EventsController {
         return "AddEditEvent";
     }
 
-
     @RequestMapping(value = "AddEditEvent/editEventNow.do", method = RequestMethod.POST)
     public String editEvent(Model model,
                             Long eventEditHidden,
@@ -506,10 +500,6 @@ public class EventsController {
         String action = request.getParameter("delete");
         Long idSectorDel;
         if (action != null) {
-//            dateEventN = request.getParameter("dateEvent");
-//            eventTimeN = request.getParameter("eventTime");
-//            eventDescriptionsN = request.getParameter("eventDescriptions");
-//            eventBookingTimeOutN = request.getParameter("eventBookingTimeOut");
             idSectorDel = Long.parseLong(action);
             int eventBookingTimeOut = 0;
             if (eventBookingTimeOutN != null) {
@@ -531,18 +521,16 @@ public class EventsController {
                 while (sectorNewList.hasNext()) {
                     Sector sectorNew = sectorNewList.next();
                     String price = request.getParameter("price" + sectorNew.getId());
-                    if (price!=null){
+                    if (price != null) {
                         double priceNew = Double.parseDouble(price);
-                        if (sectorNew.getPrice()!=priceNew){
+                        if (sectorNew.getPrice() != priceNew) {
                             sectorNew.setPrice(priceNew);
                             sectorService.updateSector(sectorNew);
                         }
                     }
                     model.addAttribute("price" + sectorNew.getId(), sectorNew.getId());
                     allSectors.put(sectorNew.getName(), sectorNew);
-
                 }
-
                 model.addAttribute("allSectors", allSectors);
                 model.addAttribute("eventDescriptions", eventDescriptionsN);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
@@ -587,12 +575,8 @@ public class EventsController {
             eventBookingTimeOut = Integer.parseInt(eventBookingTimeOutN);
         }
         String action1 = request.getParameter("action");
-        if (action1!=null&&action1.equals("save")) {
-//            dateEventN = request.getParameter("dateEvent");
-//            eventTimeN = request.getParameter("eventTime");
-//            eventDescriptionsN = request.getParameter("eventDescriptions");
-//            eventBookingTimeOutN = request.getParameter("eventBookingTimeOut");
-            if (allSectors == null||allSectors.size()==0) {
+        if (action1 != null && action1.equals("save")) {
+            if (allSectors == null || allSectors.size() == 0) {
                 errorMessageEdit = " Ошибка - нельзя создавать мероприятия без секторов!" + "<br>";
                 model.addAttribute("eventErrorMessage", errorMessageEdit);
                 model.addAttribute("eventDescriptions", eventDescriptionsN);
@@ -632,7 +616,7 @@ public class EventsController {
                 model.addAttribute("eventTime", timeEvent);
                 return "AddEditEvent";
             }
-              if (!eventDescriptionsN.equals("") && !dateEventN.equals("") && (dateValid(dateEventN) != false) && !eventTimeN.equals("") && !eventBookingTimeOutN.equals("")) {
+            if (!eventDescriptionsN.equals("") && !dateEventN.equals("") && (dateValid(dateEventN) != false) && !eventTimeN.equals("") && !eventBookingTimeOutN.equals("")) {
                 Event event = eventService.getEventById(eventEditHidden);
                 Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
                 int intHour = 0;
@@ -649,12 +633,12 @@ public class EventsController {
                 Date trueDate = rightAgain.getTime();
 
                 List<Event> list = eventService.getEventsByDateFromEvent(trueDate, event);
-                     eventBookingTimeOut = 0;
-                  if (eventBookingTimeOutN != null) {
-                      eventBookingTimeOut = Integer.parseInt(eventBookingTimeOutN);
-                  }
+                eventBookingTimeOut = 0;
+                if (eventBookingTimeOutN != null) {
+                    eventBookingTimeOut = Integer.parseInt(eventBookingTimeOutN);
+                }
                 if (list.size() == 0) {
-                    if (eventService.doMatch(eventDescriptionsN)==false){
+                    if (eventService.doMatch(eventDescriptionsN) == false) {
                         String eventNameErrorMessage = "Поле Наименование не прошло валидацию и содержит запрещенные символы!";
                         model.addAttribute("eventNameErrorMessage", eventNameErrorMessage);
                         if (allSectors != null) {
@@ -757,7 +741,7 @@ public class EventsController {
             }
         }
         String action2 = request.getParameter("newSector");
-        if (action2!=null&&action2.equals("newSector")) {
+        if (action2 != null && action2.equals("newSector")) {
             model.addAttribute("pageName", 4);
             Iterator<Sector> sectorNewList;
             if (allSectors != null) {
@@ -769,10 +753,9 @@ public class EventsController {
             while (sectorNewList.hasNext()) {
                 Sector sectorNew = sectorNewList.next();
                 String price = request.getParameter("price" + sectorNew.getId());
-                if (price!=null){
-                    //  request.getParameterNames()
-                    double priceNew = Double.parseDouble(price);
-                    if (sectorNew.getPrice()!=priceNew){
+                if (price != null) {
+                      double priceNew = Double.parseDouble(price);
+                    if (sectorNew.getPrice() != priceNew) {
                         sectorNew.setPrice(priceNew);
                         sectorService.updateSector(sectorNew);
                     }
@@ -780,12 +763,11 @@ public class EventsController {
                 model.addAttribute("price" + sectorNew.getId(), sectorNew.getId());
                 allSectors.put(sectorNew.getName(), sectorNew);
             }
-            if (eventEditHidden!=null){
-                //  eventEdit = eventService.getEventById(eventEditHidden);
+            if (eventEditHidden != null) {
                 model.addAttribute("eventEditHidden", eventEditHidden);
             }
             if (editEvent != null) {
-                model.addAttribute("eventEdit",  eventService.getEventById(eventEditHidden));
+                model.addAttribute("eventEdit", eventService.getEventById(eventEditHidden));
             }
             if (allSectors != null) {
                 model.addAttribute("allSectors", allSectors);
@@ -925,8 +907,9 @@ public class EventsController {
             sector.setMaxSeats(maxSeats);
             sector.setPrice(newPriceD);
             Event editEvent = this.editEvent;
-            if (editEvent!=null){
-            sector.setEvent(editEvent);}
+            if (editEvent != null) {
+                sector.setEvent(editEvent);
+            }
             sectorService.addSector(sector);
             model.addAttribute("id" + sector.getId(), sector.getId());
             if (sector != null && sector.getName() != null) {

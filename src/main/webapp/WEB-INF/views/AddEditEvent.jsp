@@ -16,28 +16,13 @@
 
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/js/date.js"></script>
-    <!-- Bootstrap -->
 
-
-    <%--<link href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.css" rel="stylesheet" media="screen">--%>
-    <%--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--%>
-    <%--<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>--%>
-    <%--<script src="${pageContext.request.contextPath}/resources/css/bootstrap.css"></script>--%>
     <link href="${pageContext.request.contextPath}/resources/css/multi-select.css" media="screen" rel="stylesheet"
           type="text/css">
-    <%--<script type="text/javascript"--%>
-    <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/jquery.js" />'></script>--%>
-    <%--<script type="text/javascript"--%>
-    <%--src='<c:url value="${pageContext.request.contextPath}/resources/js/bootstrap.js" />'></script>--%>
-
     <script src="${pageContext.request.contextPath}/resources/js/jquery.multi-select.js"
             type="text/javascript"></script>
 
     <script src="http://malsup.github.com/jquery.form.js"></script>
-    <%--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">--%>
-    <%--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap-responsive.css"--%>
-    <%--rel="stylesheet">--%>
-    <%--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">--%>
 
     <script type="text/javascript">
         $(document).on("hover", ".cont", function () {
