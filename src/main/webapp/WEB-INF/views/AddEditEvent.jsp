@@ -71,8 +71,8 @@
 //document.getElementById('help').innerHTML = "x = " + defPosition(event).x + ", y = " + defPosition(event).y;
 
 //Здесь координаты присваиватся положению слоя относительно окна и к координате х плюсуется 15 пикселов, чтоб курсор не был на подсказке.
-            document.getElementById('help').style.left = defPosition(event).x + 15 + "px";
-            document.getElementById('help').style.top = defPosition(event).y - 40 + "px";
+            document.getElementById('help').style.left = defPosition(event).x + 25 + "px";
+            document.getElementById('help').style.top = defPosition(event).y - 55 + "px";
         }
 
         //Функция, которая делает видимым наш слой и вкладывает в него необходимый текст.
@@ -450,16 +450,20 @@
                 <button type="submit" name="action" value="save" class="btn btn-primary btn-md">Сохранить</button>
             </div>
 
+       <%--     <form action="${pageContext.request.contextPath}/NewSector/NewSector.do"  method="get"> --%>
             <div class="col-md-3 column">
                 <input type="hidden" name="dateEvent"
                        value="<fmt:formatDate value='${dateEvent}' type='date'/>"/>
                 <input type="hidden" name="eventTime" value="${eventTime}">
                 <input type="hidden" name="eventDescriptions" value="${eventDescriptions}">
                 <input type="hidden" name="eventBookingTimeOut" value="${eventBookingTimeOut}">
+                <c:forEach items="${allSectors}" var="sector" varStatus="theCount">
+                <input tabindex="0" type="hidden" name="price${sector.value.id}" value="price${sector.value.id}">
+                </c:forEach>
 
-                <a href="${pageContext.request.contextPath}/NewSector/NewSector.do" class="btn btn-info btn-md"
-                   title="Перед заполнением формы можно добавить недостающие сектора!" role="button">+ Добавить
-                    сектор</a>
+                <%--    <a href="${pageContext.request.contextPath}/NewSector/NewSector.do"/> </a> --%>
+                <button type="submit" class ="btn btn-info btn-md" name="newSector" value="newSector"  title="Перед заполнением формы можно добавить недостающие сектора!" role="button">+ Добавить
+                    сектор</button>
             </div>
 
         </div>
