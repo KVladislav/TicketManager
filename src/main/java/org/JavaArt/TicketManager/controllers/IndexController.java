@@ -49,12 +49,12 @@ public class IndexController {
 
         sectorDefaults = new SectorDefaults();
         sectorDefaults.setSectorName("VIP A");
-        sectorDefaults.setMaxRows(20);
+        sectorDefaults.setMaxRows(10);
         sectorDefaults.setMaxSeats(20);
         sectorDefaultsService.addSectorDefaults(sectorDefaults);
         sectorDefaults = new SectorDefaults();
         sectorDefaults.setSectorName("VIP D");
-        sectorDefaults.setMaxRows(20);
+        sectorDefaults.setMaxRows(10);
         sectorDefaults.setMaxSeats(20);
         sectorDefaultsService.addSectorDefaults(sectorDefaults);
     }
