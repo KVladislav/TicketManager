@@ -58,8 +58,6 @@ public class EventsController {
         }
         model.addAttribute("eventDescriptions", "");
         model.addAttribute("eventBookingTimeOut", 0);
-        Event event = new Event();
-        model.addAttribute("event", event);
         //     status.setComplete();
         List<SectorDefaults> sectorsDefaults = sectorDefaultsService.getAllSectorDefaults();
         if (sectorsDefaults != null && sectorsDefaults.size() != 0) {
@@ -76,7 +74,6 @@ public class EventsController {
                 sector.setMaxRows(sectorDefaults.getMaxRows());
                 sector.setMaxSeats(sectorDefaults.getMaxSeats());
                 sector.setPrice(sectorDefaults.getDefaultPrice());
-                sector.setEvent(event);
                 sectorService.addSector(sector);
                 model.addAttribute("price" + sector.getId(), sector.getId());
                 allSectors.put(sector.getName(), sector);
@@ -99,7 +96,6 @@ public class EventsController {
         String eventTime = "12:00";
         model.addAttribute("eventTime", eventTime);
         model.addAttribute("dateEvent", dateEvent);
-
         return "AddEditEvent";
     }
 
@@ -296,12 +292,7 @@ public class EventsController {
                     Date nowDate = new Date();
                     event.setTimeStamp(nowDate);
                     event.setBookingTimeOut(new Date(event.getDate().getTime() - eventBookingTimeOut * 60000));
-                    if (event.getId() != null) {
-                        eventService.updateEvent(event);
-                    } else {
-                        eventService.addEvent(event);
-                    }
-
+                    eventService.addEvent(event);
                     events.add(event);
                     Iterator<Sector> sectorNewList;
                     if (allSectors != null) {
