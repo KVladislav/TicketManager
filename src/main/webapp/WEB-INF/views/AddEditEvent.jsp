@@ -56,8 +56,8 @@
 //document.getElementById('help').innerHTML = "x = " + defPosition(event).x + ", y = " + defPosition(event).y;
 
 //Здесь координаты присваиватся положению слоя относительно окна и к координате х плюсуется 15 пикселов, чтоб курсор не был на подсказке.
-            document.getElementById('help').style.left = defPosition(event).x + 25 + "px";
-            document.getElementById('help').style.top = defPosition(event).y - 55 + "px";
+            document.getElementById('help').style.left = defPosition(event).x + 40 + "px";
+            document.getElementById('help').style.top = defPosition(event).y - 70 + "px";
         }
 
         //Функция, которая делает видимым наш слой и вкладывает в него необходимый текст.
@@ -447,7 +447,7 @@
                 </c:forEach>
 
                 <%--    <a href="${pageContext.request.contextPath}/NewSector/NewSector.do"/> </a> --%>
-                <button type="submit" class ="btn btn-info btn-md" name="newSector" value="newSector"  title="Перед заполнением формы можно добавить недостающие сектора!" role="button">+ Добавить
+                <button type="submit" class ="btn btn-info btn-md"  formnovalidate="formnovalidate" name="newSector" value="newSector"  title="Перед заполнением формы можно добавить недостающие сектора!" role="button">+ Добавить
                     сектор</button>
             </div>
 

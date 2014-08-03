@@ -62,27 +62,27 @@
                                 <td>
                                     <input tabindex="1" class="form-control" size="16" maxlength="10" type="text"
                                            name="sectorName" required
-                                           placeholder="Название сектора" value=""
+                                           placeholder="Название сектора" value="${sectorName}"
                                            pattern="[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9\s]{0,9}"
                                            title="Не пустое, не начинается с пробела,только буквы и цифры,до 10 знаков">
                                 </td>
                                 <td>
                                     <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxRows"
                                            required
-                                           placeholder="Рядов" value=""
+                                           placeholder="Рядов" value="${maxRows}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
                                     <input tabindex="1" class="form-control" size="16" maxlength="2" name="maxSeats"
                                            required
-                                           placeholder="Мест" value=""
+                                           placeholder="Мест" value="${maxSeats}"
                                            pattern="[1-9][0-9]{0,1}" title="В интервале [1-99]">
                                 </td>
                                 <td>
-                                    <input tabindex="1" class="form-control" size="16" type="text" maxlength="5"
+                                    <input tabindex="1" class="form-control" size="16" type="text" maxlength="8"
                                            name="newPrice"
-                                           placeholder="Цена" value=""
-                                           required pattern="\d{0,5}(\.\d{0,2}){0,1}"
+                                           placeholder="Цена" value="${newPrice}"
+                                           required pattern="^\d{0,5}(\.\d{0,2}){0,1}$"
                                            title="В интервале [0-99999] до двух знаков после запятой">
                                 </td>
                             </tr>
