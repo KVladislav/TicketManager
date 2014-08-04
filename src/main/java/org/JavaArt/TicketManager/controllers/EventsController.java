@@ -43,7 +43,6 @@ public class EventsController {
             model.addAttribute("event", events.get(0));
             model.addAttribute("events", events);
         }
-
         return "Events";
     }
 
@@ -58,7 +57,6 @@ public class EventsController {
         }
         model.addAttribute("eventDescriptions", "");
         model.addAttribute("eventBookingTimeOut", 0);
-        //     status.setComplete();
         List<SectorDefaults> sectorsDefaults = sectorDefaultsService.getAllSectorDefaults();
         if (sectorsDefaults != null && sectorsDefaults.size() != 0) {
             Collections.sort(sectorsDefaults);
@@ -169,10 +167,10 @@ public class EventsController {
                 }
                 model.addAttribute("eventDescriptions", eventDescriptions);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-                int min = (int) getDateByString(dateEvent, eventTime).get(2);
+                int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
+                int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
                 String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
@@ -189,10 +187,10 @@ public class EventsController {
                 }
                 model.addAttribute("eventDescriptions", eventDescriptions);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-                int min = (int) getDateByString(dateEvent, eventTime).get(2);
+                int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
+                int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
                 String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
@@ -231,10 +229,10 @@ public class EventsController {
                 }
 
                 model.addAttribute("allSectors", allSectors);
-                Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-                int min = (int) getDateByString(dateEvent, eventTime).get(2);
+                int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
+                int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
                 String timeEvent = "";
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
@@ -244,7 +242,7 @@ public class EventsController {
                 model.addAttribute("eventTime", timeEvent);
                 return "AddEditEvent";
             }
-            if (!eventDescriptions.equals("") && !dateEvent.equals("") && (dateValid(dateEvent) != false) && !eventTime.equals("")
+            if (!eventDescriptions.equals("") && !dateEvent.equals("") && (eventService.dateValid(dateEvent) != false) && !eventTime.equals("")
                     && eventBookingTimeOut != 0) {
                 Event event = new Event();
                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -272,10 +270,10 @@ public class EventsController {
                         }
                         model.addAttribute("eventDescriptions", eventDescriptions);
                         model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                        Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+                        Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
                         model.addAttribute("dateEvent", simpleDate);
-                        int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-                        int min = (int) getDateByString(dateEvent, eventTime).get(2);
+                        int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
+                        int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
                         String timeEvent;
                         if (min == 0) {
                             timeEvent = "" + hour + ":" + "00";
@@ -323,7 +321,7 @@ public class EventsController {
                 if (eventDescriptions.equals("")) {
                     eventErrorMessage += " Заполните наименование мероприятия!" + "<br>";
                 }
-                if (dateValid(dateEvent) == false) {
+                if (eventService.dateValid(dateEvent) == false) {
                     eventErrorMessage += " Некорректно заполненная дата - дата может быть только в формате 'дд.мм.гггг' и больше текущей!" + "<br>";
                 }
                 if (dateEvent.equals("")) {
@@ -363,10 +361,10 @@ public class EventsController {
             if (allSectors != null) {
                 model.addAttribute("allSectors", allSectors);
             }
-            Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+            Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
             model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-            int min = (int) getDateByString(dateEvent, eventTime).get(2);
+            int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
+            int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
             String timeEvent = "";
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
@@ -408,10 +406,10 @@ public class EventsController {
             }
 
             model.addAttribute("allSectors", allSectors);
-            Date simpleDate = (Date) getDateByString(dateEvent, eventTime).get(0);
+            Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
             model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEvent, eventTime).get(1);
-            int min = (int) getDateByString(dateEvent, eventTime).get(2);
+            int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
+            int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
             String timeEvent = "";
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
@@ -534,10 +532,10 @@ public class EventsController {
                 model.addAttribute("allSectors", allSectors);
                 model.addAttribute("eventDescriptions", eventDescriptionsN);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
                 String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
@@ -555,10 +553,10 @@ public class EventsController {
                 }
                 model.addAttribute("eventDescriptions", eventDescriptionsN);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
                 String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
@@ -603,11 +601,11 @@ public class EventsController {
                 }
 
                 model.addAttribute("allSectors", allSectors);
-                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
-                String timeEvent = "";
+                int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
+                String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
                 } else {
@@ -616,9 +614,9 @@ public class EventsController {
                 model.addAttribute("eventTime", timeEvent);
                 return "AddEditEvent";
             }
-            if (!eventDescriptionsN.equals("") && !dateEventN.equals("") && (dateValid(dateEventN) != false) && !eventTimeN.equals("") && !eventBookingTimeOutN.equals("")) {
+            if (!eventDescriptionsN.equals("") && !dateEventN.equals("") && (eventService.dateValid(dateEventN) != false) && !eventTimeN.equals("") && !eventBookingTimeOutN.equals("")) {
                 Event event = eventService.getEventById(eventEditHidden);
-                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                 int intHour = 0;
                 int intMin = 0;
                 if ((eventTimeN != null) && (eventTimeN != "")) {
@@ -647,10 +645,10 @@ public class EventsController {
                         model.addAttribute("eventEdit", editEvent);
                         model.addAttribute("eventDescriptions", eventDescriptionsN);
                         model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                        Date editDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                        Date editDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                         model.addAttribute("dateEvent", editDate);
-                        int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-                        int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                        int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+                        int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
                         String timeEvent;
                         if (min == 0) {
                             timeEvent = "" + hour + ":" + "00";
@@ -696,7 +694,7 @@ public class EventsController {
                 if (eventDescriptionsN.equals("")) {
                     errorMessageEdit += " Заполните наименование мероприятия!" + "<br>";
                 }
-                if (dateValid(dateEventN) == false) {
+                if (eventService.dateValid(dateEventN) == false) {
                     errorMessageEdit += " Некорректно заполненная дата - дата может быть только в формате 'дд.мм.гггг' и больше текущей!" + "<br>";
                 }
                 if (dateEventN.equals("")) {
@@ -725,10 +723,10 @@ public class EventsController {
                     }
                 }
                 model.addAttribute("allSectors", allSectors);
-                Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+                Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                 model.addAttribute("dateEvent", simpleDate);
-                int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-                int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+                int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+                int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
                 String timeEvent = "";
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
@@ -772,10 +770,10 @@ public class EventsController {
             if (allSectors != null) {
                 model.addAttribute("allSectors", allSectors);
             }
-            Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+            Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
             model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-            int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+            int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+            int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
             String timeEvent = "";
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
@@ -810,10 +808,10 @@ public class EventsController {
                 }
             }
             model.addAttribute("allSectors", allSectors);
-            Date simpleDate = (Date) getDateByString(dateEventN, eventTimeN).get(0);
+            Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
             model.addAttribute("dateEvent", simpleDate);
-            int hour = (int) getDateByString(dateEventN, eventTimeN).get(1);
-            int min = (int) getDateByString(dateEventN, eventTimeN).get(2);
+            int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
+            int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
             String timeEvent = "";
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
@@ -839,7 +837,7 @@ public class EventsController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Events/Cancel.do", method = RequestMethod.GET)
-    public String cancel(Model model, SessionStatus status) {
+    public String cancel(Model model) {
         model.addAttribute("pageName", 4);
         List<Event> events = eventService.getAllEvents();
         Collections.sort(events);
@@ -966,65 +964,21 @@ public class EventsController {
             if (eventBookingTimeOut != null) {
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
             }
+             if (sectorName != null) {
+                model.addAttribute("sectorName", sectorName);
+            }
+            if (maxRows != null) {
+                model.addAttribute("maxRows", maxRows);
+            }
+            if (maxSeats != null) {
+                model.addAttribute("maxSeats", maxSeats);
+            }
+            if (newPrice != null) {
+                model.addAttribute("newPrice", newPrice);
+            }
+
             return "NewSector";
         }
     }
-
-    public boolean dateValid(String inputDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            Date ourDate = sdf.parse(inputDate);
-            Date now = new Date();
-            if (ourDate.getTime() > now.getTime()) {
-                return inputDate.equals(sdf.format(ourDate));
-            } else return false;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
-
-    public boolean dateValidDate(Date inputDate) {
-        Date now = new Date();
-        if (inputDate.getTime() > now.getTime()) {
-            return true;
-        } else return false;
-    }
-
-    public List getDateByString(String dateEvent, String eventTime) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        Date trueDate = format.parse(dateEvent);
-        int intHour = 0;
-        int intMin = 0;
-        if ((eventTime != null) && (eventTime != "")) {
-            String[] str = eventTime.split(":");
-            intHour = Integer.parseInt(str[0]);
-            intMin = Integer.parseInt(str[1]);
-        }
-        Calendar rightAgain = Calendar.getInstance();
-        rightAgain.setTime(trueDate);
-        rightAgain.add(Calendar.HOUR, intHour);
-        rightAgain.add(Calendar.MINUTE, intMin);
-        trueDate = rightAgain.getTime();
-        Date date = trueDate;
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(date);
-
-        int year = gc.get(GregorianCalendar.YEAR);
-        int mon = gc.get(GregorianCalendar.MONTH);
-        int day = gc.get(GregorianCalendar.DATE);
-        int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
-        int min = gc.get(GregorianCalendar.MINUTE);
-        GregorianCalendar calendarN = new GregorianCalendar();
-        calendarN.set(year, mon, day, 0, 0, 0);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String localisedDate = dateFormat.format(calendarN.getTime());
-        Date simpleDate = dateFormat.parse(localisedDate);
-        List allDates = new ArrayList();
-        allDates.add(simpleDate);
-        allDates.add(hour);
-        allDates.add(min);
-        return allDates;
-    }
-
 
 }
