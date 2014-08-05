@@ -38,12 +38,15 @@ public class IndexController {
         for (int i = 1; i <= 9; i++) {
             sectorDefaults = new SectorDefaults();
             sectorDefaults.setSectorName("0" + i);
+            sectorDefaults.setDefaultPrice(50);
             sectorDefaultsService.addSectorDefaults(sectorDefaults);
         }
 
         for (int i = 10; i <= 25; i++) {
             sectorDefaults = new SectorDefaults();
             sectorDefaults.setSectorName("" + i);
+            sectorDefaults.setDefaultPrice(50);
+
             sectorDefaultsService.addSectorDefaults(sectorDefaults);
         }
 
@@ -51,6 +54,8 @@ public class IndexController {
         sectorDefaults.setSectorName("VIP A");
         sectorDefaults.setMaxRows(10);
         sectorDefaults.setMaxSeats(20);
+        sectorDefaults.setDefaultPrice(200);
+
         sectorDefaultsService.addSectorDefaults(sectorDefaults);
         sectorDefaults = new SectorDefaults();
         sectorDefaults.setSectorName("VIP D");
