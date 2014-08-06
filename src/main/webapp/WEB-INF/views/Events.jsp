@@ -65,7 +65,7 @@
 
 
 <div class="panel-heading text-info" style="text-align:center;"><b>
-    <a href="/AddEditEvent/NewEvent.do" role="button" class="btn btn-primary" data-toggle="modal">Создание нового
+    <a href="${pageContext.request.contextPath}/AddEditEvent/NewEvent.do" role="button" class="btn btn-primary" data-toggle="modal">Создание нового
         мероприятия</a>
 </b></div>
 

@@ -10,7 +10,7 @@
     background: #e7e7e7;
     color: #000000;
     width: 100%;
-   	">(C) Copyright 2014 by <a href="/about">JavaArt Team</a>
+   	">(C) Copyright 2014 by <a href="${pageContext.request.contextPath}/about">JavaArt Team</a>
 
     </div>
 

@@ -32,7 +32,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </listener>
     <listener>
         <listener-class>
-            org.JavaArt.TicketManager.service.ThreadService
+            org.JavaArt.TicketManager.service.InitService
         </listener-class>
     </listener>
 

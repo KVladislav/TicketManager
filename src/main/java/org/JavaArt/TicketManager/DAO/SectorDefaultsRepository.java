@@ -22,8 +22,9 @@ public interface SectorDefaultsRepository {
     public SectorDefaults getSectorDefaultsById(Long id);
 
     public SectorDefaults getSectorDefaultsByName(String name);
+    public int countSectorDefaults();
 
-    public List<SectorDefaults> getAllSectorDefaults();
+        public List<SectorDefaults> getAllSectorDefaults();
 
     public void deleteSectorDefaults(SectorDefaults sectorDefaults);
 

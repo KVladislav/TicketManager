@@ -9,7 +9,6 @@ import org.JavaArt.TicketManager.service.EventService;
 import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -362,10 +361,11 @@ public class BookingController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "Booking/addTicket.do", method = RequestMethod.POST)
-    public String bookingAddTicket(Model model, @RequestParam(value = "seats", required = false) int[] seats,
+    public String bookingAddTicket(ModelMap model, HttpSession session, @RequestParam(value = "seats", required = false) int[] seats,
                                    @ModelAttribute("bookingSector") Sector sector,
                                    @ModelAttribute("bookingRow") Integer row,
                                    @ModelAttribute("bookingClient") Client client) {
+        checkEventState(model, session);
 
         if (sectorService.getSectorById(sector.getId()) == null) {
             List<String> bookingErrorMessages = new ArrayList<>();
@@ -373,25 +373,17 @@ public class BookingController {
             model.addAttribute("bookingErrorMessages", bookingErrorMessages);
             return "ClientBooking";
         }
-        Date bookingTimeOut = (Date) model.asMap().get("bookingTimeOut");
-        if (bookingTimeOut == null) {
-            bookingTimeOut = new Date();
-        }
+            Date bookingTimeOut = new Date();
 
-        if ((new Date().getTime() - bookingTimeOut.getTime()) > 1000 * bookingTimeCounter) {
-            return "redirect:Booking/UndoOrder.do";
-        }
-
-        Double bookingPrice = (Double) model.asMap().get("bookingPrice");
+        Double bookingPrice = (Double) model.get("bookingPrice");
         if (bookingPrice == null) {
             bookingPrice = 0d;
         }
-        List<Ticket> tickets = (List) model.asMap().get("bookingTickets");
+        List<Ticket> tickets = (List) model.get("bookingTickets");
         if (tickets == null) {
             tickets = new ArrayList<>();
         }
         List<Ticket> bookingErrorTickets = new ArrayList<>();
-
 
         if (seats != null) {
             for (int seat : seats) {
@@ -478,9 +470,11 @@ public class BookingController {
         for (Ticket ticket : tickets) {
             if (!ticket.isConfirmed()) {
                 isConfirmed = false;
-                if (date.getTime() > ticket.getTimeStamp().getTime()) {
-                    date = ticket.getTimeStamp();
-                }
+                ticket.setTimeStamp(date);
+//                if (date.getTime() > ticket.getTimeStamp().getTime()) {
+//                    date = ticket.getTimeStamp();  }
+                ticketService.addTicket(ticket);
+
             }
             bookingPrice += ticket.getSector().getPrice();
         }

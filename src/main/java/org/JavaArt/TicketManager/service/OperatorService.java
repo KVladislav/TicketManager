@@ -49,4 +49,6 @@ public class OperatorService implements UserDetailsService {
     public Operator getOperatorByLogin(String login) {
         return operatorRepository.getOperatorBylogin(login);
     }
+
+
 }
