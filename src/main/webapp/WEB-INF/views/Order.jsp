@@ -108,8 +108,8 @@
 </div>
 <div class="row">
     <div class="col-md-3">
+        <br>
         <strong class="text-info">Выбор ряда</strong>
-
         <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
             <p><select size="12" name="row" class="form-control">
                 <c:forEach items="${rowsMapOrder}" var="rowEntry">
@@ -142,8 +142,8 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-2">
+        <br>
         <strong class="text-info">Выбор места</strong>
-
         <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
             <p><select multiple size="12" name="seat" class="form-control">
                 <c:forEach items="${seatsMapOrder}" var="seatEntry">

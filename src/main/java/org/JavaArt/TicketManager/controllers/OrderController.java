@@ -150,7 +150,10 @@ public class OrderController
         if (orderTickets != null && orderTickets.size() > 0) {
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
             for (Ticket ord : orderTickets) {
-                if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
+                if (ticketService.getTicketById(ord.getId()) == null){
+                    deletingTicket.add(ord);
+                    break;
+                }
             }
             if (deletingTicket.size() > 0){
                 for (Ticket ord : orderTickets) {
@@ -197,10 +200,6 @@ public class OrderController
                     ticketService.addTicket(ticket);
                     orderPrice += currentSector.getPrice();
                     orderTickets.add(ticket);
-                    for (Ticket ord : orderTickets) {
-                        ord.setTimeStamp(new Date());
-                    }
-                    ticketService.saveOrUpdateTickets(orderTickets);
                 } else {
                     if (ticketService.isPlaceFree(currentSector, currentRow, seat1) == 1)
                         message.append("Билет на  ").append(currentSector.getEvent().getDescription()).append("  Сектор: ").
@@ -217,6 +216,11 @@ public class OrderController
                 }
             }
         }
+        for (Ticket ord : orderTickets) {
+            ord.setTimeStamp(new Date());
+            ticketService.saveOrUpdateTicket(ord);
+        }
+        ticketService.saveOrUpdateTickets(orderTickets);
         List<Event> events = eventService.getFutureEvents();
         if (eventService.getEventById(currentEvent.getId()) == null || currentEvent.getDate().before(new Date()))
             currentEvent = events.get(0);
