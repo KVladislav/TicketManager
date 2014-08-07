@@ -220,7 +220,6 @@ public class OrderController
             ord.setTimeStamp(new Date());
             ticketService.saveOrUpdateTicket(ord);
         }
-        ticketService.saveOrUpdateTickets(orderTickets);
         List<Event> events = eventService.getFutureEvents();
         if (eventService.getEventById(currentEvent.getId()) == null || currentEvent.getDate().before(new Date()))
             currentEvent = events.get(0);
