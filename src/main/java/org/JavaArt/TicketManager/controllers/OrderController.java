@@ -197,6 +197,10 @@ public class OrderController
                     ticketService.addTicket(ticket);
                     orderPrice += currentSector.getPrice();
                     orderTickets.add(ticket);
+                    for (Ticket ord : orderTickets) {
+                        ord.setTimeStamp(new Date());
+                    }
+                    ticketService.saveOrUpdateTickets(orderTickets);
                 } else {
                     if (ticketService.isPlaceFree(currentSector, currentRow, seat1) == 1)
                         message.append("Билет на  ").append(currentSector.getEvent().getDescription()).append("  Сектор: ").
