@@ -61,6 +61,7 @@ public class IndexController {
         sectorDefaults.setSectorName("VIP D");
         sectorDefaults.setMaxRows(10);
         sectorDefaults.setMaxSeats(20);
+        sectorDefaults.setDefaultPrice(200);
         sectorDefaultsService.addSectorDefaults(sectorDefaults);
     }
 }
