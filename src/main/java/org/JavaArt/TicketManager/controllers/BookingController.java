@@ -431,7 +431,7 @@ public class BookingController {
         modelMap.addAttribute("pageName", 2);
 
         List<Ticket> tickets = (List) modelMap.get("bookingTickets");
-        if (tickets == null || tickets.size() == 0) return;
+        if (tickets == null) return;
 //        List<String> bookingErrorMessages = new ArrayList<>();
         Map<String, String> bookingErrorMessagesMap = new HashMap<>();
 
