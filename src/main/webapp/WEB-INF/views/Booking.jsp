@@ -82,17 +82,17 @@
                 <div class="col-md-6 column">
                     <strong class="text-info">Сектор</strong>
 
-                    <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post">
+                    <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post" name="setRow" id="setRow">
                         <p><select size="10" name="sectorId" class="form-control">
                             <c:forEach items="${bookingSectorsMap}" var="sectorEntry">
                                 <c:if test="${bookingSector.id==sectorEntry.key.id}">
-                                    <option value="${sectorEntry.key.id}" onclick="this.form.submit()"
+                                    <option value="${sectorEntry.key.id}" onclick="$('#setRow').submit()"
                                             selected>${sectorEntry.key.name} цена ${sectorEntry.key.price}
                                         свободно: ${sectorEntry.value}</option>
                                 </c:if>
                                 <c:if test="${bookingSector.id!=sectorEntry.key.id}">
                                     <option value="${sectorEntry.key.id}"
-                                            onclick="this.form.submit()">${sectorEntry.key.name}
+                                            onclick="$('#setRow').submit()">${sectorEntry.key.name}
                                         цена ${sectorEntry.key.price} свободно: ${sectorEntry.value}</option>
                                 </c:if>
                             </c:forEach>
