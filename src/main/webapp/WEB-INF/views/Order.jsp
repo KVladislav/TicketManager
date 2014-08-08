@@ -108,8 +108,8 @@
 </div>
 <div class="row">
     <div class="col-md-3">
+        <br>
         <strong class="text-info">Выбор ряда</strong>
-
         <form action="${pageContext.request.contextPath}/Order/setSeat.do" method="post">
             <p><select size="12" name="row" class="form-control">
                 <c:forEach items="${rowsMapOrder}" var="rowEntry">
@@ -142,8 +142,8 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></form>
     </div>
     <div class="col-md-2">
+        <br>
         <strong class="text-info">Выбор места</strong>
-
         <form action="${pageContext.request.contextPath}/Order/addTicket.do" method="post">
             <p><select multiple size="12" name="seat" class="form-control">
                 <c:forEach items="${seatsMapOrder}" var="seatEntry">
@@ -198,8 +198,8 @@
     </div>
     <div class="col-md-7 col-lg-offset-0 ">
         <h3 class="panel-heading text-info" style="text-align: center">Выбранные билеты</h3>
-        <h5 style="text-align:center; color:Green">(Выбранный, но не купленный билет через
-            10 мин. возвратится в продажу)</h5>
+        <h5 style="text-align:center; color:Green">(Заказ, не утвержденный в течении
+            10 мин., возвратится в продажу)</h5>
         <table class="table text-center table-bordered">
             <thead>
             <th>ID</th>

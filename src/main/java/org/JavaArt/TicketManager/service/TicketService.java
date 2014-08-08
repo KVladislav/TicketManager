@@ -72,6 +72,10 @@ public class TicketService {
         ticketRepository.deleteTicket(ticket);
     }
 
+    public void saveOrUpdateTicket(Ticket ticket) {
+        ticketRepository.saveOrUpdateTicket(ticket);
+    }
+
     public void saveOrUpdateTickets(List<Ticket> tickets) {
         ticketRepository.saveOrUpdateTickets(tickets);
     }
