@@ -436,7 +436,7 @@ public class BookingController {
         Map<String, String> bookingErrorMessagesMap = new HashMap<>();
 
         List<Ticket> ticketsForRemove = new ArrayList<>();
-        double bookingPrice = 0;
+        Double bookingPrice = 0d;
 
         for (Ticket ticket : tickets) {
             Event event = ticket.getSector().getEvent();
