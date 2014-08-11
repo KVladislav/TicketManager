@@ -138,6 +138,9 @@ public class OrderController
                                  @ModelAttribute("eventOrder") Event currentEvent,
                                  @ModelAttribute("sectorOrder") Sector currentSector,
                                  @ModelAttribute("rowOrder") Integer currentRow) {
+        if  (seat==null) {
+            return "Order";
+        }
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
         if (orderTickets == null) orderTickets = new ArrayList<>();
         Double orderPrice = (Double) model.asMap().get("orderPrice");
