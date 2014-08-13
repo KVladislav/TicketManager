@@ -4,30 +4,18 @@ import org.JavaArt.TicketManager.DAO.SectorRepository;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
-import org.JavaArt.TicketManager.entities.Ticket;
-import org.JavaArt.TicketManager.service.TicketService;
 import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Vladislav Karpenko
- * Date: 06.06.2014
- * Time: 11:01
- */
-
 @Repository
 
 public class SectorRepositoryImpl implements SectorRepository {
-    @Autowired
-    private TicketService ticketService;// = TicketService.getInstance();
 
     @Override
     public void addSector(Sector sector) {
@@ -94,18 +82,6 @@ public class SectorRepositoryImpl implements SectorRepository {
         return sector;
     }
 
-    @Override
-    public void deleteSector(Sector sector) {
-        if (sector == null) return;
-        sector.setDeleted(true);
-        List<Ticket> tickets = ticketService.getAllTicketsBySector(sector);
-        if (tickets.size() != 0) {
-            ticketService.deleteTickets(tickets);
-        }
-        updateSector(sector);
-
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public List<Sector> getSectorsByEvent(Event event) {
@@ -145,15 +121,11 @@ public class SectorRepositoryImpl implements SectorRepository {
         return sectors;
     }
 
-    @Override
-    public boolean busySector(Sector sector) {
-        if (sector == null) return false;
-        int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
-        int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
-        if (dif == 0) {
-            return false;
-        }
-        return true;
+    public void deleteSector(Sector sector) {
+        if (sector == null) return;
+        sector.setDeleted(true);
+        updateSector(sector);
     }
+
 
 }

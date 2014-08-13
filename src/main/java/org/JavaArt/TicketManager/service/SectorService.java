@@ -3,6 +3,7 @@ package org.JavaArt.TicketManager.service;
 import org.JavaArt.TicketManager.DAO.SectorRepository;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import java.util.*;
 public class SectorService {
     @Autowired
     private SectorRepository sectorRepository;// = new SectorRepositoryImpl();
+    @Autowired
+    private TicketService ticketService;// = TicketService.getInstance();
 
     public List<Sector> getSectorsByEvent(Event event) {
         return sectorRepository.getSectorsByEvent(event);
@@ -91,10 +94,20 @@ public class SectorService {
 
     public void deleteSector(Sector sector) {
         sectorRepository.deleteSector(sector);
+        List<Ticket> tickets = ticketService.getAllTicketsBySector(sector);
+        if (tickets.size() != 0) {
+            ticketService.deleteTickets(tickets);
+        }
     }
 
     public boolean busySector(Sector sector) {
-        return sectorRepository.busySector(sector);
+        if (sector == null) return false;
+        int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+        int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+        if (dif == 0) {
+            return false;
+        }
+        return true;
     }
 
 }
