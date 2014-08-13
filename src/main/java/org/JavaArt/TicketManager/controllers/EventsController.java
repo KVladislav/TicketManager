@@ -47,7 +47,7 @@ public class EventsController {
     }
 
     @RequestMapping(value = "AddEditEvent/NewEvent.do", method = RequestMethod.GET)
-    public String newEventGet(Model model, SessionStatus status) throws ParseException {
+    public String newEventGet(Model model) throws ParseException {
         model.addAttribute("pageName", 4);
         String eventErrorMessage = (String) model.asMap().get("eventErrorMessage");
         String errorMessageEdit = (String) model.asMap().get("errorMessageEdit");
