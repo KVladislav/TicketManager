@@ -30,11 +30,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
-    <listener>
-        <listener-class>
-            org.JavaArt.TicketManager.service.InitService
-        </listener-class>
-    </listener>
+    <!--<listener>-->
+        <!--<listener-class>-->
+            <!--org.JavaArt.TicketManager.service.InitService-->
+        <!--</listener-class>-->
+    <!--</listener>-->
 
     <filter>
         <filter-name>

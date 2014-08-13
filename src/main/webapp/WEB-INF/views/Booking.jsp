@@ -63,16 +63,15 @@
                     <strong class="text-info">Мероприятие</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSectors.do" method="post">
-                        <p><select size="10" name="eventId" data-size="3" class="form-control">
+                        <p><select size="10" name="eventId" data-size="3" class="form-control" onclick="this.form.submit()">
                             <c:forEach items="${bookingEvents}" var="evnt">
                                 <c:if test="${bookingEvent.id==evnt.id}">
-                                    <option value="${evnt.id}" onclick="this.form.submit()"
+                                    <option value="${evnt.id}"
                                             selected>${evnt.description} <fmt:formatDate value="${evnt.date}"
                                                                                          pattern="d.MM.yyyy H:mm"/></option>
                                 </c:if>
                                 <c:if test="${bookingEvent.id!=evnt.id}">
-                                    <option value="${evnt.id}"
-                                            onclick="this.form.submit()">${evnt.description} <fmt:formatDate
+                                    <option value="${evnt.id}">${evnt.description} <fmt:formatDate
                                             value="${evnt.date}" pattern="d.MM.yyyy H:mm"/></option>
                                 </c:if>
                             </c:forEach>
@@ -82,17 +81,16 @@
                 <div class="col-md-6 column">
                     <strong class="text-info">Сектор</strong>
 
-                    <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post">
-                        <p><select size="10" name="sectorId" class="form-control">
+                    <form action="${pageContext.request.contextPath}/Booking/setRow.do" method="post" name="setRow" id="setRow">
+                        <p><select size="10" name="sectorId" class="form-control" onclick="this.form.submit()">
                             <c:forEach items="${bookingSectorsMap}" var="sectorEntry">
                                 <c:if test="${bookingSector.id==sectorEntry.key.id}">
-                                    <option value="${sectorEntry.key.id}" onclick="this.form.submit()"
+                                    <option value="${sectorEntry.key.id}"
                                             selected>${sectorEntry.key.name} цена ${sectorEntry.key.price}
                                         свободно: ${sectorEntry.value}</option>
                                 </c:if>
                                 <c:if test="${bookingSector.id!=sectorEntry.key.id}">
-                                    <option value="${sectorEntry.key.id}"
-                                            onclick="this.form.submit()">${sectorEntry.key.name}
+                                    <option value="${sectorEntry.key.id}">${sectorEntry.key.name}
                                         цена ${sectorEntry.key.price} свободно: ${sectorEntry.value}</option>
                                 </c:if>
                             </c:forEach>
@@ -105,15 +103,15 @@
                     <strong class="text-info">Ряд</strong>
 
                     <form action="${pageContext.request.contextPath}/Booking/setSeat.do" method="post">
-                        <p><select size="11" name="row" class="form-control">
+                        <p><select size="11" name="row" class="form-control" onclick="this.form.submit()">
                             <c:forEach items="${bookingRowsMap}" var="rowEntry">
                                 <c:if test="${rowEntry.key==bookingRow}">
-                                    <option value="${rowEntry.key}" onclick="this.form.submit()"
+                                    <option value="${rowEntry.key}"
                                             selected>${rowEntry.key}
                                         свободно: ${rowEntry.value}</option>
                                 </c:if>
                                 <c:if test="${bookingRow!=rowEntry.key}">
-                                    <option value="${rowEntry.key}" onclick="this.form.submit()">${rowEntry.key}
+                                    <option value="${rowEntry.key}" >${rowEntry.key}
                                         свободно: ${rowEntry.value}</option>
                                 </c:if>
                             </c:forEach>

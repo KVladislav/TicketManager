@@ -1,11 +1,11 @@
 package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.TicketRepository;
-import org.JavaArt.TicketManager.DAO.impl.TicketRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Client;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,18 +13,19 @@ import java.util.List;
 
 @Service
 public class TicketService {
-    private static TicketService ticketService;
-    private TicketRepository ticketRepository = new TicketRepositoryImpl();
+//    private static TicketService ticketService;
+@Autowired
+    private TicketRepository ticketRepository;// = new TicketRepositoryImpl();
 
-    private TicketService() {
+    public TicketService() {
     }
 
-    public static TicketService getInstance() {
-        if (ticketService == null) {
-            ticketService = new TicketService();
-        }
-        return ticketService;
-    }
+//    public static TicketService getInstance() {
+//        if (ticketService == null) {
+//            ticketService = new TicketService();
+//        }
+//        return ticketService;
+//    }
 
     public void deleteExpiredBookedTickets() {
         ticketRepository.deleteExpiredBookedTickets();
@@ -70,6 +71,10 @@ public class TicketService {
 
     public void deleteTicket(Ticket ticket) {
         ticketRepository.deleteTicket(ticket);
+    }
+
+    public void saveOrUpdateTicket(Ticket ticket) {
+        ticketRepository.saveOrUpdateTicket(ticket);
     }
 
     public void saveOrUpdateTickets(List<Ticket> tickets) {

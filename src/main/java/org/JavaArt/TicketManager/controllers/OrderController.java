@@ -5,6 +5,7 @@ import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +21,14 @@ import java.util.*;
         "orderConfirmation", "priceConfirmation"})
 public class OrderController
 {
-    private EventService eventService = new EventService();
-    private TicketService ticketService = TicketService.getInstance();
-    private SectorService sectorService = new SectorService();
-    private OperatorService operatorService = new OperatorService();
+    @Autowired
+    private EventService eventService;// = new EventService();
+    @Autowired
+    private TicketService ticketService;// = new TicketService();
+    @Autowired
+    private SectorService sectorService;// = new SectorService();
+    @Autowired
+    private OperatorService operatorService;// = new OperatorService();
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) {
@@ -138,6 +143,9 @@ public class OrderController
                                  @ModelAttribute("eventOrder") Event currentEvent,
                                  @ModelAttribute("sectorOrder") Sector currentSector,
                                  @ModelAttribute("rowOrder") Integer currentRow) {
+        if  (seat==null) {
+            return "Order";
+        }
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
         if (orderTickets == null) orderTickets = new ArrayList<>();
         Double orderPrice = (Double) model.asMap().get("orderPrice");
@@ -150,9 +158,20 @@ public class OrderController
         if (orderTickets != null && orderTickets.size() > 0) {
             ArrayList<Ticket> deletingTicket = new ArrayList<>();
             for (Ticket ord : orderTickets) {
-                if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
+                if (ticketService.getTicketById(ord.getId()) == null){
+                    deletingTicket.add(ord);
+                    break;
+                }
             }
-            if (deletingTicket.size() == 1) {
+            if (deletingTicket.size() > 0){
+                for (Ticket ord : orderTickets) {
+                    if (ticketService.getTicketById(ord.getId()) != null) ticketService.deleteTicket(ord);
+                }
+                model.addAttribute("errorOrder", "Заказ автоматически удален, так как не был утверждён в течении 10 минут");
+                orderTickets.clear();
+                orderPrice = 0.0;
+            }
+            /*if (deletingTicket.size() == 1) {
                 model.addAttribute("errorOrder", "Билет ID = " + deletingTicket.get(0).getId() +
                         " автоматически удален из заказа, так как не был куплен в течении 10 минут");
                 orderPrice -= deletingTicket.get(0).getSector().getPrice();
@@ -167,7 +186,7 @@ public class OrderController
                 }
                 model.addAttribute("errorOrder", "Билеты ID = " + builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 10 минут");
-            }
+            }*/
         }
         for (int seat1 : seat) {
             Ticket ticket = new Ticket();
@@ -204,6 +223,10 @@ public class OrderController
                                 append(seat1).append("  продан другим оператором<br>");
                 }
             }
+        }
+        for (Ticket ord : orderTickets) {
+            ord.setTimeStamp(new Date());
+            ticketService.saveOrUpdateTicket(ord);
         }
         List<Event> events = eventService.getFutureEvents();
         if (eventService.getEventById(currentEvent.getId()) == null || currentEvent.getDate().before(new Date()))
@@ -257,7 +280,15 @@ public class OrderController
             for (Ticket ord : orderTickets) {
                 if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
             }
-            if (deletingTicket.size() == 1) {
+            if (deletingTicket.size() > 0){
+                for (Ticket ord : orderTickets) {
+                    if (ticketService.getTicketById(ord.getId()) != null) ticketService.deleteTicket(ord);
+                }
+                model.addAttribute("errorOrder", "Заказ автоматически удален, так как не был утверждён в течении 10 минут");
+                orderTickets.clear();
+                orderPrice = 0.0;
+            }
+            /*if (deletingTicket.size() == 1) {
                 model.addAttribute("errorOrder", "Билет ID = " + deletingTicket.get(0).getId() +
                         " автоматически удален из заказа, так как не был куплен в течении 10 минут");
                 orderPrice -= deletingTicket.get(0).getSector().getPrice();
@@ -272,7 +303,7 @@ public class OrderController
                 }
                 model.addAttribute("errorOrder", "Билеты ID = " + builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 10 минут");
-            }
+            }*/
         }
         if (ticketService.getTicketById(orderId) != null) {
             for (Ticket ord : orderTickets) {
@@ -327,7 +358,6 @@ public class OrderController
                            @ModelAttribute("eventOrder") Event currentEvent) {
         Double orderPrice = (Double) model.asMap().get("orderPrice");
         ArrayList<Ticket> orderTickets = (ArrayList) model.asMap().get("orderList");
-        StringBuilder idBuy = new StringBuilder(200);
         model.addAttribute("errorOrder", "");
         model.addAttribute("messageOrder", "");
         if (orderTickets != null && orderTickets.size() > 0) {
@@ -335,7 +365,15 @@ public class OrderController
             for (Ticket ord : orderTickets) {
                 if (ticketService.getTicketById(ord.getId()) == null) deletingTicket.add(ord);
             }
-            if (deletingTicket.size() == 1) {
+            if (deletingTicket.size() > 0){
+                for (Ticket ord : orderTickets) {
+                    if (ticketService.getTicketById(ord.getId()) != null) ticketService.deleteTicket(ord);
+                }
+                model.addAttribute("errorOrder", "Заказ автоматически удален, так как не был утверждён в течении 10 минут");
+                orderTickets.clear();
+                orderPrice = 0.0;
+            }
+            /*if (deletingTicket.size() == 1) {
                 model.addAttribute("errorOrder", "Билет ID = " + deletingTicket.get(0).getId() +
                         " автоматически удален из заказа, так как не был куплен в течении 10 минут");
                 orderTickets.remove(deletingTicket.get(0));
@@ -350,7 +388,7 @@ public class OrderController
                 }
                 model.addAttribute("errorOrder", "Билеты ID = " + builder.toString() +
                         " автоматически удалены из заказа, так как не были куплены в течении 10 минут");
-            }
+            }*/
         }
         for (Ticket ticket : orderTickets) {
             if (ticketService.getTicketById(ticket.getId()).isConfirmed()) {
@@ -365,8 +403,7 @@ public class OrderController
         }
         for (Ticket ticket : orderTickets) {
             ticket.setConfirmed(true);
-            idBuy.append(ticket.getId()).append("  ");
-            ticketService.addTicket(ticket);
+             ticketService.addTicket(ticket);
         }
         List<Event> events = eventService.getFutureEvents();
         if (eventService.getEventById(currentEvent.getId()) == null || currentEvent.getDate().before(new Date()))
@@ -395,11 +432,18 @@ public class OrderController
         model.addAttribute("sectorOrder", currentSector);
         model.addAttribute("rowOrder", currentRow);
         model.addAttribute("seatsMapOrder", seatsMap1);
-        model.addAttribute("orderConfirmation", orderTickets);
-        model.addAttribute("priceConfirmation", orderPrice);
-        model.addAttribute("orderPrice", 0.0);
-        model.addAttribute("orderList", new ArrayList<Ticket>());
-        return "OrderInfo";
+        if (orderTickets.size()==0){
+            model.addAttribute("orderPrice", 0.0);
+            model.addAttribute("orderList", new ArrayList<Ticket>());
+            return "Order";
+        }
+       else{
+            model.addAttribute("orderConfirmation", orderTickets);
+            model.addAttribute("priceConfirmation", orderPrice);
+            model.addAttribute("orderPrice", 0.0);
+            model.addAttribute("orderList", new ArrayList<Ticket>());
+            return "OrderInfo";
+        }
     }
 
     @SuppressWarnings("unchecked")

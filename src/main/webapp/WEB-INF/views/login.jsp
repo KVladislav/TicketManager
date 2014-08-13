@@ -21,7 +21,7 @@
 <div class="container">
     <br>
 
-    <form class="form-horizontal" name="loginForm" action="<c:url value='${pageContext.request.contextPath}/j_spring_security_check' />" method='POST'>
+    <form class="form-horizontal" name="loginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
         <fieldset>
 
             <!-- Form Name -->

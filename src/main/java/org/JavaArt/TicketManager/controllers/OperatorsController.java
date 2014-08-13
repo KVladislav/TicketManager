@@ -2,6 +2,7 @@ package org.JavaArt.TicketManager.controllers;
 
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.service.OperatorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,8 @@ import java.util.List;
 @Controller
 @SessionAttributes({"pageName", "operator"})
 public class OperatorsController {
-
-    OperatorService operatorService = new OperatorService();
+    @Autowired
+    OperatorService operatorService;// = new OperatorService();
 
 
     @RequestMapping(value = "Operators/Operators.do", method = RequestMethod.GET)

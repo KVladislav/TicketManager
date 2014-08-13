@@ -1,9 +1,9 @@
 package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.SectorRepository;
-import org.JavaArt.TicketManager.DAO.impl.SectorRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Event;
 import org.JavaArt.TicketManager.entities.Sector;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,7 +11,8 @@ import java.util.*;
 
 @Service
 public class SectorService {
-    private SectorRepository sectorRepository = new SectorRepositoryImpl();
+    @Autowired
+    private SectorRepository sectorRepository;// = new SectorRepositoryImpl();
 
     public List<Sector> getSectorsByEvent(Event event) {
         return sectorRepository.getSectorsByEvent(event);
