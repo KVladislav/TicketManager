@@ -23,6 +23,7 @@ public class IndexController {
 //    InitService initService;
 
 
+
     @RequestMapping("/")
     public String showIndex(ModelMap model) {
         model.addAttribute("pageName", 0);

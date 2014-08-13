@@ -5,6 +5,8 @@ import org.JavaArt.TicketManager.DAO.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,25 +24,30 @@ import java.util.concurrent.TimeUnit;
 public class InitService {
 
     @Autowired
-    private TicketRepository ticketRepository;
+    private TicketRepository ticketRepository;// = new TicketRepositoryImpl();
     @Autowired
-    private ClientRepository clientRepository;
-
+    private ClientRepository clientRepository;// = new ClientRepositoryImpl();
     private ExecutorService executorService;
 
     public InitService(){
+
+    }
+
+    @PostConstruct
+    private void threadStart(){
         executorService = Executors.newFixedThreadPool(3);
         executorService.execute(new ClearNonConfirmedTickets());
         executorService.execute(new ClearEmptyClients());
         executorService.execute(new ClearExpiredBookedTickets());
     }
 
-//    @PreDestroy
+    @PreDestroy
     public void preDestroy() {
         executorService.shutdownNow();
         while (!executorService.isTerminated()) {
         }
     }
+
 
 //    @Override
 //    public void contextInitialized(ServletContextEvent arg0) {
