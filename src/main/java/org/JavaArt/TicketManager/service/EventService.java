@@ -2,6 +2,8 @@ package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.EventRepository;
 import org.JavaArt.TicketManager.entities.Event;
+import org.JavaArt.TicketManager.entities.Sector;
+import org.JavaArt.TicketManager.entities.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +16,19 @@ import java.util.regex.Pattern;
 
 @Service
 public class EventService {
-//    private static EventService eventService;
+
     @Autowired
     private EventRepository eventRepository;// = new EventRepositoryImpl();
+    @Autowired
+    private TicketService ticketService;// = TicketService.getInstance();
+    @Autowired
+    private SectorService sectorService;// = new SectorService();
+
     public static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9-_#,:\\.\\s]{0,49}$");
+
     public EventService() {
 
     }
-
-//    public static EventService getInstance() {
-//        if (eventService == null) {
-//            eventService = new EventService();
-//        }
-//        return eventService;
-//    }
 
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.getAllEvents();
@@ -49,7 +50,24 @@ public class EventService {
     }
 
     public void updateEvent(Event event) {
-        eventRepository.updateEvent(event);
+
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        int size = sectors.size();
+        int count = 0;
+        if (size != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+                int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+                if (dif == 0) {
+                    count++;
+                }
+            }
+        }
+        if (size == count) {
+            eventRepository.updateEvent(event);
+        }
     }
 
     public List<Event> getEventsByDate(Date date) {
@@ -67,11 +85,58 @@ public class EventService {
     }
 
     public void deleteEvent(Event event) {
-        eventRepository.deleteEvent(event);
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        int size = sectors.size();
+        int count = 0;
+        if (size != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+                int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+                if (dif == 0) {
+                    count++;
+                }
+            }
+        }
+        if (size == count) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                List<Ticket> tickets = ticketService.getAllTicketsBySector(sector);
+                if (tickets.size() != 0) {
+                    ticketService.deleteTickets(tickets);
+                }
+                boolean isDeleted = true;
+                sector.setDeleted(isDeleted);
+                count++;
+                sectorService.updateSector(sector);
+                sectors.add(sector);
+            }
+            eventRepository.deleteEvent(event);
+        }
     }
 
     public boolean busyEvent(Event event) {
-        return eventRepository.busyEvent(event);
+        if (event == null) return false;
+        List<Sector> sectors = sectorService.getSectorsByEvent(event);
+        int size = sectors.size();
+        int count = 0;
+        if (size != 0) {
+            List copy = new ArrayList(sectors);
+            for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
+                Sector sector = it.next();
+                int freeTickets = ticketService.getFreeTicketsAmountBySector(sector);
+                int dif = sector.getMaxRows() * sector.getMaxSeats() - freeTickets;
+                if (dif == 0) {
+                    count++;
+                }
+            }
+        }
+        if (size == count) {
+            return false;
+        }
+        return true;
     }
 
     public boolean doMatch(String word) {
