@@ -12,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +24,10 @@ import java.util.List;
 @Repository
 
 public class EventRepositoryImpl implements EventRepository {
-    private TicketService ticketService = TicketService.getInstance();
-    private SectorService sectorService = new SectorService();
+    @Autowired
+    private TicketService ticketService;// = TicketService.getInstance();
+    @Autowired
+    private SectorService sectorService;// = new SectorService();
 
     @Override
     public void addEvent(Event event) {

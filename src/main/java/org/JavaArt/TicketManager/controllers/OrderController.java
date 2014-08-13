@@ -5,6 +5,7 @@ import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.Sector;
 import org.JavaArt.TicketManager.entities.Ticket;
 import org.JavaArt.TicketManager.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +21,14 @@ import java.util.*;
         "orderConfirmation", "priceConfirmation"})
 public class OrderController
 {
-    private EventService eventService = new EventService();
-    private TicketService ticketService = TicketService.getInstance();
-    private SectorService sectorService = new SectorService();
-    private OperatorService operatorService = new OperatorService();
+    @Autowired
+    private EventService eventService;// = new EventService();
+    @Autowired
+    private TicketService ticketService;// = new TicketService();
+    @Autowired
+    private SectorService sectorService;// = new SectorService();
+    @Autowired
+    private OperatorService operatorService;// = new OperatorService();
 
     @RequestMapping(value = "Order/Order.do", method = RequestMethod.GET)
     public String orderGet(Model model) {

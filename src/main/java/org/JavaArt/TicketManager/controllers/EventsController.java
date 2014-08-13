@@ -6,6 +6,7 @@ import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.service.EventService;
 import org.JavaArt.TicketManager.service.SectorDefaultsService;
 import org.JavaArt.TicketManager.service.SectorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,12 @@ import java.util.*;
 
 public class EventsController {
     public Event editEvent;
-    private EventService eventService = EventService.getInstance();
-    private SectorService sectorService = new SectorService();
-    private SectorDefaultsService sectorDefaultsService = new SectorDefaultsService();
+    @Autowired
+    private EventService eventService;// = new EventService();
+    @Autowired
+    private SectorService sectorService;// = new SectorService();
+    @Autowired
+    private SectorDefaultsService sectorDefaultsService;// = new SectorDefaultsService();
 
     @RequestMapping(value = "Events/Events.do", method = RequestMethod.GET)
     public String eventGet(Model model) {

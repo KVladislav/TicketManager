@@ -1,8 +1,8 @@
 package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.EventRepository;
-import org.JavaArt.TicketManager.DAO.impl.EventRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Event;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -14,19 +14,20 @@ import java.util.regex.Pattern;
 
 @Service
 public class EventService {
-    private static EventService eventService;
-    private EventRepository eventRepository = new EventRepositoryImpl();
+//    private static EventService eventService;
+    @Autowired
+    private EventRepository eventRepository;// = new EventRepositoryImpl();
     public static final Pattern pattern = Pattern.compile("^[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9-_#,:\\.\\s]{0,49}$");
-    // private EventService() {
+    public EventService() {
 
-    // }
-
-    public static EventService getInstance() {
-        if (eventService == null) {
-            eventService = new EventService();
-        }
-        return eventService;
     }
+
+//    public static EventService getInstance() {
+//        if (eventService == null) {
+//            eventService = new EventService();
+//        }
+//        return eventService;
+//    }
 
     public List<Event> getAllEvents() {
         List<Event> events = eventRepository.getAllEvents();

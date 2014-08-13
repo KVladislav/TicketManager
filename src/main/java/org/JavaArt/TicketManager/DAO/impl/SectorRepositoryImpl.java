@@ -10,6 +10,7 @@ import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,8 @@ import java.util.List;
 @Repository
 
 public class SectorRepositoryImpl implements SectorRepository {
-    private TicketService ticketService = TicketService.getInstance();
+    @Autowired
+    private TicketService ticketService;// = TicketService.getInstance();
 
     @Override
     public void addSector(Sector sector) {

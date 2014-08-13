@@ -1,7 +1,6 @@
 package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.OperatorRepository;
-import org.JavaArt.TicketManager.DAO.impl.OperatorRepositoryImpl;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +14,7 @@ import java.util.List;
 @Service
 public class OperatorService implements UserDetailsService {
     @Autowired
-    private OperatorRepository operatorRepository = new OperatorRepositoryImpl();
+    private OperatorRepository operatorRepository;// = new OperatorRepositoryImpl();
 
     public List<Operator> getAllOperators() {
         List<Operator> operators = operatorRepository.getAllOperators();

@@ -1,8 +1,9 @@
 package org.JavaArt.TicketManager.service;
 
 import org.JavaArt.TicketManager.DAO.SectorDefaultsRepository;
-import org.JavaArt.TicketManager.DAO.impl.SectorDefaultsRepositoryImpl;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,8 +13,10 @@ import java.util.List;
  * Date: 08.07.2014
  * Time: 14:50
  */
+@Service
 public class SectorDefaultsService {
-    SectorDefaultsRepository sectorDefaultsRepository = new SectorDefaultsRepositoryImpl();
+    @Autowired
+    SectorDefaultsRepository sectorDefaultsRepository;// = new SectorDefaultsRepositoryImpl();
 
     public void addSectorDefaults(SectorDefaults sectorDefaults) {
         sectorDefaultsRepository.addSectorDefaults(sectorDefaults);

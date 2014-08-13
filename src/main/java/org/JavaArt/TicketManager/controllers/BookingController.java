@@ -8,6 +8,7 @@ import org.JavaArt.TicketManager.service.ClientService;
 import org.JavaArt.TicketManager.service.EventService;
 import org.JavaArt.TicketManager.service.SectorService;
 import org.JavaArt.TicketManager.service.TicketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +31,14 @@ import java.util.*;
         "bookingSector", "bookingEvent", "bookingPrice", "bookingRow", "bookingTimeOut", "bookingClient", "sectorsGroupedMap"})
 public class BookingController {
 
-    private TicketService ticketService = TicketService.getInstance();
-    private ClientService clientService = ClientService.getInstance();
-    private EventService eventService = new EventService();
-    private SectorService sectorService = new SectorService();
+    @Autowired
+    private TicketService ticketService;// = new TicketService();
+    @Autowired
+    private ClientService clientService;// = new ClientService();
+    @Autowired
+    private EventService eventService;// = new EventService();
+    @Autowired
+    private SectorService sectorService;// = new SectorService();
     private static final int bookingTimeCounter = 10 * 60;
 
 

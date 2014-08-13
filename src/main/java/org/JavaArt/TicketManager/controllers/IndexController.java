@@ -3,6 +3,7 @@ package org.JavaArt.TicketManager.controllers;
 import org.JavaArt.TicketManager.entities.Operator;
 import org.JavaArt.TicketManager.entities.SectorDefaults;
 import org.JavaArt.TicketManager.service.SectorDefaultsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 
 public class IndexController {
-    SectorDefaultsService sectorDefaultsService = new SectorDefaultsService();
+    @Autowired
+    SectorDefaultsService sectorDefaultsService;// = new SectorDefaultsService();
+//    @Autowired
+//    InitService initService;
 
 
     @RequestMapping("/")
