@@ -68,7 +68,7 @@ public class EventsController {
         Map<String, Sector> allSectors = new TreeMap<>();
         if (sectorsDefaults != null && sectorsDefaults.size() != 0) {
             allSectors.clear();
-            List copy = new ArrayList(sectorsDefaults);
+            List<SectorDefaults> copy = new ArrayList<SectorDefaults>(sectorsDefaults);
             for (Iterator<SectorDefaults> it = copy.iterator(); it.hasNext(); ) {
                 SectorDefaults sectorDefaults = it.next();
                 Sector sector = new Sector();
@@ -81,7 +81,8 @@ public class EventsController {
                 allSectors.put(sector.getName(), sector);
             }
         }
-        if (allSectors != null && allSectors.size() > 0) {
+
+        if (allSectors.size() > 0) {
             model.addAttribute("allSectors", allSectors);
         }
         Date today = new Date();
@@ -105,7 +106,7 @@ public class EventsController {
     public String eventsSetDelete(@RequestParam(value = "eventId", required = true) Long eventId,
                                   SessionStatus status, Model model) {
         Event event = eventService.getEventById(eventId);
-        if (eventService.busyEvent(event) == false) {
+        if (!eventService.busyEvent(event)) {
             eventService.deleteEvent(event);
             status.setComplete();
             return "redirect:/Events/Events.do";
@@ -146,12 +147,7 @@ public class EventsController {
                 sectorService.deleteSector(sector);
                 allSectors.values().remove(sector);
                 Iterator<Sector> sectorNewList;
-                if (allSectors != null) {
-                    sectorNewList = allSectors.values().iterator();
-                } else {
-                    allSectors = new TreeMap<>();
-                    sectorNewList = allSectors.values().iterator();
-                }
+                sectorNewList = allSectors.values().iterator();
                 while (sectorNewList.hasNext()) {
                     Sector sectorNew = sectorNewList.next();
                     String price = request.getParameter("price" + sectorNew.getId());
@@ -213,12 +209,7 @@ public class EventsController {
                 model.addAttribute("eventDescriptions", eventDescriptions);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
                 Iterator<Sector> sectorNewList = null;
-                if (allSectors != null) {
-                    sectorNewList = allSectors.values().iterator();
-                } else {
-                    allSectors = new TreeMap<>();
-                    sectorNewList = allSectors.values().iterator();
-                }
+                sectorNewList = allSectors.values().iterator();
                 while (sectorNewList.hasNext()) {
                     Sector sectorNew = sectorNewList.next();
                     String price = request.getParameter("price" + sectorNew.getId());
@@ -237,7 +228,7 @@ public class EventsController {
                 model.addAttribute("dateEvent", simpleDate);
                 int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
                 int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
-                String timeEvent = "";
+                String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
                 } else {
@@ -253,7 +244,7 @@ public class EventsController {
                 Date trueDate = format.parse(dateEvent);
                 int intHour = 0;
                 int intMin = 0;
-                if ((eventTime != null) && (eventTime != "")) {
+                if (eventTime != "") {
                     String[] str = eventTime.split(":");
                     intHour = Integer.parseInt(str[0]);
                     intMin = Integer.parseInt(str[1]);
@@ -269,9 +260,7 @@ public class EventsController {
                     if (eventService.doMatch(eventDescriptions) == false) {
                         String eventNameErrorMessage = "Поле Наименование не прошло валидацию и содержит запрещенные символы!";
                         model.addAttribute("eventNameErrorMessage", eventNameErrorMessage);
-                        if (allSectors != null) {
-                            model.addAttribute("allSectors", allSectors);
-                        }
+                        model.addAttribute("allSectors", allSectors);
                         model.addAttribute("eventDescriptions", eventDescriptions);
                         model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
                         Date simpleDate = (Date) eventService.getDateByString(dateEvent, eventTime).get(0);
@@ -297,12 +286,7 @@ public class EventsController {
                     eventService.addEvent(event);
                     events.add(event);
                     Iterator<Sector> sectorNewList;
-                    if (allSectors != null) {
-                        sectorNewList = allSectors.values().iterator();
-                    } else {
-                        allSectors = new TreeMap<>();
-                        sectorNewList = allSectors.values().iterator();
-                    }
+                    sectorNewList = allSectors.values().iterator();
                     while (sectorNewList.hasNext()) {
                         Sector sectorNew = sectorNewList.next();
                         String price = request.getParameter("price" + sectorNew.getId());
@@ -319,10 +303,8 @@ public class EventsController {
                     eventErrorMessage = " Мероприятие на эту дату уже существует!" + "<br>";
                 }
             } else {
-                if (eventErrorMessage == null) {
-                    eventErrorMessage = "" + "<br>";
-                }
-                if (eventDescriptions.equals("")) {
+                eventErrorMessage = "" + "<br>";
+                 if (eventDescriptions.equals("")) {
                     eventErrorMessage += " Заполните наименование мероприятия!" + "<br>";
                 }
                 if (eventService.dateValid(dateEvent) == false) {
@@ -369,7 +351,7 @@ public class EventsController {
             model.addAttribute("dateEvent", simpleDate);
             int hour = (int) eventService.getDateByString(dateEvent, eventTime).get(1);
             int min = (int) eventService.getDateByString(dateEvent, eventTime).get(2);
-            String timeEvent = "";
+            String timeEvent;
             if (min == 0) {
                 timeEvent = "" + hour + ":" + "00";
             } else {
@@ -389,13 +371,8 @@ public class EventsController {
             model.addAttribute("eventErrorMessage", eventErrorMessage);
             model.addAttribute("eventDescriptions", eventDescriptions);
             model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-            Iterator<Sector> sectorNewList = null;
-            if (allSectors != null) {
-                sectorNewList = allSectors.values().iterator();
-            } else {
-                allSectors = new TreeMap<>();
-                sectorNewList = allSectors.values().iterator();
-            }
+            Iterator<Sector> sectorNewList;
+            sectorNewList = allSectors.values().iterator();
             while (sectorNewList.hasNext()) {
                 Sector sectorNew = sectorNewList.next();
                 String price = request.getParameter("price" + sectorNew.getId());
@@ -449,7 +426,7 @@ public class EventsController {
         List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
         if (sectors != null) {
             if (sectors.size() != 0) {
-                List copy = new ArrayList(sectors);
+                List<Sector> copy = new ArrayList<Sector>(sectors);
                 for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
                     Sector sector = it.next();
                     model.addAttribute("id" + sector.getId(), sector.getId());
@@ -514,12 +491,8 @@ public class EventsController {
                 allSectors.values().remove(sector);
 
                 Iterator<Sector> sectorNewList;
-                if (allSectors != null) {
-                    sectorNewList = allSectors.values().iterator();
-                } else {
-                    allSectors = new TreeMap<>();
-                    sectorNewList = allSectors.values().iterator();
-                }
+                sectorNewList = allSectors.values().iterator();
+                sectorNewList = allSectors.values().iterator();
                 while (sectorNewList.hasNext()) {
                     Sector sectorNew = sectorNewList.next();
                     String price = request.getParameter("price" + sectorNew.getId());
@@ -533,8 +506,7 @@ public class EventsController {
                     model.addAttribute("price" + sectorNew.getId(), sectorNew.getId());
                     allSectors.put(sectorNew.getName(), sectorNew);
                 }
-                model.addAttribute("allSectors", allSectors);
-                model.addAttribute("eventDescriptions", eventDescriptionsN);
+                model.addAttribute("allSectors", allSectors).addAttribute("eventDescriptions", eventDescriptionsN);
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
                 Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
                 model.addAttribute("dateEvent", simpleDate);
@@ -584,13 +556,8 @@ public class EventsController {
                 model.addAttribute("eventDescriptions", eventDescriptionsN);
 
                 model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
-                Iterator<Sector> sectorNewList = null;
-                if (allSectors != null) {
-                    sectorNewList = allSectors.values().iterator();
-                } else {
-                    allSectors = new TreeMap<>();
-                    sectorNewList = allSectors.values().iterator();
-                }
+                Iterator<Sector> sectorNewList;
+                sectorNewList = allSectors.values().iterator();
                 while (sectorNewList.hasNext()) {
                     Sector sectorNew = sectorNewList.next();
                     String price = request.getParameter("price" + sectorNew.getId());
@@ -643,9 +610,7 @@ public class EventsController {
                     if (eventService.doMatch(eventDescriptionsN) == false) {
                         String eventNameErrorMessage = "Поле Наименование не прошло валидацию и содержит запрещенные символы!";
                         model.addAttribute("eventNameErrorMessage", eventNameErrorMessage);
-                        if (allSectors != null) {
-                            model.addAttribute("allSectors", allSectors);
-                        }
+                        model.addAttribute("allSectors", allSectors);
                         model.addAttribute("eventEdit", editEvent);
                         model.addAttribute("eventDescriptions", eventDescriptionsN);
                         model.addAttribute("eventBookingTimeOut", eventBookingTimeOut);
@@ -681,6 +646,7 @@ public class EventsController {
                                 sectorNew.setPrice(priceNew);
                                 sectorNew.setEvent(event);
                             } catch (Exception e) {
+                                System.out.println("Sorry");
                             }
                             sectorService.updateSector(sectorNew);
                         }
@@ -719,7 +685,7 @@ public class EventsController {
                 model.addAttribute("eventBookingTimeOut", time);
                 List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
                 if (sectors.size() != 0) {
-                    List copy = new ArrayList(sectors);
+                    List<Sector> copy = new ArrayList<Sector>(sectors);
                     for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
                         Sector sector = it.next();
                         model.addAttribute("id" + sector.getId(), sector.getId());
@@ -731,7 +697,7 @@ public class EventsController {
                 model.addAttribute("dateEvent", simpleDate);
                 int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
                 int min = (int) eventService.getDateByString(dateEventN, eventTimeN).get(2);
-                String timeEvent = "";
+                String timeEvent;
                 if (min == 0) {
                     timeEvent = "" + hour + ":" + "00";
                 } else {
@@ -771,9 +737,7 @@ public class EventsController {
             if (editEvent != null) {
                 model.addAttribute("eventEdit", eventService.getEventById(eventEditHidden));
             }
-            if (allSectors != null) {
-                model.addAttribute("allSectors", allSectors);
-            }
+            model.addAttribute("allSectors", allSectors);
             Date simpleDate = (Date) eventService.getDateByString(dateEventN, eventTimeN).get(0);
             model.addAttribute("dateEvent", simpleDate);
             int hour = (int) eventService.getDateByString(dateEventN, eventTimeN).get(1);
@@ -804,7 +768,7 @@ public class EventsController {
 
             List<Sector> sectors = sectorService.getSectorsByEvent(editEvent);
             if (sectors.size() != 0) {
-                List copy = new ArrayList(sectors);
+                List<Sector> copy = new ArrayList<Sector>(sectors);
                 for (Iterator<Sector> it = copy.iterator(); it.hasNext(); ) {
                     Sector sector = it.next();
                     model.addAttribute("id" + sector.getId(), sector.getId());
@@ -862,7 +826,7 @@ public class EventsController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "NewSector/Cancel.do", method = RequestMethod.GET)
-    public String cancelNewSector(Model model, SessionStatus status) {
+    public String cancelNewSector(Model model) {
         model.addAttribute("pageName", 4);
         Map allSectors = (TreeMap) model.asMap().get("allSectors");
         Date dateEv = (Date) model.asMap().get("dateEvent");
