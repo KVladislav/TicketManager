@@ -18,9 +18,6 @@
 
 </head>
 <body onload='document.loginForm.username.focus();'>
-<%
-    request.setCharacterEncoding("UTF-8");
-%>
 <div class="container">
     <br>
 
