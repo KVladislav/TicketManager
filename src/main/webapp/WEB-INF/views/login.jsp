@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -20,7 +20,6 @@
 <body onload='document.loginForm.username.focus();'>
 <div class="container">
     <br>
-
     <form class="form-horizontal" name="loginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
         <fieldset>
 
