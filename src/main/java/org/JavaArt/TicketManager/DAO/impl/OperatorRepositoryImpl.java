@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
@@ -23,13 +24,16 @@ import java.util.List;
 @Repository
 
 public class OperatorRepositoryImpl implements OperatorRepository {
+    @Autowired
+    HibernateUtil hibernateUtil;
+    
 
     @Override
     public void addOperator(Operator operator) {
         if (operator == null) return;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(operator);
             session.getTransaction().commit();
@@ -48,7 +52,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         if (operator == null) return;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(operator);
             session.getTransaction().commit();
@@ -68,7 +72,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         Session session = null;
         Operator operator = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             operator = (Operator) session.get(Operator.class, id);
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -86,7 +90,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         Session session = null;
         List<Operator> operators = null;//new ArrayList<Event>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             operators = session.createCriteria(Operator.class)
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
                     .addOrder(Order.asc("id")).list();
@@ -105,7 +109,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         Session session = null;
         int counter = 0;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery(String.format("select count (*) from Operator where isDeleted = false"));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
@@ -132,7 +136,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         Session session = null;
         Operator operator = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             operator = (Operator) session.createCriteria(Operator.class)
                     .add(Restrictions.eq("login", userName))
                     .add(Restrictions.eq("isDeleted", false))
@@ -171,7 +175,7 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         Session session = null;
         Operator operator = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             operator = (Operator) session.createCriteria(Operator.class)
                     .add(Restrictions.eq("login", login))
                     .add(Restrictions.eq("isDeleted", false))

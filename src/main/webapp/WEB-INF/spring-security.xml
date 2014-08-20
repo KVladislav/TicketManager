@@ -37,4 +37,5 @@
                 class="org.JavaArt.TicketManager.service.UserNameCachingAuthenticationFailureHandler">
         <beans:property name="defaultFailureUrl" value="/login.do?error=true"/>
     </beans:bean>
+
 </beans:beans>

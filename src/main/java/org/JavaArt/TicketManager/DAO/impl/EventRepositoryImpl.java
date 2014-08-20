@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,8 @@ import java.util.List;
 @Repository
 
 public class EventRepositoryImpl implements EventRepository {
+    @Autowired
+    HibernateUtil hibernateUtil;
 
     @Override
     public void addEvent(Event event) {
@@ -26,7 +29,7 @@ public class EventRepositoryImpl implements EventRepository {
         event.setOperator(operator);
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(event);
             session.getTransaction().commit();
@@ -46,7 +49,7 @@ public class EventRepositoryImpl implements EventRepository {
         event.setOperator(operator);
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(event);
             session.getTransaction().commit();
@@ -64,7 +67,7 @@ public class EventRepositoryImpl implements EventRepository {
         Session session = null;
         Event event = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             event = (Event) session.createCriteria(Event.class).
                     add(Restrictions.eq("isDeleted", false)).
                     add(Restrictions.eq("id", id)).uniqueResult();
@@ -85,7 +88,7 @@ public class EventRepositoryImpl implements EventRepository {
         Session session = null;
         List<Event> events = null;//new ArrayList<Event>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             events = session.createCriteria(Event.class)
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
                     .addOrder(Order.asc("date")).list();
@@ -103,7 +106,7 @@ public class EventRepositoryImpl implements EventRepository {
         Session session = null;
         List<Event> events = new ArrayList<Event>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Event WHERE isDeleted = false and date > :currientDate order by date");
             query.setTimestamp("currientDate", new Date());
             events = (List<Event>) query.list();
@@ -122,7 +125,7 @@ public class EventRepositoryImpl implements EventRepository {
         Session session = null;
         List<Event> events = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             events = session.createCriteria(Event.class)
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
                     .add(Restrictions.eq("date", inputDate)).list();
@@ -143,7 +146,7 @@ public class EventRepositoryImpl implements EventRepository {
         Session session = null;
         List<Event> events = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             events = session.createCriteria(Event.class)
                     .add(Restrictions.eq("isDeleted", new Boolean("false")))
                     .add(Restrictions.ne("id", event.getId()))
@@ -164,7 +167,7 @@ public class EventRepositoryImpl implements EventRepository {
         Session session = null;
         List<Event> events = new ArrayList<Event>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Event WHERE isDeleted = false and bookingTimeOut > :currientDate order by date");
             query.setTimestamp("currientDate", new Date());
             events = (List<Event>) query.list();

@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,10 @@ import java.util.List;
  */
 @Repository
 public class ClientRepositoryImpl implements ClientRepository {
+    @Autowired
+    HibernateUtil hibernateUtil;
+    
+    
     @Override
     public void saveOrUpdateClient(Client client) {
         if (client == null) return;
@@ -31,7 +36,7 @@ public class ClientRepositoryImpl implements ClientRepository {
 
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.saveOrUpdate(client);
             session.getTransaction().commit();
@@ -53,7 +58,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Session session = null;
         List<Client> clients = null;//new ArrayList<Client>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             clients = session.createCriteria(Client.class).add(Restrictions.eq("isDeleted", false)).add(Restrictions.ilike("name", "%" + clientName + "%")).list();
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -70,7 +75,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Session session = null;
         Client client = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             client = (Client) session.get(Client.class, id);
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -88,7 +93,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Session session = null;
         List<Client> clients = null;//new ArrayList<Client>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             clients = session.createCriteria(Client.class).list();
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -108,7 +113,7 @@ public class ClientRepositoryImpl implements ClientRepository {
 
 
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
 //            Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT distinct client FROM Ticket AS ticket LEFT JOIN ticket.client AS client) AND client.timeStamp <= :endDate");
             Query query = session.createQuery("DELETE FROM Client AS client WHERE client not in (SELECT distinct ticket.client FROM Ticket AS ticket) AND client.timeStamp <= :endDate");

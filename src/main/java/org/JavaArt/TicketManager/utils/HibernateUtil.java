@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 
@@ -12,31 +13,27 @@ import javax.annotation.PreDestroy;
  * Created with IntelliJ IDEA.
  * User: Vladislav Karpenko
  * Date: 06.06.2014
- * Time: 0:05                                                 x
+ * Time: 0:05
  */
+
+@Component
 public class HibernateUtil {
-    private static SessionFactory sessionFactory;
-    private static ServiceRegistry serviceRegistry;
+    private SessionFactory sessionFactory;
 
-    private static SessionFactory buildSessionFactory() {
 
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        return configuration.buildSessionFactory(serviceRegistry);
-    }
-
-    public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            sessionFactory = buildSessionFactory();
-        }
-
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
+    public HibernateUtil() {
+        Configuration configuration = new Configuration();
+        configuration.configure();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+    }
+
     @PreDestroy
-    public static void shutdown() {
-        getSessionFactory().close();
-        System.out.println("Perform Hibernate ShutDown!!!");
+    public void shutdown() {
+        sessionFactory.close();
     }
 }

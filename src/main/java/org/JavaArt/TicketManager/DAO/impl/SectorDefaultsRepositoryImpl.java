@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,9 @@ import java.util.List;
 @Repository
 
 public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
+    @Autowired
+    HibernateUtil hibernateUtil;
+
     @Override
     public void addSectorDefaults(SectorDefaults sectorDefaults) {
         if (sectorDefaults == null) return;
@@ -30,7 +34,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         sectorDefaults.setOperator(operator);
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(sectorDefaults);
             session.getTransaction().commit();
@@ -48,7 +52,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         Session session = null;
         int counter = 0;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery(String.format("select count (*) from SectorDefaults where isDeleted = false"));
             counter = ((Long) query.uniqueResult()).intValue();
         } catch (Exception e) {
@@ -69,7 +73,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         sectorDefaults.setOperator(operator);
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(sectorDefaults);
             session.getTransaction().commit();
@@ -88,7 +92,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         Session session = null;
         SectorDefaults sectorDefaults = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             sectorDefaults = (SectorDefaults) session.get(SectorDefaults.class, id);
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
@@ -106,7 +110,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         Session session = null;
         List<SectorDefaults> sectorDefaults = null;//new ArrayList<Event>();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             sectorDefaults = session.createCriteria(SectorDefaults.class).
                     add(Restrictions.eq("isDeleted", false)).
                     addOrder(Order.asc("sectorName")).list();
@@ -134,7 +138,7 @@ public class SectorDefaultsRepositoryImpl implements SectorDefaultsRepository {
         Session session = null;
         SectorDefaults sectorDefaults = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             sectorDefaults = (SectorDefaults) session.createCriteria(SectorDefaults.class).
                     add(Restrictions.eq("isDeleted", false)).
                     add(Restrictions.eq("sectorName", name)).uniqueResult();

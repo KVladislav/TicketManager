@@ -8,6 +8,7 @@ import org.JavaArt.TicketManager.utils.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,9 @@ import java.util.List;
 @Repository
 
 public class SectorRepositoryImpl implements SectorRepository {
+    @Autowired
+    HibernateUtil hibernateUtil;
+
 
     @Override
     public void addSector(Sector sector) {
@@ -24,7 +28,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         sector.setOperator(operator);
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(sector);
             session.getTransaction().commit();
@@ -45,7 +49,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         sector.setOperator(operator);
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(sector);
             session.getTransaction().commit();
@@ -65,7 +69,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         Session session = null;
         Sector sector = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
 //            sector = (Sector) session.get(Sector.class, id);
 
             sector = (Sector) session.createCriteria(Sector.class).
@@ -88,7 +92,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         Session session = null;
         List<Sector> sectors = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY id");
             sectors = query.list();
         } catch (Exception e) {
@@ -108,7 +112,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         Session session = null;
         List<Sector> sectors = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = hibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY price");
             sectors = query.list();
         } catch (Exception e) {
