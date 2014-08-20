@@ -25,7 +25,7 @@
         <fieldset>
 
             <!-- Form Name -->
-            <legend>Пожалуйста, авторизируйтесь!</legend>
+            <legend>Пожалуйста, авторизируйтесь</legend>
 
             <!-- Text input-->
             <div class="form-group">
