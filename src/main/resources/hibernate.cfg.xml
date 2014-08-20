@@ -14,7 +14,7 @@
         <property name="connection.password">javaartr2d2</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
         <property name="connection.schemaname">public</property>
-        <property name="hibernate.connection.characterEncoding">utf8</property>
+        <property name="hibernate.connection.characterEncoding">utf-8</property>
 
         <property name="connection.pool_size">2</property>
         <property name="hibernate.connection.autocommit">false</property>
