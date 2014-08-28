@@ -66,19 +66,17 @@ public class SectorService {
                     if (index > 0) buf.append(", ").append(sector2.getName());
                     index++;
                     if (buf.toString().length() > 46) {
-                        legenda.add(element, buf.toString());
+                        legenda.add(element++, buf.toString());
                         buf.delete(0, 99);
                         buf.append(sortByPrice.get(j)).append(" грн.  Сектор ");
                         index = 0;
-                        element++;
                     }
                 }
             }
-            if (buf.toString().length() < 15) buf.delete(0, 99);
+            if (index==0) buf.delete(0, 99);
             else {
-                legenda.add(element, buf.toString());
+                legenda.add(element++, buf.toString());
                 buf.delete(0, 99);
-                element++;
             }
         }
         return legenda;

@@ -93,7 +93,7 @@ public class SectorRepositoryImpl implements SectorRepository {
         List<Sector> sectors = null;
         try {
             session = hibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY id");
+            Query query = session.createQuery("from Sector where event =" + event.getId() + " and isDeleted = false ORDER BY name");
             sectors = query.list();
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
